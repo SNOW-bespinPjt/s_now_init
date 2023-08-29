@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.btc.snow.user.study.book.IUserBookMapper">
+
+<!--	<insert id="scheduledUpdateBook" parameterType="com.btc.snow.user.study.book.UserBookDto">-->
+<!--		INSERT INTO tbl_book(b_isbn, b_title, b_author, b_cover, b_publisher, b_description)-->
+<!--		VALUES (#{isbn13}, #{title}, #{author}, #{cover}, #{publisher}, #{description})-->
+<!--	</insert>-->
+
+	<insert id="scheduledUpdateBook" parameterType="java.util.List">
+		INSERT INTO tbl_book (
+		b_isbn, b_title, b_author, b_cover, b_publisher, b_description
+		) VALUES
+		<foreach collection="list" item="item" separator=",">
+			(
+			#{item.isbn13}, #{item.title}, #{item.author}, #{item.cover}, #{item.publisher}, #{item.description}
+			)
+		</foreach>
+	</insert>
+
+</mapper>
