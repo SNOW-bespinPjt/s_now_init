@@ -31,6 +31,7 @@ public class AdminMemberService implements IAdminService {
     final static public int ADMIN_SUCCESS = 1;
     final static public int ADMIN_FAIL = -1;
 
+    // 회원가입
     @Override
     public int createAccountConfirm(AdminMemberDto adminMemberDto) {
         log.info("[AdminMemberService] createAccountForm()");
@@ -66,7 +67,8 @@ public class AdminMemberService implements IAdminService {
 
         }
     }
-
+    
+    // 로그인
     @Override
     public AdminMemberDto loginConfirm(AdminMemberDto adminMemberDto) {
         log.info("[AdminMemberService] loginConfirm()");
@@ -87,14 +89,18 @@ public class AdminMemberService implements IAdminService {
 
     }
 
+    // 수정
     @Override
     public int modifyAccountConfirm(AdminMemberDto adminMemberDto) {
         log.info("[AdminMemberService] adminMemberDto()");
+
+        adminMemberDto.setA_m_pw(passwordEncoder.encode(adminMemberDto.getA_m_pw()));
 
         return iAdminDaoMB.updateAdminAccount(adminMemberDto);
 
     }
 
+    // 관리자 확인
     @Override
     public AdminMemberDto getLoginedAdminMember(int a_m_no) {
         log.info("[AdminMemberService] getLoginedAdminMember()");
@@ -103,6 +109,7 @@ public class AdminMemberService implements IAdminService {
 
     }
 
+    // 관리자 리스트
     @Override
     public List<AdminMemberDto> listupAdmin() {
         log.info("[AdminMemberService] listupAdmin()");
@@ -111,6 +118,7 @@ public class AdminMemberService implements IAdminService {
 
     }
 
+    // 관리자 권한 설정
     @Override
     public int setAdminApproval(int a_m_no) {
         log.info("[AdminMemberService] setAdminApproval()");
@@ -127,6 +135,7 @@ public class AdminMemberService implements IAdminService {
         return result;
     }
 
+    // 비밀번호 찾기
     @Override
     public int findPasswordConfirm(AdminMemberDto adminMemberDto) {
         log.info("[AdminMemberService] findPasswordConfirm()");
@@ -143,12 +152,13 @@ public class AdminMemberService implements IAdminService {
         if (selectedAdminMemberDto != null) {
 
             String newPassword = createNewPassword();
-			newPassword = passwordEncoder.encode(newPassword);
 
-            result = iAdminDaoMB.updatePassword(adminMemberDto.getA_m_id(), newPassword);
+            result = iAdminDaoMB.updatePassword(adminMemberDto.getA_m_id(), passwordEncoder.encode(newPassword));
 
-            if (result > 0)
+            if (result > 0) {
                 sendNewPasswordByMail(adminMemberDto.getA_m_mail(), newPassword);
+
+            }
 
         }
 
@@ -156,6 +166,7 @@ public class AdminMemberService implements IAdminService {
 
     }
 
+    // 임시 비밀번호 만들기
     @Override
     public String createNewPassword() {
         log.info("[AdminMemberService] createNewPassword()");
@@ -174,13 +185,17 @@ public class AdminMemberService implements IAdminService {
         int index = 0;
         int length = chars.length;
         for (int i = 0; i < 8; i++) {
-
             index = secureRandom.nextInt(length);
 
             if (index % 2 == 0)
+            {
                 stringBuffer.append(String.valueOf(chars[index]).toUpperCase());
-            else
+
+            } else {
                 stringBuffer.append(String.valueOf(chars[index]).toLowerCase());
+                
+            }
+
         }
 
         log.info("[AdminMemberService] NEW PASSWORD: " + stringBuffer.toString());
@@ -189,6 +204,7 @@ public class AdminMemberService implements IAdminService {
 
     }
 
+    // 새 비밀번호 메일 전송
     @Override
     public void sendNewPasswordByMail(String toMailAddr, String newPassword) {
         log.info("[AdminMemberService] sendNewPasswordByMail()");
@@ -208,6 +224,7 @@ public class AdminMemberService implements IAdminService {
 
     }
 
+    // 회원탈퇴
     @Override
     public int SignOutConfirm(int a_m_no) {
         log.info("[AdminMemberService] SignOutConfirm()");

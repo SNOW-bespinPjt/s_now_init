@@ -12,8 +12,8 @@ function init_events() {
     $(document).on('click', '#loginLink', function () {
         console.log("loginLink button CLICK HANDLER");
 
-        $('#contentDiv').css('display', 'none');
-        $('#member_login_form').css('display','block');
+            $('#contentDiv').css('display', 'none');
+            $('#member_login_form').css('display','block');
 
     });
 

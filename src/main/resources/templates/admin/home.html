@@ -69,7 +69,8 @@
                 <!-- ➡️⬆️️ -->
 
                 <!-- beforn login : contentDiv -->
-                <div class="flex flex-col items-center justify-center w-11/12 h-40 p-2 mt-6 border-2 rounded-sm"
+                <div id="contentDiv"
+                     class="flex flex-col items-center justify-center w-11/12 h-40 p-2 mt-6 border-2 rounded-sm"
                      th:if="${session.loginedAdminDto == null}">
                     <h3 class="mb-3">이곳은 ADMIN 페이지 입니다 !</h3>
                     <a class="mx-auto h-10 px-4 py-2 font-bold items-center text-white bg-green-500 rounded w-52 hover:bg-green-600 text-center"
@@ -78,20 +79,56 @@
                         login
                     </a>
                     <div class="mt-3.5 text-xs text-gray-700">
-                        <a id="findIDLink"
-                           class="cursor-pointer hover:underline hover:font-thin hover:text-gray-500"
+                        <a
+                                class="cursor-pointer hover:underline hover:font-thin hover:text-gray-500"
+                                th:href="@{/admin/member/find_id_form}"
                         >아이디 찾기</a
                         >
                         |
-                        <a id="findPWLink"
-                           class="cursor-pointer hover:underline hover:font-thin hover:text-gray-500"
-                           th:href="@{/admin/member/find_password_form}"
+                        <a
+                                class="cursor-pointer hover:underline hover:font-thin hover:text-gray-500"
+                                th:href="@{/admin/member/find_password_form}"
                         >비밀번호 찾기</a
                         >
                         |
-                        <a id="AccountLink"
-                           class="cursor-pointer hover:underline hover:font-thin hover:text-gray-500"
-                           th:href="@{/admin/member/create_account_form}"
+                        <a
+                                class="cursor-pointer hover:underline hover:font-thin hover:text-gray-500"
+                                th:href="@{/admin/member/create_account_form}"
+                        >회원가입</a
+                        >
+                    </div>
+                </div>
+                <!-- member_login_form -->
+                <div id="member_login_form" style="display: none"
+                     class="flex flex-col items-center justify-center w-11/12 h-40 p-2 mt-6 border-2 rounded-sm">
+                    <div>
+                        MEMBER LOGIN FORM
+                    </div>
+                    <div>
+                        <form th:action="@{/admin/member/member_login_confirm}" name="member_login_form"
+                              method="post">
+                            <input type="text" name="a_m_id" placeholder="INPUT ID"><br>
+                            <input type="password" name="a_m_pw" placeholder="INPUT PW"><br>
+                            <input type="button" value="member login" onclick="memberLoginForm();">
+                            <input type="reset" value="reset">
+                        </form>
+                    </div>
+                    <div class="mt-3.5 text-xs text-gray-700">
+                        <a
+                                class="cursor-pointer hover:underline hover:font-thin hover:text-gray-500"
+                                th:href="@{/admin/member/find_id_form}"
+                        >아이디 찾기</a
+                        >
+                        |
+                        <a
+                                class="cursor-pointer hover:underline hover:font-thin hover:text-gray-500"
+                                th:href="@{/admin/member/find_password_form}"
+                        >비밀번호 찾기</a
+                        >
+                        |
+                        <a
+                                class="cursor-pointer hover:underline hover:font-thin hover:text-gray-500"
+                                th:href="@{/admin/member/create_account_form}"
                         >회원가입</a
                         >
                     </div>
@@ -101,8 +138,9 @@
                 <div class="flex flex-col items-center justify-center w-11/12 h-40 p-2 mt-6 border-2 rounded-sm"
                      th:if="${session.loginedAdminDto != null}">
                     <h3 class="mb-3">환영합니다</h3>
-                    <p class="mx-auto h-10 px-4 py-2 font-bold items-center text-white bg-green-500 rounded w-52 hover:bg-green-600 text-center">
-                        ${session.loginedAdminDto.a_m_id}님</p>
+
+                    <span th:text="${session.loginedAdminDto.a_m_id}"
+                          class="mx-auto h-10 px-4 py-2 font-bold items-center text-white bg-green-500 rounded w-52 hover:bg-green-600 text-center"> 님</span>
                     <div class="mt-3.5 text-xs text-gray-700">
                         <a th:href="@{/admin/member/member_modify_form}"
                            class="cursor-pointer hover:underline hover:font-thin hover:text-gray-500"
@@ -116,25 +154,6 @@
                     </div>
                 </div>
 
-                <!-- member_login_form -->
-                <div id="member_login_form" style="display: none"
-                     class="flex flex-col items-center justify-center w-11/12 h-40 p-2 mt-6 border-2 rounded-sm">
-                    <div>
-                        MEMBER LOGIN FORM
-                    </div>
-                    <div>
-                        <form th:action="@{/admin/member/member_login_confirm}" name="member_login_form" method="post">
-                            <input type="text" name="a_m_id" placeholder="INPUT ID"><br>
-                            <input type="password" name="a_m_pw" placeholder="INPUT PW"><br>
-                            <input type="button" value="member login" onclick="memberLoginForm();">
-                            <input type="reset" value="reset">
-                        </form>
-                    </div>
-
-                    <div>
-                        <a th:href="@{/admin/member/create_account_form}">create account</a>
-                    </div>
-                </div>
 
                 <!-- find_id_form -->
                 <!-- find_password_form -->
@@ -161,34 +180,6 @@
                         <a th:href="@{/admin/member/member_login_form.html}">login</a>
                     </div>
 
-                </div>
-                <!-- create_account_form -->
-                <div id="create_account_form" style="display: none"
-                     class="flex flex-col items-center justify-center w-11/12 h-40 p-2 mt-6 border-2 rounded-sm">
-                    <div>
-                        CREATE ACCOUNT FORM
-                    </div>
-                    <div>
-                        <form th:action="@{/admin/member/create_account_confirm}" name="create_account_form"
-                              method="post">
-                            <input type="text" name="a_m_id" placeholder="INPUT ID"><br>
-                            <input type="password" name="a_m_pw" placeholder="INPUT PW"><br>
-                            <input type="text" name="a_m_name" placeholder="INPUT NAME"><br>
-                            <input type="email" name="a_m_mail" placeholder="INPUT MAIL"><br>
-                            <input type="text" name="a_m_phone" placeholder="INPUT PHONE"><br>
-                            <select name="a_m_position">
-                                <option value="">--- SELECT POSITION ---</option>
-                                <option value="교육기관">교육기관</option>
-                                <option value="강사">강사</option>
-                            </select>
-                            <input type="button" value="create account" onclick="createAccountForm();">
-                            <input type="reset" value="reset">
-                        </form>
-                    </div>
-
-                    <div>
-                        <a th:href="@{/admin/member/member_login_form}">Already have an account? login</a>
-                    </div>
                 </div>
 
                 <!-- ➡️⬇️ -->

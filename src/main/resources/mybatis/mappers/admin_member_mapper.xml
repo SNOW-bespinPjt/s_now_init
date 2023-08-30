@@ -12,8 +12,10 @@
     </select>
 
     <insert id="insertAdminAccount" parameterType="com.btc.snow.admin.member.AdminMemberDto">
-        INSERT INTO tbl_admin_member (a_m_approval, a_m_id, a_m_pw, a_m_name, a_m_mail, a_m_phone, a_m_position, a_m_reg_date, a_m_mod_date)
-		VALUES (#{a_m_approval}, #{a_m_id}, #{a_m_pw}, #{a_m_name}, #{a_m_mail}, #{a_m_phone}, #{a_m_position}, NOW(), NOW())
+        INSERT INTO tbl_admin_member (a_m_approval, a_m_id, a_m_pw, a_m_name, a_m_mail, a_m_phone, a_m_position,
+                                      a_m_reg_date, a_m_mod_date)
+        VALUES (#{a_m_approval}, #{a_m_id}, #{a_m_pw}, #{a_m_name}, #{a_m_mail}, #{a_m_phone}, #{a_m_position}, NOW(),
+                NOW())
     </insert>
 
     <select id="selectAdminForLogin" parameterType="String" resultType="com.btc.snow.admin.member.AdminMemberDto">
@@ -38,7 +40,8 @@
     <update id="updateAdminAccount" parameterType="com.btc.snow.admin.member.AdminMemberDto">
         UPDATE
             tbl_admin_member
-        SET a_m_name     = #{a_m_name},
+        SET a_m_pw       = #{a_m_pw},
+            a_m_name     = #{a_m_name},
             a_m_mail     = #{a_m_mail},
             a_m_phone    = #{a_m_phone},
             a_m_position = #{a_m_position},
