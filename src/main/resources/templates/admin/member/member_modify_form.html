@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+
+    <link rel="stylesheet" th:href="@{/css/common.css}">
+
+    <script th:src="@{/admin/js/member_modify_form.js}" type="text/javascript"></script>
+
+</head>
+<body>
+<header th:replace="~{/include/header_nav_footer::header}"></header>
+<div>
+    <a th:href="@{/admin}">home</a> &nbsp;&nbsp;
+    <a th:href="@{/admin/member/create_account_form}">create account</a> &nbsp;&nbsp;
+    <a th:href="@{/admin/member/member_login_form}">login</a> &nbsp;&nbsp;
+    <a th:href="@{/admin/member/member_modify_form}">modify</a> &nbsp;&nbsp;
+    <a th:href="@{/admin/member/member_logout_confirm}">logout</a> &nbsp;&nbsp;
+    <a th:href="@{/admin/member/listup_admin}">list</a>
+</div>
+<section>
+    <div id="section_wrap">
+        <div class="word">
+            MEMBER MODIFY FORM
+        </div>
+
+        <div class="create_account_form">
+            <form th:action="@{/admin/member/member_modify_confirm}" name="member_modify_form" method="post">
+
+                <input type="hidden" name="a_m_no" th:value="${session.loginedAdminDto.a_m_no}">
+
+                <input type="text" name="a_m_id" th:value="${session.loginedAdminDto.a_m_id}" readonly disabled><br>
+                <input type="password" name="a_m_pw" value="******" readonly disabled><br>
+                <input type="text" name="a_m_name" th:value="${session.loginedAdminDto.a_m_name}"><br>
+                <input type="email" name="a_m_mail" th:value="${session.loginedAdminDto.a_m_mail}"><br>
+                <input type="text" name="a_m_phone" th:value="${session.loginedAdminDto.a_m_phone}"><br>
+                <select name="a_m_position">
+                    <option value="">--- SELECT POSITION ---</option>
+                    <option value="교육기관" th:selected="${session.loginedAdminDto.a_m_position == '교육기관'}">교육기관</option>
+                    <option value="강사" th:selected="${session.loginedAdminDto.a_m_position == '강사'}">강사</option>
+                </select><br>
+
+                <input type="button" value="ADMIN MODIFY" onclick="memberModifyForm();">
+                <input type="reset" value="reset">
+            </form>
+        </div>
+
+        <div class="delete_account">
+            <a th:href="@{/admin/member/member_delete_confirm}">delete account</a>
+        </div>
+    </div>
+</section>
+<footer th:replace="~{/include/header_nav_footer.html::footer}"></footer>
+</body>
+</html>

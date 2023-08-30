@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.btc.snow.admin.member.IAdminDaoMB">
+
+    <select id="isAdminMember" parameterType="String" resultType="Boolean">
+        SELECT COUNT(*)
+        FROM tbl_admin_member
+        WHERE a_m_id = #{a_m_id}
+    </select>
+
+    <insert id="insertAdminAccount" parameterType="com.btc.snow.admin.member.AdminMemberDto">
+        INSERT INTO tbl_admin_member (a_m_approval, a_m_id, a_m_pw, a_m_name, a_m_mail, a_m_phone, a_m_position, a_m_reg_date, a_m_mod_date)
+		VALUES (#{a_m_approval}, #{a_m_id}, #{a_m_pw}, #{a_m_name}, #{a_m_mail}, #{a_m_phone}, #{a_m_position}, NOW(), NOW())
+    </insert>
+
+    <select id="selectAdminForLogin" parameterType="String" resultType="com.btc.snow.admin.member.AdminMemberDto">
+        SELECT *
+        FROM tbl_admin_member
+        WHERE a_m_id = #{a_m_id}
+          AND a_m_approval > 0
+    </select>
+
+    <select id="selectAdmins" resultType="com.btc.snow.admin.member.AdminMemberDto">
+        SELECT *
+        FROM tbl_admin_member
+    </select>
+
+    <update id="updateAdminApproval" parameterType="Integer">
+        UPDATE
+            tbl_admin_member
+        SET a_m_approval = 1
+        WHERE a_m_no = #{a_m_no}
+    </update>
+
+    <update id="updateAdminAccount" parameterType="com.btc.snow.admin.member.AdminMemberDto">
+        UPDATE
+            tbl_admin_member
+        SET a_m_name     = #{a_m_name},
+            a_m_mail     = #{a_m_mail},
+            a_m_phone    = #{a_m_phone},
+            a_m_position = #{a_m_position},
+            a_m_mod_date = NOW()
+        WHERE a_m_no = #{a_m_no}
+    </update>
+
+    <select id="selectLoginedAdmin" parameterType="Integer" resultType="com.btc.snow.admin.member.AdminMemberDto">
+        SELECT *
+        FROM tbl_admin_member
+        WHERE a_m_no = #{a_m_no}
+    </select>
+
+    <select id="selectAdminForFindPassword" parameterType="Map"
+            resultType="com.btc.snow.admin.member.AdminMemberDto">
+        SELECT *
+        FROM tbl_admin_member
+        WHERE a_m_id = #{a_m_id}
+          AND a_m_name = #{a_m_name}
+          AND a_m_mail = #{a_m_mail}
+    </select>
+
+    <update id="updatePassword" parameterType="String">
+        UPDATE
+            tbl_admin_member
+        SET a_m_pw       = #{newPassword},
+            a_m_mod_date = NOW()
+        WHERE a_m_id = #{a_m_id}
+    </update>
+
+    <delete id="deleteAdmin" parameterType="Integer">
+        DELETE
+        FROM tbl_admin_member
+        WHERE a_m_no = #{a_m_no}
+    </delete>
+
+</mapper>
+
+
+
+
+
+
+
+

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script th:src="@{/admin/js/create_account_form.js}" type="text/javascript"></script>
+</head>
+<body>
+<div class="flex">
+    <!-- nav -->
+    <div>
+        <nav th:replace="~{/include/admin_nav::nav}"></nav>
+    </div>
+    <!--  section & footer  -->
+    <div class="flex flex-col items-center justify-center w-5/6 mx-auto">
+        <section class="flex flex-row w-5/6 border-solid mt-7">
+            <div
+                    class="relative flex items-center justify-center w-screen h-screen mr-8 border-2 rounded-lg bg-slate-100"
+            >
+                <div class="word">
+                    <h2 class="absolute top-0 left-0 mt-4 text-2xl font-bold ml-14">CREATE ACCOUNT FORM</h2>
+                </div>
+                <div class="create_account_form">
+                    <form th:action="@{/admin/member/create_account_confirm}" name="create_account_form" method="post">
+                        <input type="text" name="a_m_id" placeholder="INPUT ID"><br>
+                        <input type="password" name="a_m_pw" placeholder="INPUT PW"><br>
+                        <input type="text" name="a_m_name" placeholder="INPUT NAME"><br>
+                        <input type="email" name="a_m_mail" placeholder="INPUT MAIL"><br>
+                        <input type="text" name="a_m_phone" placeholder="INPUT PHONE"><br>
+                        <select name="a_m_position">
+                            <option value="">--- SELECT POSITION ---</option>
+                            <option value="교육기관">교육기관</option>
+                            <option value="강사">강사</option>
+                        </select>
+                        <input type="button" value="create account" onclick="createAccountForm();">
+                        <input type="reset" value="reset">
+                    </form>
+                </div>
+
+                <div class="go_login_form">
+                    <a th:href="@{/admin/member/member_login_form}">Already have an account? login</a>
+                </div>
+            </div>
+        </section>
+        <footer th:replace="~{/include/header_nav_footer.html::footer}"></footer>
+    </div>
+</div>
+</body>
+</html>

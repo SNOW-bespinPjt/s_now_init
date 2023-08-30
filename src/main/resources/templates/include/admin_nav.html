@@ -1,0 +1,12 @@
+<nav th:fragment="nav" class="h-full bg-gray-500 text-white p-10 my-auto">
+    <a th:href="@{/admin}" class="block mb-4 hover:bg-gray-600 py-2 px-4 rounded transition duration-200">홈</a>
+    <a th:href="@{/admin/member/create_account_form}"
+       class="block mb-4 hover:bg-gray-600 py-2 px-4 rounded transition duration-200">페2지</a>
+    <a th:href="@{/admin/member/member_login_form}"
+       class="block mb-4 hover:bg-gray-600 py-2 px-4 rounded transition duration-200">페이지</a>
+    <a th:href="@{/admin/member/member_modify_form}"
+       class="block mb-4 hover:bg-gray-600 py-2 px-4 rounded transition duration-200">페E지</a>
+    <a th:href="@{/admin/member/listup_admin}"
+       class="block mb-4 hover:bg-gray-600 py-2 px-4 rounded transition duration-200">LIST</a>
+<!--  th:if="${session.loginedAdminDto.a_m_id eq 'super admin'}"  -->
+</nav>
