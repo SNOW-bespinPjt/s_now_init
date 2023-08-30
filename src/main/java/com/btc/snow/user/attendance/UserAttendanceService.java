@@ -1,5 +1,6 @@
 package com.btc.snow.user.attendance;
 
+import com.btc.snow.user.member.UserMemberDto;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 
@@ -25,7 +26,7 @@ public class UserAttendanceService implements  IUserAttendanceService{
     UserAttendanceMapper userAttendanceMapper;
 
 
-    public void qrCreate() throws WriterException {
+    public Object qrCreate(UserMemberDto userMemberDto) throws WriterException {
         log.info("Service qrCreate() called");
 
 
@@ -34,7 +35,7 @@ public class UserAttendanceService implements  IUserAttendanceService{
 
 
         // do update confirm?u_m_no=1
-        String url="http://localhost:8090/qrtest/confirm";
+        String url="http://localhost:8090/qrtest/confirm?u_m_no="+Integer.toString(userMemberDto.getU_m_no());
 
         BitMatrix encode=new MultiFormatWriter().encode(url, BarcodeFormat.QR_CODE,width,height);
         Map<String,Object> map = new HashMap<>();
@@ -46,13 +47,13 @@ public class UserAttendanceService implements  IUserAttendanceService{
 
             MatrixToImageWriter.writeToStream(encode,"PNG",out);
 
-            ResponseEntity.ok().contentType(MediaType.IMAGE_PNG).body(out.toByteArray());
+            return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG).body(out.toByteArray());
 
 
         } catch(Exception e) {
-            e.printStackTrace();
+            log.error(e);
         }
-
+        return "404";
     }
 
     @Override
@@ -61,9 +62,6 @@ public class UserAttendanceService implements  IUserAttendanceService{
         log.info("Service qrChackConfirm() called");
 
         int result= userAttendanceMapper.qrCheckConfrim(u_m_no);
-
-
-
 
         return  result;
 

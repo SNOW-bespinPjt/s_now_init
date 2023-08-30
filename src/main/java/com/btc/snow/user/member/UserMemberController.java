@@ -36,7 +36,7 @@ public class UserMemberController {
 	@PostMapping("/create_account_confirm")
 	public String createAccountConfirm(UserMemberDto userMemberDto) {
 		log.info("[UserMemberController] createAccountConfirm()");
-		
+
 		String nextPage = "user/member/create_account_success";
 		
 		int result = userMemberService.createAccountConfirm(userMemberDto);
@@ -68,16 +68,13 @@ public class UserMemberController {
 	public String userLoginConfirm(UserMemberDto userMemberDto, HttpSession session) {
 		log.info("[UserMemberController] userLoginConfirm()");
 
-		String nextPage = "user/member/member_login_success";
+		String nextPage = "home";
 
 		UserMemberDto loginedUserDto = userMemberService.userLoginConfirm(userMemberDto);
 
 		if(loginedUserDto != null) {
 			session.setAttribute("loginedUserDto", loginedUserDto);
 			session.setMaxInactiveInterval(60 * 30);
-
-		} else {
-			nextPage = "user/member/member_login_fail";
 
 		}
 

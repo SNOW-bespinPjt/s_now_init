@@ -4,9 +4,12 @@
 
 
 <mapper namespace="com.btc.snow.user.attendance.UserAttendanceMapper">
+
+
+
     <insert id="qrCheckConfrim" parameterType="Integer">
 
-        insert into atd_m_no(u_m_no,atd_m_reg_date,atd_m_mod_date)
+        insert into tbl_atd_m(u_m_no,atd_m_reg_date,atd_m_mod_date)
         values (#{u_m_no},now(),now())
 
     </insert>
