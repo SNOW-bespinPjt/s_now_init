@@ -20,12 +20,11 @@ public class UserBookService {
 
     String key = "ttbgjhs791423001";
 
-    //메퍼 만들어 줘야 함
     @Autowired
     private IUserBookMapper iUserBookMapper;
 
-    @Scheduled(cron = "20 19 18 * * *")
-    public void scheduledUpdateBook(){
+    @Scheduled(cron = "0 0 13 * * MON")
+    public void scheduledUpdateBook() {
         HttpHeaders httpHeaders = new HttpHeaders();
         RestTemplate restTemplate = new RestTemplate();
 

@@ -4,20 +4,32 @@
 
 <mapper namespace="com.btc.snow.user.study.book.IUserBookMapper">
 
-<!--	<insert id="scheduledUpdateBook" parameterType="com.btc.snow.user.study.book.UserBookDto">-->
-<!--		INSERT INTO tbl_book(b_isbn, b_title, b_author, b_cover, b_publisher, b_description)-->
-<!--		VALUES (#{isbn13}, #{title}, #{author}, #{cover}, #{publisher}, #{description})-->
-<!--	</insert>-->
+    <!--    <insert id="scheduledUpdateBook" parameterType="java.util.List">-->
+    <!--        INSERT INTO BOOK (-->
+    <!--        isbn, title, author, cover, publisher, description, reg_date, mod_date-->
+    <!--        ) VALUES-->
+    <!--        <foreach collection="list" item="item" separator=",">-->
+    <!--            (-->
+    <!--            #{item.isbn13}, #{item.title}, #{item.author}, #{item.cover}, #{item.publisher},-->
+    <!--            #{item.description},now(),now()-->
+    <!--            )-->
+    <!--        </foreach>-->
+    <!--    </insert>-->
 
-	<insert id="scheduledUpdateBook" parameterType="java.util.List">
-		INSERT INTO tbl_book (
-		b_isbn, b_title, b_author, b_cover, b_publisher, b_description
-		) VALUES
-		<foreach collection="list" item="item" separator=",">
-			(
-			#{item.isbn13}, #{item.title}, #{item.author}, #{item.cover}, #{item.publisher}, #{item.description}
-			)
-		</foreach>
-	</insert>
+    <update id="scheduledUpdateBook" parameterType="java.util.List">
+        <foreach collection="list" item="item" separator=";">
+            UPDATE BOOK
+            SET
+            isbn = #{item.isbn13},
+            title = #{item.title},
+            author = #{item.author},
+            cover = #{item.cover},
+            publisher = #{item.publisher},
+            description = #{item.description},
+            mod_date = now()
+            WHERE isbn = #{item.isbn13}
+        </foreach>
+    </update>
+
 
 </mapper>

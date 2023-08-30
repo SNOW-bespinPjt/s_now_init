@@ -1,6 +1,8 @@
 package com.btc.snow.user.study.book;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
@@ -19,7 +21,6 @@ public class UserBookDto {
         private String isbn13;
         private String publisher;
         private String description;
-
     }
 
 }
