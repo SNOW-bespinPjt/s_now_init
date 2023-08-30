@@ -7,7 +7,10 @@ import jakarta.servlet.http.HttpSession;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 
 @Controller
@@ -24,27 +27,29 @@ public class UserAttendanceController {
     public Object qrCreate(HttpSession session) throws WriterException {
         log.info("qrCreate() called");
 
-       
+
         return userAttendanceService.qrCreate((UserMemberDto) session.getAttribute("loginedUserDto"));
     }
 
 
-    @GetMapping("/test")
-    public String test() {
-
-
-        return "/user/member/toast_ui";
-    }
-
-
-    @PostMapping("/attendance/confirm")
+    @GetMapping("/attendence/confirm")
     @ResponseBody
     public Object qrCheckConfrim(@RequestParam("u_m_no") int u_m_no) {
 
         log.info("qrCheckConfrim() called");
+        log.info("qrCheckConfrim() u_m_no : " + u_m_no);
+        int result = (Integer) userAttendanceService.qrChackConfirm(u_m_no);
+
+        log.info("hey  : " + result);
+        if (result <= 0) {
+            log.info("confirm fail");
+
+        } else {
+            log.info("confirm success!!");
+        }
 
 
-        return userAttendanceService.qrChackConfirm(u_m_no);
+        return result;
     }
 
 
