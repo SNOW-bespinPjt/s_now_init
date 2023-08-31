@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.btc.snow.admin.assignment.IAdminAssignmentMB">
+
+    <select id="selectAssignments" resultType="com.btc.snow.admin.assignment.AdminAssignmentDto">
+        SELECT *
+        FROM ASSIGNMENT
+        ORDER BY reg_date DESC
+    </select>
+
+    <insert id="insertAssignment" parameterType="com.btc.snow.admin.assignment.AdminAssignmentDto">
+        INSERT INTO ASSIGNMENT (admin_no, title, body, file, reg_date, mod_date)
+        VALUES (#{admin_no}, #{title}, #{body}, #{file}, NOW(), NOW())
+    </insert>
+
+
+</mapper>

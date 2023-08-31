@@ -129,7 +129,7 @@ public class UserMemberController {
 	public String userLogoutConfirm(HttpSession session) {
 		log.info("[UserMemberController] user_logout_confirm()");
 
-		String nextPage = "redirect:/";
+		String nextPage = ":/";
 
 		session.removeAttribute("loginedUserDto");
 
@@ -148,7 +148,7 @@ public class UserMemberController {
 		UserMemberDto loginedUserDto =
 				(UserMemberDto) session.getAttribute("loginedUserDto");
 
-		int result = userMemberService.userDeleteConfirm(loginedUserDto.getU_m_no());
+		int result = userMemberService.userDeleteConfirm(loginedUserDto.getNo());
 
 		if (result > 0) {
 			session.removeAttribute("loginedUserDto");
