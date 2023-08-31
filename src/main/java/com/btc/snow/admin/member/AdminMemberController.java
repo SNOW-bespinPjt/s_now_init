@@ -118,6 +118,36 @@ public class AdminMemberController {
     }
 
     /*
+     * 아이디 찾기
+     */
+    @GetMapping("/find_id_form")
+    public String findIdForm() {
+        log.info("[AdminMemberController] findPasswordForm()");
+
+        String nextPage = "admin/member/find_id_form";
+
+        return nextPage;
+
+    }
+
+    /*
+     * 아이디 찾기 확인
+     */
+    @PostMapping("/find_id_confirm")
+    public String findIdConfirm(AdminMemberDto adminMemberDto) {
+        log.info("[AdminMemberController] findPasswordConfirm()");
+
+        String nextPage = "admin/member/success";
+
+        int result = adminMemberService.findIdConfirm(adminMemberDto);
+        if (result <= 0)
+            nextPage = "admin/member/fail";
+
+        return nextPage;
+
+    }
+
+    /*
      * 로그아웃확인
      */
     @GetMapping("/member_logout_confirm")

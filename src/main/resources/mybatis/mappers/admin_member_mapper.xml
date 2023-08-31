@@ -13,7 +13,7 @@
 
     <insert id="insertAdminAccount" parameterType="com.btc.snow.admin.member.AdminMemberDto">
         INSERT INTO admin (approval, id, pw, name, mail, phone, position,
-                                      reg_date, mod_date)
+                           reg_date, mod_date)
         VALUES (#{approval}, #{id}, #{pw}, #{name}, #{mail}, #{phone}, #{position}, NOW(),
                 NOW())
     </insert>
@@ -40,12 +40,10 @@
     <update id="updateAdminAccount" parameterType="com.btc.snow.admin.member.AdminMemberDto">
         UPDATE
             admin
-        SET pw       = #{pw},
-            name     = #{name},
-            mail     = #{mail},0
-            phone    = #{phone},
-            position = #{position},
-            mod_date = NOW()
+        SET pw   = #{pw},
+            name = #{name},
+            mail = #{mail}, 0
+            phone = #{phone}, position = #{position}, mod_date = NOW()
         WHERE no = #{no}
     </update>
 
@@ -53,6 +51,14 @@
         SELECT *
         FROM admin
         WHERE no = #{no}
+    </select>
+
+    <select id="selectAdminForFindId" parameterType="Map"
+            resultType="com.btc.snow.admin.member.AdminMemberDto">
+        SELECT *
+        FROM admin
+        WHERE name = #{name}
+          AND mail = #{mail}
     </select>
 
     <select id="selectAdminForFindPassword" parameterType="Map"
@@ -77,7 +83,6 @@
         FROM admin
         WHERE no = #{no}
     </delete>
-
 </mapper>
 
 

@@ -135,6 +135,49 @@ public class AdminMemberService implements IAdminService {
         return result;
     }
 
+    // 아이디 찾기
+    @Override
+    public int findIdConfirm(AdminMemberDto adminMemberDto) {
+        log.info("[AdminMemberService] findIdConfirm()");
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("name", adminMemberDto.getName());
+        map.put("mail", adminMemberDto.getMail());
+
+        AdminMemberDto selectedAdminMemberDto = iAdminDaoMB.selectAdminForFindId(map);
+
+        int result = 0;
+
+        if (selectedAdminMemberDto != null) {
+            sendIdByMail(selectedAdminMemberDto);
+            result = 1;
+
+        }
+
+        return result;
+    }
+
+
+    // 찾은 아이디 메일 발송
+    @Override
+    public void sendIdByMail(AdminMemberDto adminMemberDto) {
+        log.info("[AdminMemberService] sendIdByMail()");
+
+        final MimeMessagePreparator mimeMessagePreparator = new MimeMessagePreparator() {
+            @Override
+            public void prepare(jakarta.mail.internet.MimeMessage mimeMessage) throws Exception {
+                final MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+                mimeMessageHelper.setTo("iolagvi28@gmail.com");    // 수신자 메일 주소
+                mimeMessageHelper.setSubject("[TEST] 찾은 아이디 정보 메일입니다.");
+                mimeMessageHelper.setText("찾은 아이디 : " + adminMemberDto.getId());
+            }
+
+        };
+
+        javaMailSenderImpl.send(mimeMessagePreparator);
+
+    }
+
     // 비밀번호 찾기
     @Override
     public int findPasswordConfirm(AdminMemberDto adminMemberDto) {

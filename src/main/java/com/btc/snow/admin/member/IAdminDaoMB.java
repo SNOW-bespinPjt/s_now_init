@@ -26,4 +26,6 @@ public interface IAdminDaoMB {
     int updatePassword(String id, String newPassword);
 
     int deleteAdmin(int no);
+
+    AdminMemberDto selectAdminForFindId(Map<String, Object> map);
 }
