@@ -13,4 +13,8 @@ public interface UserAttendanceMapper {
     void testInsert(String hi);
 
     int qrCheckConfrim(Map<Object, Object> map);
+
+    UserAttendanceDto selectAttendenceStatus(Map<Object, Object> map);
+
+    int isValidStatus(Map<Object, Object> map);
 }

@@ -35,7 +35,7 @@ public class UserAttendanceService implements IUserAttendanceService {
 
 
         // do update confirm?u_m_no=1
-        String url = "http://localhost:8090/user/attendence/confirm?u_m_no=" + Integer.toString(userMemberDto.getU_m_no());
+        String url = "http://localhost:8090/user/attendence/confirm?u_id=" + userMemberDto.getId();
 
         BitMatrix encode = new MultiFormatWriter().encode(url, BarcodeFormat.QR_CODE, width, height);
         Map<String, Object> map = new HashMap<>();
@@ -57,7 +57,7 @@ public class UserAttendanceService implements IUserAttendanceService {
     }
 
     @Override
-    public Object qrChackConfirm(int u_m_no) {
+    public Object qrChackConfirm(String u_id) {
 
         log.info("Service qrChackConfirm() called");
         LocalTime currTime = LocalTime.now();
@@ -66,24 +66,31 @@ public class UserAttendanceService implements IUserAttendanceService {
         int result = 0;
 
         Map<Object, Object> map = new HashMap<>();
-        map.put("u_m_no", u_m_no);
+        map.put("u_id", u_id);
 
 
         if (currTime.isBefore(LocalTime.NOON)) {
-            if (currTime.isAfter(morningTime)) {
-                map.put("i", 1);
-                map.put("i1", 0);
-                result = userAttendanceMapper.qrCheckConfrim(map);
+            map.put("tstatus", 0);
+
+            int validResult = userAttendanceMapper.isValidStatus(map);
+
+            log.info("validResult : " + validResult);
+
+            if (validResult > 0) {
+                if (currTime.isAfter(morningTime)) {
+                    map.put("i", 1);
+                    map.put("i1", 0);
+                    result = userAttendanceMapper.qrCheckConfrim(map);
 
 
-            } else {
-                log.info("hey~~~: " + map.get("u_m_no"));
-                map.put("i", 0);
-                map.put("i1", 0);
-                result = userAttendanceMapper.qrCheckConfrim(map);
+                } else {
+                    log.info("hey~~~: " + map.get("u_id"));
+                    map.put("i", 0);
+                    map.put("i1", 0);
+                    result = userAttendanceMapper.qrCheckConfrim(map);
 
+                }
             }
-
         } else {
 
 
@@ -106,6 +113,35 @@ public class UserAttendanceService implements IUserAttendanceService {
 
         return result;
     }
+
+
+    @Override
+    public Object selectUserforAttendence(String u_id) {
+        log.info("selectUserforAttendence : ");
+        log.info(" u_id : " + u_id);
+        LocalTime currentTime = LocalTime.now();
+
+        LocalTime morningTime = LocalTime.of(9, 0);
+        LocalTime lastMorningTime = LocalTime.of(12, 0);
+        LocalTime noonTime = LocalTime.of(14, 0);
+        LocalTime lastNoonTime = LocalTime.of(18, 0);
+
+        Map<Object, Object> map = new HashMap<>();
+        if ((currentTime.isAfter(morningTime) && currentTime.isBefore(lastMorningTime))) {
+            map.put("u_id", u_id);
+            map.put("tstatus", 0);
+            return userAttendanceMapper.selectAttendenceStatus(map);
+
+        } else if ((currentTime.isAfter(noonTime) && currentTime.isBefore(lastNoonTime))) {
+            map.put("u_id", u_id);
+            map.put("tstatus", 1);
+            return userAttendanceMapper.selectAttendenceStatus(map);
+
+        }
+        return null;
+
+    }
+
 
 //    @Override
 //    public Object selectUserforAttendence() {

@@ -9,9 +9,28 @@
     <insert id="qrCheckConfrim" parameterType="HashMap">
 
         insert into ATTENDENCE(u_id, astatus, tstatus, reg_date, mod_date)
-        values (#{u_m_no}, #{i}, #{i1}, now(), now())
+        values (#{u_id}, #{i}, #{i1}, now(), now())
 
     </insert>
+
+    <select id="selectAttendenceStatus" parameterType="HashMap"
+            resultType="com.btc.snow.user.attendance.UserAttendanceDto">
+
+        select *
+        from ATTENDENCE
+        where u_id = #{u_id}
+          and tstatus = #{tstatus}
+
+
+    </select>
+
+    <select id="isValidStatus" parameterType="HashMap" resultType="Integer">
+        select count(*)
+        from ATTENDENCE
+        where u_id = #{u_id}
+          AND tstatus = #{tstatus}
+
+    </select>
 
 
 </mapper>
