@@ -1,0 +1,116 @@
+<script th:fragment="js" th:inline="javascript" type="text/javascript">
+
+    $(document).ready(function () {
+        console.log("DOCUMENT READY!!");
+
+        // 이벤트 핸들러 초기화(등록)
+        init_events();
+
+    });
+
+    function init_events() {
+        console.log("init_events READY!!");
+
+        $(document).on('change', 'select.meeting_select', function (e) {
+            console.log('meeting_select CHANGE HANDLER!!');
+
+            let meetingSelected = $('#meeting_section select.meeting_select').val();
+            // let loginedDto = [[${session.loginedDto}]];
+            if (meetingSelected == "study") {
+                console.log("go ajax_study_form");
+
+                // let id = loginedDto.id;
+                $("#meeting_section form.meeting_form").children().remove();
+
+                let appendTag = "";
+
+                appendTag += "<input type='text' name='title' value='제목을 입력하세요.'><br>";
+                appendTag += "<textarea ></textarea><br>";
+                appendTag += "<textarea name='body' placeholder='내용을 입력하세요.' cols='50' rows='10'></textarea><br>";
+                appendTag += "<input type='file' name='img' placeholder='이미지를 선택하세요.'>";
+                appendTag += "<input type='button' name='modal' value='modal'><br>";
+                appendTag += "<input type='submit' value='등록'>";
+
+                $("#meeting_section form.meeting_form").append(appendTag);
+
+
+                // ajax_study_form();
+
+            } else {
+                console.log("go ajax_meal_form");
+
+                // let id = loginedDto.id;
+                $("#meeting_section form.meeting_form").children().remove();
+
+                let appendTag = "";
+
+                appendTag += "<input type='text' name='title' value='제목을 입력하세요.'><br>";
+                appendTag += "<textarea ></textarea><br>";
+                appendTag += "<textarea name='body' placeholder='내용을 입력하세요.' cols='50' rows='10'></textarea><br>";
+                appendTag += "<input type='file' name='img' placeholder='이미지를 선택하세요.'><br>";
+                appendTag += "<input type='submit' value='등록'>";
+
+                $("#meeting_section form.meeting_form").append(appendTag);
+
+            }
+
+
+        });
+
+    }
+
+    // FORM 등록 버튼 클릭
+    $(document).on('click', '#meeting_section input[value="등록"]', function (e) {
+        console.log('submit BUTTON CLICK HANDLER!!');
+
+        let title = $('#meeting_section .meeting_form input[name="title"]').val();
+        let body = $('#meeting_section .meeting_form input[name="body"]').val();
+
+        if (title == '') {
+            alert("INPUT FORM TITLE");
+            $('#meeting_section .meeting_form input[name="title"]').focus();
+
+        } else if (body == '') {
+            alert("INPUT FORM BODY");
+            $('#meeting_section .meeting_form input[name="body"]').focus();
+
+        } else {
+
+            alert("sfgahg;org;oreo;gro");
+
+            ajax_study_form(title, body);
+
+        }
+
+    });
+
+
+    // AJAX START
+    function ajax_study_form(title, body) {
+
+        $.ajax({
+            url: '/user/meeting/study_form',
+            method: 'GET',
+            processData: false,
+            contentType: false,
+            success: function () {
+                console.log('AJAX SUCCESS - ajax_meeting_form()');
+
+
+            },
+            error: function (data) {
+                console.log('AJAX ERROR - ajax_meeting_form()');
+
+                alert('일정 등록에 문제가 발생 했습니다.');
+
+            },
+            complete: function (data) {
+                console.log('AJAX COMPLETE - ajax_writeOrganizer()');
+
+                hideWritePlansView();
+
+            }
+        });
+    }
+
+</script>

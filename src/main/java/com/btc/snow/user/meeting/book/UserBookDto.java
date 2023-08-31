@@ -1,4 +1,4 @@
-package com.btc.snow.user.study.book;
+package com.btc.snow.user.meeting.book;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

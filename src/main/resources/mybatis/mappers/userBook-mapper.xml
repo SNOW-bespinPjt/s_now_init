@@ -2,7 +2,7 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.btc.snow.user.study.book.IUserBookMapper">
+<mapper namespace="com.btc.snow.user.meeting.book.IUserBookMapper">
 
     <!--    <insert id="scheduledUpdateBook" parameterType="java.util.List">-->
     <!--        INSERT INTO BOOK (-->

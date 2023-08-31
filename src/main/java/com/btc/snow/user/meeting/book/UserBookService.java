@@ -1,4 +1,4 @@
-package com.btc.snow.user.study.book;
+package com.btc.snow.user.meeting.book;
 
 
 import lombok.extern.log4j.Log4j2;
