@@ -31,5 +31,12 @@
         </foreach>
     </update>
 
+    <select id="selectSearchBooks" parameterType="String" resultType="com.btc.snow.user.meeting.book.UserBookItemDto">
+
+        select *
+        from BOOK
+        where title like concat('%', #{title}, '%')
+
+    </select>
 
 </mapper>

@@ -8,5 +8,7 @@ import java.util.List;
 public interface IUserBookMapper {
     void scheduledUpdateBook(List<UserBookDto.Item> itemList);
 
+    List<UserBookDto> selectSearchBooks(String title);
+
 //    void scheduledUpdateBook(UserBookDto.Item itemList);
 }

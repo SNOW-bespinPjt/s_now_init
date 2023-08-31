@@ -13,10 +13,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 @Log4j2
-public class UserBookService {
+public class UserBookService implements IUserBookService {
 
     String key = "ttbgjhs791423001";
 
@@ -56,4 +59,20 @@ public class UserBookService {
     }
 
 
+    public Map<String, Object> searchBook(String title) {
+        log.info("searchBook()");
+
+        Map<String, Object> map = new HashMap<>();
+
+        List<UserBookDto> userBookDtos = iUserBookMapper.selectSearchBooks(title);
+
+        log.info("userBookDtos {}", userBookDtos);
+        log.info("userBookDtos {}", userBookDtos.size());
+
+        map.put("userBookDtos", userBookDtos);
+
+        log.info("============================>" + userBookDtos);
+
+        return map;
+    }
 }

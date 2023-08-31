@@ -31,14 +31,4 @@ public class UserMeetingController {
 
         return nextPage;
     }
-
-//    @GetMapping("/study_form")
-//    @ResponseBody
-//    public Object study_form() {
-//        log.info("study_form()");
-//
-//        userMeetingService.
-//
-//        return nextPage;
-//    }
 }
