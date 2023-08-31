@@ -14,187 +14,216 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/user/member")
 public class UserMemberController {
 
-    @Autowired
-    UserMemberService userMemberService;
+	@Autowired
+	UserMemberService userMemberService;
+	
+	/*
+	 * CREATE ACCOUT FORM
+	 */
+	@GetMapping("/create_account_form")
+	public String createAccountForm() {
+		log.info("[UserMemberController] createAccountForm()");
+		
+		String nextPage = "user/member/create_account_form";
+		
+		return nextPage;
+		
+	}
+	
+	/*
+	 * CREATE ACCOUNT CONFIRM
+	 */
+	@PostMapping("/create_account_confirm")
+	public String createAccountConfirm(UserMemberDto userMemberDto) {
+		log.info("[UserMemberController] createAccountConfirm()");
+		
+		String nextPage = "user/member/create_account_success";
+		
+		int result = userMemberService.createAccountConfirm(userMemberDto);
+		
+		if (result <= UserMemberService.INSERT_FAIL_AT_DATABASE) {
+			nextPage = "user/member/create_account_fail";
 
-    /*
-     * CREATE ACCOUT FORM
-     */
-    @GetMapping("/create_account_form")
-    public String createAccountForm() {
-        log.info("[UserMemberController] createAccountForm()");
+		}
+			
+		return nextPage;
+		
+	}
 
-        String nextPage = "user/member/create_account_form";
-
-        return nextPage;
-
-    }
-
-    /*
-     * CREATE ACCOUNT CONFIRM
-     */
-    @PostMapping("/create_account_confirm")
-    public String createAccountConfirm(UserMemberDto userMemberDto) {
-        log.info("[UserMemberController] createAccountConfirm()");
-
-        String nextPage = "user/member/create_account_success";
-
-        int result = userMemberService.createAccountConfirm(userMemberDto);
-
-        if (result <= UserMemberService.INSERT_FAIL_AT_DATABASE) {
-            nextPage = "user/member/create_account_fail";
-
-        }
-
-        return nextPage;
-
-    }
-
-    /*
+	/*
      USER LOGIN FORM
      */
-    @GetMapping("/user_login_form")
-    public String userLoginForm() {
-        log.info("[UserMemberController] userLoginForm()");
+	@GetMapping("/user_login_form")
+	public String userLoginForm() {
+		log.info("[UserMemberController] userLoginForm()");
 
-        String nextPage = "user/member/member_login_form";
+		String nextPage = "user/member/member_login_form";
 
-        return nextPage;
+		return nextPage;
 
-    }
+	}
 
-    /*
+	/*
      USER LOGIN CONFIRM
     */
-    @PostMapping("/user_login_confirm")
-    public String userLoginConfirm(UserMemberDto userMemberDto, HttpSession session) {
-        log.info("[UserMemberController] userLoginConfirm()");
+	@PostMapping("/user_login_confirm")
+	public String userLoginConfirm(UserMemberDto userMemberDto, HttpSession session) {
+		log.info("[UserMemberController] userLoginConfirm()");
 
-        String nextPage = "user/member/member_login_success";
+		String nextPage = "user/member/member_login_success";
 
-        UserMemberDto loginedUserDto = userMemberService.userLoginConfirm(userMemberDto);
+		UserMemberDto loginedUserDto = userMemberService.userLoginConfirm(userMemberDto);
 
-        if (loginedUserDto != null) {
-            session.setAttribute("loginedUserDto", loginedUserDto);
-            session.setMaxInactiveInterval(60 * 30);
+		if(loginedUserDto != null) {
+			session.setAttribute("loginedUserDto", loginedUserDto);
+			session.setMaxInactiveInterval(60 * 30);
 
-        } else {
-            nextPage = "user/member/member_login_fail";
+		} else {
+			nextPage = "user/member/member_login_fail";
 
-        }
+		}
 
-        return nextPage;
+		return nextPage;
 
-    }
+	}
 
-    /*
-       USER MODIFY FORM
+	/*
+  	 USER MODIFY FORM
    */
-    @GetMapping("/user_modify_form")
-    public String userModifyForm() {
-        log.info("[UserMemberController] userModifyForm()");
+	@GetMapping("/user_modify_form")
+	public String userModifyForm() {
+		log.info("[UserMemberController] userModifyForm()");
 
-        String nextPage = "/user/member/member_modify_form";
+		String nextPage = "/user/member/member_modify_form";
 
-        return nextPage;
+		return nextPage;
 
-    }
+	}
 
-    /*
+	/*
      USER MODIFY CONFIRM
     */
-    @PostMapping("/user_modify_confirm")
-    public String userModifyConfirm(UserMemberDto userMemberDto, HttpSession session) {
-        log.info("[UserMemberController] userModifyConfirm()");
+	@PostMapping("/user_modify_confirm")
+	public String userModifyConfirm(UserMemberDto userMemberDto, HttpSession session) {
+		log.info("[UserMemberController] userModifyConfirm()");
 
-        String nextPage = "/user/member/member_modify_success";
+		String nextPage = "/user/member/member_modify_success";
 
-        UserMemberDto loginedUserDto = userMemberService.userModifyConfirm(userMemberDto);
-        if (loginedUserDto != null) {
-            session.setAttribute("loginedUserDto", loginedUserDto);
-            session.setMaxInactiveInterval(60 * 30);
+		UserMemberDto loginedUserDto = userMemberService.userModifyConfirm(userMemberDto);
+		if (loginedUserDto != null) {
+			session.setAttribute("loginedUserDto", loginedUserDto);
+			session.setMaxInactiveInterval(60 * 30);
 
-        } else {
-            nextPage = "/user/member/member_modify_fail";
+		} else {
+			nextPage = "/user/member/member_modify_fail";
+		}
 
-        }
+		return nextPage;
 
-        return nextPage;
+	}
 
-    }
-
-    /*
+	/*
     LOGOUT CONFIRM
      */
-    @GetMapping("/user_logout_confirm")
-    public String userLogoutConfirm(HttpSession session) {
-        log.info("[UserMemberController] user_logout_confirm()");
+	@GetMapping("/user_logout_confirm")
+	public String userLogoutConfirm(HttpSession session) {
+		log.info("[UserMemberController] user_logout_confirm()");
 
-        String nextPage = "redirect:/";
+		String nextPage = "redirect:/";
 
-        session.removeAttribute("loginedUserDto");
+		session.removeAttribute("loginedUserDto");
 
-        return nextPage;
+		return nextPage;
+	}
 
-    }
+	/*
+	 * USER DELETE CONFIRM
+	 */
+	@GetMapping("/user_delete_confirm")
+	public String userDeleteConfirm(HttpSession session) {
+		log.info("[UserMemberController] userDeleteConfirm()");
 
-    /*
-     * USER DELETE CONFIRM
-     */
-    @GetMapping("/user_delete_confirm")
-    public String userDeleteConfirm(HttpSession session) {
-        log.info("[UserMemberController] userDeleteConfirm()");
+		String nextPage = "redirect:/";
 
-        String nextPage = "redirect:/";
+		UserMemberDto loginedUserDto =
+				(UserMemberDto) session.getAttribute("loginedUserDto");
 
-        UserMemberDto loginedUserDto =
-                (UserMemberDto) session.getAttribute("loginedUserDto");
+		int result = userMemberService.userDeleteConfirm(loginedUserDto.getU_m_no());
 
-        int result = userMemberService.userDeleteConfirm(loginedUserDto.getNo());
+		if (result > 0) {
+			session.removeAttribute("loginedUserDto");
 
-        if (result > 0) {
-            session.removeAttribute("loginedUserDto");
+		} else {
+			nextPage = "member/member_delete_fail";
 
-        } else {
-            nextPage = "member/member_delete_fail";
+		}
 
-        }
+		return nextPage;
 
-        return nextPage;
+	}
 
-    }
+	/*
+	 * FIND PASSWORD FORM
+	 */
+	@GetMapping("/find_password_form")
+	public String findPasswordForm() {
+		log.info("[UserMemberController] findPasswordForm()");
 
-    /*
-     * FIND PASSWORD FORM
-     */
-    @GetMapping("/find_password_form")
-    public String findPasswordForm() {
-        log.info("[UserMemberController] findPasswordForm()");
+		String nextPage = "user/member/find_password_form";
 
-        String nextPage = "user/member/find_password_form";
+		return nextPage;
 
-        return nextPage;
+	}
 
-    }
+	/*
+	 * FIND PASSWORD CONFIRM
+	 */
+	@PostMapping("/find_password_confirm")
+	public String findPasswordConfirm(UserMemberDto userMemberDto) throws MessagingException {
+		log.info("[UserMemberController] findPasswordConfirm()");
 
-    /*
-     * FIND PASSWORD CONFIRM
-     */
-    @PostMapping("/find_password_confirm")
-    public String findPasswordConfirm(UserMemberDto userMemberDto) throws MessagingException {
-        log.info("[UserMemberController] findPasswordConfirm()");
+		String nextPage = "user/member/find_password_success";
 
-        String nextPage = "user/member/find_password_success";
+		int result = userMemberService.findPasswordConfirm(userMemberDto);
 
-        int result = userMemberService.findPasswordConfirm(userMemberDto);
+		if(result <= 0) {
+			nextPage = "admin/member/find_password_fail";
 
-        if (result <= 0) {
-            nextPage = "admin/member/find_password_fail";
+		}
 
-        }
+		return nextPage;
 
-        return nextPage;
+	}
 
-    }
+	/*
+	 * FIND ID FORM
+	 */
+//	@GetMapping("/find_id_form")
+//	public String findIdForm() {
+//		log.info("[UserMemberController] findIdForm()");
+//
+//		String nextPage = "user/member/find_id_form";
+//
+//		return nextPage;
+//
+//	}
+
+	/*
+	 * FIND ID CONFIRM
+	 */
+//	@PostMapping("/find_id_confirm")
+//	public String findIdConfirm(UserMemberDto userMemberDto) throws MessagingException {
+//		log.info("[UserMemberController] findIdConfirm()");
+//
+//		String nextPage = "user/member/find_id_success";
+//
+//		int result = userMemberService.findIdConfirm(userMemberDto);
+//
+//		if(result <= 0)
+//			nextPage = "admin/member/find_id_fail";
+//
+//		return nextPage;
+//
+//	}
 
 }
