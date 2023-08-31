@@ -1,5 +1,6 @@
 package com.btc.snow.admin.assignment;
 
+
 import com.btc.snow.admin.member.AdminMemberDto;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.log4j.Log4j2;
@@ -42,6 +43,36 @@ public class AdminAssignmentService implements IAdminAssignmentService {
 
         }
 
+    }
+
+    // 과제 활성화
+    @Override
+    public int SetAdminActive(int no) {
+        log.info("[AdminAssignmentService] SetAdminActive()");
+
+        // 활성화 번호 찾기
+        AdminAssignmentDto selectActivationNum = iAdminAssignmentMB.selectActivationNum(no);
+        int is_activation = selectActivationNum.getIs_activation();
+        log.info("is_activation --> " + is_activation);
+
+        int result = 0;
+        if (is_activation == 0) {
+            // 비활성화를 비활성화로
+            result = iAdminAssignmentMB.updateAdminActive(no);
+        } else {
+            // 활성화를 비활성화로
+            result = iAdminAssignmentMB.updateAdminInactive(no);
+        }
+
+
+        if (result > 0) {
+            log.info("ADMIN ASSIGNMENT ACTIVE SUCCESS!!");
+
+        } else {
+            log.info("ADMIN ASSIGNMENT ACTIVE FAIl!!");
+        }
+
+        return result;
     }
 
 }

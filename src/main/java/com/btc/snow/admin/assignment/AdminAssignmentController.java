@@ -1,5 +1,7 @@
 package com.btc.snow.admin.assignment;
 
+import ch.qos.logback.core.model.Model;
+import com.btc.snow.admin.config.Message;
 import com.btc.snow.admin.member.AdminMemberDto;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.log4j.Log4j2;
@@ -9,8 +11,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Log4j2
 @RequestMapping("/admin/assignment")
@@ -24,6 +27,7 @@ public class AdminAssignmentController {
     UploadFileService uploadFileService;
 
     String nextPage = null;
+    String msg = "";
 
     // alert
 
@@ -61,10 +65,12 @@ public class AdminAssignmentController {
     @PostMapping("/registration_confirm")
     public String RegistrationConfirm(AdminAssignmentDto adminAssignmentDto,
                                       HttpSession session,
-                                      @RequestParam("file_admin") MultipartFile file){
+                                      @RequestParam("file_admin") MultipartFile file,
+                                      Model model) {
         log.info("[AdminAssignmentController] RegistrationConfirm()");
 
         nextPage = "redirect:/admin/assignment/list";
+        msg = "과제등록에 성공하였습니다";
 
         // 세션
         AdminMemberDto loginedAdminDto = (AdminMemberDto) session.getAttribute("loginedAdminDto");
@@ -80,18 +86,85 @@ public class AdminAssignmentController {
             int result = adminAssignmentService.RegistrationConfirm(adminAssignmentDto);
 
             if (result <= 0)
+                nextPage = "/";
+            msg = "과제등록에 실패하였습니다";
 
-                nextPage = "redirect:/";
 
         } else {
-
-            nextPage = "redirect:/";
-
+            nextPage = "/";
+            msg = "과제등록에 실패하였습니다";
         }
 
+        model.addText("msg");
         return nextPage;
 
     }
 
+    /*
+     * 과제 활성화 
+     */
+    @GetMapping("set_admin_active")
+    @ResponseBody
+    public Object SetAdminActive(@RequestParam("no") int no){
+        log.info("[AdminAssignmentController] SetAdminActive()");
+        log.info("no: " + no);
+
+        Map<String, Object> map = new HashMap<>();
+
+        int result = adminAssignmentService.SetAdminActive(no);
+
+        if (result > 0) {
+            map.put("result", result);
+
+        } else {
+            map.put("error", "Invalid credentials");
+        }
+
+        return map;
+    }
+    
+
+    /*
+     * 과제 상세페이지
+     */
+
+    
+    
+    /*
+     * 과제 수정
+     */
+
+    
+    
+    /*
+     * 과제 삭제(본인만)
+     */
+
+
+
+    // -------------------------------------------------------------------------------------------
+    /*
+     * 과제 제출 학생 리스트
+     */
+
+
+    /*
+     * 과제 다운로드
+     */
+
+
+    /*
+     * 과제 점수 등록
+     */
+
+
+    /*
+     * 과제 점수 수정
+     */
+
+
+    /*
+     * 과제 미제출 학생 메일 보내기
+     */
 
 }

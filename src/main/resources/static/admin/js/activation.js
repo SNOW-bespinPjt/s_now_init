@@ -3,7 +3,7 @@ function activeAssignment(no) {
     console.log('activeAssignment() : ', no);
 
     $.ajax({
-        url: '/admin/member/set_admin_active?no=' + no,
+        url: '/admin/assignment/set_admin_active?no=' + no,
         type: 'GET',
         success: function onData(data) {
             console.log(data);

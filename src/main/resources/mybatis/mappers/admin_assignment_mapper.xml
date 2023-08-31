@@ -16,5 +16,28 @@
         VALUES (#{admin_no}, #{title}, #{body}, #{file}, NOW(), NOW())
     </insert>
 
+    <update id="updateAdminActive" parameterType="Integer">
+        UPDATE
+            ASSIGNMENT
+        SET is_activation = 1,
+            start_date = NOW(),
+            end_date = DATE_ADD(NOW(), INTERVAL 7 DAY)
+        WHERE no = #{no}
+    </update>
+
+    <update id="updateAdminInactive" parameterType="Integer">
+        UPDATE
+            ASSIGNMENT
+        SET is_activation = 0,
+            start_date = null,
+            end_date = null
+        WHERE no = #{no}
+    </update>
+
+    <select id="selectActivationNum"  parameterType="Integer" resultType="com.btc.snow.admin.assignment.AdminAssignmentDto">
+        SELECT *
+        FROM ASSIGNMENT
+        WHERE no = #{no}
+    </select>
 
 </mapper>

@@ -30,7 +30,7 @@
         FROM ADMIN
     </select>
 
-    <update id="updateAdminis_approval" parameterType="Integer">
+    <update id="updateAdminApproval" parameterType="Integer">
         UPDATE
             ADMIN
         SET is_approval = 1
