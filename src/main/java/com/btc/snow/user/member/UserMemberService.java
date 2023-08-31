@@ -38,7 +38,6 @@ public class UserMemberService implements IUserMemberService {
 		boolean isUser = iUserMemberDaoMB.isUser(userMemberDto.getU_m_id());
 
 		if (!isUser) {
-
 			userMemberDto.setU_m_pw(passwordEncoder.encode(userMemberDto.getU_m_pw()));			// 비밀번호 암호화 작업
 			int result = iUserMemberDaoMB.insertUserMember(userMemberDto);
 
@@ -54,6 +53,7 @@ public class UserMemberService implements IUserMemberService {
 			case INSERT_SUCCESS_AT_DATABASE:
 				log.info("[UserMemberService] INSERT SUCCESS AT DATABASE");
 				break;
+
 			}
 			
 			return result;
@@ -76,20 +76,24 @@ public class UserMemberService implements IUserMemberService {
 		} else {
 			loginedUserDto = null;
 			return loginedUserDto;
+
 		}
 
 	}
-
 
 	@Override
 	public UserMemberDto userModifyConfirm(UserMemberDto userMemberDto) {
 		log.info("[UserMemberService] userModifyConfirm()");
 
 		int result = iUserMemberDaoMB.updateAccount(userMemberDto);
-		if(result > 0)
+		if(result > 0) {
 			return iUserMemberDaoMB.getLatestAccountInfo(userMemberDto);
-		else
+
+		} else {
 			return null;
+
+		}
+
 	}
 
 	@Override
@@ -97,6 +101,7 @@ public class UserMemberService implements IUserMemberService {
 		log.info("[UserMemberService] userDeleteConfirm()");
 
 		return iUserMemberDaoMB.deleteUser(u_m_no);
+
 	}
 
 	@Override
@@ -107,14 +112,28 @@ public class UserMemberService implements IUserMemberService {
 
 		if(newPassword != null) {
 			emailService.sendMail(userMemberDto, newPassword);
-			return 1;
+
+			userMemberDto.setU_m_pw(passwordEncoder.encode(newPassword));
+
+			int result = iUserMemberDaoMB.updateUserPW(userMemberDto);
+
+			if(result <= 0) {
+				log.info("[UserMemberService] UPDATE USER PASSWORD FAIL");
+				return result;
+
+			}
+
+			log.info("[UserMemberService] UPDATE USER PASSWORD SUCCESS");
+			return result;
+
 		}
 
 		return 0;
-    }
+
+	}
 
 	private String createNewPassword() {
-		System.out.println("[AdminMemberService] createNewPassword()");
+		log.info("[UserMemberService] createNewPassword()");
 
 		char[] chars = new char[] {
 				'0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
@@ -123,11 +142,6 @@ public class UserMemberService implements IUserMemberService {
 				'x', 'y','z'
 		};
 
-		/*
-		 * String -> 실제로는 ["H", "E", "L", "L", "O"] 이렇게 저장됨 근데 만약에 뒤에 값이 달라지면 뒤에 늘어나는게 아니라, 주소값을 바꾸고 hello를 복사해서 가져와서 붙임
-		 * 하지만 StringBuffer는 바로 뒤에 붙이고 뺴고 하기 때문에 메모리 소모가 덜함 그래서 빠르다.
-		 */
-
 		StringBuffer stringBuffer = new StringBuffer();
 		SecureRandom secureRandom = new SecureRandom();
 		secureRandom.setSeed(new Date().getTime());
@@ -135,19 +149,22 @@ public class UserMemberService implements IUserMemberService {
 		int index = 0;
 		int length =  chars.length;
 		for (int i = 0; i < 8; i++) {
-
 			index = secureRandom.nextInt(length);
 
-			if (index % 2 == 0)
+			if (index % 2 == 0) {
 				stringBuffer.append(String.valueOf(chars[index]).toUpperCase());
-			else
+
+			} else {
 				stringBuffer.append(String.valueOf(chars[index]).toLowerCase());
+
+			}
+
 		}
 
-		System.out.println("[AdminMemberService] NEW PASSWORD: " + stringBuffer.toString());
+		log.info("[UserMemberService] NEW PASSWORD: " + stringBuffer.toString());
 
 		return stringBuffer.toString();
-	}
 
+	}
 
 }

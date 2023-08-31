@@ -41,8 +41,10 @@ public class UserMemberController {
 
         int result = userMemberService.createAccountConfirm(userMemberDto);
 
-        if (result <= UserMemberService.INSERT_FAIL_AT_DATABASE)
+        if (result <= UserMemberService.INSERT_FAIL_AT_DATABASE) {
             nextPage = "user/member/create_account_fail";
+
+        }
 
         return nextPage;
 
@@ -68,7 +70,7 @@ public class UserMemberController {
     public String userLoginConfirm(UserMemberDto userMemberDto, HttpSession session) {
         log.info("[UserMemberController] userLoginConfirm()");
 
-        String nextPage = "home";
+        String nextPage = "user/member/member_login_success";
 
         UserMemberDto loginedUserDto = userMemberService.userLoginConfirm(userMemberDto);
 
@@ -76,9 +78,13 @@ public class UserMemberController {
             session.setAttribute("loginedUserDto", loginedUserDto);
             session.setMaxInactiveInterval(60 * 30);
 
+        } else {
+            nextPage = "user/member/member_login_fail";
+
         }
 
         return nextPage;
+
     }
 
     /*
@@ -110,6 +116,7 @@ public class UserMemberController {
 
         } else {
             nextPage = "/user/member/member_modify_fail";
+
         }
 
         return nextPage;
@@ -128,6 +135,7 @@ public class UserMemberController {
         session.removeAttribute("loginedUserDto");
 
         return nextPage;
+
     }
 
     /*
@@ -142,49 +150,51 @@ public class UserMemberController {
         UserMemberDto loginedUserDto =
                 (UserMemberDto) session.getAttribute("loginedUserDto");
 
-        int result = userMemberService.userDeleteConfirm(loginedUserDto.getU_m_no());
+        int result = userMemberService.userDeleteConfirm(loginedUserDto.getNo());
 
         if (result > 0) {
             session.removeAttribute("loginedUserDto");
 
         } else {
             nextPage = "member/member_delete_fail";
+
         }
 
-
         return nextPage;
+
     }
 
+    /*
+     * FIND PASSWORD FORM
+     */
+    @GetMapping("/find_password_form")
+    public String findPasswordForm() {
+        log.info("[UserMemberController] findPasswordForm()");
 
-//	/*
-//	 * 비밀번호 찾기
-//	 */
-//	@GetMapping("/findPasswordForm")
-//	public String findPasswordForm() {
-//		System.out.println("[AdminMemberControlle r] findPasswordForm()");
-//
-//		String nextPage = "user/member/find_password_form";
-//
-//		return nextPage;
-//	}
+        String nextPage = "user/member/find_password_form";
+
+        return nextPage;
+
+    }
 
     /*
-     * 비밀번호 찾기 확인
+     * FIND PASSWORD CONFIRM
      */
-    @PostMapping("/findPasswordConfirm")
+    @PostMapping("/find_password_confirm")
     public String findPasswordConfirm(UserMemberDto userMemberDto) throws MessagingException {
-        System.out.println("[AdminMemberController] findPasswordConfirm()");
+        log.info("[UserMemberController] findPasswordConfirm()");
 
         String nextPage = "user/member/find_password_success";
 
         int result = userMemberService.findPasswordConfirm(userMemberDto);
 
-        if (result <= 0)
+        if (result <= 0) {
             nextPage = "admin/member/find_password_fail";
+
+        }
 
         return nextPage;
 
     }
-
 
 }
