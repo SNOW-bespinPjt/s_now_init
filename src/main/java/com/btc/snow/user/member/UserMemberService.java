@@ -14,157 +14,157 @@ import java.util.Date;
 @Service
 public class UserMemberService implements IUserMemberService {
 
-	final static public int DATABASE_COMMUNICATION_TROUBLE = -1;
-	final static public int INSERT_FAIL_AT_DATABASE = 0;
-	final static public int INSERT_SUCCESS_AT_DATABASE = 1;
-	final static public int INSERT_DUPLICATE_ID_AT_DATABASE = -2;
+    final static public int DATABASE_COMMUNICATION_TROUBLE = -1;
+    final static public int INSERT_FAIL_AT_DATABASE = 0;
+    final static public int INSERT_SUCCESS_AT_DATABASE = 1;
+    final static public int INSERT_DUPLICATE_ID_AT_DATABASE = -2;
 
-	@Autowired
-	IUserMemberDaoMB iUserMemberDaoMB;
+    @Autowired
+    IUserMemberDaoMB iUserMemberDaoMB;
 
-	@Autowired
-	PasswordEncoder passwordEncoder;
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
-	@Autowired
-	EmailService emailService;
+    @Autowired
+    EmailService emailService;
 
-	@Override
-	public int createAccountConfirm(UserMemberDto userMemberDto) {
-		log.info("[UserMemberService] createAccountConfirm()");
+    @Override
+    public int createAccountConfirm(UserMemberDto userMemberDto) {
+        log.info("[UserMemberService] createAccountConfirm()");
 
-		/*
-		* 아이디 중복 여부 확인
-		 */
-		boolean isUser = iUserMemberDaoMB.isUser(userMemberDto.getU_m_id());
+        /*
+         * 아이디 중복 여부 확인
+         */
+        boolean isUser = iUserMemberDaoMB.isUser(userMemberDto.getId());
 
-		if (!isUser) {
-			userMemberDto.setU_m_pw(passwordEncoder.encode(userMemberDto.getU_m_pw()));			// 비밀번호 암호화 작업
-			int result = iUserMemberDaoMB.insertUserMember(userMemberDto);
+        if (!isUser) {
+            userMemberDto.setPw(passwordEncoder.encode(userMemberDto.getPw()));            // 비밀번호 암호화 작업
+            int result = iUserMemberDaoMB.insertUserMember(userMemberDto);
 
-			switch (result) {
-			case DATABASE_COMMUNICATION_TROUBLE:
-				log.info("[UserMemberService] DATABASE COMMUNICATION TROUBLE");
-				break;
+            switch (result) {
+                case DATABASE_COMMUNICATION_TROUBLE:
+                    log.info("[UserMemberService] DATABASE COMMUNICATION TROUBLE");
+                    break;
 
-			case INSERT_FAIL_AT_DATABASE:
-				log.info("[UserMemberService] INSERT FAIL AT DATABASE");
-				break;
-				
-			case INSERT_SUCCESS_AT_DATABASE:
-				log.info("[UserMemberService] INSERT SUCCESS AT DATABASE");
-				break;
+                case INSERT_FAIL_AT_DATABASE:
+                    log.info("[UserMemberService] INSERT FAIL AT DATABASE");
+                    break;
 
-			}
-			
-			return result;
-			
-		} else {
-			return INSERT_DUPLICATE_ID_AT_DATABASE;
-			
-		}
-		
-	}
+                case INSERT_SUCCESS_AT_DATABASE:
+                    log.info("[UserMemberService] INSERT SUCCESS AT DATABASE");
+                    break;
 
-	@Override
-	public UserMemberDto userLoginConfirm(UserMemberDto userMemberDto) {
-		log.info("[UserMemberService] memberLoginConfirm()");
+            }
 
-		UserMemberDto loginedUserDto = iUserMemberDaoMB.selectUserForLogin(userMemberDto);
-		if(passwordEncoder.matches(userMemberDto.getU_m_pw(),loginedUserDto.getU_m_pw())) {
-			return loginedUserDto;
+            return result;
 
-		} else {
-			loginedUserDto = null;
-			return loginedUserDto;
+        } else {
+            return INSERT_DUPLICATE_ID_AT_DATABASE;
 
-		}
+        }
 
-	}
+    }
 
-	@Override
-	public UserMemberDto userModifyConfirm(UserMemberDto userMemberDto) {
-		log.info("[UserMemberService] userModifyConfirm()");
+    @Override
+    public UserMemberDto userLoginConfirm(UserMemberDto userMemberDto) {
+        log.info("[UserMemberService] memberLoginConfirm()");
 
-		int result = iUserMemberDaoMB.updateAccount(userMemberDto);
-		if(result > 0) {
-			return iUserMemberDaoMB.getLatestAccountInfo(userMemberDto);
+        UserMemberDto loginedUserDto = iUserMemberDaoMB.selectUserForLogin(userMemberDto);
+        if (passwordEncoder.matches(userMemberDto.getPw(), loginedUserDto.getPw())) {
+            return loginedUserDto;
 
-		} else {
-			return null;
+        } else {
+            loginedUserDto = null;
+            return loginedUserDto;
 
-		}
+        }
 
-	}
+    }
 
-	@Override
-	public int userDeleteConfirm(int u_m_no) {
-		log.info("[UserMemberService] userDeleteConfirm()");
+    @Override
+    public UserMemberDto userModifyConfirm(UserMemberDto userMemberDto) {
+        log.info("[UserMemberService] userModifyConfirm()");
 
-		return iUserMemberDaoMB.deleteUser(u_m_no);
+        int result = iUserMemberDaoMB.updateAccount(userMemberDto);
+        if (result > 0) {
+            return iUserMemberDaoMB.getLatestAccountInfo(userMemberDto);
 
-	}
+        } else {
+            return null;
 
-	@Override
-	public int findPasswordConfirm(UserMemberDto userMemberDto) throws MessagingException {
-		log.info("[UserMemberService] findPasswordConfirm()");
+        }
 
-		String newPassword = createNewPassword();
+    }
 
-		if(newPassword != null) {
-			emailService.sendMail(userMemberDto, newPassword);
+    @Override
+    public int userDeleteConfirm(int no) {
+        log.info("[UserMemberService] userDeleteConfirm()");
 
-			userMemberDto.setU_m_pw(passwordEncoder.encode(newPassword));
+        return iUserMemberDaoMB.deleteUser(no);
 
-			int result = iUserMemberDaoMB.updateUserPW(userMemberDto);
+    }
 
-			if(result <= 0) {
-				log.info("[UserMemberService] UPDATE USER PASSWORD FAIL");
-				return result;
+    @Override
+    public int findPasswordConfirm(UserMemberDto userMemberDto) throws MessagingException {
+        log.info("[UserMemberService] findPasswordConfirm()");
 
-			}
+        String newPassword = createNewPassword();
 
-			log.info("[UserMemberService] UPDATE USER PASSWORD SUCCESS");
-			return result;
+        if (newPassword != null) {
+            emailService.sendMail(userMemberDto, newPassword);
 
-		}
+            userMemberDto.setPw(passwordEncoder.encode(newPassword));
 
-		return 0;
+            int result = iUserMemberDaoMB.updateUserPW(userMemberDto);
 
-	}
+            if (result <= 0) {
+                log.info("[UserMemberService] UPDATE USER PASSWORD FAIL");
+                return result;
 
-	private String createNewPassword() {
-		log.info("[UserMemberService] createNewPassword()");
+            }
 
-		char[] chars = new char[] {
-				'0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-				'a', 'b', 'c', 'd', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
-				'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w',
-				'x', 'y','z'
-		};
+            log.info("[UserMemberService] UPDATE USER PASSWORD SUCCESS");
+            return result;
 
-		StringBuffer stringBuffer = new StringBuffer();
-		SecureRandom secureRandom = new SecureRandom();
-		secureRandom.setSeed(new Date().getTime());
+        }
 
-		int index = 0;
-		int length =  chars.length;
-		for (int i = 0; i < 8; i++) {
-			index = secureRandom.nextInt(length);
+        return 0;
 
-			if (index % 2 == 0) {
-				stringBuffer.append(String.valueOf(chars[index]).toUpperCase());
+    }
 
-			} else {
-				stringBuffer.append(String.valueOf(chars[index]).toLowerCase());
+    private String createNewPassword() {
+        log.info("[UserMemberService] createNewPassword()");
 
-			}
+        char[] chars = new char[]{
+                '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+                'a', 'b', 'c', 'd', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
+                'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w',
+                'x', 'y', 'z'
+        };
 
-		}
+        StringBuffer stringBuffer = new StringBuffer();
+        SecureRandom secureRandom = new SecureRandom();
+        secureRandom.setSeed(new Date().getTime());
 
-		log.info("[UserMemberService] NEW PASSWORD: " + stringBuffer.toString());
+        int index = 0;
+        int length = chars.length;
+        for (int i = 0; i < 8; i++) {
+            index = secureRandom.nextInt(length);
 
-		return stringBuffer.toString();
+            if (index % 2 == 0) {
+                stringBuffer.append(String.valueOf(chars[index]).toUpperCase());
 
-	}
+            } else {
+                stringBuffer.append(String.valueOf(chars[index]).toLowerCase());
+
+            }
+
+        }
+
+        log.info("[UserMemberService] NEW PASSWORD: " + stringBuffer.toString());
+
+        return stringBuffer.toString();
+
+    }
 
 }

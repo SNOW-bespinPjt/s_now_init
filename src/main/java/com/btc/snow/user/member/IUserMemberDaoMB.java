@@ -5,25 +5,25 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface IUserMemberDaoMB {
 
-	// CHECK DUPLICATE ID
-	public boolean isUser(String m_id);
+    // CHECK DUPLICATE ID
+    public boolean isUser(String id);
 
-	// INSERT NEW ACCOUNT
-	public int insertUserMember(UserMemberDto memberDto);
+    // INSERT NEW ACCOUNT
+    public int insertUserMember(UserMemberDto memberDto);
 
-	// USER LOGIN CONFIRM
-	public UserMemberDto selectUserForLogin(UserMemberDto userMemberDto);
+    // USER LOGIN CONFIRM
+    public UserMemberDto selectUserForLogin(UserMemberDto userMemberDto);
 
-	// USER MODIFY CONFIRM
-	public int updateAccount(UserMemberDto userMemberDto);
+    // USER MODIFY CONFIRM
+    public int updateAccount(UserMemberDto userMemberDto);
 
-	// GET USER INFO
-	public UserMemberDto getLatestAccountInfo(UserMemberDto userMemberDto);
+    // GET USER INFO
+    public UserMemberDto getLatestAccountInfo(UserMemberDto userMemberDto);
 
-	// USER DELETE CONFIRM
-	public int deleteUser(int u_m_no);
+    // USER DELETE CONFIRM
+    public int deleteUser(int no);
 
-	// UPDATE USER PW
-	public int updateUserPW(UserMemberDto userMemberDto);
+    // UPDATE USER PW
+    public int updateUserPW(UserMemberDto userMemberDto);
 
 }

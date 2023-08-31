@@ -26,7 +26,7 @@
                          age,
                          university,
                          department,
-                         gradu_status,
+                         is_graduation_status,
                          img,
                          reg_date,
                          mod_date)
@@ -42,7 +42,7 @@
                 #{age},
                 #{university},
                 #{department},
-                #{gradu_status},
+                #{is_graduation_status},
                 #{img},
                 NOW(), NOW())
     </insert>
