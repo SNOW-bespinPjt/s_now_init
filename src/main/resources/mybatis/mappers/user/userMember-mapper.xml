@@ -3,124 +3,104 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.btc.snow.user.member.IUserMemberDaoMB">
-	
-	<select id="isUser"
-			parameterType="String"
-			resultType="Boolean">
 
-		SELECT 
-			COUNT(*)
-		FROM
-			tbl_user_member
-		WHERE
-			u_m_id = #{u_m_id}
+    <select id="isUser"
+            parameterType="String"
+            resultType="Boolean">
+        SELECT COUNT(*)
+        FROM USER
+        WHERE id = #{id}
+    </select>
 
-	</select>
+    <insert id="insertUserMember"
+            parameterType="com.btc.snow.user.member.UserMemberDto">
+        INSERT INTO USER(id,
+                         pw,
+                         name,
+                         mail,
+                         phone,
+                         home_phone,
+                         address,
+                         gender,
+                         birthdate,
+                         age,
+                         university,
+                         department,
+                         gradu_status,
+                         img,
+                         reg_date,
+                         mod_date)
+        VALUES (#{id},
+                #{pw},
+                #{name},
+                #{mail},
+                #{phone},
+                #{home_phone},
+                #{address},
+                #{gender},
+                #{birthdate},
+                #{age},
+                #{university},
+                #{department},
+                #{gradu_status},
+                #{img},
+                NOW(), NOW())
+    </insert>
 
-	<insert id="insertUserMember"
-			parameterType="com.btc.snow.user.member.UserMemberDto">
+    <select id="selectUserForLogin"
+            parameterType="com.btc.snow.user.member.UserMemberDto"
+            resultType="com.btc.snow.user.member.UserMemberDto">
 
-		INSERT INTO
-			tbl_user_member(u_m_id,
-			                u_m_pw,
-			                u_m_name,
-			                u_m_mail,
-			                u_m_phone,
-			                u_m_home_phone,
-			                u_m_address,
-			                u_m_gender,
-			                u_m_birthdate,
-			                u_m_age,
-			                u_m_university,
-			                u_m_department,
-			                u_m_gradu_status,
-			                u_m_reg_date,
-			                u_m_mod_date)
-		VALUES
-			(#{u_m_id},
-			 #{u_m_pw},
-			 #{u_m_name},
-			 #{u_m_mail},
-			 #{u_m_phone},
-			 #{u_m_home_phone},
-			 #{u_m_address},
-			 #{u_m_gender},
-			 #{u_m_birthdate},
-			 #{u_m_age},
-			 #{u_m_university},
-			 #{u_m_department},
-			 #{u_m_gradu_status},
-			 NOW(), NOW())
+        SELECT *
+        FROM USER
+        WHERE id = #{id}
 
-	</insert>
+    </select>
 
-	<select id="selectUserForLogin"
-			parameterType="com.btc.snow.user.member.UserMemberDto"
-			resultType="com.btc.snow.user.member.UserMemberDto">
+    <update id="updateAccount" parameterType="com.btc.snow.user.member.UserMemberDto">
 
-		SELECT
-			*
-		FROM
-			tbl_user_member
-		WHERE
-			u_m_id = #{u_m_id}
+        UPDATE
+            USER
+        SET mail         = #{mail},
+            phone        = #{phone},
+            home_phone   = #{home_phone},
+            address      = #{address},
+            university   = #{university},
+            department   = #{department},
+            gradu_status = #{gradu_status},
+            img          = #{img},
+            mod_date     = NOW()
+        WHERE
+            no = #{no}
+    </update>
 
-	</select>
+    <select id="getLatestAccountInfo" parameterType="com.btc.snow.user.member.UserMemberDto"
+            resultType="com.btc.snow.user.member.UserMemberDto">
 
-	<update id="updateAccount" parameterType="com.btc.snow.user.member.UserMemberDto">
+        SELECT *
+        FROM USER
+        WHERE
+            no = #{no}
+    </select>
 
-		UPDATE
-			tbl_user_member
-		SET
-			u_m_mail = #{u_m_mail},
-			u_m_phone = #{u_m_phone},
-			u_m_home_phone = #{u_m_home_phone},
-			u_m_address = #{u_m_address},
-			u_m_university = #{u_m_university},
-			u_m_department = #{u_m_department},
-			u_m_gradu_status = #{u_m_gradu_status},
-			u_m_mod_date = NOW()
-		WHERE
-			u_m_no = #{u_m_no}
+    <delete id="deleteUser"
+            parameterType="Integer">
 
-	</update>
+        DELETE
+        FROM USER
+        WHERE
+            no = #{no}
+    </delete>
 
-	<select id="getLatestAccountInfo" parameterType="com.btc.snow.user.member.UserMemberDto"
-			resultType="com.btc.snow.user.member.UserMemberDto">
+    <update id="updateUserPW"
+            parameterType="com.btc.snow.user.member.UserMemberDto">
 
-		SELECT
-			*
-		FROM
-			tbl_user_member
-		WHERE
-			u_m_no = #{u_m_no}
+        UPDATE
+            USER
+        SET pw = #{pw}
+        WHERE id = #{id}
+          AND name = #{name}
 
-	</select>
-
-	<delete id="deleteUser"
-			parameterType="Integer">
-
-		DELETE FROM
-			tbl_user_member
-		WHERE
-			u_m_no = #{u_m_no}
-
-	</delete>
-
-	<update id="updateUserPW"
-			parameterType="com.office.user.member.UserMemberDto">
-
-		UPDATE
-			tbl_user_member
-		SET
-			u_m_pw = #{u_m_pw}
-		WHERE
-			u_m_id = #{u_m_id}
-		  AND
-			u_m_name = #{u_m_name}
-
-	</update>
-
-
+    </update>
 
 </mapper>

@@ -21,7 +21,7 @@ public class EmailService {
         MimeMessage message = emailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
-        log.info(userMemberDto.getU_m_mail());
+        log.info(userMemberDto.getMail());
         //제목, 내용 설정
         helper.setSubject("SEND EMAIL CODE");
         helper.setText(newPassword, false);
@@ -30,7 +30,7 @@ public class EmailService {
         helper.setCc("hyunuk1459@gmail.com");
 
         // 발신자 설정(연동된 구글 계정으로 고정)
-         helper.setFrom("hyunuk1459@gmail.com");
+        helper.setFrom("hyunuk1459@gmail.com");
 
         //메일 전송(setTo 파라미터에 문자열 리스트를 넘기면 한번에 여러명에게 전송 가능)
         helper.setTo("hyunuk1459@gmail.com");
