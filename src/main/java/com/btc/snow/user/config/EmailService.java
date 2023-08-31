@@ -35,7 +35,9 @@ public class EmailService {
         //메일 전송(setTo 파라미터에 문자열 리스트를 넘기면 한번에 여러명에게 전송 가능)
         helper.setTo("hyunuk1459@gmail.com");
         emailSender.send(message);
+
     }
+
 }
 
 

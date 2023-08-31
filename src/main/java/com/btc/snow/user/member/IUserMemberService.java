@@ -24,17 +24,9 @@ public interface IUserMemberService {
     */
 	public int userDeleteConfirm(int u_m_no);
 
-
-
-
-
-
-
-
-
-
+	/*
+	 FIND PASSWORD CONFIRM
+	 */
 	public int findPasswordConfirm(UserMemberDto userMemberDto) throws MessagingException;
 
-//	public int memberDeleteConfirm(int m_no);
-	
 }

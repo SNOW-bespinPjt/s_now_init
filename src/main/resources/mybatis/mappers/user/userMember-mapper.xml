@@ -7,16 +7,19 @@
 	<select id="isUser"
 			parameterType="String"
 			resultType="Boolean">
+
 		SELECT 
 			COUNT(*)
 		FROM
 			tbl_user_member
 		WHERE
 			u_m_id = #{u_m_id}
+
 	</select>
 
 	<insert id="insertUserMember"
 			parameterType="com.btc.snow.user.member.UserMemberDto">
+
 		INSERT INTO
 			tbl_user_member(u_m_id,
 			                u_m_pw,
@@ -48,6 +51,7 @@
 			 #{u_m_department},
 			 #{u_m_gradu_status},
 			 NOW(), NOW())
+
 	</insert>
 
 	<select id="selectUserForLogin"
@@ -78,6 +82,7 @@
 			u_m_mod_date = NOW()
 		WHERE
 			u_m_no = #{u_m_no}
+
 	</update>
 
 	<select id="getLatestAccountInfo" parameterType="com.btc.snow.user.member.UserMemberDto"
@@ -89,6 +94,7 @@
 			tbl_user_member
 		WHERE
 			u_m_no = #{u_m_no}
+
 	</select>
 
 	<delete id="deleteUser"
@@ -98,7 +104,22 @@
 			tbl_user_member
 		WHERE
 			u_m_no = #{u_m_no}
+
 	</delete>
+
+	<update id="updateUserPW"
+			parameterType="com.office.user.member.UserMemberDto">
+
+		UPDATE
+			tbl_user_member
+		SET
+			u_m_pw = #{u_m_pw}
+		WHERE
+			u_m_id = #{u_m_id}
+		  AND
+			u_m_name = #{u_m_name}
+
+	</update>
 
 
 

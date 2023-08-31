@@ -23,6 +23,7 @@ public interface IUserMemberDaoMB {
 	// USER DELETE CONFIRM
 	public int deleteUser(int u_m_no);
 
+	// UPDATE USER PW
+	public int updateUserPW(UserMemberDto userMemberDto);
 
-	
 }

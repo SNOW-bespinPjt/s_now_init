@@ -41,8 +41,10 @@ public class UserMemberController {
 		
 		int result = userMemberService.createAccountConfirm(userMemberDto);
 		
-		if (result <= UserMemberService.INSERT_FAIL_AT_DATABASE)
+		if (result <= UserMemberService.INSERT_FAIL_AT_DATABASE) {
 			nextPage = "user/member/create_account_fail";
+
+		}
 			
 		return nextPage;
 		
@@ -153,45 +155,75 @@ public class UserMemberController {
 
 		} else {
 			nextPage = "member/member_delete_fail";
+
 		}
 
-
 		return nextPage;
+
 	}
 
+	/*
+	 * FIND PASSWORD FORM
+	 */
+	@GetMapping("/find_password_form")
+	public String findPasswordForm() {
+		log.info("[UserMemberController] findPasswordForm()");
 
+		String nextPage = "user/member/find_password_form";
 
+		return nextPage;
 
-//	/*
-//	 * 비밀번호 찾기
-//	 */
-//	@GetMapping("/findPasswordForm")
-//	public String findPasswordForm() {
-//		System.out.println("[AdminMemberControlle r] findPasswordForm()");
-//
-//		String nextPage = "user/member/find_password_form";
-//
-//		return nextPage;
-//	}
+	}
 
 	/*
-	 * 비밀번호 찾기 확인
+	 * FIND PASSWORD CONFIRM
 	 */
-	@PostMapping("/findPasswordConfirm")
+	@PostMapping("/find_password_confirm")
 	public String findPasswordConfirm(UserMemberDto userMemberDto) throws MessagingException {
-		System.out.println("[AdminMemberController] findPasswordConfirm()");
+		log.info("[UserMemberController] findPasswordConfirm()");
 
 		String nextPage = "user/member/find_password_success";
 
 		int result = userMemberService.findPasswordConfirm(userMemberDto);
 
-		if(result <= 0)
+		if(result <= 0) {
 			nextPage = "admin/member/find_password_fail";
+
+		}
 
 		return nextPage;
 
 	}
-	
 
-	
+	/*
+	 * FIND ID FORM
+	 */
+//	@GetMapping("/find_id_form")
+//	public String findIdForm() {
+//		log.info("[UserMemberController] findIdForm()");
+//
+//		String nextPage = "user/member/find_id_form";
+//
+//		return nextPage;
+//
+//	}
+
+	/*
+	 * FIND ID CONFIRM
+	 */
+//	@PostMapping("/find_id_confirm")
+//	public String findIdConfirm(UserMemberDto userMemberDto) throws MessagingException {
+//		log.info("[UserMemberController] findIdConfirm()");
+//
+//		String nextPage = "user/member/find_id_success";
+//
+//		int result = userMemberService.findIdConfirm(userMemberDto);
+//
+//		if(result <= 0)
+//			nextPage = "admin/member/find_id_fail";
+//
+//		return nextPage;
+//
+//	}
+
 }
