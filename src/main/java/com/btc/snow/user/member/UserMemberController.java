@@ -4,10 +4,16 @@ import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.net.URI;
 
 @Controller
 @Log4j2
@@ -67,23 +73,34 @@ public class UserMemberController {
      USER LOGIN CONFIRM
     */
     @PostMapping("/user_login_confirm")
-    public String userLoginConfirm(UserMemberDto userMemberDto, HttpSession session) {
+    @ResponseBody
+    public ResponseEntity<Object> userLoginConfirm(UserMemberDto userMemberDto, HttpSession session) {
         log.info("[UserMemberController] userLoginConfirm()");
 
-        String nextPage = "user/member/member_login_success";
+
+        HttpHeaders headers = new HttpHeaders();
+
 
         UserMemberDto loginedUserDto = userMemberService.userLoginConfirm(userMemberDto);
 
         if (loginedUserDto != null) {
+            log.info("Login Success!!");
+
             session.setAttribute("loginedUserDto", loginedUserDto);
             session.setMaxInactiveInterval(60 * 30);
 
-        } else {
-            nextPage = "user/member/member_login_fail";
+            headers.setLocation(URI.create("/"));
 
+            return new ResponseEntity<>(headers, HttpStatus.MOVED_PERMANENTLY);
+        } else {
+
+            log.info("Login Fail!!");
+
+            headers.setLocation(URI.create("404"));
+
+            return new ResponseEntity<>(headers, HttpStatus.MOVED_PERMANENTLY);
         }
 
-        return nextPage;
 
     }
 
@@ -116,7 +133,6 @@ public class UserMemberController {
 
         } else {
             nextPage = "/user/member/member_modify_fail";
-
         }
 
         return nextPage;
@@ -135,7 +151,6 @@ public class UserMemberController {
         session.removeAttribute("loginedUserDto");
 
         return nextPage;
-
     }
 
     /*
@@ -196,5 +211,6 @@ public class UserMemberController {
         return nextPage;
 
     }
+
 
 }

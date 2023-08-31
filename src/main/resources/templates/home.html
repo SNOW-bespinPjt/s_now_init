@@ -1,180 +1,317 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <title>Title</title>
-        <script src="https://cdn.tailwindcss.com"></script>
-    </head>
-    <body class="flex flex-col items-center justify-center w-5/6 mx-auto">
-        <header th:replace="~{/include/header_nav_footer::header}"></header>
+<html
+        lang="en"
+        xmlns="http://www.w3.org/1999/html"
+>
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        function modallToggle() {
+            console.log('modallToggle');
+            const modal = document.querySelector('#defaultModal');
 
-        <section class="flex flex-row w-5/6 border-solid mt-7">
+            modal.classList.toggle('hidden');
+        }
+    </script>
+</head>
+<body class="flex flex-col items-center justify-center w-5/6 mx-auto">
+<div
+        id="defaultModal"
+        tabindex="-1"
+        aria-hidden="true"
+        class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] bg-slate backdrop-blur-xl flex justify-center items-center max-h-full"
+>
+    <div class="relative w-full max-w-2xl max-h-full">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            <!-- Modal header -->
             <div
-                class="relative flex items-center justify-center w-screen h-screen mr-8 border-2 rounded-lg bg-slate-100"
+                    class="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600"
             >
-                <h2 class="absolute top-0 left-0 mt-4 text-2xl font-bold ml-14">스터디</h2>
-                <div class="flex flex-col w-11/12 bg-white h-5/6">
-                    <div class="flex w-full border-b-2 h-1/4 border-b-slate-300">
-                        <div class="w-11/12 p-4">
-                            <p class="font-bold">sample title</p>
-                            <p class="font-thin truncate">sample content</p>
-                        </div>
-                        <div class="flex flex-col items-center p-4 mb-5">
-                            <p class="font-bold text-blue-400">D-5</p>
-                            <div class="flex">
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke-width="1.5"
-                                    stroke="currentColor"
-                                    class="w-6 h-6"
-                                >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
-                                    />
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                                    />
-                                </svg>
-                                <p class="ml-2 font-thin text-slate-400">399</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flex w-full border-b-2 h-1/4 border-b-slate-300">
-                        <div class="w-11/12 p-4">
-                            <p class="font-bold">sample title</p>
-                            <p class="font-thin truncate">sample content</p>
-                        </div>
-                        <div class="flex flex-col items-center p-4 mb-5">
-                            <p class="font-bold text-blue-400">D-5</p>
-                            <div class="flex">
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke-width="1.5"
-                                    stroke="currentColor"
-                                    class="w-6 h-6"
-                                >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
-                                    />
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                                    />
-                                </svg>
-                                <p class="ml-2 font-thin text-slate-400">399</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flex w-full border-b-2 h-1/4 border-b-slate-300">
-                        <div class="w-11/12 p-4">
-                            <p class="font-bold">sample title</p>
-                            <p class="font-thin truncate">sample content</p>
-                        </div>
-                        <div class="flex flex-col items-center p-4 mb-5">
-                            <p class="font-bold text-blue-400">D-5</p>
-                            <div class="flex">
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke-width="1.5"
-                                    stroke="currentColor"
-                                    class="w-6 h-6"
-                                >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
-                                    />
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                                    />
-                                </svg>
-                                <p class="ml-2 font-thin text-slate-400">399</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flex w-full border-b-2 h-1/4 border-b-slate-300">
-                        <div class="w-11/12 p-4">
-                            <p class="font-bold">sample title</p>
-                            <p class="font-thin truncate">sample content</p>
-                        </div>
-                        <div class="flex flex-col items-center p-4 mb-5">
-                            <p class="font-bold text-blue-400">D-5</p>
-                            <div class="flex">
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke-width="1.5"
-                                    stroke="currentColor"
-                                    class="w-6 h-6"
-                                >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
-                                    />
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                                    />
-                                </svg>
-                                <p class="ml-2 font-thin text-slate-400">399</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="flex flex-col items-center w-3/4 h-screen border-2 rounded-lg">
-                <div
-                    class="flex flex-col items-center justify-center w-11/12 h-40 p-2 mt-6 border-2 rounded-sm"
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                    Terms of Service
+                </h3>
+                <button
+                        type="button"
+                        class="inline-flex items-center justify-center w-8 h-8 ml-auto text-sm text-gray-400 bg-transparent rounded-lg hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white"
+                        data-modal-hide="defaultModal"
+                        onclick="modallToggle()"
                 >
-                    <h3 class="mb-3">SNOW에 오신 것을 환영합니다 !</h3>
-                    <button
-                        class="h-10 px-4 py-2 font-bold text-white bg-green-500 rounded w-52 hover:bg-green-600"
+                    <svg
+                            class="w-3 h-3"
+                            aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 14 14"
                     >
-                        login
-                    </button>
-                    <div class="mt-3">
-                        <a
-                            class="cursor-pointer hover:underline hover:font-thin hover:text-gray-500"
-                            >아이디 찾기</a
+                        <path
+                                stroke="currentColor"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                        />
+                    </svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
+            </div>
+            <!-- Modal body -->
+            <div class="p-6 space-y-6">
+                <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                    With less than a month to go before the European Union enacts new
+                    consumer privacy laws for its citizens, companies around the world are
+                    updating their terms of service agreements to comply.
+                </p>
+                <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                    The European Union’s General Data Protection Regulation (G.D.P.R.) goes
+                    into effect on May 25 and is meant to ensure a common set of data rights
+                    in the European Union. It requires organizations to notify users as soon
+                    as possible of high-risk data breaches that could personally affect
+                    them.
+                </p>
+            </div>
+            <!-- Modal footer -->
+            <div
+                    class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600"
+            >
+                <button
+                        data-modal-hide="defaultModal"
+                        type="button"
+                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                >
+                    I accept
+                </button>
+                <button
+                        data-modal-hide="defaultModal"
+                        type="button"
+                        onclick="modallToggle()"
+                        class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600"
+                >
+                    Decline
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<header th:replace="~{/include/header_nav_footer::header}"></header>
+
+<section class="flex flex-row w-5/6 border-solid mt-7">
+    <div
+            class="relative flex items-center justify-center w-screen h-screen mr-8 border-2 rounded-lg bg-slate-100"
+    >
+        <h2 class="absolute top-0 left-0 mt-4 text-2xl font-bold ml-14">스터디</h2>
+        <div class="flex flex-col w-11/12 bg-white h-5/6">
+            <div class="flex w-full border-b-2 h-1/4 border-b-slate-300">
+                <div class="w-11/12 p-4">
+                    <p class="font-bold">sample title</p>
+                    <p class="font-thin truncate">sample content</p>
+                </div>
+                <div class="flex flex-col items-center p-4 mb-5">
+                    <p class="font-bold text-blue-400">D-5</p>
+                    <div class="flex">
+                        <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke-width="1.5"
+                                stroke="currentColor"
+                                class="w-6 h-6"
                         >
-                        |
-                        <a
-                            class="cursor-pointer hover:underline hover:font-thin hover:text-gray-500"
-                            >비밀번호 찾기</a
-                        >
-                        |
-                        <a
-                            class="cursor-pointer hover:underline hover:font-thin hover:text-gray-500"
-                            >회원가입</a
-                        >
+                            <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
+                            />
+                            <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                            />
+                        </svg>
+                        <p class="ml-2 font-thin text-slate-400">399</p>
                     </div>
                 </div>
-                <div
-                    class="flex flex-col items-center justify-center w-11/12 p-2 mt-6 border-2 rounded-sm h-2/4"
-                >
-                    <h3 class="mb-3">SNOW에 오신 것을 환영합니다 !</h3>
+            </div>
+            <div class="flex w-full border-b-2 h-1/4 border-b-slate-300">
+                <div class="w-11/12 p-4">
+                    <p class="font-bold">sample title</p>
+                    <p class="font-thin truncate">sample content</p>
+                </div>
+                <div class="flex flex-col items-center p-4 mb-5">
+                    <p class="font-bold text-blue-400">D-5</p>
+                    <div class="flex">
+                        <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke-width="1.5"
+                                stroke="currentColor"
+                                class="w-6 h-6"
+                        >
+                            <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
+                            />
+                            <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                            />
+                        </svg>
+                        <p class="ml-2 font-thin text-slate-400">399</p>
+                    </div>
                 </div>
             </div>
-        </section>
+            <div class="flex w-full border-b-2 h-1/4 border-b-slate-300">
+                <div class="w-11/12 p-4">
+                    <p class="font-bold">sample title</p>
+                    <p class="font-thin truncate">sample content</p>
+                </div>
+                <div class="flex flex-col items-center p-4 mb-5">
+                    <p class="font-bold text-blue-400">D-5</p>
+                    <div class="flex">
+                        <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke-width="1.5"
+                                stroke="currentColor"
+                                class="w-6 h-6"
+                        >
+                            <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
+                            />
+                            <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                            />
+                        </svg>
+                        <p class="ml-2 font-thin text-slate-400">399</p>
+                    </div>
+                </div>
+            </div>
+            <div class="flex w-full border-b-2 h-1/4 border-b-slate-300">
+                <div class="w-11/12 p-4">
+                    <p class="font-bold">sample title</p>
+                    <p class="font-thin truncate">sample content</p>
+                </div>
+                <div class="flex flex-col items-center p-4 mb-5">
+                    <p class="font-bold text-blue-400">D-5</p>
+                    <div class="flex">
+                        <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke-width="1.5"
+                                stroke="currentColor"
+                                class="w-6 h-6"
+                        >
+                            <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
+                            />
+                            <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                            />
+                        </svg>
+                        <p class="ml-2 font-thin text-slate-400">399</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        <footer th:replace="~{/include/header_nav_footer.html::footer}"></footer>
-    </body>
+    <div class="flex flex-col items-center w-3/4 h-screen border-2 rounded-lg">
+        <div
+                th:if="${session.loginedUserDto == null}"
+                class="flex flex-col items-center justify-center w-11/12 h-40 p-2 mt-6 border-2 rounded-sm"
+        >
+            <h3 class="mb-3">SNOW에 오신 것을 환영합니다 !</h3>
+            <a href="/user/member/user_login_form">
+                <button
+                        class="h-10 px-4 py-2 font-bold text-white bg-green-500 rounded w-52 hover:bg-green-600"
+                >
+                    login
+                </button>
+            </a>
+            <div class="mt-3">
+                <a
+                        class="cursor-pointer hover:underline hover:font-thin hover:text-gray-500"
+                >아이디 찾기</a
+                >
+                |
+                <a
+                        class="cursor-pointer hover:underline hover:font-thin hover:text-gray-500"
+                >비밀번호 찾기</a
+                >
+                |
+                <a
+                        class="cursor-pointer hover:underline hover:font-thin hover:text-gray-500"
+                >회원가입</a
+                >
+            </div>
+        </div>
+
+        <div
+                th:unless="${session.loginedUserDto == null}"
+                class="flex flex-col items-center justify-center w-11/12 h-40 p-2 mt-6 border-2 rounded-sm"
+        >
+            <div>
+                <p
+                        th:if="${qrValidStatus != 0 && (userAttendanceDto != null || userAttendanceDto.astatus =='0') }"
+                        th:text="'출석 '+${userAttendanceDto.reg_date}"
+                        class="font-semibold text-green-400"
+                ></p>
+            </div>
+            <h3 class="mb-3">SNOW에 오신 것을 환영합니다 !</h3>
+            <div th:if="${qrValidStatus != 0}">
+                <a th:href="@{/user/attendance}">
+                    <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            fill="currentColor"
+                            class="w-10 h-10 cursor-pointer"
+                    >
+                        <path
+                                fill-rule="evenodd"
+                                d="M3 4.875C3 3.839 3.84 3 4.875 3h4.5c1.036 0 1.875.84 1.875 1.875v4.5c0 1.036-.84 1.875-1.875 1.875h-4.5A1.875 1.875 0 013 9.375v-4.5zM4.875 4.5a.375.375 0 00-.375.375v4.5c0 .207.168.375.375.375h4.5a.375.375 0 00.375-.375v-4.5a.375.375 0 00-.375-.375h-4.5zm7.875.375c0-1.036.84-1.875 1.875-1.875h4.5C20.16 3 21 3.84 21 4.875v4.5c0 1.036-.84 1.875-1.875 1.875h-4.5a1.875 1.875 0 01-1.875-1.875v-4.5zm1.875-.375a.375.375 0 00-.375.375v4.5c0 .207.168.375.375.375h4.5a.375.375 0 00.375-.375v-4.5a.375.375 0 00-.375-.375h-4.5zM6 6.75A.75.75 0 016.75 6h.75a.75.75 0 01.75.75v.75a.75.75 0 01-.75.75h-.75A.75.75 0 016 7.5v-.75zm9.75 0A.75.75 0 0116.5 6h.75a.75.75 0 01.75.75v.75a.75.75 0 01-.75.75h-.75a.75.75 0 01-.75-.75v-.75zM3 14.625c0-1.036.84-1.875 1.875-1.875h4.5c1.036 0 1.875.84 1.875 1.875v4.5c0 1.035-.84 1.875-1.875 1.875h-4.5A1.875 1.875 0 013 19.125v-4.5zm1.875-.375a.375.375 0 00-.375.375v4.5c0 .207.168.375.375.375h4.5a.375.375 0 00.375-.375v-4.5a.375.375 0 00-.375-.375h-4.5zm7.875-.75a.75.75 0 01.75-.75h.75a.75.75 0 01.75.75v.75a.75.75 0 01-.75.75h-.75a.75.75 0 01-.75-.75v-.75zm6 0a.75.75 0 01.75-.75h.75a.75.75 0 01.75.75v.75a.75.75 0 01-.75.75h-.75a.75.75 0 01-.75-.75v-.75zM6 16.5a.75.75 0 01.75-.75h.75a.75.75 0 01.75.75v.75a.75.75 0 01-.75.75h-.75a.75.75 0 01-.75-.75v-.75zm9.75 0a.75.75 0 01.75-.75h.75a.75.75 0 01.75.75v.75a.75.75 0 01-.75.75h-.75a.75.75 0 01-.75-.75v-.75zm-3 3a.75.75 0 01.75-.75h.75a.75.75 0 01.75.75v.75a.75.75 0 01-.75.75h-.75a.75.75 0 01-.75-.75v-.75zm6 0a.75.75 0 01.75-.75h.75a.75.75 0 01.75.75v.75a.75.75 0 01-.75.75h-.75a.75.75 0 01-.75-.75v-.75z"
+                                clip-rule="evenodd"
+                        />
+                    </svg>
+                </a>
+            </div>
+            <div>
+                <a th:href="@{/user/member/user_logout_confirm}">Logout</a>
+            </div>
+        </div>
+
+        <div
+                class="flex flex-col items-center justify-center w-11/12 p-2 mt-6 border-2 rounded-sm h-2/4"
+        >
+            <h3 class="mb-3">SNOW에 오신 것을 환영합니다 !</h3>
+        </div>
+    </div>
+    <button
+            data-modal-target="defaultModal"
+            data-modal-toggle="defaultModal"
+            class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            type="button"
+            onclick="modallToggle()"
+    >
+        Toggle modal
+    </button>
+</section>
+
+<footer th:replace="~{/include/header_nav_footer.html::footer}"></footer>
+</body>
 </html>
