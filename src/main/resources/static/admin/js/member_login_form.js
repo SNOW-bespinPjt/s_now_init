@@ -2,13 +2,13 @@ function memberLoginForm() {
     console.log('memberLoginForm() CALLED!!');
 
     let form = document.member_login_form;
-    if (form.a_m_id.value == '') {
+    if (form.id.value == '') {
         alert('INPUT ID');
-        form.a_m_id.focus();
+        form.id.focus();
 
-    } else if (form.a_m_pw.value == '') {
+    } else if (form.pw.value == '') {
         alert('INPUT PW');
-        form.a_m_pw.focus();
+        form.pw.focus();
 
     } else {
         form.submit();

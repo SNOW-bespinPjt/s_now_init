@@ -23,12 +23,12 @@
                 </div>
                 <div class="create_account_form">
                     <form th:action="@{/admin/member/create_account_confirm}" name="create_account_form" method="post">
-                        <input type="text" name="a_m_id" placeholder="INPUT ID"><br>
-                        <input type="password" name="a_m_pw" placeholder="INPUT PW"><br>
-                        <input type="text" name="a_m_name" placeholder="INPUT NAME"><br>
-                        <input type="email" name="a_m_mail" placeholder="INPUT MAIL"><br>
-                        <input type="text" name="a_m_phone" placeholder="INPUT PHONE"><br>
-                        <select name="a_m_position">
+                        <input type="text" name="id" placeholder="INPUT ID"><br>
+                        <input type="password" name="pw" placeholder="INPUT PW"><br>
+                        <input type="text" name="name" placeholder="INPUT NAME"><br>
+                        <input type="email" name="mail" placeholder="INPUT MAIL"><br>
+                        <input type="text" name="phone" placeholder="INPUT PHONE"><br>
+                        <select name="position">
                             <option value="">--- SELECT POSITION ---</option>
                             <option value="교육기관">교육기관</option>
                             <option value="강사">강사</option>

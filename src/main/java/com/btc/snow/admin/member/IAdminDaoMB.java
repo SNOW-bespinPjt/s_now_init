@@ -7,23 +7,23 @@ import java.util.Map;
 
 @Mapper
 public interface IAdminDaoMB {
-    boolean isAdminMember(String a_m_id);
+    boolean isAdminMember(String id);
 
     int insertAdminAccount(AdminMemberDto adminMemberDto);
 
-    AdminMemberDto selectAdminForLogin(String a_m_id);
+    AdminMemberDto selectAdminForLogin(String id);
 
     int updateAdminAccount(AdminMemberDto adminMemberDto);
 
-    AdminMemberDto selectLoginedAdmin(int a_m_no);
+    AdminMemberDto selectLoginedAdmin(int no);
 
     List<AdminMemberDto> selectAdmins();
 
-    int updateAdminApproval(int a_m_no);
+    int updateAdminApproval(int no);
 
     AdminMemberDto selectAdminForFindPassword(Map<String, Object> map);
 
-    int updatePassword(String a_m_id, String newPassword);
+    int updatePassword(String id, String newPassword);
 
-    int deleteAdmin(int a_m_no);
+    int deleteAdmin(int no);
 }

@@ -47,7 +47,6 @@ public class AdminMemberController {
             nextPage = "admin/member/fail";
 
         return nextPage;
-
     }
 
     /*
@@ -81,7 +80,7 @@ public class AdminMemberController {
             session.setAttribute("loginedAdminDto", loginedAdminDto);
             session.setMaxInactiveInterval(60 * 30);
 
-            log.info("로그인한 ID : " + loginedAdminDto.getA_m_id());
+            log.info("로그인한 ID : " + loginedAdminDto.getId());
         }
 
         return nextPage;
@@ -160,14 +159,14 @@ public class AdminMemberController {
 
         String nextPage = "admin/member/success";
 
-        log.info("modift pw -------------->" + adminMemberDto.getA_m_pw());
-        log.info("modift name -------------->" + adminMemberDto.getA_m_name());
+        log.info("modift pw -------------->" + adminMemberDto.getPw());
+        log.info("modift name -------------->" + adminMemberDto.getName());
 
         int result = adminMemberService.modifyAccountConfirm(adminMemberDto);
 
         if (result > 0) {
             AdminMemberDto loginedAdminDto =
-                    adminMemberService.getLoginedAdminMember(adminMemberDto.getA_m_no());
+                    adminMemberService.getLoginedAdminMember(adminMemberDto.getNo());
 
             session.setAttribute("loginedAdminDto", loginedAdminDto);
             session.setMaxInactiveInterval(60 * 30);
@@ -205,14 +204,14 @@ public class AdminMemberController {
      */
     @GetMapping("/set_admin_approval")
     @ResponseBody
-    public Object setAdminApproval(@RequestParam("a_m_no") int a_m_no) {
+    public Object setAdminApproval(@RequestParam("no") int no) {
         log.info("[AdminMemberController] setAdminApproval()");
 
-        log.info("a_m_no: " + a_m_no);
+        log.info("no: " + no);
 
         Map<String, Object> map = new HashMap<>();
 
-        int result = adminMemberService.setAdminApproval(a_m_no);
+        int result = adminMemberService.setAdminApproval(no);
 
         if (result > 0) {
             map.put("result", result);
@@ -239,7 +238,7 @@ public class AdminMemberController {
         AdminMemberDto loginedAdminDto = (AdminMemberDto) session.getAttribute("loginedAdminDto");
 
         if (loginedAdminDto != null) {
-            int status = adminMemberService.SignOutConfirm(loginedAdminDto.getA_m_no());
+            int status = adminMemberService.SignOutConfirm(loginedAdminDto.getNo());
             if (status > 0) {
                 System.out.println("[AdminController] SIGNOUT SUCCESS!!");
                 session.removeAttribute("loginedAdminDto");

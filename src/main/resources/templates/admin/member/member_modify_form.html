@@ -26,18 +26,18 @@
                 <div class="member_modify_form">
                     <form th:action="@{/admin/member/member_modify_confirm}" name="member_modify_form" method="post">
 
-                        <input type="hidden" name="a_m_no" th:value="${session.loginedAdminDto.a_m_no}">
+                        <input type="hidden" name="no" th:value="${session.loginedAdminDto.no}">
 
-                        <input type="text" name="a_m_id" th:value="${session.loginedAdminDto.a_m_id}" readonly disabled><br>
-                        <input type="password" name="a_m_pw" th:value="${session.loginedAdminDto.a_m_pw}"><br>
-                        <input type="text" name="a_m_name" th:value="${session.loginedAdminDto.a_m_name}"><br>
-                        <input type="email" name="a_m_mail" th:value="${session.loginedAdminDto.a_m_mail}"><br>
-                        <input type="text" name="a_m_phone" th:value="${session.loginedAdminDto.a_m_phone}"><br>
-                        <select name="a_m_position">
+                        <input type="text" name="id" th:value="${session.loginedAdminDto.id}" readonly disabled><br>
+                        <input type="password" name="pw" th:value="${session.loginedAdminDto.pw}"><br>
+                        <input type="text" name="name" th:value="${session.loginedAdminDto.name}"><br>
+                        <input type="email" name="mail" th:value="${session.loginedAdminDto.mail}"><br>
+                        <input type="text" name="phone" th:value="${session.loginedAdminDto.phone}"><br>
+                        <select name="position">
                             <option value="">--- SELECT POSITION ---</option>
-                            <option value="교육기관" th:selected="${session.loginedAdminDto.a_m_position == '교육기관'}">교육기관
+                            <option value="교육기관" th:selected="${session.loginedAdminDto.position == '교육기관'}">교육기관
                             </option>
-                            <option value="강사" th:selected="${session.loginedAdminDto.a_m_position == '강사'}">강사</option>
+                            <option value="강사" th:selected="${session.loginedAdminDto.position == '강사'}">강사</option>
                         </select><br>
 
                         <input type="button" value="ADMIN MODIFY" onclick="memberModifyForm();">

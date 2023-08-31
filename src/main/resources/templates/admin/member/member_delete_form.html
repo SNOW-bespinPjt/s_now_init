@@ -19,7 +19,7 @@
 
         <div class="member_delete_form">
             <form th:action="@{/admin/member/member_delete_confirm}" name="member_delete_form" method="post">
-                <input type="password" name="a_m_pw" placeholder="INPUT PW"><br>
+                <input type="password" name="pw" placeholder="INPUT PW"><br>
                 <input type="button" value="delete" onclick="memberDeleteForm();">
                 <input th:href="@{/admin}" value="홈으로">
             </form>

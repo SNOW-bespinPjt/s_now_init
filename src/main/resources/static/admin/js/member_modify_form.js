@@ -2,17 +2,17 @@ function memberModifyForm() {
     console.log('memberModifyForm() CALLED!!');
 
     let form = document.member_modify_form;
-    if (form.a_m_name.value == '') {
+    if (form.name.value == '') {
         alert('INPUT MAIL');
-        form.a_m_name.focus();
+        form.name.focus();
 
-    } else if (form.a_m_mail.value == '') {
+    } else if (form.mail.value == '') {
         alert('INPUT MAIL');
-        form.a_m_mail.focus();
+        form.mail.focus();
 
-    } else if (form.a_m_phone.value == '') {
+    } else if (form.phone.value == '') {
         alert('INPUT PHONE');
-        form.a_m_phone.focus();
+        form.phone.focus();
 
     } else {
         form.submit();

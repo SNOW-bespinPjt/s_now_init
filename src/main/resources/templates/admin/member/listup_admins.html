@@ -23,7 +23,7 @@
                 <div class="absolute top-0 left-0 mt-4 ml-14">
                     <div>
                         <h3 class="font-bold">ADMIN LIST</h3>
-                        <div th:if="${session.loginedAdminDto.getA_m_id() eq 'super admin'}"
+                        <div th:if="${session.loginedAdminDto.getId() eq 'super admin'}"
                              class="overflow-x-auto">
                             <table class="table-auto border-collapse border border-gray-400">
                                 <thead>
@@ -38,24 +38,24 @@
                                 </thead>
                                 <tbody>
                                 <tr th:each="item : ${adminMemberDtos}">
-                                    <td class="border px-4 py-2" th:text="${item.a_m_id}"></td>
-                                    <td class="border px-4 py-2" th:text="${item.a_m_name}"></td>
-                                    <td class="border px-4 py-2" th:text="${item.a_m_mail}"></td>
-                                    <td class="border px-4 py-2" th:text="${item.a_m_phone}"></td>
-                                    <td class="border px-4 py-2" th:text="${item.a_m_position}"></td>
+                                    <td class="border px-4 py-2" th:text="${item.id}"></td>
+                                    <td class="border px-4 py-2" th:text="${item.name}"></td>
+                                    <td class="border px-4 py-2" th:text="${item.mail}"></td>
+                                    <td class="border px-4 py-2" th:text="${item.phone}"></td>
+                                    <td class="border px-4 py-2" th:text="${item.position}"></td>
                                     <td class="border px-4 py-2">
-                                        <span th:if="${item.a_m_approval eq 0}">
-                                            <input type="button" value="승인처리" th:attr="data-a_m_no=${item.a_m_no}"
-                                                   onclick="approveAdmin(this.getAttribute('data-a_m_no'));"
+                                        <span th:if="${item.approval eq 0}">
+                                            <input type="button" value="승인처리" th:attr="data-no=${item.no}"
+                                                   onclick="approveAdmin(this.getAttribute('data-no'));"
                                                    class="px-2 py-1 rounded bg-blue-500 text-white hover:bg-blue-600">
                                         </span>
-                                        <span th:if="${item.a_m_approval eq 1}" class="text-green-500">승인완료</span>
+                                        <span th:if="${item.approval eq 1}" class="text-green-500">승인완료</span>
                                     </td>
                                 </tr>
                                 </tbody>
                             </table>
                         </div>
-                        <div th:unless="${session.loginedAdminDto.getA_m_id() eq 'super admin'}">
+                        <div th:unless="${session.loginedAdminDto.getId() eq 'super admin'}">
                             <p>최고 관리자만 열람 가능합니다</p>
                         </div>
                     </div>

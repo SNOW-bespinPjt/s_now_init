@@ -36,20 +36,20 @@ public class AdminMemberService implements IAdminService {
     public int createAccountConfirm(AdminMemberDto adminMemberDto) {
         log.info("[AdminMemberService] createAccountForm()");
 
-        log.info("---->" + adminMemberDto.getA_m_id());
+        log.info("---->" + adminMemberDto.getId());
 
         log.info("isAdminMember()");
-        boolean isMember = iAdminDaoMB.isAdminMember(adminMemberDto.getA_m_id());
+        boolean isMember = iAdminDaoMB.isAdminMember(adminMemberDto.getId());
 
-        int a_m_approval = 0;
-        if (adminMemberDto.getA_m_id().equals("super admin")) {
-            a_m_approval = 1;
+        int approval = 0;
+        if (adminMemberDto.getId().equals("super admin")) {
+            approval = 1;
 
         }
 
         if (!isMember) {
-            adminMemberDto.setA_m_pw(passwordEncoder.encode(adminMemberDto.getA_m_pw()));
-            adminMemberDto.setA_m_approval(a_m_approval);
+            adminMemberDto.setPw(passwordEncoder.encode(adminMemberDto.getPw()));
+            adminMemberDto.setApproval(approval);
             log.info("insertAdminAccount()");
 
             int result = iAdminDaoMB.insertAdminAccount(adminMemberDto);
@@ -73,9 +73,9 @@ public class AdminMemberService implements IAdminService {
     public AdminMemberDto loginConfirm(AdminMemberDto adminMemberDto) {
         log.info("[AdminMemberService] loginConfirm()");
 
-        AdminMemberDto loginedAdminDto = iAdminDaoMB.selectAdminForLogin(adminMemberDto.getA_m_id());
+        AdminMemberDto loginedAdminDto = iAdminDaoMB.selectAdminForLogin(adminMemberDto.getId());
 
-        if (loginedAdminDto != null && passwordEncoder.matches(adminMemberDto.getA_m_pw(), loginedAdminDto.getA_m_pw())) {
+        if (loginedAdminDto != null && passwordEncoder.matches(adminMemberDto.getPw(), loginedAdminDto.getPw())) {
             log.info("[AdminMemberService] ADMIN MEMBER LOGIN SUCCESS!!");
 
 			return loginedAdminDto;
@@ -94,7 +94,7 @@ public class AdminMemberService implements IAdminService {
     public int modifyAccountConfirm(AdminMemberDto adminMemberDto) {
         log.info("[AdminMemberService] adminMemberDto()");
 
-        adminMemberDto.setA_m_pw(passwordEncoder.encode(adminMemberDto.getA_m_pw()));
+        adminMemberDto.setPw(passwordEncoder.encode(adminMemberDto.getPw()));
 
         return iAdminDaoMB.updateAdminAccount(adminMemberDto);
 
@@ -102,10 +102,10 @@ public class AdminMemberService implements IAdminService {
 
     // 관리자 확인
     @Override
-    public AdminMemberDto getLoginedAdminMember(int a_m_no) {
+    public AdminMemberDto getLoginedAdminMember(int no) {
         log.info("[AdminMemberService] getLoginedAdminMember()");
 
-        return iAdminDaoMB.selectLoginedAdmin(a_m_no);
+        return iAdminDaoMB.selectLoginedAdmin(no);
 
     }
 
@@ -120,10 +120,10 @@ public class AdminMemberService implements IAdminService {
 
     // 관리자 권한 설정
     @Override
-    public int setAdminApproval(int a_m_no) {
+    public int setAdminApproval(int no) {
         log.info("[AdminMemberService] setAdminApproval()");
 
-        int result = iAdminDaoMB.updateAdminApproval(a_m_no);
+        int result = iAdminDaoMB.updateAdminApproval(no);
 
         if (result > 0) {
 			log.info("ADMIN MEMBER APPROVAL SUCCESS!!");
@@ -141,9 +141,9 @@ public class AdminMemberService implements IAdminService {
         log.info("[AdminMemberService] findPasswordConfirm()");
 
         Map<String, Object> map = new HashMap<>();
-        map.put("a_m_id", adminMemberDto.getA_m_id());
-        map.put("a_m_name", adminMemberDto.getA_m_name());
-        map.put("a_m_mail", adminMemberDto.getA_m_mail());
+        map.put("id", adminMemberDto.getId());
+        map.put("name", adminMemberDto.getName());
+        map.put("mail", adminMemberDto.getMail());
 
         AdminMemberDto selectedAdminMemberDto = iAdminDaoMB.selectAdminForFindPassword(map);
 
@@ -153,10 +153,10 @@ public class AdminMemberService implements IAdminService {
 
             String newPassword = createNewPassword();
 
-            result = iAdminDaoMB.updatePassword(adminMemberDto.getA_m_id(), passwordEncoder.encode(newPassword));
+            result = iAdminDaoMB.updatePassword(adminMemberDto.getId(), passwordEncoder.encode(newPassword));
 
             if (result > 0) {
-                sendNewPasswordByMail(adminMemberDto.getA_m_mail(), newPassword);
+                sendNewPasswordByMail(adminMemberDto.getMail(), newPassword);
 
             }
 
@@ -226,10 +226,10 @@ public class AdminMemberService implements IAdminService {
 
     // 회원탈퇴
     @Override
-    public int SignOutConfirm(int a_m_no) {
+    public int SignOutConfirm(int no) {
         log.info("[AdminMemberService] SignOutConfirm()");
 
-        int result = iAdminDaoMB.deleteAdmin(a_m_no);
+        int result = iAdminDaoMB.deleteAdmin(no);
 
         switch (result) {
             case ADMIN_FAIL:

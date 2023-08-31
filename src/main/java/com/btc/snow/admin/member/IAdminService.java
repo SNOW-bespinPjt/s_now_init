@@ -10,11 +10,11 @@ public interface IAdminService {
 
     int modifyAccountConfirm(AdminMemberDto adminMemberDto);
 
-    AdminMemberDto getLoginedAdminMember(int a_m_no);
+    AdminMemberDto getLoginedAdminMember(int no);
 
     List<AdminMemberDto> listupAdmin();
 
-    int setAdminApproval(int a_m_no);
+    int setAdminApproval(int no);
 
     int findPasswordConfirm(AdminMemberDto adminMemberDto);
 
@@ -22,5 +22,5 @@ public interface IAdminService {
 
     void sendNewPasswordByMail(String toMailAddr, String newPassword);
 
-    int SignOutConfirm(int a_m_no);
+    int SignOutConfirm(int no);
 }

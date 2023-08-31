@@ -2,29 +2,29 @@ function createAccountForm() {
     console.log('createAccountForm() CALLED!!');
 
     let form = document.create_account_form;
-    if (form.a_m_id.value == '') {
+    if (form.id.value == '') {
         alert('INPUT ID');
-        form.a_m_id.focus();
+        form.id.focus();
 
-    } else if (form.a_m_pw.value == '') {
+    } else if (form.pw.value == '') {
         alert('INPUT PW');
-        form.a_m_pw.focus();
+        form.pw.focus();
 
-    } else if (form.a_m_name.value == '') {
+    } else if (form.name.value == '') {
         alert('INPUT NAME');
-        form.a_m_name.focus();
+        form.name.focus();
 
-    } else if (form.a_m_mail.value == '') {
+    } else if (form.mail.value == '') {
         alert('INPUT MAIL');
-        form.a_m_mail.focus();
+        form.mail.focus();
 
-    } else if (form.a_m_phone.value == '') {
+    } else if (form.phone.value == '') {
         alert('INPUT PHONE');
-        form.a_m_phone.focus();
+        form.phone.focus();
 
-    } else if (form.a_m_position.value == '') {
+    } else if (form.position.value == '') {
         alert('SELECT POSITION');
-        form.a_m_position.focus();
+        form.position.focus();
 
     } else {
         form.submit();
