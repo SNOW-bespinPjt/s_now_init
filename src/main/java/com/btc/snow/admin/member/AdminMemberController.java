@@ -259,7 +259,7 @@ public class AdminMemberController {
      */
     @PostMapping("/member_signout_confirm")
     public Object SignOutConfirm(HttpSession session) {
-        System.out.println("[AdminController] SignOutConfirm()");
+        log.info("[AdminController] SignOutConfirm()");
 
         String nextPage = "admin/member/modify_account_form";
 
@@ -270,13 +270,13 @@ public class AdminMemberController {
         if (loginedAdminDto != null) {
             int status = adminMemberService.SignOutConfirm(loginedAdminDto.getNo());
             if (status > 0) {
-                System.out.println("[AdminController] SIGNOUT SUCCESS!!");
+                log.info("[AdminController] SIGNOUT SUCCESS!!");
                 session.removeAttribute("loginedAdminDto");
 
                 nextPage = "admin/member/success";
 
             } else {
-                System.out.println("[AdminController] SIGNOUT FAIL!!");
+                log.info("[AdminController] SIGNOUT FAIL!!");
 
                 nextPage = "admin/member/fail";
             }

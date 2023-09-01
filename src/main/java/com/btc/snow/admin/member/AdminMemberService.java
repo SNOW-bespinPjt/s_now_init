@@ -41,15 +41,15 @@ public class AdminMemberService implements IAdminService {
         log.info("isAdminMember()");
         boolean isMember = iAdminDaoMB.isAdminMember(adminMemberDto.getId());
 
-        int approval = 0;
+        int is_approval = 0;
         if (adminMemberDto.getId().equals("super admin")) {
-            approval = 1;
+            is_approval = 1;
 
         }
 
         if (!isMember) {
             adminMemberDto.setPw(passwordEncoder.encode(adminMemberDto.getPw()));
-            adminMemberDto.setApproval(approval);
+            adminMemberDto.setIs_approval(is_approval);
             log.info("insertAdminAccount()");
 
             int result = iAdminDaoMB.insertAdminAccount(adminMemberDto);
@@ -275,12 +275,12 @@ public class AdminMemberService implements IAdminService {
 
         switch (result) {
             case ADMIN_FAIL:
-                System.out.println("[AdminMemberService] DELETE_FAIL_AT_DATABASE");
+                log.info("[AdminMemberService] DELETE_FAIL_AT_DATABASE");
 
                 break;
 
             case ADMIN_SUCCESS:
-                System.out.println("[AdminMemberService] DELETE_SUCCESS_AT_DATABASE");
+                log.info("[AdminMemberService] DELETE_SUCCESS_AT_DATABASE");
 
                 break;
         }
