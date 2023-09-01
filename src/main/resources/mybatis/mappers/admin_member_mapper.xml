@@ -14,7 +14,7 @@
     <insert id="insertAdminAccount" parameterType="com.btc.snow.admin.member.AdminMemberDto">
         INSERT INTO ADMIN (is_approval, id, pw, name, mail, phone, position,
                            reg_date, mod_date)
-        VALUES (#{is_is_approval}, #{id}, #{pw}, #{name}, #{mail}, #{phone}, #{position}, NOW(),
+        VALUES (#{is_approval}, #{id}, #{pw}, #{name}, #{mail}, #{phone}, #{position}, NOW(),
                 NOW())
     </insert>
 

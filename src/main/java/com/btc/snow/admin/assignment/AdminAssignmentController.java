@@ -1,12 +1,11 @@
 package com.btc.snow.admin.assignment;
 
-import ch.qos.logback.core.model.Model;
-import com.btc.snow.admin.config.Message;
 import com.btc.snow.admin.member.AdminMemberDto;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -95,7 +94,7 @@ public class AdminAssignmentController {
             msg = "과제등록에 실패하였습니다";
         }
 
-        model.addText("msg");
+        model.addAttribute("msg");
         return nextPage;
 
     }
@@ -122,11 +121,30 @@ public class AdminAssignmentController {
 
         return map;
     }
-    
 
     /*
      * 과제 상세페이지
      */
+    @GetMapping("/get_assignment")
+    public String getAssignment(HttpSession session,
+                                Model model,
+                                AdminAssignmentDto adminAssignmentDto) {
+        System.out.println("[OrganizerController] getAssignment()");
+
+        // 세션 확인
+        AdminMemberDto loginedAdminDto = (AdminMemberDto) session.getAttribute("loginedAdminDto");
+        if (loginedAdminDto == null) {
+            return "redirect:/";
+
+        }
+
+        adminAssignmentDto = adminAssignmentService.getAssignment(adminAssignmentDto);
+
+        model.addAttribute("adminAssignmentDto", adminAssignmentDto);
+
+        return nextPage;
+    }
+
 
     
     

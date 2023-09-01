@@ -14,4 +14,7 @@ public interface IAdminAssignmentService {
 
     // 과제 활성화 
     int SetAdminActive(int no);
+
+    // 과제 상세페이지
+    AdminAssignmentDto getAssignment(AdminAssignmentDto adminAssignmentDto);
 }

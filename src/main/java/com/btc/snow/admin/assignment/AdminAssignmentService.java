@@ -75,4 +75,12 @@ public class AdminAssignmentService implements IAdminAssignmentService {
         return result;
     }
 
+    // 과제 상세페이지
+    @Override
+    public AdminAssignmentDto getAssignment(AdminAssignmentDto adminAssignmentDto) {
+        log.info("[AdminAssignmentService] getAssignment()");
+
+        return null;
+    }
+
 }
