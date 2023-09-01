@@ -14,87 +14,87 @@ import java.util.Date;
 @Service
 public class UserMemberService implements IUserMemberService {
 
-    final static public int DATABASE_COMMUNICATION_TROUBLE = -1;
-    final static public int INSERT_FAIL_AT_DATABASE = 0;
-    final static public int INSERT_SUCCESS_AT_DATABASE = 1;
-    final static public int INSERT_DUPLICATE_ID_AT_DATABASE = -2;
+	final static public int DATABASE_COMMUNICATION_TROUBLE = -1;
+	final static public int INSERT_FAIL_AT_DATABASE = 0;
+	final static public int INSERT_SUCCESS_AT_DATABASE = 1;
+	final static public int INSERT_DUPLICATE_ID_AT_DATABASE = -2;
 
-    @Autowired
-    IUserMemberDaoMB iUserMemberDaoMB;
+	@Autowired
+	IUserMemberDaoMB iUserMemberDaoMB;
 
-    @Autowired
-    PasswordEncoder passwordEncoder;
+	@Autowired
+	PasswordEncoder passwordEncoder;
 
-    @Autowired
-    EmailService emailService;
+	@Autowired
+	EmailService emailService;
 
-    @Override
-    public int createAccountConfirm(UserMemberDto userMemberDto) {
-        log.info("[UserMemberService] createAccountConfirm()");
+	@Override
+	public int createAccountConfirm(UserMemberDto userMemberDto) {
+		log.info("[UserMemberService] createAccountConfirm()");
 
-        /*
-         * 아이디 중복 여부 확인
-         */
-        boolean isUser = iUserMemberDaoMB.isUser(userMemberDto.getId());
+		/*
+		* 아이디 중복 여부 확인
+		 */
+		boolean isUser = iUserMemberDaoMB.isUser(userMemberDto.getId());
 
-        if (!isUser) {
-            userMemberDto.setPw(passwordEncoder.encode(userMemberDto.getPw()));            // 비밀번호 암호화 작업
-            int result = iUserMemberDaoMB.insertUserMember(userMemberDto);
+		if (!isUser) {
+			userMemberDto.setPw(passwordEncoder.encode(userMemberDto.getPw()));			// 비밀번호 암호화 작업
+			int result = iUserMemberDaoMB.insertUserMember(userMemberDto);
 
-            switch (result) {
-                case DATABASE_COMMUNICATION_TROUBLE:
-                    log.info("[UserMemberService] DATABASE COMMUNICATION TROUBLE");
-                    break;
+			switch (result) {
+			case DATABASE_COMMUNICATION_TROUBLE:
+				log.info("[UserMemberService] DATABASE COMMUNICATION TROUBLE");
+				break;
 
-                case INSERT_FAIL_AT_DATABASE:
-                    log.info("[UserMemberService] INSERT FAIL AT DATABASE");
-                    break;
+			case INSERT_FAIL_AT_DATABASE:
+				log.info("[UserMemberService] INSERT FAIL AT DATABASE");
+				break;
+				
+			case INSERT_SUCCESS_AT_DATABASE:
+				log.info("[UserMemberService] INSERT SUCCESS AT DATABASE");
+				break;
 
-                case INSERT_SUCCESS_AT_DATABASE:
-                    log.info("[UserMemberService] INSERT SUCCESS AT DATABASE");
-                    break;
+			}
+			
+			return result;
+			
+		} else {
+			return INSERT_DUPLICATE_ID_AT_DATABASE;
+			
+		}
+		
+	}
 
-            }
+	@Override
+	public UserMemberDto userLoginConfirm(UserMemberDto userMemberDto) {
+		log.info("[UserMemberService] memberLoginConfirm()");
 
-            return result;
+		UserMemberDto loginedUserDto = iUserMemberDaoMB.selectUserForLogin(userMemberDto);
+		if(passwordEncoder.matches(userMemberDto.getPw(),loginedUserDto.getPw())) {
+			return loginedUserDto;
 
-        } else {
-            return INSERT_DUPLICATE_ID_AT_DATABASE;
+		} else {
+			loginedUserDto = null;
+			return loginedUserDto;
 
-        }
+		}
 
-    }
+	}
 
-    @Override
-    public UserMemberDto userLoginConfirm(UserMemberDto userMemberDto) {
-        log.info("[UserMemberService] memberLoginConfirm()");
+	@Override
+	public UserMemberDto userModifyConfirm(UserMemberDto userMemberDto) {
+		log.info("[UserMemberService] userModifyConfirm()");
 
-        UserMemberDto loginedUserDto = iUserMemberDaoMB.selectUserForLogin(userMemberDto);
-        if (passwordEncoder.matches(userMemberDto.getPw(), loginedUserDto.getPw())) {
-            return loginedUserDto;
+		int result = iUserMemberDaoMB.updateAccount(userMemberDto);
+		if(result > 0) {
+			return iUserMemberDaoMB.getLatestAccountInfo(userMemberDto);
 
-        } else {
-            loginedUserDto = null;
-            return loginedUserDto;
+		} else {
+			return null;
 
-        }
+		}
 
-    }
-
-    @Override
-    public UserMemberDto userModifyConfirm(UserMemberDto userMemberDto) {
-        log.info("[UserMemberService] userModifyConfirm()");
-
-        int result = iUserMemberDaoMB.updateAccount(userMemberDto);
-        if (result > 0) {
-            return iUserMemberDaoMB.getLatestAccountInfo(userMemberDto);
-
-        } else {
-            return null;
-
-        }
-
-    }
+	}
 
     @Override
     public int userDeleteConfirm(int no) {
@@ -102,69 +102,69 @@ public class UserMemberService implements IUserMemberService {
 
         return iUserMemberDaoMB.deleteUser(no);
 
-    }
+	}
 
-    @Override
-    public int findPasswordConfirm(UserMemberDto userMemberDto) throws MessagingException {
-        log.info("[UserMemberService] findPasswordConfirm()");
+	@Override
+	public int findPasswordConfirm(UserMemberDto userMemberDto) throws MessagingException {
+		log.info("[UserMemberService] findPasswordConfirm()");
 
-        String newPassword = createNewPassword();
+		String newPassword = createNewPassword();
 
-        if (newPassword != null) {
-            emailService.sendMail(userMemberDto, newPassword);
+		if(newPassword != null) {
+			emailService.sendMail(userMemberDto, newPassword);
 
-            userMemberDto.setPw(passwordEncoder.encode(newPassword));
+			userMemberDto.setPw(passwordEncoder.encode(newPassword));
 
-            int result = iUserMemberDaoMB.updateUserPW(userMemberDto);
+			int result = iUserMemberDaoMB.updateUserPW(userMemberDto);
 
-            if (result <= 0) {
-                log.info("[UserMemberService] UPDATE USER PASSWORD FAIL");
-                return result;
+			if(result <= 0) {
+				log.info("[UserMemberService] UPDATE USER PASSWORD FAIL");
+				return result;
 
-            }
+			}
 
-            log.info("[UserMemberService] UPDATE USER PASSWORD SUCCESS");
-            return result;
+			log.info("[UserMemberService] UPDATE USER PASSWORD SUCCESS");
+			return result;
 
-        }
+		}
 
-        return 0;
+		return 0;
 
-    }
+	}
 
-    private String createNewPassword() {
-        log.info("[UserMemberService] createNewPassword()");
+	private String createNewPassword() {
+		log.info("[UserMemberService] createNewPassword()");
 
-        char[] chars = new char[]{
-                '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-                'a', 'b', 'c', 'd', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
-                'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w',
-                'x', 'y', 'z'
-        };
+		char[] chars = new char[] {
+				'0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+				'a', 'b', 'c', 'd', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
+				'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w',
+				'x', 'y','z'
+		};
 
-        StringBuffer stringBuffer = new StringBuffer();
-        SecureRandom secureRandom = new SecureRandom();
-        secureRandom.setSeed(new Date().getTime());
+		StringBuffer stringBuffer = new StringBuffer();
+		SecureRandom secureRandom = new SecureRandom();
+		secureRandom.setSeed(new Date().getTime());
 
-        int index = 0;
-        int length = chars.length;
-        for (int i = 0; i < 8; i++) {
-            index = secureRandom.nextInt(length);
+		int index = 0;
+		int length =  chars.length;
+		for (int i = 0; i < 8; i++) {
+			index = secureRandom.nextInt(length);
 
-            if (index % 2 == 0) {
-                stringBuffer.append(String.valueOf(chars[index]).toUpperCase());
+			if (index % 2 == 0) {
+				stringBuffer.append(String.valueOf(chars[index]).toUpperCase());
 
-            } else {
-                stringBuffer.append(String.valueOf(chars[index]).toLowerCase());
+			} else {
+				stringBuffer.append(String.valueOf(chars[index]).toLowerCase());
 
-            }
+			}
 
-        }
+		}
 
-        log.info("[UserMemberService] NEW PASSWORD: " + stringBuffer.toString());
+		log.info("[UserMemberService] NEW PASSWORD: " + stringBuffer.toString());
 
-        return stringBuffer.toString();
+		return stringBuffer.toString();
 
-    }
+	}
 
 }

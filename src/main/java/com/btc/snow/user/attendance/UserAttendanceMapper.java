@@ -3,7 +3,6 @@ package com.btc.snow.user.attendance;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import java.util.List;
 import java.util.Map;
 
 @Mapper
@@ -14,10 +13,4 @@ public interface UserAttendanceMapper {
     void testInsert(String hi);
 
     int qrCheckConfrim(Map<Object, Object> map);
-
-    UserAttendanceDto selectAttendenceStatus(Map<Object, Object> map);
-
-    int isValidStatus(Map<Object, Object> map);
-
-    List<UserAttendanceDto> selectAllUserforAttendence(String uId);
 }

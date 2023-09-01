@@ -35,7 +35,7 @@ public class MyPageController {
         ModelAndView modelAndView = new ModelAndView();
         List<UserAttendanceDto> userAttendanceDtos = new ArrayList<>();
 
-        userAttendanceDtos = userAttendanceService.selectAllUserforAttendence(u_id);
+//        userAttendanceDtos = userAttendanceService.selectAllUserforAttendence(u_id);
 
 
         modelAndView.addObject("userAttendanceDtos", userAttendanceDtos);

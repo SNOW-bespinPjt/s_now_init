@@ -30,7 +30,6 @@ public class AdminAssignmentController {
     // alert
     String msg = "";
 
-
     /*
      * 과제 리스트(과제 페이지)
      */
