@@ -12,6 +12,7 @@ public class UserLoginInterCeptor implements HandlerInterceptor {
         System.out.println("[LoginInterCeptor] preHandle()");
 
         HttpSession session = request.getSession(false);
+
         if (session != null) {
             Object object = session.getAttribute("loginedMemberDto");
 
