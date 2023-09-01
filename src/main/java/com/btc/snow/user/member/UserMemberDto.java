@@ -18,7 +18,7 @@ public class UserMemberDto {
     private int age;
     private String university;
     private String department;
-    private int gradu_status;
+    private int is_graduation_status;
     private String img;
     private String reg_date;
     private String mod_date;

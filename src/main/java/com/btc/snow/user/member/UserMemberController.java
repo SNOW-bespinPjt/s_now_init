@@ -195,35 +195,5 @@ public class UserMemberController {
 
 	}
 
-	/*
-	 * FIND ID FORM
-	 */
-//	@GetMapping("/find_id_form")
-//	public String findIdForm() {
-//		log.info("[UserMemberController] findIdForm()");
-//
-//		String nextPage = "user/member/find_id_form";
-//
-//		return nextPage;
-//
-//	}
-
-	/*
-	 * FIND ID CONFIRM
-	 */
-//	@PostMapping("/find_id_confirm")
-//	public String findIdConfirm(UserMemberDto userMemberDto) throws MessagingException {
-//		log.info("[UserMemberController] findIdConfirm()");
-//
-//		String nextPage = "user/member/find_id_success";
-//
-//		int result = userMemberService.findIdConfirm(userMemberDto);
-//
-//		if(result <= 0)
-//			nextPage = "admin/member/find_id_fail";
-//
-//		return nextPage;
-//
-//	}
 
 }
