@@ -26,9 +26,9 @@ public class AdminAssignmentController {
     UploadFileService uploadFileService;
 
     String nextPage = null;
-    String msg = "";
 
     // alert
+    String msg = "";
 
 
     /*
@@ -145,12 +145,16 @@ public class AdminAssignmentController {
         return nextPage;
     }
 
-
     
     
     /*
      * 과제 수정
      */
+    @GetMapping("modify")
+    public String modify(){
+
+        return null;
+    }
 
     
     
@@ -161,6 +165,7 @@ public class AdminAssignmentController {
 
 
     // -------------------------------------------------------------------------------------------
+
     /*
      * 과제 제출 학생 리스트
      */
