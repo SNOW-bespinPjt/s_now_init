@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="flex flex-col items-center justify-center w-5/6 mx-auto">
+
+<header th:replace="~{/include/header_nav_footer.html::header}"></header>
+
+<nav th:replace="~{/include/header_nav_footer.html::nav}"></nav>
+
+<section class="flex flex-row w-5/6 border-solid mt-7">
+    <div>
+        <a th:href="@{/user/meeting/meeting_form}">모임 개설</a>
+    </div>
+</section>
+
+<footer th:replace="~{/include/header_nav_footer.html::footer}"></footer>
+
+</body>
+</html>
