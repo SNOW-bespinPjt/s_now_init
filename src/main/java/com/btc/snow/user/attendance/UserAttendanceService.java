@@ -35,7 +35,7 @@ public class UserAttendanceService implements IUserAttendanceService {
 
 
         // do update confirm?u_m_no=1
-        String url = "http://localhost:8090/user/attendence/confirm?u_m_no=" + Integer.toString(userMemberDto.getU_m_no());
+        String url = "http://localhost:8090/user/attendence/confirm?u_m_no=" + Integer.toString(userMemberDto.getNo());
 
         BitMatrix encode = new MultiFormatWriter().encode(url, BarcodeFormat.QR_CODE, width, height);
         Map<String, Object> map = new HashMap<>();

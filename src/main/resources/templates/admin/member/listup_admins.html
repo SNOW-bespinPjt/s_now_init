@@ -44,12 +44,12 @@
                                     <td class="border px-4 py-2" th:text="${item.phone}"></td>
                                     <td class="border px-4 py-2" th:text="${item.position}"></td>
                                     <td class="border px-4 py-2">
-                                        <span th:if="${item.approval eq 0}">
+                                        <span th:if="${item.is_approval eq 0}">
                                             <input type="button" value="승인처리" th:attr="data-no=${item.no}"
                                                    onclick="approveAdmin(this.getAttribute('data-no'));"
                                                    class="px-2 py-1 rounded bg-blue-500 text-white hover:bg-blue-600">
                                         </span>
-                                        <span th:if="${item.approval eq 1}" class="text-green-500">승인완료</span>
+                                        <span th:if="${item.is_approval eq 1}" class="text-green-500">승인완료</span>
                                     </td>
                                 </tr>
                                 </tbody>
