@@ -6,7 +6,11 @@ import com.google.zxing.WriterException;
 public interface IUserAttendanceService {
     public Object qrCreate(UserMemberDto userMemberDto) throws WriterException;
 
-    public Object qrChackConfirm(int u_m_no);
+    public Object qrChackConfirm(String u_id);
 
-//    public Object selectUserforAttendence();
+
+    public Object selectUserforAttendence(String u_id);
+
+    public Object selectAllUserforAttendence(String u_id);
+
 }
