@@ -35,7 +35,7 @@
 
 
     <select id="selectAllUserforAttendence" parameterType="String"
-            resultType="java.util.List.UserAttendanceDto">
+            resultType="java.util.List">
 
         select *
         from ATTENDENCE
