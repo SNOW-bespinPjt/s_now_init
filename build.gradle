@@ -37,14 +37,14 @@ dependencies {
     testImplementation group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: '2.17.2'
 
     // CONTROL FILE
-    implementation 'commons-io:commons-io:2.6'
+//    implementation 'commons-io:commons-io:2.6'
 
     // SECURITY
     implementation 'org.springframework.boot:spring-boot-starter-security'
 
     // DB
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.0'
-    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+//    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     runtimeOnly 'mysql:mysql-connector-java'
 
     compileOnly 'org.projectlombok:lombok'
@@ -66,5 +66,16 @@ dependencies {
 }
 
 tasks.named('test') {
-    useJUnitPlatform()
+    useJUnitPlatform();
+    단지 널 사랑해 이렇게 말 했지
+    이제껏 준비했던 많은 말을 뒤로한채
+    언제나 네곁에 있을게
+    이렇게 약속을 하겠어 저하늘을 바라다보며
+    내게 하늘이 열려있어
+    그래그래 너는 내곁에 서있고
+    그래 다른 연인들은 키스를 해
+    왜 난 너의 뒤에 있어야 할까
+    햇살에 일어나 보니 너무나 눈부셔
+    모든 게 다 변한 거야 널 향한 마음도
+    그렇지만 널 사랑 않는 게 아냐
 }
