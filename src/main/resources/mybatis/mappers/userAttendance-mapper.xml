@@ -20,6 +20,7 @@
         from ATTENDENCE
         where u_id = #{u_id}
           and tstatus = #{tstatus}
+          and date_format(reg_date, "%Y-%m-%d") = current_date()
 
 
     </select>
@@ -29,6 +30,16 @@
         from ATTENDENCE
         where u_id = #{u_id}
           AND tstatus = #{tstatus}
+
+    </select>
+
+
+    <select id="selectAllUserforAttendence" parameterType="String"
+            resultType="java.util.List.UserAttendanceDto">
+
+        select *
+        from ATTENDENCE
+        where u_id = #{u_id}
 
     </select>
 

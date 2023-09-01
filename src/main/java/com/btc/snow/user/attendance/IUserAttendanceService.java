@@ -11,5 +11,6 @@ public interface IUserAttendanceService {
 
     public Object selectUserforAttendence(String u_id);
 
+    public Object selectAllUserforAttendence(String u_id);
 
 }

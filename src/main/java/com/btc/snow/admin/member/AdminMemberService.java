@@ -55,19 +55,19 @@ public class AdminMemberService implements IAdminService {
             int result = iAdminDaoMB.insertAdminAccount(adminMemberDto);
 
             if (result > 0) {
-				return ADMIN_SUCCESS;
+                return ADMIN_SUCCESS;
 
-			} else {
-				return ADMIN_FAIL;
+            } else {
+                return ADMIN_FAIL;
 
-			}
+            }
 
         } else {
             return ADMIN_ACCOUNT_ALREADY_EXIST;
 
         }
     }
-    
+
     // 로그인
     @Override
     public AdminMemberDto loginConfirm(AdminMemberDto adminMemberDto) {
@@ -78,12 +78,12 @@ public class AdminMemberService implements IAdminService {
         if (loginedAdminDto != null && passwordEncoder.matches(adminMemberDto.getPw(), loginedAdminDto.getPw())) {
             log.info("[AdminMemberService] ADMIN MEMBER LOGIN SUCCESS!!");
 
-			return loginedAdminDto;
+            return loginedAdminDto;
 
         } else {
             log.info("[AdminMemberService] ADMIN MEMBER LOGIN FAIL!!");
 
-			return null;
+            return null;
 
         }
 
@@ -126,11 +126,11 @@ public class AdminMemberService implements IAdminService {
         int result = iAdminDaoMB.updateAdminApproval(no);
 
         if (result > 0) {
-			log.info("ADMIN MEMBER APPROVAL SUCCESS!!");
+            log.info("ADMIN MEMBER APPROVAL SUCCESS!!");
 
-		} else {
-			log.info("ADMIN MEMBER APPROVAL FAIl!!");
-		}
+        } else {
+            log.info("ADMIN MEMBER APPROVAL FAIl!!");
+        }
 
         return result;
     }
@@ -213,7 +213,7 @@ public class AdminMemberService implements IAdminService {
     @Override
     public String createNewPassword() {
         log.info("[AdminMemberService] createNewPassword()");
-
+        
         char[] chars = new char[]{
                 '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
                 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
@@ -230,13 +230,12 @@ public class AdminMemberService implements IAdminService {
         for (int i = 0; i < 8; i++) {
             index = secureRandom.nextInt(length);
 
-            if (index % 2 == 0)
-            {
+            if (index % 2 == 0) {
                 stringBuffer.append(String.valueOf(chars[index]).toUpperCase());
 
             } else {
                 stringBuffer.append(String.valueOf(chars[index]).toLowerCase());
-                
+
             }
 
         }
