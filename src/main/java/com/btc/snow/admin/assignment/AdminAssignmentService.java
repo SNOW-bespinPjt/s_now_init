@@ -16,7 +16,7 @@ public class AdminAssignmentService implements IAdminAssignmentService {
     @Autowired
     IAdminAssignmentMB iAdminAssignmentMB;
 
-    // 상수
+    // 상수 : 공통상수 빼기
     final static public int ASSIGNMENT_SUCCESS = 1;     //성공
     final static public int ASSIGNMENT_FAIL = 0;        //실패
 

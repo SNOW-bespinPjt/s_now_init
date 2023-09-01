@@ -34,7 +34,7 @@ public class AdminAssignmentController {
     /*
      * 과제 리스트(과제 페이지)
      */
-    @GetMapping("/list")
+    @GetMapping("/list") //수정 필요 ~ : 공부 -> 적용
     public ModelAndView List() {
         log.info("[AdminAssignmentController] List()");
 
@@ -185,4 +185,5 @@ public class AdminAssignmentController {
      * 과제 미제출 학생 메일 보내기
      */
 
+    
 }
