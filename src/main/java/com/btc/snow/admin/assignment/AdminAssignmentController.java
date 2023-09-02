@@ -219,11 +219,6 @@ public class AdminAssignmentController {
 
 
     /*
-     * 과제 다운로드
-     */
-
-
-    /*
      * 과제 점수 등록
      */
 
