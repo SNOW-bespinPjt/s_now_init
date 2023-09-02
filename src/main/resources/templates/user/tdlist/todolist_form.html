@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script th:replace="~{/include/common_js.html::jquery_cdn}"></script>
+    <script th:replace="~{/user/tdlist/todolist_form_js.html::js}"></script>
+
+</head>
+<body class="flex flex-col items-center justify-center w-5/6 mx-auto">
+<header th:replace="~{/include/header_nav_footer::header}"></header>
+
+<section class="flex flex-row w-5/6 border-solid mt-7">
+    <div
+            class="items-center justify-center w-screen h-screen mr-8 border-2 rounded-lg bg-slate-100"
+    >
+        <div>
+            <h2>Create ToDoList~</h2>
+        </div>
+
+        <div id="todo_container">
+            <div>
+                <label for="content">Content:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <label for="tag">Tag:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <label for="start_date">Start Date:</label>&nbsp;&nbsp;
+                <label for="end_date">End Date:</label>&nbsp;&nbsp;
+            </div>
+            <form name="create_tdlist_form">
+                <input type="text" id="content" name="content" placeholder="INPUT CONTENT">
+                <input type="text" id="tag" name="tag" placeholder="INPUT TAG">
+                <input type="date" id="start_date" name="start_date">
+                <input type="date" id="end_date" name="end_date">
+                <input type="button" value="Create List">
+            </form>
+        </div>
+
+        <div id="todo_list">
+            <table>
+                <thead>
+                <th>체크</th>
+                <th>내용</th>
+                <th>태그</th>
+                <th>시작일</th>
+                <th>마감일</th>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+    <div class="flex flex-col items-center w-3/4 h-screen border-2 rounded-lg">
+        <div
+                class="flex flex-col items-center justify-center w-11/12 h-40 p-2 mt-6 border-2 rounded-sm"
+        >
+            <h3 class="mb-3">SNOW에 오신 것을 환영합니다 !</h3>
+            <button
+                    class="h-10 px-4 py-2 font-bold text-white bg-green-500 rounded w-52 hover:bg-green-600"
+            >
+                login
+            </button>
+            <div class="mt-3">
+                <a
+                        class="cursor-pointer hover:underline hover:font-thin hover:text-gray-500"
+                >아이디 찾기</a
+                >
+                |
+                <a
+                        class="cursor-pointer hover:underline hover:font-thin hover:text-gray-500"
+                >비밀번호 찾기</a
+                >
+                |
+                <a
+                        class="cursor-pointer hover:underline hover:font-thin hover:text-gray-500"
+                >회원가입</a
+                >
+            </div>
+        </div>
+        <div
+                class="flex flex-col items-center justify-center w-11/12 p-2 mt-6 border-2 rounded-sm h-2/4"
+        >
+            <h3 class="mb-3">SNOW에 오신 것을 환영합니다 !</h3>
+        </div>
+    </div>
+</section>
+
+<footer th:replace="~{/include/header_nav_footer.html::footer}"></footer>
+</body>
+</html>

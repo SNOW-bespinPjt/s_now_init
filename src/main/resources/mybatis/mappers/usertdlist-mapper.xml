@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.btc.snow.user.tdlist.IUserTdListDaoMB">
+
+    <select id="showAllTdList"
+            parameterType="com.btc.snow.user.member.UserMemberDto"
+            resultType="com.btc.snow.user.tdlist.UserTdListDto">
+
+        SELECT *
+        FROM TODOLIST
+        WHERE user_id = #{id}
+        ORDER BY reg_date DESC
+
+
+    </select>
+
+    <insert id="insertTdList"
+            parameterType="com.btc.snow.user.tdlist.UserTdListDto">
+
+        INSERT INTO TODOLIST(user_id,
+                             content,
+                             tag,
+                             start_date,
+                             end_date,
+                             reg_date,
+                             mod_date)
+
+        VALUES (#{user_id},
+                #{content},
+                #{tag},
+                #{start_date},
+                #{end_date},
+                NOW(), NOW())
+
+    </insert>
+
+    <update id="updateTdList" parameterType="com.btc.snow.user.tdlist.UserTdListDto">
+
+        UPDATE
+            TODOLIST
+        SET content    = #{content},
+            tag        = #{tag},
+            home_phone = #{home_phone},
+            start_date = #{start_date},
+            end_date   = #{end_date},
+            mod_date   = NOW()
+        WHERE no = #{no}
+
+    </update>
+
+    <delete id="removeTdList" parameterType="Integer">
+
+        DELETE
+        FROM TODOLIST
+        WHERE
+            no = #{no}
+
+    </delete>
+
+
+</mapper>
