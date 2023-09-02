@@ -20,4 +20,8 @@ public interface UserAttendanceMapper {
     int isValidStatus(Map<Object, Object> map);
 
     List<UserAttendanceDto> selectAllUserforAttendence(String uId);
+
+    UserAttendanceDto selectValidAttDto(Map<String, Object> map);
+
+    void updateUstatus();
 }

@@ -1,9 +1,10 @@
 package com.btc.snow.user.mypage;
 
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MyPageService {
-
-
+@Log4j2
+public class MyPageService implements IMyPageService {
+    
 }

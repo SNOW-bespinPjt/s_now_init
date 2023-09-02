@@ -35,13 +35,27 @@
 
 
     <select id="selectAllUserforAttendence" parameterType="String"
-            resultType="java.util.List">
+            resultType="HashMap">
 
         select *
         from ATTENDENCE
         where u_id = #{u_id}
 
     </select>
+
+    <select id="selectValidAttDto" parameterType="HashMap" resultType="com.btc.snow.user.attendance.UserAttendanceDto">
+        select *
+        from ATTENDENCE
+        where u_id = #{u_id}
+          AND ustatus = #{ustatus}
+    </select>
+
+    <update id="updateUstatus">
+        update ATTENDENCE
+        set ustatus=1
+        where reg_date &lt;= now() - interval 2 week;
+
+    </update>
 
 
 </mapper>

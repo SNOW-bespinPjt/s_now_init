@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.net.URI;
 
@@ -63,6 +64,22 @@ public class UserAttendanceController {
         }
 
 
+    }
+
+
+    @GetMapping("/attendence/validSubmit")
+    public Object selectValidSubmit(HttpSession session) {
+        log.info("selectValidSubmit() !!!");
+        ModelAndView modelAndView = new ModelAndView();
+        UserAttendanceDto userAttendanceDto = userAttendanceService.selectValidSubmitAttendence(session);
+        if (userAttendanceDto != null) {
+            log.info("selectValidSubmit() successs");
+            modelAndView.addObject("userAttendanceDto", userAttendanceDto);
+        } else {
+            log.info("selectValidSubmit() fail!!");
+        }
+
+        return modelAndView;
     }
 
 

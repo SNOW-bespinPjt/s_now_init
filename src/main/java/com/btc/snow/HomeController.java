@@ -46,10 +46,14 @@ public class HomeController {
 
             if (userMemberDto != null) {
                 UserAttendanceDto userAttendanceDto = (UserAttendanceDto) userAttendanceService.selectUserforAttendence(userMemberDto.getId());
-                log.info("userAttendanceDto.getAstatus() : " + userAttendanceDto.getAstatus());
 
-                modelAndView.addObject("userAttendanceDto", userAttendanceDto);
+                if (userAttendanceDto == null) {
+                    modelAndView.addObject("status", 0);
 
+                } else {
+                    modelAndView.addObject("status", 1);
+                    modelAndView.addObject("userAttendanceDto", userAttendanceDto);
+                }
             }
 
 

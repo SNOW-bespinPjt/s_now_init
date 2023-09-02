@@ -7,10 +7,12 @@ import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
@@ -128,6 +130,7 @@ public class UserAttendanceService implements IUserAttendanceService {
         LocalTime lastNoonTime = LocalTime.of(18, 0);
 
         Map<Object, Object> map = new HashMap<>();
+
         if ((currentTime.isAfter(morningTime) && currentTime.isBefore(lastMorningTime))) {
             map.put("u_id", u_id);
             map.put("tstatus", 0);
@@ -147,12 +150,43 @@ public class UserAttendanceService implements IUserAttendanceService {
     public List<UserAttendanceDto> selectAllUserforAttendence(String u_id) {
         log.info("selectAllUserforAttendence : ");
         log.info(" u_id : " + u_id);
+        Map<Object, Object> map = new HashMap<>();
+        List<UserAttendanceDto> userAttendanceDtos = userAttendanceMapper.selectAllUserforAttendence(u_id);
 
+        if (userAttendanceDtos == null) {
+            log.info("usetrAttendenceDtos niull!!");
 
-        return userAttendanceMapper.selectAllUserforAttendence(u_id);
+            return null;
+
+        } else {
+            log.info("usetrAttendenceDtos success {}!!", userAttendanceDtos.get(0));
+
+            return userAttendanceDtos;
+
+        }
 
 
     }
 
 
+    @Override
+    public UserAttendanceDto selectValidSubmitAttendence(HttpSession session) {
+        log.info("selectValidSubmitAttendence()!!");
+        Map<String, Object> map = new HashMap<>();
+
+        UserMemberDto loginedUserDto = (UserMemberDto) session.getAttribute("loginedUserDto");
+        map.put("ustatus", 0);
+        map.put("u_no", loginedUserDto.getId());
+
+
+        return userAttendanceMapper.selectValidAttDto(map);
+    }
+
+    @Scheduled(cron = "0 0 0 * * *", zone = "Asia/Seoul")
+    public void updateAttendenceUstatus() {
+        log.info("updateAttendenceUstatus()!!");
+
+        userAttendanceMapper.updateUstatus();
+
+    }
 }
