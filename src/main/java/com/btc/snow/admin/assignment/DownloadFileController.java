@@ -35,7 +35,7 @@ public class DownloadFileController {
                 log.info("[DownloadFileController] 파일 존재");
                 return ResponseEntity.ok()
                         .contentType(MediaType.APPLICATION_OCTET_STREAM)
-                        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFile() + "\"")
+                        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; file=\"" + resource.getFile() + "\"")
                         .body(resource);
             } else {
                 // 파일이 존재하지 않거나 읽을 수 없는 경우 404 에러 응답

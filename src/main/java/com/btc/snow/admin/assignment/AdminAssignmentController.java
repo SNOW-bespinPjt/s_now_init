@@ -166,7 +166,8 @@ public class AdminAssignmentController {
                                           AdminAssignmentDto adminAssignmentDto) {
         log.info("[AdminAssignmentController] modifyAssignmentConfirm()");
 
-        nextPage = "redirect:/admin/assignment/assignment_modify_form?no=" + adminAssignmentDto.getNo();
+//        nextPage = "redirect:/admin/assignment/assignment_modify_form?no=" + adminAssignmentDto.getNo();
+        nextPage = "redirect:/admin/assignment/list";
 
         adminAssignmentDto.setFile_name(file.getOriginalFilename());
         log.info("adminAssignmentDto : " + adminAssignmentDto.getFile_name());

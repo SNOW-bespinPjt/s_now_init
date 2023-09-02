@@ -30,9 +30,9 @@
                         <input type="hidden" name="no" th:value="${adminAssignmentDto.no}">
                         <input type="text" name="title" class="font-bold border mb-4 px-4 py-2 rounded-lg w-full"
                                placeholder="INPUT TITLE"
-                               th:text="${adminAssignmentDto.title}">
+                               th:value="${adminAssignmentDto.title}">
                         <textarea name="body" placeholder="INPUT BODY" class="border mb-4 p-4 rounded-lg w-full"
-                                  th:value="${adminAssignmentDto.body}"></textarea>
+                                  th:text="${adminAssignmentDto.body}"></textarea>
                         <input type="file" name="file_admin" class="mb-4">
                         <div class="space-x-4">
                             <input type="button" value="MODIFY" onclick="modifyAssignmentForm();"

@@ -49,16 +49,17 @@
 
     <update id="updateAssignment" parameterType="Integer">
         UPDATE ASSIGNMENT
-        <set>
-            <if test="file != null">
-                file = #{file},
-            </if>
-            title = #{title},
-            body = #{body},
-            mod_date = NOW()
-        </set>
+        SET
+        <if test="file != null">
+            file = #{file},
+            file_name = #{file_name},
+        </if>
+        title = #{title},
+        body = #{body},
+        mod_date = NOW()
         WHERE
-            no = #{no}
+        no = #{no}
+
     </update>
 
     <delete id="deleteAssignment" parameterType="Integer">
