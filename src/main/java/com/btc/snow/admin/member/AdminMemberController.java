@@ -148,7 +148,7 @@ public class AdminMemberController {
     }
 
     /*
-     * 로그아웃확인
+     * 로그아웃 확인
      */
     @GetMapping("/member_logout_confirm")
     public String logoutConfirm(HttpSession session) {
@@ -156,7 +156,6 @@ public class AdminMemberController {
 
         String nextPage = "redirect:/admin";
 
-//		session.invalidate();
         session.removeAttribute("loginedAdminDto");
 
         return nextPage;
@@ -164,7 +163,7 @@ public class AdminMemberController {
     }
 
     /*
-     * 계정수정
+     * 계정 수정
      */
     @GetMapping("/member_modify_form")
     public String modifyAccountForm(HttpSession session) {
@@ -221,11 +220,11 @@ public class AdminMemberController {
 
         List<AdminMemberDto> adminMemberDtos = adminMemberService.listupAdmin();
 
-        ModelAndView mv = new ModelAndView();                // 1)객체 생성
-        mv.setViewName(nextPage);                            // 2)뷰 설정
-        mv.addObject("adminMemberDtos", adminMemberDtos);    // 3) 데이터 추가
+        ModelAndView mv = new ModelAndView();                               // 1)객체 생성
+        mv.setViewName(nextPage);                                           // 2)뷰 설정
+        mv.addObject("adminMemberDtos", adminMemberDtos);       // 3) 데이터 추가
 
-        return mv;                                            // 4) MV 반환
+        return mv;                                                          // 4) MV 반환
 
     }
 

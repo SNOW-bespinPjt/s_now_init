@@ -20,4 +20,13 @@ public interface IAdminAssignmentMB {
 
     // 활성화 번호 찾기
     AdminAssignmentDto selectActivationNum(int no);
+
+    // 과제 상세페이지
+    AdminAssignmentDto selectAssignment(int no);
+
+    // 과제 삭제
+     int deleteAssignment(int no);
+
+    // 과제 수정
+     int updateAssignment(AdminAssignmentDto adminAssignmentDto);
 }

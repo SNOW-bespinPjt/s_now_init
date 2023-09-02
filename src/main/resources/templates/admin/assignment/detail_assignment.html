@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script th:src="@{/admin/js/goBack.js}" type="text/javascript"></script>
+    <script th:src="@{/admin/js/goToModifyForm.js}" type="text/javascript"></script>
+    <script th:src="@{/admin/js/deleteAssignment.js}" type="text/javascript"></script>
+</head>
+<body>
+<div class="flex">
+    <!-- nav -->
+    <div>
+        <nav th:replace="~{/include/admin_nav::nav}"></nav>
+    </div>
+    <!--  section & footer  -->
+    <div class="flex">
+        <div class="flex flex-col items-center justify-center w-5/6 mx-auto">
+            <section class="flex flex-row w-5/6 border-solid mt-7">
+                <div class="relative flex items-center justify-center w-screen h-auto mr-8 border-2 rounded-lg bg-slate-100 pb-10">
+                    <div class="word">
+                        <h2 class="absolute top-0 left-0 mt-4 text-2xl font-bold ml-14">
+                            DETAIL
+                        </h2>
+                    </div>
+                    <div id="assignmentDetails" class="mt-8 w-full text-center">
+                        <div class="mb-4">
+                            <h2 class="text-2xl font-bold pt-10" th:text="${adminAssignmentDto.title}"></h2>
+                        </div>
+                        <div class="mb-4 h-auto pt-16 pb-20" th:text="${adminAssignmentDto.body}"></div>
+                        <!-- 이거 파일업로드로 해야되서 바꿔야해 -->
+                        <div>
+                            <!-- 다운로드 버튼 -->
+                            <a th:href="@{'/download?file=' + adminAssignmentDto.file}"
+                               class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                               th:download="${adminAssignmentDto.file_name}"
+                               th:text="${adminAssignmentDto.file_name}">
+                            </a>
+                        </div>
+                        <div th:if="${session.loginedAdminDto.getNo() eq adminAssignmentDto.admin_no}"
+                             class="flex space-x-4 mt-7 justify-center">
+                            <input
+                                    type="button"
+                                    value="MODIFY"
+                                    th:attr="data-no=${adminAssignmentDto.no}"
+                                    onclick="goToModifyForm(this.getAttribute('data-no'))"
+                                    class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                            />
+                            <input
+                                    type="button"
+                                    value="DELETE"
+                                    th:attr="data-no=${adminAssignmentDto.no}"
+                                    onclick="deleteAssignment(this.getAttribute('data-no'))"
+                                    class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+                            />
+                            <input
+                                    type="button"
+                                    value="확인"
+                                    onclick="goBack()"
+                                    class="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400"
+                            />
+                        </div>
+                        <div th:unless="${session.loginedAdminDto.getNo() eq adminAssignmentDto.admin_no}"
+                             class="flex space-x-4 mt-7 justify-center">
+                            <input
+                                    type="button"
+                                    value="확인"
+                                    onclick="goBack()"
+                                    class="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <footer th:replace="~{/include/header_nav_footer.html::footer}"></footer>
+        </div>
+    </div>
+</div>
+</body>
+</html>

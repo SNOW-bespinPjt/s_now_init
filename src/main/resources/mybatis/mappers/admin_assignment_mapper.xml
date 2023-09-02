@@ -12,16 +12,16 @@
     </select>
 
     <insert id="insertAssignment" parameterType="com.btc.snow.admin.assignment.AdminAssignmentDto">
-        INSERT INTO ASSIGNMENT (admin_no, title, body, file, reg_date, mod_date)
-        VALUES (#{admin_no}, #{title}, #{body}, #{file}, NOW(), NOW())
+        INSERT INTO ASSIGNMENT (admin_no, title, body, file, file_name, reg_date, mod_date)
+        VALUES (#{admin_no}, #{title}, #{body}, #{file}, #{file_name}, NOW(), NOW())
     </insert>
 
     <update id="updateAdminActive" parameterType="Integer">
         UPDATE
             ASSIGNMENT
         SET is_activation = 1,
-            start_date = NOW(),
-            end_date = DATE_ADD(NOW(), INTERVAL 7 DAY)
+            start_date    = NOW(),
+            end_date      = DATE_ADD(NOW(), INTERVAL 7 DAY)
         WHERE no = #{no}
     </update>
 
@@ -29,15 +29,44 @@
         UPDATE
             ASSIGNMENT
         SET is_activation = 0,
-            start_date = null,
-            end_date = null
+            start_date    = null,
+            end_date      = null
         WHERE no = #{no}
     </update>
 
-    <select id="selectActivationNum"  parameterType="Integer" resultType="com.btc.snow.admin.assignment.AdminAssignmentDto">
+    <select id="selectActivationNum" parameterType="Integer"
+            resultType="com.btc.snow.admin.assignment.AdminAssignmentDto">
         SELECT *
         FROM ASSIGNMENT
         WHERE no = #{no}
     </select>
+
+    <select id="selectAssignment" parameterType="Integer" resultType="com.btc.snow.admin.assignment.AdminAssignmentDto">
+        SELECT *
+        FROM ASSIGNMENT
+        WHERE no = #{no}
+    </select>
+
+    <update id="updateAssignment" parameterType="Integer">
+        UPDATE ASSIGNMENT
+        <set>
+            <if test="file != null">
+                file = #{file},
+            </if>
+            title = #{title},
+            body = #{body},
+            mod_date = NOW()
+        </set>
+        WHERE
+            no = #{no}
+    </update>
+
+    <delete id="deleteAssignment" parameterType="Integer">
+        DELETE
+        FROM ASSIGNMENT
+        WHERE
+            no = #{no}
+    </delete>
+
 
 </mapper>

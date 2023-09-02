@@ -16,5 +16,11 @@ public interface IAdminAssignmentService {
     int SetAdminActive(int no);
 
     // 과제 상세페이지
-    AdminAssignmentDto getAssignment(AdminAssignmentDto adminAssignmentDto);
+    AdminAssignmentDto getAssignment(int no);
+
+    // 과제 수정
+    int modifyAssignmentConfirm(AdminAssignmentDto adminAssignmentDto);
+
+    // 과제 삭제
+    int deleteAssignmentConfirm(int no);
 }

@@ -77,10 +77,26 @@ public class AdminAssignmentService implements IAdminAssignmentService {
 
     // 과제 상세페이지
     @Override
-    public AdminAssignmentDto getAssignment(AdminAssignmentDto adminAssignmentDto) {
+    public AdminAssignmentDto getAssignment(int no) {
         log.info("[AdminAssignmentService] getAssignment()");
 
-        return null;
+        return iAdminAssignmentMB.selectAssignment(no);
+    }
+
+    // 과제 수정
+    @Override
+    public int modifyAssignmentConfirm(AdminAssignmentDto adminAssignmentDto) {
+        log.info("[AdminAssignmentService] modifyAssignmentConfirm()");
+
+        return iAdminAssignmentMB.updateAssignment(adminAssignmentDto);
+    }
+
+    // 과제 삭제
+    @Override
+    public int deleteAssignmentConfirm(int no) {
+        log.info("[AdminAssignmentService] deleteAssignmentConfirm()");
+
+        return iAdminAssignmentMB.deleteAssignment(no);
     }
 
 }

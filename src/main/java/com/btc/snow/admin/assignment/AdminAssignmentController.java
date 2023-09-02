@@ -57,7 +57,6 @@ public class AdminAssignmentController {
         log.info("[AdminAssignmentController] RegistrationForm()");
 
         nextPage = "admin/assignment/registration_form";
-
     }
 
     @PostMapping("/registration_confirm")
@@ -75,6 +74,9 @@ public class AdminAssignmentController {
         int admin_no = loginedAdminDto.getNo();
         log.info("과제 등록 admin_no --->" + admin_no);
         adminAssignmentDto.setAdmin_no(admin_no);
+
+        adminAssignmentDto.setFile_name(file.getOriginalFilename());
+        log.info("adminAssignmentDto : " + adminAssignmentDto.getFile_name());
 
         // 파일 저장
         String saveFileName = uploadFileService.upload(file);
@@ -99,11 +101,11 @@ public class AdminAssignmentController {
     }
 
     /*
-     * 과제 활성화 
+     * 과제 활성화
      */
     @GetMapping("set_admin_active")
     @ResponseBody
-    public Object SetAdminActive(@RequestParam("no") int no){
+    public Object SetAdminActive(@RequestParam("no") int no) {
         log.info("[AdminAssignmentController] SetAdminActive()");
         log.info("no: " + no);
 
@@ -125,42 +127,87 @@ public class AdminAssignmentController {
      * 과제 상세페이지
      */
     @GetMapping("/get_assignment")
-    public String getAssignment(HttpSession session,
-                                Model model,
-                                AdminAssignmentDto adminAssignmentDto) {
-        System.out.println("[OrganizerController] getAssignment()");
+    public ModelAndView getAssignment(@RequestParam("no") int no) {
+        log.info("[AdminAssignmentController] getAssignment()");
 
-        // 세션 확인
-        AdminMemberDto loginedAdminDto = (AdminMemberDto) session.getAttribute("loginedAdminDto");
-        if (loginedAdminDto == null) {
-            return "redirect:/";
+        nextPage = "admin/assignment/detail_assignment";
 
+        AdminAssignmentDto adminAssignmentDto = adminAssignmentService.getAssignment(no);
+
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName(nextPage);
+        mv.addObject("adminAssignmentDto", adminAssignmentDto);
+
+        return mv;
+    }
+
+
+    /*
+     * 과제 수정
+     */
+    @GetMapping("assignment_modify_form")
+    public String AssignmentModifyForm(
+            @RequestParam("no") int no,
+            Model model
+    ) {
+        log.info("[AdminAssignmentController] AssignmentModifyForm()");
+
+        nextPage = "admin/assignment/assignment_modify_form";
+
+        AdminAssignmentDto adminAssignmentDto = adminAssignmentService.getAssignment(no);
+        model.addAttribute("adminAssignmentDto", adminAssignmentDto);
+
+        return nextPage;
+
+    }
+
+    @PostMapping("/assignment_modify_confirm")
+    public String modifyAssignmentConfirm(@RequestParam("file_admin") MultipartFile file,
+                                          AdminAssignmentDto adminAssignmentDto) {
+        log.info("[AdminAssignmentController] modifyAssignmentConfirm()");
+
+        nextPage = "redirect:/admin/assignment/assignment_modify_form?no=" + adminAssignmentDto.getNo();
+
+        adminAssignmentDto.setFile_name(file.getOriginalFilename());
+        log.info("adminAssignmentDto : " + adminAssignmentDto.getFile_name());
+
+        // SAVE FILE
+        if (!file.getOriginalFilename().equals("")) {
+            String savedFileName = uploadFileService.upload(file);
+            if (savedFileName != null)
+                adminAssignmentDto.setFile(savedFileName);
         }
 
-        adminAssignmentDto = adminAssignmentService.getAssignment(adminAssignmentDto);
+        int result = adminAssignmentService.modifyAssignmentConfirm(adminAssignmentDto);
 
-        model.addAttribute("adminAssignmentDto", adminAssignmentDto);
+        if (result <= 0) {
+            log.info("[AdminAssignmentController] ASSIGNMENT MODIFY FAIL");
+
+        }
 
         return nextPage;
     }
 
-    
-    
-    /*
-     * 과제 수정
-     */
-    @GetMapping("modify")
-    public String modify(){
 
-        return null;
+    /*
+     * 과제 삭제
+     */
+    @GetMapping("/delete_assignment_confirm")
+    public String deleteAssignmentConfirm(@RequestParam("no") int no) {
+        System.out.println("[AdminAssignmentController] deleteAssignmentConfirm()");
+
+        String nextPage = "redirect:/admin/assignment/list";
+
+        int result = adminAssignmentService.deleteAssignmentConfirm(no);
+
+        if (result <= 0) {
+            log.info("[AdminAssignmentController] ASSIGNMENT DELETE FAIL");
+
+        }
+
+        return nextPage;
+
     }
-
-    
-    
-    /*
-     * 과제 삭제(본인만)
-     */
-
 
 
     // -------------------------------------------------------------------------------------------
@@ -189,5 +236,5 @@ public class AdminAssignmentController {
      * 과제 미제출 학생 메일 보내기
      */
 
-    
+
 }
