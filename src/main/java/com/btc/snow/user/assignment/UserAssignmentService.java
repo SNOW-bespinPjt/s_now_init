@@ -13,43 +13,55 @@ public class UserAssignmentService implements IUserAssignmentService {
     @Autowired
     IUserAssignmentMB iUserAssignmentMB;
 
+    // 상수 : 공통상수 빼기
+    final static public int ASSIGNMENT_SUCCESS = 1;     //성공
+    final static public int ASSIGNMENT_FAIL = 0;        //실패
+
     // 과제 리스트
     @Override
     public List<UserAssignmentDto> listAssignment() {
         log.info("[UserAssignmentService] listAssignment()");
 
-        return null;
+        return iUserAssignmentMB.selectAssignments();
     }
 
     // 과제 등록
     @Override
     public int RegistrationConfirm(UserAssignmentDto userAssignmentDto) {
+        log.info("[UserAssignmentService] RegistrationConfirm()");
 
+        int result = iUserAssignmentMB.insertAssignment(userAssignmentDto);
 
-        return 0;
+        if (result > 0) {
+            return ASSIGNMENT_SUCCESS;
+
+        } else {
+            return ASSIGNMENT_FAIL;
+
+        }
     }
 
     // 과제 상세페이지
     @Override
     public UserAssignmentDto getAssignment(int no) {
+        log.info("[UserAssignmentService] getAssignment()");
 
-
-        return null;
+        return iUserAssignmentMB.selectAssignment(no);
     }
 
     // 과제 수정
     @Override
     public int modifyAssignmentConfirm(UserAssignmentDto userAssignmentDto) {
+        log.info("[UserAssignmentService] modifyAssignmentConfirm()");
 
-
-        return 0;
+        return iUserAssignmentMB.updateAssignment(userAssignmentDto);
     }
 
     // 과제 삭제
     @Override
     public int deleteAssignmentConfirm(int no) {
+        log.info("[UserAssignmentService] deleteAssignmentConfirm()");
 
-
-        return 0;
+        return iUserAssignmentMB.deleteAssignment(no);
     }
 }
