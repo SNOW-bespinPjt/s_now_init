@@ -4,6 +4,8 @@ import com.btc.snow.user.member.UserMemberDto;
 import com.google.zxing.WriterException;
 import jakarta.servlet.http.HttpSession;
 
+import java.util.List;
+
 public interface IUserAttendanceService {
     public Object qrCreate(UserMemberDto userMemberDto) throws WriterException;
 
@@ -15,4 +17,10 @@ public interface IUserAttendanceService {
     public Object selectAllUserforAttendence(String u_id);
 
     public UserAttendanceDto selectValidSubmitAttendence(HttpSession session);
+
+    List<UserAttendanceDto> selectAbsentAttendence(String session);
+
+    List<UserAttendanceDto> selectACKAttendence(String id);
+
+    List<UserAttendanceDto> selectTardyAttendence(String id);
 }

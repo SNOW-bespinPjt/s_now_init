@@ -61,7 +61,6 @@ public class UserAttendanceService implements IUserAttendanceService {
 
     @Override
     public Object qrChackConfirm(String u_id) {
-
         log.info("Service qrChackConfirm() called");
         LocalTime currTime = LocalTime.now();
         LocalTime morningTime = LocalTime.of(9, 10);
@@ -150,7 +149,7 @@ public class UserAttendanceService implements IUserAttendanceService {
     public List<UserAttendanceDto> selectAllUserforAttendence(String u_id) {
         log.info("selectAllUserforAttendence : ");
         log.info(" u_id : " + u_id);
-        Map<Object, Object> map = new HashMap<>();
+
         List<UserAttendanceDto> userAttendanceDtos = userAttendanceMapper.selectAllUserforAttendence(u_id);
 
         if (userAttendanceDtos == null) {
@@ -182,11 +181,36 @@ public class UserAttendanceService implements IUserAttendanceService {
         return userAttendanceMapper.selectValidAttDto(map);
     }
 
+    @Override
+    public List<UserAttendanceDto> selectAbsentAttendence(String Id) {
+        log.info("selectAbsentAttendence!!");
+
+
+        return userAttendanceMapper.selectAbsentAttendence(Id);
+    }
+
+    @Override
+    public List<UserAttendanceDto> selectACKAttendence(String id) {
+        log.info("selectACKAttendence!!");
+
+        return userAttendanceMapper.selectACKAttendence(id);
+    }
+
+    @Override
+    public List<UserAttendanceDto> selectTardyAttendence(String id) {
+        log.info("selectTardyAttendence!!");
+
+        return userAttendanceMapper.selectTardyAttendence(id);
+    }
+
+
+    //2주 전 데이터 ustatus update (1 -> 업데이트 불가능)
     @Scheduled(cron = "0 0 0 * * *", zone = "Asia/Seoul")
     public void updateAttendenceUstatus() {
         log.info("updateAttendenceUstatus()!!");
 
         userAttendanceMapper.updateUstatus();
-
     }
+
+
 }

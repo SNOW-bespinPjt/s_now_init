@@ -10,13 +10,11 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.net.URI;
+import java.util.List;
 
 
 @Controller
@@ -70,8 +68,10 @@ public class UserAttendanceController {
     @GetMapping("/attendence/validSubmit")
     public Object selectValidSubmit(HttpSession session) {
         log.info("selectValidSubmit() !!!");
+
         ModelAndView modelAndView = new ModelAndView();
         UserAttendanceDto userAttendanceDto = userAttendanceService.selectValidSubmitAttendence(session);
+
         if (userAttendanceDto != null) {
             log.info("selectValidSubmit() successs");
             modelAndView.addObject("userAttendanceDto", userAttendanceDto);
@@ -82,5 +82,55 @@ public class UserAttendanceController {
         return modelAndView;
     }
 
+
+    @PostMapping("/attendence/absent")
+    @ResponseBody
+    public Object selectAttendenceAbsent(HttpSession session) {
+        log.info("selectAbsent()!!");
+
+        return getObject(session, "absent");
+    }
+
+    @PostMapping("/attendence/ackattendence")
+    @ResponseBody
+    public Object selectAttendenceACK(HttpSession session) {
+        log.info("selectAttendenceACK()");
+
+        return getObject(session, "attendanceACK");
+    }
+
+    @PostMapping("/attendence/tardy")
+    @ResponseBody
+    public Object selectAttendenceTardy(HttpSession session) {
+        log.info("selectAttendenceTardy()");
+
+        return getObject(session, "tardy");
+    }
+
+
+    private Object getObject(HttpSession session, String request) {
+        UserMemberDto userMemberDto = (UserMemberDto) session.getAttribute("loginedUserDto");
+        List<UserAttendanceDto> userAttendanceDtos = null;
+        if (request.equals("absent")) {
+
+            userAttendanceDtos = userAttendanceService.selectAbsentAttendence(userMemberDto.getId());
+        }
+        if (request.equals("attendanceACK")) {
+            userAttendanceDtos = userAttendanceService.selectACKAttendence(userMemberDto.getId());
+        }
+        if (request.equals("tardy")) {
+            userAttendanceDtos = userAttendanceService.selectTardyAttendence(userMemberDto.getId());
+        }
+
+
+        if (userAttendanceDtos != null) {
+            log.info("selectCategory success");
+            return userAttendanceDtos;
+
+        } else {
+            log.info("selectCategory fail!!");
+            return null;
+        }
+    }
 
 }

@@ -7,7 +7,6 @@
 
 
     <insert id="qrCheckConfrim" parameterType="HashMap">
-
         insert into ATTENDENCE(u_id, astatus, tstatus, reg_date, mod_date)
         values (#{u_id}, #{i}, #{i1}, now(), now())
 
@@ -15,7 +14,6 @@
 
     <select id="selectAttendenceStatus" parameterType="HashMap"
             resultType="com.btc.snow.user.attendance.UserAttendanceDto">
-
         select *
         from ATTENDENCE
         where u_id = #{u_id}
@@ -57,5 +55,31 @@
 
     </update>
 
+    <select id="selectAbsentAttendence" parameterType="String"
+            resultType="HashMap">
+        select *
+        from ATTENDENCE
+        where u_id = #{Id}
+          and astatus = 3
+
+    </select>
+
+    <select id="selectACKAttendence" parameterType="String"
+            resultType="HashMap">
+        select *
+        from ATTENDENCE
+        where u_id = #{Id}
+          and astatus = 0
+
+    </select>
+
+    <select id="selectTardyAttendence" parameterType="String"
+            resultType="HashMap">
+        select *
+        from ATTENDENCE
+        where u_id = #{Id}
+          and astatus = 1
+
+    </select>
 
 </mapper>

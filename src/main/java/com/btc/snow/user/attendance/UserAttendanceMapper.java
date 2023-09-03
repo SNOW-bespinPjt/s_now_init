@@ -24,4 +24,12 @@ public interface UserAttendanceMapper {
     UserAttendanceDto selectValidAttDto(Map<String, Object> map);
 
     void updateUstatus();
+
+    void updateAstatusForLT();
+
+    List<UserAttendanceDto> selectAbsentAttendence(String id);
+
+    List<UserAttendanceDto> selectACKAttendence(String id);
+
+    List<UserAttendanceDto> selectTardyAttendence(String id);
 }
