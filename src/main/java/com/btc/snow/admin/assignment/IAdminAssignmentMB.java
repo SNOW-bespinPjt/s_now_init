@@ -1,5 +1,7 @@
 package com.btc.snow.admin.assignment;
 
+import com.btc.snow.user.assignment.UserAssignmentDto;
+import com.btc.snow.user.member.UserMemberDto;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -32,5 +34,6 @@ public interface IAdminAssignmentMB {
     int updateAssignment(AdminAssignmentDto adminAssignmentDto);
 
     // 과제 제출 학생 리스트
-    List<AdminAssignmentDto> selectSubmitUser(int no, int groupId);
+    List<UserMemberDto> selectUsers();
+    List<UserAssignmentDto> selectSubmitUser(int no);
 }

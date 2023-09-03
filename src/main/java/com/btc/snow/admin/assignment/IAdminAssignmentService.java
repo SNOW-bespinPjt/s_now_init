@@ -1,5 +1,7 @@
 package com.btc.snow.admin.assignment;
 
+import com.btc.snow.user.assignment.UserAssignmentDto;
+import com.btc.snow.user.member.UserMemberDto;
 import jakarta.servlet.http.HttpSession;
 
 import java.util.List;
@@ -25,5 +27,7 @@ public interface IAdminAssignmentService {
     int deleteAssignmentConfirm(int no);
 
     // 과제 제출 학생 리스트
-    List<AdminAssignmentDto> checkAssignmentList(int no);
+    List<UserMemberDto> getUserList();
+    List<UserAssignmentDto> checkAssignmentList(int no);
+
 }

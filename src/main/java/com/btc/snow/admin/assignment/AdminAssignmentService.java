@@ -2,6 +2,8 @@ package com.btc.snow.admin.assignment;
 
 
 import com.btc.snow.admin.member.AdminMemberDto;
+import com.btc.snow.user.assignment.UserAssignmentDto;
+import com.btc.snow.user.member.UserMemberDto;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -99,13 +101,19 @@ public class AdminAssignmentService implements IAdminAssignmentService {
         return iAdminAssignmentMB.deleteAssignment(no);
     }
 
+
     // 과제 제출 학생 리스트
     @Override
-    public List<AdminAssignmentDto> checkAssignmentList(int no) {
+    public List<UserMemberDto> getUserList() {
+        log.info("[AdminAssignmentService] getUserList()");
+
+        return iAdminAssignmentMB.selectUsers();
+    }
+    @Override
+    public List<UserAssignmentDto> checkAssignmentList(int no) {
         log.info("[AdminAssignmentService] checkAssignmentList()");
 
-        int group_id = no;
-        return iAdminAssignmentMB.selectSubmitUser(no, group_id);
+        return iAdminAssignmentMB.selectSubmitUser(no);
     }
 
 }

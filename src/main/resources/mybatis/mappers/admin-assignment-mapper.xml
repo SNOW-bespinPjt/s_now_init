@@ -70,11 +70,15 @@
             no = #{no}
     </delete>
 
-    <select id="selectSubmitUser" parameterType="map" resultType="yourResultType">
+    <select id="selectUsers" resultType="com.btc.snow.user.member.UserMemberDto">
+        SELECT *
+        FROM USER
+    </select>
+
+    <select id="selectSubmitUser" parameterType="map" resultType="com.btc.snow.user.assignment.UserAssignmentDto">
         SELECT *
         FROM ASSIGNMENT
-        WHERE no = #{no}
-          AND group_id = #{group_id}
+        WHERE group_id = #{no}
     </select>
 
 </mapper>

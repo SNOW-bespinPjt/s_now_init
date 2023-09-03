@@ -3,6 +3,7 @@ package com.btc.snow.admin.assignment;
 import com.btc.snow.admin.config.UploadFileServiceForAdmin;
 import com.btc.snow.admin.member.AdminMemberDto;
 import com.btc.snow.user.assignment.UserAssignmentDto;
+import com.btc.snow.user.member.UserMemberDto;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -224,11 +225,13 @@ public class AdminAssignmentController {
 
         nextPage = "admin/assignment/check_assignments";
 
-        List<AdminAssignmentDto> adminAssignmentDtos = adminAssignmentService.checkAssignmentList(no);
+        List<UserMemberDto> userMemberDtos = adminAssignmentService.getUserList();
+        List<UserAssignmentDto> userAssignmentDtos = adminAssignmentService.checkAssignmentList(no);
 
         ModelAndView mv = new ModelAndView();
         mv.setViewName(nextPage);
-        mv.addObject("adminAssignmentDtos", adminAssignmentDtos);
+        mv.addObject("userAssignmentDtos", userAssignmentDtos);
+        mv.addObject("userMemberDtos", userMemberDtos);
 
         return mv;
     }
