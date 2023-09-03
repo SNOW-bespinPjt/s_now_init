@@ -8,6 +8,7 @@
     <select id="selectAssignments" resultType="com.btc.snow.admin.assignment.AdminAssignmentDto">
         SELECT *
         FROM ASSIGNMENT
+        WHERE admin_no > 0
         ORDER BY reg_date DESC
     </select>
 

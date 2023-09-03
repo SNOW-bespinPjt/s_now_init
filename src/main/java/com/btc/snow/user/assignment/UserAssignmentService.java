@@ -43,20 +43,13 @@ public class UserAssignmentService implements IUserAssignmentService {
         }
     }
 
-
     // 과제 상세페이지
     @Override
-    public int getIsSubmit(int group_id, int user_no) {
+    public Integer getIsSubmit(int group_id, int user_no) {
         log.info("[UserAssignmentService] getAssignment()");
 
-        boolean isSubmit = iUserAssignmentMB.selectIsSubmitNum(group_id, user_no);
-
-        if (isSubmit) {
-            return ASSIGNMENT_SUCCESS;
-
-        } else {
-            return ASSIGNMENT_FAIL;
-        }
+            Boolean isSubmit = iUserAssignmentMB.selectIsSubmitNum(group_id, user_no);
+            return (isSubmit != null && isSubmit) ? 1 : 0;
 
     }
     @Override

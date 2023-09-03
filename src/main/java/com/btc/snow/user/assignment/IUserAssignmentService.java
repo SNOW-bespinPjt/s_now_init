@@ -11,7 +11,7 @@ public interface IUserAssignmentService {
     int RegistrationConfirm(UserAssignmentDto userAssignmentDto);
 
     // 과제 상세페이지
-    int getIsSubmit(int no, int user_no);
+    Integer getIsSubmit(int no, int user_no);
     UserAssignmentDto getAssignment(int no);
 
     // 과제 수정

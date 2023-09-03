@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Log4j2
@@ -33,16 +34,30 @@ public class UserAssignmentController {
      * 과제 리스트(과제 페이지)
      */
     @GetMapping("/") //수정 필요 ~ : 공부 -> 적용
-    public ModelAndView List() {
+    public ModelAndView List(HttpSession session) {
         log.info("[UserAssignmentController] List()");
 
         nextPage = "user/assignment/list_assignments";
 
         List<UserAssignmentDto> userAssignmentDtos = userAssignmentService.listAssignment();
 
+        // is_submit 값 가져오기
+        UserMemberDto loginedUserDto = (UserMemberDto) session.getAttribute("loginedUserDto");
+
+        List<Integer> results = new ArrayList<>(); // is_submit 값을 저장할 리스트
+
+        for (UserAssignmentDto userAssignmentDto : userAssignmentDtos) {
+            int user_no = loginedUserDto.getNo();
+            int group_id = userAssignmentDto.getNo();
+
+            int result = userAssignmentService.getIsSubmit(group_id, user_no);
+            results.add(result);
+        }
+
         ModelAndView mv = new ModelAndView();
         mv.setViewName(nextPage);
         mv.addObject("userAssignmentDtos", userAssignmentDtos);
+        mv.addObject("results", results);
 
         return mv;
 
@@ -142,7 +157,7 @@ public class UserAssignmentController {
     }
 
     @PostMapping("/assignment_modify_confirm")
-    public String modifyAssignmentConfirm(@RequestParam("file_admin") MultipartFile file,
+    public String modifyAssignmentConfirm(@RequestParam("file_user") MultipartFile file,
                                           UserAssignmentDto userAssignmentDto,
                                           HttpSession session) {
         log.info("[UserAssignmentController] modifyAssignmentConfirm()");

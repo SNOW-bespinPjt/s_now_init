@@ -4,58 +4,45 @@
     <meta charset="UTF-8"/>
     <title>Title</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://code.jquery.com/jquery-3.7.0.js"
-            integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossOrigin="anonymous"></script>
-
+    <script crossOrigin="anonymous"
+            integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
+            src="https://code.jquery.com/jquery-3.7.0.js"></script>
 </head>
 <body class="flex flex-col items-center justify-center w-5/6 mx-auto">
 <header th:replace="~{/include/header_nav_footer::header}"></header>
 <!--  section & footer  -->
 <div class="flex flex-col items-center justify-center w-5/6 mx-auto">
     <section class="flex flex-row w-5/6 border-solid mt-7">
-        <div
-                class="relative flex items-center justify-center w-screen h-screen mr-8 border-2 rounded-lg bg-slate-100"
-        >
+        <div class="relative flex items-center justify-center w-screen h-screen mr-8 border-2 rounded-lg bg-slate-100">
             <div class="absolute top-0 left-0 mt-6 ml-14 w-full">
                 <div>
                     <h2 class="text-2xl font-bold mb-10">ASSIGNMENT LIST</h2>
                     <div class="flex flex-col w-11/12 bg-white h-5/6">
-                        <div th:each="item : ${userAssignmentDtos}"
-                             class="flex w-full border-b-2 h-1/4 border-b-slate-300">
+                        <div class="flex w-full border-b-2 h-1/4 border-b-slate-300"
+                             th:each="item, iterStat : ${userAssignmentDtos}">
                             <div class="w-11/12 p-4">
-                                <a type="button" th:text="${item.title}"
-                                   th:href="@{/user/assignment/get_assignment(no=${item.no})}"></a>
-                                <br>
+                                <a th:href="@{/user/assignment/get_assignment(no=${item.no})}" th:text="${item.title}"
+                                   type="button"></a>
+                                <div class="flex">
+                                    <span class="ml-2 font-thin text-slate-400 text-xs">마감일 <span
+                                            th:text="${item.mod_date}"></span></span>
+                                </div>
                             </div>
-                            <div class="flex flex-col items-center pt-4 pr-4 mb-5 ">
-                                        <span th:if="${item.is_submit eq 0}">
-                                            <p class="text-red-600">미제출</p>
-                                        </span>
-                                <span th:unless="${item.is_submit eq 0}" class="text-green-500">
+                            <div class="flex flex-col items-center pt-4 pr-4 mb-5">
+                                    <span th:if="${results[iterStat.index] == 0}">
+                                        <p class="text-red-600">미제출</p>
+                                    </span>
+                                <span class="text-green-500" th:if="${results[iterStat.index] == 1}">
                                         <p class="text-blue-600">제출완료</p>
-                                    <div class="flex">
-                                        <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                fill="none"
-                                                viewBox="0 0 24 24"
-                                                stroke-width="1.5"
-                                                stroke="currentColor"
-                                                class="w-6 h-6"
-                                        >
-                                            <path
-                                                    stroke-linecap="round"
-                                                    stroke-linejoin="round"
-                                                    d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
-                                            />
-                                            <path
-                                                    stroke-linecap="round"
-                                                    stroke-linejoin="round"
-                                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                                            />
-                                        </svg>
-                                        <p class="ml-2 font-thin text-slate-400" th:text="${item.mod_date}"></p>
-                                    </div>
-
+                                        <div class="flex">
+                                            <svg class="text-green-500 w-4 h-4" fill="none" stroke="currentColor"
+                                                 stroke-width="2" viewBox="0 0 24 24"
+                                                 xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M5 13l4 4L19 7" stroke-linecap="round"
+                                                      stroke-linejoin="round"/>
+                                            </svg>
+                                            <p class="ml-2 font-thin text-slate-400" th:text="${item.mod_date}"></p>
+                                        </div>
                                     </span>
                             </div>
                         </div>
@@ -65,7 +52,6 @@
         </div>
     </section>
     <footer th:replace="~{/include/header_nav_footer.html::footer}"></footer>
-</div>
 </div>
 </body>
 </html>

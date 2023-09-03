@@ -32,7 +32,7 @@
                            th:text="${userAssignmentDto.file_name}">
                         </a>
                     </div>
-                    <div th:if="${getIsSubmit.user_no eq loginedUserDto.no and userAssignmentDto.is_submit eq 0}"
+                    <div th:if="${result eq 0}"
                          class="flex space-x-4 mt-7 justify-center">
                         <form th:action="@{/user/assignment/registration_confirm}"
                               name="detail_assignment" method="post"
@@ -52,7 +52,7 @@
                                 class="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400"
                         />
                     </div>
-                    <div th:unless="${getIsSubmit.user_no eq loginedUserDto.no and userAssignmentDto.is_submit eq 0}"
+                    <div th:unless="${result eq 0}"
                          class="flex space-x-4 mt-7 justify-center">
                         <form th:action="@{/user/assignment/assignment_modify_confirm}"
                               name="detail_assignment" method="post"

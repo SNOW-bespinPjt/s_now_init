@@ -17,11 +17,19 @@
         VALUES (#{user_no}, #{group_id}, #{file}, #{file_name}, 1, NOW(), NOW())
     </insert>
 
-    <select id="selectIsSubmitNum" parameterType="int" resultType="boolean">
-        SELECT *
+    <!--    <select id="selectIsSubmitNum" parameterType="map" resultType="int">-->
+    <!--        SELECT *-->
+    <!--        FROM ASSIGNMENT-->
+    <!--        WHERE group_id = #{group_id} AND user_no = #{user_no}-->
+    <!--    </select>-->
+
+    <select id="selectIsSubmitNum" parameterType="map" resultType="java.lang.Boolean">
+        SELECT is_submit
         FROM ASSIGNMENT
-        WHERE group_id = #{group_id} AND user_no =#{user_no} AND is_submit = 1
+        WHERE group_id = #{group_id}
+          AND user_no = #{user_no}
     </select>
+
 
     <select id="selectAssignment" parameterType="Integer" resultType="com.btc.snow.user.assignment.UserAssignmentDto">
         SELECT *
