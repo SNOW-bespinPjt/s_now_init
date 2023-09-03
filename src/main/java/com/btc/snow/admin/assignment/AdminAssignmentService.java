@@ -22,8 +22,8 @@ public class AdminAssignmentService implements IAdminAssignmentService {
 
     // 과제 리스트
     @Override
-    public List<AdminAssignmentDto> listupAssignment() {
-        log.info("[AdminAssignmentService] listupAssignment()");
+    public List<AdminAssignmentDto> listAssignment() {
+        log.info("[AdminAssignmentService] listAssignment()");
 
         return iAdminAssignmentMB.selectAssignments();
     }

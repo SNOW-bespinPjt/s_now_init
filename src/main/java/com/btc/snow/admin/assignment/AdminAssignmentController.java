@@ -40,7 +40,7 @@ public class AdminAssignmentController {
 
         nextPage = "admin/assignment/list_assignments";
 
-        List<AdminAssignmentDto> adminAssignmentDtos = adminAssignmentService.listupAssignment();
+        List<AdminAssignmentDto> adminAssignmentDtos = adminAssignmentService.listAssignment();
 
         ModelAndView mv = new ModelAndView();
         mv.setViewName(nextPage);

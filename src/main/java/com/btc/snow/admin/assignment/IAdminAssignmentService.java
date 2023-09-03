@@ -7,7 +7,7 @@ import java.util.List;
 public interface IAdminAssignmentService {
 
     // 과제 리스트
-    List<AdminAssignmentDto> listupAssignment();
+    List<AdminAssignmentDto> listAssignment();
 
     // 과제 등록
     int RegistrationConfirm(AdminAssignmentDto adminAssignmentDto);
