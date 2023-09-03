@@ -23,4 +23,7 @@ public interface IAdminAssignmentService {
 
     // 과제 삭제
     int deleteAssignmentConfirm(int no);
+
+    // 과제 제출 학생 리스트
+    List<AdminAssignmentDto> checkAssignmentList(int no);
 }

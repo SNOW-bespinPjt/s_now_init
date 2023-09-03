@@ -70,5 +70,11 @@
             no = #{no}
     </delete>
 
+    <select id="selectSubmitUser" parameterType="map" resultType="yourResultType">
+        SELECT *
+        FROM ASSIGNMENT
+        WHERE no = #{no}
+          AND group_id = #{group_id}
+    </select>
 
 </mapper>

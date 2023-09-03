@@ -140,22 +140,6 @@ public class UserAssignmentController {
     /*
      * 과제 수정
      */
-    @GetMapping("assignment_modify_form")
-    public String AssignmentModifyForm(
-            @RequestParam("no") int no,
-            Model model
-    ) {
-        log.info("[UserAssignmentController] AssignmentModifyForm()");
-
-        nextPage = "user/assignment/assignment_modify_form";
-
-        UserAssignmentDto userAssignmentDto = userAssignmentService.getAssignment(no);
-        model.addAttribute("userAssignmentDto", userAssignmentDto);
-
-        return nextPage;
-
-    }
-
     @PostMapping("/assignment_modify_confirm")
     public String modifyAssignmentConfirm(@RequestParam("file_user") MultipartFile file,
                                           UserAssignmentDto userAssignmentDto,
@@ -202,7 +186,7 @@ public class UserAssignmentController {
      */
     @GetMapping("/delete_assignment_confirm")
     public String deleteAssignmentConfirm(@RequestParam("no") int no) {
-        System.out.println("[UserAssignmentController] deleteAssignmentConfirm()");
+        log.info("[UserAssignmentController] deleteAssignmentConfirm()");
 
         String nextPage = "redirect:/user/assignment/";
 

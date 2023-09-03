@@ -16,6 +16,7 @@ public interface IAdminAssignmentMB {
 
     // 과제 활성화
     int updateAdminActive(int no);
+
     int updateAdminInactive(int no);
 
     // 활성화 번호 찾기
@@ -25,8 +26,11 @@ public interface IAdminAssignmentMB {
     AdminAssignmentDto selectAssignment(int no);
 
     // 과제 삭제
-     int deleteAssignment(int no);
+    int deleteAssignment(int no);
 
     // 과제 수정
-     int updateAssignment(AdminAssignmentDto adminAssignmentDto);
+    int updateAssignment(AdminAssignmentDto adminAssignmentDto);
+
+    // 과제 제출 학생 리스트
+    List<AdminAssignmentDto> selectSubmitUser(int no, int groupId);
 }

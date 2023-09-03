@@ -99,4 +99,13 @@ public class AdminAssignmentService implements IAdminAssignmentService {
         return iAdminAssignmentMB.deleteAssignment(no);
     }
 
+    // 과제 제출 학생 리스트
+    @Override
+    public List<AdminAssignmentDto> checkAssignmentList(int no) {
+        log.info("[AdminAssignmentService] checkAssignmentList()");
+
+        int group_id = no;
+        return iAdminAssignmentMB.selectSubmitUser(no, group_id);
+    }
+
 }

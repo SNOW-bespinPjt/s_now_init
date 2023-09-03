@@ -2,6 +2,7 @@ package com.btc.snow.admin.assignment;
 
 import com.btc.snow.admin.config.UploadFileServiceForAdmin;
 import com.btc.snow.admin.member.AdminMemberDto;
+import com.btc.snow.user.assignment.UserAssignmentDto;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -146,7 +147,7 @@ public class AdminAssignmentController {
     /*
      * 과제 수정
      */
-    @GetMapping("assignment_modify_form")
+    @GetMapping("/assignment_modify_form")
     public String AssignmentModifyForm(
             @RequestParam("no") int no,
             Model model
@@ -196,7 +197,7 @@ public class AdminAssignmentController {
      */
     @GetMapping("/delete_assignment_confirm")
     public String deleteAssignmentConfirm(@RequestParam("no") int no) {
-        System.out.println("[AdminAssignmentController] deleteAssignmentConfirm()");
+        log.info("[AdminAssignmentController] deleteAssignmentConfirm()");
 
         String nextPage = "redirect:/admin/assignment/";
 
@@ -217,21 +218,53 @@ public class AdminAssignmentController {
     /*
      * 과제 제출 학생 리스트
      */
+    @GetMapping("/check")
+    public ModelAndView checkAssignmentList(@RequestParam("no") int no) {
+        log.info("[AdminAssignmentController] checkAssignmentList()");
+
+        nextPage = "admin/assignment/check_assignments";
+
+        List<AdminAssignmentDto> adminAssignmentDtos = adminAssignmentService.checkAssignmentList(no);
+
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName(nextPage);
+        mv.addObject("adminAssignmentDtos", adminAssignmentDtos);
+
+        return mv;
+    }
 
 
     /*
      * 과제 점수 등록
      */
+    @PostMapping("/assignment_input_point")
+    public String AssignmentInputPoint(UserAssignmentDto userAssignmentDto) {
+        log.info("[UserAssignmentController] AssignmentInputPoint()");
 
+        return nextPage;
+    }
 
     /*
      * 과제 점수 수정
      */
+    @PostMapping("/assignment_modify_point")
+    public String AssignmentModifyPoint(UserAssignmentDto userAssignmentDto) {
+        log.info("[UserAssignmentController] AssignmentModifyPoint()");
+
+        return nextPage;
+    }
 
 
     /*
      * 과제 미제출 학생 메일 보내기
      */
+    @PostMapping("/send_mail_not_submit_user")
+    public String SendMailForNotSubmitUser(AdminMemberDto adminMemberDto) {
+        log.info("[AdminMemberController] SendMailForNotSubmitUser()");
+
+        return nextPage;
+
+    }
 
 
 
