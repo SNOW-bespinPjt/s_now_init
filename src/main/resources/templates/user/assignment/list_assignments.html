@@ -21,21 +21,21 @@
                 <div>
                     <h2 class="text-2xl font-bold">ASSIGNMENT LIST</h2>
                     <div class="flex flex-col w-11/12 bg-white h-5/6">
-                        <div th:each="item : ${adminAssignmentDtos}"
+                        <div th:each="item : ${userAssignmentDtos}"
                              class="flex w-full border-b-2 h-1/4 border-b-slate-300">
                             <div class="w-11/12 p-4">
                                 <a type="button" th:text="${item.title}"
-                                   th:href="@{/admin/assignment/get_assignment(no=${item.no})}"></a>
+                                   th:href="@{/user/assignment/get_assignment(no=${item.no})}"></a>
                                 <br>
                             </div>
                             <div class="flex flex-col items-center p-4 mb-5">
                                         <span th:if="${item.is_activation eq 0}">
-                                            <input type="button" value="과제 활성화" th:attr="data-no=${item.no}"
+                                            <input type="button" value="과제 제출" th:attr="data-no=${item.no}"
                                                    onclick="activeAssignment(this.getAttribute('data-no'));"
                                                    class="px-2 py-1 rounded bg-blue-500 text-white hover:bg-blue-600">
                                         </span>
-                                <span th:if="${item.is_activation eq 1}" class="text-green-500">
-                                        <input type="button" value="과제 비활성화" th:attr="data-no=${item.no}"
+                                <span th:unless="${item.is_activation eq 1}" class="text-green-500">
+                                        <input type="button" value="과제 수정" th:attr="data-no=${item.no}"
                                                onclick="activeAssignment(this.getAttribute('data-no'));"
                                                class="px-2 py-1 rounded bg-blue-500 text-white hover:bg-blue-600">
                                     <div class="flex">
@@ -58,7 +58,7 @@
                                                     d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
                                             />
                                         </svg>
-                                        <p class="ml-2 font-thin text-slate-400" th:text="${item.end_date}"></p>
+                                        <p class="ml-2 font-thin text-slate-400" th:text="${item.mod_date}"></p>
                                     </div>
 
                                     </span>
