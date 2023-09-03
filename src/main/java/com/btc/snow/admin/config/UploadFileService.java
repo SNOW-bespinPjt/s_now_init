@@ -21,7 +21,6 @@ public class UploadFileService {
         String fileOriName = file.getOriginalFilename();
         String fileExtension = fileOriName.substring(fileOriName.lastIndexOf("."), fileOriName.length());
         String uploadDir = "c:\\snow\\admin\\assignment";
-//        String uploadDir = "c:\\snow\\member\\" + user_id; // 아이디별로 받겠다 여기에 키득
 
         UUID uuid = UUID.randomUUID(); // 랜덤으로 유니크한 값을 생성해서 보내주는 메소드 (덮어쓰기 방지)
         String uniqueName = uuid.toString().replace("-", ""); // 값이 000-000-.. 이런형식이라서 걍 "-" 없애기 [선택사항]

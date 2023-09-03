@@ -235,7 +235,7 @@ public class AdminMemberController {
     public ModelAndView listupUser() {
         log.info("[AdminMemberController] listupUser()");
 
-        String nextPage = "admin/member/list_users";  //아직 없음
+        String nextPage = "admin/member/list_users";  //있지만 승인 DB 컬럼이 없어서 수정이 필요함
 
         List<AdminMemberDto> adminMemberDtos = adminMemberService.listupAdmin();   //아직없음
 
