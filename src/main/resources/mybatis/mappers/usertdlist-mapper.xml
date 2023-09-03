@@ -42,7 +42,6 @@
             TODOLIST
         SET content    = #{content},
             tag        = #{tag},
-            home_phone = #{home_phone},
             start_date = #{start_date},
             end_date   = #{end_date},
             mod_date   = NOW()

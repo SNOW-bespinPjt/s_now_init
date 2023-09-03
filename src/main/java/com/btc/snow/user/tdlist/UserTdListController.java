@@ -84,13 +84,13 @@ public class UserTdListController {
 
     }
 
-    @GetMapping("/modify_tdlist_confirm")
-    public String modifyTdListConfirm(UserTdListDto userTdListDto) {
+    @PostMapping("/modify_tdlist_confirm")
+    @ResponseBody
+    public void modifyTdListConfirm(UserTdListDto userTdListDto) {
         log.info("[UserTdListController] modifyTdListConfirm()");
 
         userTdListService.modifyTdListConfirm(userTdListDto);
 
-        return null;
     }
 
     @PostMapping("/delete_tdlist_confirm")
