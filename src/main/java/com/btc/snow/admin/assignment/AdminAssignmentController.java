@@ -82,7 +82,7 @@ public class AdminAssignmentController {
         String saveFileName = uploadFileService.upload(file);
 
         if (saveFileName != null) {
-            adminAssignmentDto.setFile(saveFileName);
+            adminAssignmentDto.setFile(saveFileName); // 파일 저장이 되면 그걸 넣어주기
             int result = adminAssignmentService.RegistrationConfirm(adminAssignmentDto);
 
             if (result <= 0)
@@ -231,6 +231,7 @@ public class AdminAssignmentController {
     /*
      * 과제 미제출 학생 메일 보내기
      */
+
 
 
 }
