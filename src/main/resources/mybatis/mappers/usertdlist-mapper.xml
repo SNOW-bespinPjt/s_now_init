@@ -11,6 +11,7 @@
         SELECT *
         FROM TODOLIST
         WHERE user_id = #{id}
+          and end_date >= DATE_SUB(NOW(), INTERVAL 3 DAY)
         ORDER BY is_finish ASC, end_date asc, start_date desc, reg_date desc
 
 

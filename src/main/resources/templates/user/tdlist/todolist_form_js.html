@@ -19,7 +19,7 @@
         let className;
 
         // 시작일, 종료일 현재일 기준으로 변경 START
-        $('#start_date').val(new Date().toISOString().substring(0, 10));
+        $('#start_date').val(new Date().toISOString().substring(0, 10)); // 날짜만 추출 (YYYY-MM-DD)
         $('#end_date').val(new Date().toISOString().substring(0, 10));
 
         $('#start_date_modify').val(new Date().toISOString().substring(0, 10));
@@ -240,31 +240,30 @@
                 }
 
                 // 마감일 & 체크(활성화) css 변경 START
-                // 오늘 날짜를 가져오는 함수
+                // 오늘 날짜 함수
                 function getCurrentDate() {
                     const today = new Date();
                     return today.toISOString().substring(0, 10); // 날짜만 추출 (YYYY-MM-DD)
                 }
 
-                // 각 행(row)을 확인하고 조건을 충족할 때 스타일을 변경합니다.
+                // 각 행을 확인하며 CSS 변경
                 $("#todo_list table tbody tr").each(function () {
-                    const isFinish = $(this).find("td.is_finish input[type='checkbox']").is(":checked");
-                    console.log("isFinish : " + isFinish);
-
-
+                    const isFinish = $(this).find("td input.is_finish").prop("checked");
                     const endDate = $(this).find("td:nth-child(5)").text(); // 5번째 열의 텍스트 (마감일)
 
-                    // 오늘 날짜보다 이전인 경우 스타일을 변경합니다.
+                    // 마감일이 오늘 날짜 보다 이전이거나 check가 되어 있는 튜플을 회색 처리하며 선 긋기
                     if (isFinish || endDate < getCurrentDate()) {
                         $(this).addClass("gray-row"); // 회색으로 표시
 
-                        // 글자를 회색으로 변경하고 가운데에 선을 추가합니다.
+                        // 글자를 회색으로 변경하고 가운데에 선 추가
                         $(this).find("td").css({
-                            "color": "#888",             // 글자 색상을 회색(#888)으로 설정
-                            "text-decoration": "line-through", // 가운데 선 추가
-                            "text-decoration-color": "#888"    // 선의 색상을 회색(#888)으로 설정
+                            "color": "#888",                    // 글자 색상을 회색(#888)으로 설정
+                            "text-decoration": "line-through",  // 가운데 선 추가
+                            "text-decoration-color": "#888"     // 선의 색상을 회색(#888)으로 설정
                         });
+
                     }
+
                 });
                 // 마감일 & 체크(활성화) css 변경 END
 
@@ -326,6 +325,8 @@
             success: function (data) {
                 console.log('AJAX SUCCESS - ajax_modify_isfinish_confirm()');
 
+                remove_list();
+                ajax_show_tdlist();
 
             },
             error: function (data) {

@@ -19,7 +19,6 @@ public interface IUserTdListService {
     // MODIFY ISFINISH CONFIRM
     public int modifyIsFinishConfirm(int className);
 
-
     // DELETE TODOLIST CONFIRM
     public int deleteTdListConfirm(int className);
 
