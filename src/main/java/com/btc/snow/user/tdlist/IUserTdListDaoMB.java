@@ -34,5 +34,9 @@ public interface IUserTdListDaoMB {
      */
     public int removeTdList(int className);
 
+    /*
+     * SEARCH LIST USING TAG WORD
+     */
+    public List<UserTdListDto> selectListByTag(UserTdListDto userTdListDto);
 
 }

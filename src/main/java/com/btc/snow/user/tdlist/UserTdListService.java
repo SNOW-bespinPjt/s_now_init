@@ -98,5 +98,27 @@ public class UserTdListService implements IUserTdListService {
         }
     }
 
+    @Override
+    public List<UserTdListDto> searchTagConfirm(String searchWord, String userId) {
+        log.info("[UserTdListService] searchTagConfirm()");
 
+        UserTdListDto userTdListDto = new UserTdListDto();
+
+        userTdListDto.setUser_id(userId);
+        userTdListDto.setTag(searchWord);
+
+        List<UserTdListDto> userTdListDtos = iUserTdListDaoMB.selectListByTag(userTdListDto);
+
+        if (userTdListDtos != null) {
+            log.info("[UserTdListService] SEARCH TAG SUCCESS!!");
+            return userTdListDtos;
+
+        } else {
+            log.info("[UserTdListService] SEARCH TAG FAIL!!");
+            return null;
+
+        }
+
+    }
+    
 }

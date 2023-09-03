@@ -39,8 +39,8 @@
             <div id="book_list" class="p-6 space-y-6 max-h-[calc(100vh-10rem)] overflow-y-auto flex flex-col">
                 <form name="create_tdlist_form">
                     <!--					<input type="hidden" id="no_modify" name="no">-->
-                    <input type="text" name="content" placeholder="INPUT NEW CONTENT">
-                    <input type="text" name="tag" placeholder="INPUT NEW TAG">
+                    <input type="text" id="content_modify" name="content" placeholder="INPUT NEW CONTENT">
+                    <input type="text" id="tag_modify" name="tag" placeholder="INPUT NEW TAG">
                     <input type="date" id="start_date_modify" name="start_date">
                     <input type="date" id="end_date_modify" name="end_date">
                 </form>
@@ -89,6 +89,14 @@
                 <input type="date" id="start_date" name="start_date">
                 <input type="date" id="end_date" name="end_date">
                 <input type="button" value="Create List">
+            </form>
+        </div>
+
+        <div id="search_word">
+            <form name="search_word_form">
+                <input type="text" class="search_bar" placeholder="INPUT TAG WORD">&nbsp;&nbsp;
+                <input type="button" value="search">&nbsp;&nbsp;
+                <input type="reset" value="reset">
             </form>
         </div>
 

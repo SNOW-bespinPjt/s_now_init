@@ -22,5 +22,7 @@ public interface IUserTdListService {
     // DELETE TODOLIST CONFIRM
     public int deleteTdListConfirm(int className);
 
+    // SEARCH TAG CONFIRM
+    public List<UserTdListDto> searchTagConfirm(String searchWord, String userId);
 
 }

@@ -26,11 +26,32 @@
         $('#end_date_modify').val(new Date().toISOString().substring(0, 10));
         // 시작일, 종료일 현재일 기준으로 변경 END
 
-
         // 생성 버튼 클릭 이벤트 START
         $(document).on("click", "#todo_container input[value='Create List']", function (e) {
             console.log("#todo_container input[value='Create List'] CLICK HANDLER!!");
-            ajax_create_tdlist_confirm();
+
+            let content = $("#content").val();
+            let tag = $("#tag").val();
+            let start_date = $("#start_date").val();
+            let end_date = $("#end_date").val();
+
+            console.log("content: " + content);
+            console.log("tag: " + tag);
+            console.log("start_date: " + start_date);
+            console.log("end_date: " + end_date);
+
+            if (start_date > end_date) {
+                alert("시작일이 마감일보다 늦게 설정하셨습니다.");
+
+                $("#content").val('');
+                $("#tag").val('');
+                $('#start_date').val(new Date().toISOString().substring(0, 10)); // 날짜만 추출 (YYYY-MM-DD)
+                $('#end_date').val(new Date().toISOString().substring(0, 10));
+
+            } else {
+                ajax_create_tdlist_confirm(content, tag, start_date, end_date);
+
+            }
 
         });
         // 생성 버튼 클릭 이벤트 END
@@ -70,14 +91,24 @@
             let start_date = $('form[name="create_tdlist_form"] input[name="start_date"]').val();
             let end_date = $('form[name="create_tdlist_form"] input[name="end_date"]').val();
 
+            if (start_date <= end_date) {
+                console.log("className : " + className);
+                console.log("content : " + content);
+                console.log("tag : " + tag);
+                console.log("start_date : " + start_date);
+                console.log("end_date : " + end_date);
 
-            console.log("className : " + className);
-            console.log("content : " + content);
-            console.log("tag : " + tag);
-            console.log("start_date : " + start_date);
-            console.log("end_date : " + end_date);
+                ajax_modify_tdlist_confirm(className, content, tag, start_date, end_date);
 
-            ajax_modify_tdlist_confirm(className, content, tag, start_date, end_date);
+            } else {
+                alert("시작일이 마감일보다 더 늦게 설정하셨습니다.");
+
+                $('#content_modify').val('');
+                $('#tag_modify').val('');
+                $('#start_date_modify').val(new Date().toISOString().substring(0, 10));
+                $('#end_date_modify').val(new Date().toISOString().substring(0, 10));
+
+            }
 
         });
 
@@ -131,6 +162,19 @@
         });
         // 삭제 버튼 클릭 이벤트 END
 
+        // 검색 버튼 클릭 이벤트 START
+        $(document).on("click", '#search_word input[value="search"]', function (e) {
+            console.log('#search_word input[value="search"] CLICK HANDER!!');
+
+            let search_word = $('#search_word input.search_bar').val();
+            console.log("search_word : " + search_word);
+
+            ajax_search_tags(search_word);
+
+        })
+
+        // 검색 버튼 클릭 이벤트 END
+
 
     }
 
@@ -157,19 +201,42 @@
 
     // Modal창 visiable & hide END
 
+
+    // 마감일 & 체크(활성화) css 변경 START
+    function checkedNEndDate() {
+        // 오늘 날짜 함수
+        function getCurrentDate() {
+            const today = new Date();
+            return today.toISOString().substring(0, 10); // 날짜만 추출 (YYYY-MM-DD)
+        }
+
+        // 각 행을 확인하며 CSS 변경
+        $("#todo_list table tbody tr").each(function () {
+            const isFinish = $(this).find("td input.is_finish").prop("checked");
+            const endDate = $(this).find("td:nth-child(5)").text(); // 5번째 열의 텍스트 (마감일)
+
+            // 마감일이 오늘 날짜 보다 이전이거나 check가 되어 있는 튜플을 회색 처리하며 선 긋기
+            if (isFinish || endDate < getCurrentDate()) {
+                $(this).addClass("gray-row"); // 회색으로 표시
+
+                // 글자를 회색으로 변경하고 가운데에 선 추가
+                $(this).find("td").css({
+                    "color": "#888",                    // 글자 색상을 회색(#888)으로 설정
+                    "text-decoration": "line-through",  // 가운데 선 추가
+                    "text-decoration-color": "#888"     // 선의 색상을 회색(#888)으로 설정
+                });
+
+            }
+
+        })
+    }
+
+    // 마감일 & 체크(활성화) css 변경 END
+
+
     //AJAX START
-    function ajax_create_tdlist_confirm() {
+    function ajax_create_tdlist_confirm(content, tag, start_date, end_date) {
         console.log("ajax_create_tdlist_form CALLED!!")
-
-        let content = $("#content").val();
-        let tag = $("#tag").val();
-        let start_date = $("#start_date").val();
-        let end_date = $("#end_date").val();
-
-        console.log("content: " + content);
-        console.log("tag: " + tag);
-        console.log("start_date: " + start_date);
-        console.log("end_date: " + end_date);
 
         let formData = new FormData();
         formData.append("content", content);
@@ -361,6 +428,58 @@
             error: function (data) {
                 console.log('AJAX ERROR - ajax_delete_tdlist_confirm()');
                 alert("삭제하지 못하였습니다");
+
+            }
+        });
+
+    }
+
+    function ajax_search_tags(search_word) {
+        let formData = new FormData();
+        formData.append("search_word", search_word);
+
+        $.ajax({
+            url: '/user/tdlist/search_tag_confirm',
+            type: 'POST',
+            processData: false,
+            contentType: false,
+            data: formData,
+            success: function (data) {
+                console.log('AJAX SUCCESS - ajax_search_tags()');
+
+                remove_list();
+
+                let userTdListDtos = data.userTdListDtos;
+                console.log(userTdListDtos);
+
+                for (let i = 0; i < userTdListDtos.length; i++) {
+                    let appendTag = "<tr>";
+                    appendTag += "<td><input type='checkbox' class='is_finish' data-no='" + userTdListDtos[i].no + "'";
+                    if (userTdListDtos[i].is_finish === 1) {
+                        appendTag += " checked"; // is_finish가 1이면 checked 속성을 추가하여 체크된 상태로 만듭니다.
+                    }
+                    appendTag += ">" + "</a></td>";
+                    appendTag += "<td><a href='#none' class='modify' data-no='";
+                    appendTag += userTdListDtos[i].no;
+                    appendTag += "' >" + userTdListDtos[i].content + "</a></td>";
+                    appendTag += "<td>" + userTdListDtos[i].tag + "</td>";
+                    appendTag += "<td>" + userTdListDtos[i].start_date + "</td>";
+                    appendTag += "<td>" + userTdListDtos[i].end_date + "</td>";
+                    appendTag += "<td><input data-no='";
+                    appendTag += userTdListDtos[i].no;
+                    appendTag += "' type='button' value='DELETE'></td>";
+                    appendTag += "</tr>";
+
+                    $("#todo_list tbody").append(appendTag);
+
+                }
+
+                checkedNEndDate();
+
+            },
+            error: function (data) {
+                console.log('AJAX ERROR - ajax_search_tags()');
+                alert("정보를 불러오지 못하였습니다");
 
             }
         });

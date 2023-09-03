@@ -113,4 +113,23 @@ public class UserTdListController {
 
     }
 
+    @PostMapping("/search_tag_confirm")
+    @ResponseBody
+    public Map<String, Object> searchTagConfirm(@RequestParam("search_word") String search_word, HttpSession session) {
+        log.info("[UserTdListController] searchTagConfirm()");
+        log.info("search_word : " + search_word);
+
+        Map<String, Object> msgMap = new HashMap<>();
+
+        UserMemberDto loginedUserDto = (UserMemberDto) session.getAttribute("loginedUserDto");
+        String user_id = loginedUserDto.getId();
+
+        List<UserTdListDto> userTdListDtos = userTdListService.searchTagConfirm(search_word, user_id);
+
+        msgMap.put("userTdListDtos", userTdListDtos);
+
+        return msgMap;
+
+    }
+    
 }

@@ -73,5 +73,17 @@
 
     </delete>
 
+    <select id="selectListByTag"
+            parameterType="com.btc.snow.user.tdlist.UserTdListDto"
+            resultType="com.btc.snow.user.tdlist.UserTdListDto">
+
+        SELECT *
+        FROM TODOLIST
+        WHERE user_id = #{user_id}
+          AND end_date >= DATE_SUB(NOW(), INTERVAL 3 DAY)
+          AND tag = #{tag}
+        ORDER BY is_finish ASC, end_date asc, start_date desc, reg_date desc
+
+    </select>
 
 </mapper>
