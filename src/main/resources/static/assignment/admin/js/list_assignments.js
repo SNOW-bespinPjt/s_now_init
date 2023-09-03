@@ -18,7 +18,7 @@ function getAssignment(no) {
         error: function onError(error) {
             console.error(error);
 
-            location.href='/admin/assignment/list';
+            location.href='/admin/assignment/';
         }
     });
 }
@@ -36,7 +36,7 @@ function activeAssignment(no) {
 
             alert('과제가 상태가 변경 되었습니다');
 
-            location.href='/admin/assignment/list';
+            location.href='/admin/assignment/';
         },
         error: function onError(error) {
             console.error(error);

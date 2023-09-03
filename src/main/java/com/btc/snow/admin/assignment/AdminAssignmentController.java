@@ -1,5 +1,6 @@
 package com.btc.snow.admin.assignment;
 
+import com.btc.snow.admin.config.UploadFileService;
 import com.btc.snow.admin.member.AdminMemberDto;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.log4j.Log4j2;
@@ -15,8 +16,8 @@ import java.util.List;
 import java.util.Map;
 
 @Log4j2
-@RequestMapping("/admin/assignment")
 @Controller
+@RequestMapping("/admin/assignment")
 public class AdminAssignmentController {
 
     @Autowired
@@ -33,11 +34,11 @@ public class AdminAssignmentController {
     /*
      * 과제 리스트(과제 페이지)
      */
-    @GetMapping("/list") //수정 필요 ~ : 공부 -> 적용
+    @GetMapping("/") //수정 필요 ~ : 공부 -> 적용
     public ModelAndView List() {
         log.info("[AdminAssignmentController] List()");
 
-        nextPage = "admin/assignment/listup_assignments";
+        nextPage = "admin/assignment/list_assignments";
 
         List<AdminAssignmentDto> adminAssignmentDtos = adminAssignmentService.listupAssignment();
 
@@ -66,7 +67,7 @@ public class AdminAssignmentController {
                                       Model model) {
         log.info("[AdminAssignmentController] RegistrationConfirm()");
 
-        nextPage = "redirect:/admin/assignment/list";
+        nextPage = "redirect:/admin/assignment/";
         msg = "과제등록에 성공하였습니다";
 
         // 세션
@@ -167,7 +168,7 @@ public class AdminAssignmentController {
         log.info("[AdminAssignmentController] modifyAssignmentConfirm()");
 
 //        nextPage = "redirect:/admin/assignment/assignment_modify_form?no=" + adminAssignmentDto.getNo();
-        nextPage = "redirect:/admin/assignment/list";
+        nextPage = "redirect:/admin/assignment/";
 
         adminAssignmentDto.setFile_name(file.getOriginalFilename());
         log.info("adminAssignmentDto : " + adminAssignmentDto.getFile_name());
@@ -197,7 +198,7 @@ public class AdminAssignmentController {
     public String deleteAssignmentConfirm(@RequestParam("no") int no) {
         System.out.println("[AdminAssignmentController] deleteAssignmentConfirm()");
 
-        String nextPage = "redirect:/admin/assignment/list";
+        String nextPage = "redirect:/admin/assignment/";
 
         int result = adminAssignmentService.deleteAssignmentConfirm(no);
 

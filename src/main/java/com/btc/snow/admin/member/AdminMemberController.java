@@ -212,11 +212,11 @@ public class AdminMemberController {
     /*
      * 관리자 리스트
      */
-    @GetMapping("/listup_admin")
+    @GetMapping("/list_admin")
     public ModelAndView listupAdmin() {
         log.info("[AdminMemberController] listupAdmin()");
 
-        String nextPage = "admin/member/listup_admins";
+        String nextPage = "admin/member/list_admins";
 
         List<AdminMemberDto> adminMemberDtos = adminMemberService.listupAdmin();
 
@@ -228,6 +228,26 @@ public class AdminMemberController {
 
     }
 
+    /*
+     * 학생 리스트
+     */
+    @GetMapping("/list_user")
+    public ModelAndView listupUser() {
+        log.info("[AdminMemberController] listupUser()");
+
+        String nextPage = "admin/member/list_users";  //아직 없음
+
+        List<AdminMemberDto> adminMemberDtos = adminMemberService.listupAdmin();   //아직없음
+
+        ModelAndView mv = new ModelAndView();                               // 1)객체 생성
+        mv.setViewName(nextPage);                                           // 2)뷰 설정
+        mv.addObject("adminMemberDtos", adminMemberDtos);       // 3) 데이터 추가
+
+        return mv;                                                          // 4) MV 반환
+
+    }
+    
+    
     /*
      * 관리자 승인 처리
      */

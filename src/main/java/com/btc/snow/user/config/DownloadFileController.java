@@ -1,4 +1,4 @@
-package com.btc.snow.admin.assignment;
+package com.btc.snow.user.config;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.core.io.Resource;
