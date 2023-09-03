@@ -93,6 +93,15 @@ public class UserTdListController {
 
     }
 
+    @PostMapping("/modify_isfinish_confirm")
+    @ResponseBody
+    public void modifyIsFinishConfirm(@RequestParam("className") int className) {
+        log.info("[UserTdListController] modifyTdListConfirm()");
+
+        userTdListService.modifyIsFinishConfirm(className);
+
+    }
+
     @PostMapping("/delete_tdlist_confirm")
     @ResponseBody
     public void deleteTdListConfirm(@RequestParam("className") int className) {

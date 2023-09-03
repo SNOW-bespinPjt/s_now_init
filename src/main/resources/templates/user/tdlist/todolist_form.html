@@ -6,8 +6,11 @@
     <script src="https://cdn.tailwindcss.com"></script>
 
     <script th:replace="~{/include/common_js.html::jquery_cdn}"></script>
-    <script th:replace="~{/user/tdlist/todolist_form_js.html::js}"></script>
+    <script th:replace="~{/include/todolist_form_js.html::js}"></script>
+    <script>
 
+
+    </script>
 </head>
 <body class="flex flex-col items-center justify-center w-5/6 mx-auto">
 
@@ -38,8 +41,8 @@
                     <!--					<input type="hidden" id="no_modify" name="no">-->
                     <input type="text" name="content" placeholder="INPUT NEW CONTENT">
                     <input type="text" name="tag" placeholder="INPUT NEW TAG">
-                    <input type="date" name="start_date">
-                    <input type="date" name="end_date">
+                    <input type="date" id="start_date_modify" name="start_date">
+                    <input type="date" id="end_date_modify" name="end_date">
                 </form>
 
             </div>

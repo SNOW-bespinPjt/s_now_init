@@ -65,6 +65,23 @@ public class UserTdListService implements IUserTdListService {
     }
 
     @Override
+    public int modifyIsFinishConfirm(int className) {
+        int result = iUserTdListDaoMB.updateIsFinish(className);
+
+        if (result > 0) {
+            log.info("[UserTdListService]" + className + ".NO MODIFY IS_FINISH SUCCESS!!");
+
+            return result;
+
+        } else {
+            log.info("[UserTdListService]" + className + ".NO MODIFY IS_FINISH FAIL!!");
+            return result;
+
+        }
+
+    }
+
+    @Override
     public int deleteTdListConfirm(int className) {
         log.info("[UserTdListService] deleteTdListConfirm()");
 

@@ -25,6 +25,11 @@ public interface IUserTdListDaoMB {
     public int updateTdList(UserTdListDto userTdListDto);
 
     /*
+     * UPDATE ISFINISH
+     */
+    public int updateIsFinish(int className);
+
+    /*
      * DELETE TODOLIST
      */
     public int removeTdList(int className);

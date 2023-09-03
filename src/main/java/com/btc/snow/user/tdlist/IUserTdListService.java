@@ -16,6 +16,10 @@ public interface IUserTdListService {
     // MODIFY TODOLIST CONFIRM
     public int modifyTdListConfirm(UserTdListDto userTdListDto);
 
+    // MODIFY ISFINISH CONFIRM
+    public int modifyIsFinishConfirm(int className);
+
+
     // DELETE TODOLIST CONFIRM
     public int deleteTdListConfirm(int className);
 

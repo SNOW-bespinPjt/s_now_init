@@ -11,7 +11,7 @@
         SELECT *
         FROM TODOLIST
         WHERE user_id = #{id}
-        ORDER BY reg_date DESC
+        ORDER BY is_finish ASC, end_date asc, start_date desc, reg_date desc
 
 
     </select>
@@ -46,6 +46,20 @@
             end_date   = #{end_date},
             mod_date   = NOW()
         WHERE no = #{no}
+
+    </update>
+
+    <update id="updateIsFinish" parameterType="Integer">
+
+        UPDATE
+            TODOLIST
+        SET is_finish =
+                CASE
+                    WHEN is_finish = 0 THEN 1
+                    WHEN is_finish = 1 THEN 0
+                    END
+        WHERE
+            no = #{no};
 
     </update>
 
