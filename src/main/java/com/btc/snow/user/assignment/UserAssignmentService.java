@@ -1,5 +1,7 @@
 package com.btc.snow.user.assignment;
 
+import com.btc.snow.user.member.UserMemberDto;
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,7 +43,22 @@ public class UserAssignmentService implements IUserAssignmentService {
         }
     }
 
+
     // 과제 상세페이지
+    @Override
+    public int getIsSubmit(int group_id, int user_no) {
+        log.info("[UserAssignmentService] getAssignment()");
+
+        boolean isSubmit = iUserAssignmentMB.selectIsSubmitNum(group_id, user_no);
+
+        if (isSubmit) {
+            return ASSIGNMENT_SUCCESS;
+
+        } else {
+            return ASSIGNMENT_FAIL;
+        }
+
+    }
     @Override
     public UserAssignmentDto getAssignment(int no) {
         log.info("[UserAssignmentService] getAssignment()");

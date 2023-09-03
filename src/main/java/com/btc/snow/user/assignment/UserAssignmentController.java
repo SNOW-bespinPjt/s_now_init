@@ -51,13 +51,6 @@ public class UserAssignmentController {
     /*
      * 과제 등록
      */
-    @GetMapping("/registration_form")
-    public void RegistrationForm() {
-        log.info("[UserAssignmentController] RegistrationForm()");
-
-        nextPage = "user/assignment/registration_form";
-    }
-
     @PostMapping("/registration_confirm")
     public String RegistrationConfirm(UserAssignmentDto userAssignmentDto,
                                       HttpSession session,
@@ -70,10 +63,12 @@ public class UserAssignmentController {
         UserMemberDto loginedUserDto = (UserMemberDto) session.getAttribute("loginedUserDto");
         int user_no = loginedUserDto.getNo();
         log.info("과제 등록 user_no --->" + user_no);
-        userAssignmentDto.setAdmin_no(user_no);
+        userAssignmentDto.setUser_no(user_no);
 
         // group_id 저장
-        userAssignmentDto.setGroup_id(userAssignmentDto.getNo());
+        int group_id = userAssignmentDto.getNo();
+        log.info("과제 수정 group_id --->" + group_id);
+        userAssignmentDto.setGroup_id(group_id);
 
         // file_name 저장
         userAssignmentDto.setFile_name(file.getOriginalFilename());
@@ -104,16 +99,24 @@ public class UserAssignmentController {
      * 과제 상세페이지
      */
     @GetMapping("/get_assignment")
-    public ModelAndView getAssignment(@RequestParam("no") int no) {
+    public ModelAndView getAssignment(@RequestParam("no") int no, HttpSession session) {
         log.info("[UserAssignmentController] getAssignment()");
 
         nextPage = "user/assignment/detail_assignment";
 
+        // no에 맞는 페이지 가져오기
         UserAssignmentDto userAssignmentDto = userAssignmentService.getAssignment(no);
+
+        // is_submit 값 가져오기
+        UserMemberDto loginedUserDto = (UserMemberDto) session.getAttribute("loginedUserDto");
+        int user_no = loginedUserDto.getNo();
+        int group_id = userAssignmentDto.getNo();
+        int result = userAssignmentService.getIsSubmit(group_id, user_no);
 
         ModelAndView mv = new ModelAndView();
         mv.setViewName(nextPage);
         mv.addObject("userAssignmentDto", userAssignmentDto);
+        mv.addObject("result", result);
 
         return mv;
     }
@@ -149,11 +152,13 @@ public class UserAssignmentController {
         // 세션 > user_no 저장
         UserMemberDto loginedUserDto = (UserMemberDto) session.getAttribute("loginedUserDto");
         int user_no = loginedUserDto.getNo();
-        log.info("과제 등록 user_no --->" + user_no);
-        userAssignmentDto.setAdmin_no(user_no);
+        log.info("과제 수정 user_no --->" + user_no);
+        userAssignmentDto.setUser_no(user_no);
 
         // group_id 저장
-        userAssignmentDto.setGroup_id(userAssignmentDto.getNo());
+        int group_id = userAssignmentDto.getNo();
+        log.info("과제 수정 group_id --->" + group_id);
+        userAssignmentDto.setGroup_id(group_id);
 
         // file_name 저장
         userAssignmentDto.setFile_name(file.getOriginalFilename());

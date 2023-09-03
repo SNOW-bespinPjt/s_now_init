@@ -13,9 +13,15 @@
     </select>
 
     <insert id="insertAssignment" parameterType="com.btc.snow.user.assignment.UserAssignmentDto">
-        INSERT INTO ASSIGNMENT (user_no, file, file_name, group_id, is_submit, reg_date, mod_date)
-        VALUES (#{user_no}, #{file}, #{file_name}, #{group_id}, 1, NOW(), NOW())
+        INSERT INTO ASSIGNMENT (user_no, group_id, file, file_name, is_submit, reg_date, mod_date)
+        VALUES (#{user_no}, #{group_id}, #{file}, #{file_name}, 1, NOW(), NOW())
     </insert>
+
+    <select id="selectIsSubmitNum" parameterType="int" resultType="boolean">
+        SELECT *
+        FROM ASSIGNMENT
+        WHERE group_id = #{group_id} AND user_no =#{user_no} AND is_submit = 1
+    </select>
 
     <select id="selectAssignment" parameterType="Integer" resultType="com.btc.snow.user.assignment.UserAssignmentDto">
         SELECT *

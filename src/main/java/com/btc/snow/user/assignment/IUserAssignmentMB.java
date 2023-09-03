@@ -14,6 +14,7 @@ public interface IUserAssignmentMB {
     int insertAssignment(UserAssignmentDto userAssignmentDto);
 
     // 과제 상세페이지
+    boolean selectIsSubmitNum(int group_id, int user_no);
     UserAssignmentDto selectAssignment(int no);
 
     // 과제 수정
@@ -21,4 +22,6 @@ public interface IUserAssignmentMB {
 
     // 과제 삭제
     int deleteAssignment(int no);
+
+
 }
