@@ -1,6 +1,6 @@
 package com.btc.snow.user.assignment;
 
-import com.btc.snow.user.config.UploadFileService;
+import com.btc.snow.user.config.UploadFileServiceForUser;
 import com.btc.snow.user.member.UserMemberDto;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.log4j.Log4j2;
@@ -25,7 +25,7 @@ public class UserAssignmentController {
     UserAssignmentService userAssignmentService;
 
     @Autowired
-    UploadFileService uploadFileService;
+    UploadFileServiceForUser uploadFileServiceForUser;
 
     String nextPage = null;
 
@@ -80,7 +80,7 @@ public class UserAssignmentController {
         log.info("userAssignmentDto : " + userAssignmentDto.getFile_name());
 
         // file 저장
-        String saveFileName = uploadFileService.upload(file, loginedUserDto.getId());
+        String saveFileName = uploadFileServiceForUser.upload(file, loginedUserDto.getId());
 
         if (saveFileName != null) {
             userAssignmentDto.setFile(saveFileName); // 파일 저장이 되면 그걸 넣어주기
@@ -161,7 +161,7 @@ public class UserAssignmentController {
 
         // SAVE FILE
         if (!file.getOriginalFilename().equals("")) {
-            String savedFileName = uploadFileService.upload(file, loginedUserDto.getId());
+            String savedFileName = uploadFileServiceForUser.upload(file, loginedUserDto.getId());
             if (savedFileName != null)
                 userAssignmentDto.setFile(savedFileName);
         }

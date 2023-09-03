@@ -1,6 +1,6 @@
 package com.btc.snow.admin.assignment;
 
-import com.btc.snow.admin.config.UploadFileService;
+import com.btc.snow.admin.config.UploadFileServiceForAdmin;
 import com.btc.snow.admin.member.AdminMemberDto;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.log4j.Log4j2;
@@ -24,7 +24,7 @@ public class AdminAssignmentController {
     AdminAssignmentService adminAssignmentService;
 
     @Autowired
-    UploadFileService uploadFileService;
+    UploadFileServiceForAdmin uploadFileServiceForAdmin;
 
     String nextPage = null;
 
@@ -80,7 +80,7 @@ public class AdminAssignmentController {
         log.info("adminAssignmentDto : " + adminAssignmentDto.getFile_name());
 
         // 파일 저장
-        String saveFileName = uploadFileService.upload(file);
+        String saveFileName = uploadFileServiceForAdmin.upload(file);
 
         if (saveFileName != null) {
             adminAssignmentDto.setFile(saveFileName); // 파일 저장이 되면 그걸 넣어주기
@@ -175,7 +175,7 @@ public class AdminAssignmentController {
 
         // SAVE FILE
         if (!file.getOriginalFilename().equals("")) {
-            String savedFileName = uploadFileService.upload(file);
+            String savedFileName = uploadFileServiceForAdmin.upload(file);
             if (savedFileName != null)
                 adminAssignmentDto.setFile(savedFileName);
         }
