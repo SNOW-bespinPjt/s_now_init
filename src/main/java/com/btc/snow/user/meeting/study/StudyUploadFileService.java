@@ -11,7 +11,7 @@ import java.util.UUID;
 @Service
 public class StudyUploadFileService {
 
-    public String upload(MultipartFile file) {
+    public String upload(MultipartFile file, String id) {
         log.info("upload()");
 
         // 저장 유무

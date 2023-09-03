@@ -1,5 +1,7 @@
 package com.btc.snow.user.meeting.study;
 
+import com.btc.snow.user.member.UserMemberDto;
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,18 +22,22 @@ public class UserStudyController {
     StudyUploadFileService studyUploadFileService;
 
     @PostMapping("/write_study")
-    public String writeStudy(UserStudyDto userStudyDto, @RequestParam("file") MultipartFile file) {
+    public String writeStudy(UserStudyDto userStudyDto,
+                             @RequestParam("file") MultipartFile file,
+                             HttpSession session) {
         log.info("writeStudy()");
 
+        UserMemberDto loginedUserDto = (UserMemberDto) session.getAttribute("loginedUserDto");
+
         String nextPage = "redirect:/user/meeting/list";
-        log.info("========={}", userStudyDto.getBook_no());
 
-        String saveFileName = studyUploadFileService.upload(file);
-        log.info("saveFileName {}", saveFileName);
-
+        String saveFileName = studyUploadFileService.upload(file, loginedUserDto.getId());
 
         if (saveFileName != null) {
+
+            userStudyDto.setUser_id(loginedUserDto.getId());
             userStudyDto.setImg(saveFileName);
+
             int result = userStudyService.writeStudy(userStudyDto);
 
             if (result <= 0) {

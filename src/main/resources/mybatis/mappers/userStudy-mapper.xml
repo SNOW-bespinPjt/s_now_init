@@ -5,8 +5,8 @@
 <mapper namespace="com.btc.snow.user.meeting.study.IUserStudyMapper">
 
     <insert id="insertStudy" parameterType="com.btc.snow.user.meeting.study.UserStudyDto">
-        insert into STUDY (book_no, title, body, total, img, start_date, end_date, reg_date, mod_date)
-        VALUES (#{book_no}, #{title}, #{body}, #{total}, #{img}, #{start_date}, #{end_date}, NOW(), NOW())
+        insert into STUDY (user_id, book_no, title, body, total, img, start_date, end_date, reg_date, mod_date)
+        VALUES (#{user_id}, #{book_no}, #{title}, #{body}, #{total}, #{img}, #{start_date}, #{end_date}, NOW(), NOW())
     </insert>
 
 </mapper>
