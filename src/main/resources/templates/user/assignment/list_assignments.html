@@ -6,49 +6,35 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://code.jquery.com/jquery-3.7.0.js"
             integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossOrigin="anonymous"></script>
-    <script th:src="@{/admin/js/list_assignments.js}" type="text/javascript"></script>
-    <script>
-        $(document).ready(function () {
-            let message = "[[${msg}]]";
-            if (message != "") {
-                alert(message);
-            } else {
-            }
-        })
-    </script>
+    <script th:src="@{/assignment/user/js/list_assignments.js}" type="text/javascript"></script>
+
 </head>
-<body>
-<div class="flex">
-    <!-- nav -->
-    <div>
-        <nav th:replace="~{/include/admin_nav::nav}"></nav>
-    </div>
-    <!--  section & footer  -->
-    <div class="flex flex-col items-center justify-center w-5/6 mx-auto">
-        <section class="flex flex-row w-5/6 border-solid mt-7">
-            <div
-                    class="relative flex items-center justify-center w-screen h-screen mr-8 border-2 rounded-lg bg-slate-100"
-            >
-                <div class="absolute top-0 left-0 mt-6 ml-14 w-full">
-                    <div>
-                        <h2 class="text-2xl font-bold">ASSIGNMENT LIST</h2>
-                        <a th:href="@{/admin/assignment/registration_form}"
-                           class="block mb-4 hover:bg-gray-600 py-2 px-16 rounded transition duration-200"
-                        >글쓰기</a>
-                        <div class="flex flex-col w-11/12 bg-white h-5/6">
-                            <div th:each="item : ${adminAssignmentDtos}"
-                                 class="flex w-full border-b-2 h-1/4 border-b-slate-300">
-                                <div class="w-11/12 p-4">
-                                    <a type="button" th:text="${item.title}" th:href="@{/admin/assignment/get_assignment(no=${item.no})}"></a>
-                                    <br>
-                                </div>
-                                <div class="flex flex-col items-center p-4 mb-5">
+<body class="flex flex-col items-center justify-center w-5/6 mx-auto">
+<header th:replace="~{/include/header_nav_footer::header}"></header>
+<!--  section & footer  -->
+<div class="flex flex-col items-center justify-center w-5/6 mx-auto">
+    <section class="flex flex-row w-5/6 border-solid mt-7">
+        <div
+                class="relative flex items-center justify-center w-screen h-screen mr-8 border-2 rounded-lg bg-slate-100"
+        >
+            <div class="absolute top-0 left-0 mt-6 ml-14 w-full">
+                <div>
+                    <h2 class="text-2xl font-bold">ASSIGNMENT LIST</h2>
+                    <div class="flex flex-col w-11/12 bg-white h-5/6">
+                        <div th:each="item : ${adminAssignmentDtos}"
+                             class="flex w-full border-b-2 h-1/4 border-b-slate-300">
+                            <div class="w-11/12 p-4">
+                                <a type="button" th:text="${item.title}"
+                                   th:href="@{/admin/assignment/get_assignment(no=${item.no})}"></a>
+                                <br>
+                            </div>
+                            <div class="flex flex-col items-center p-4 mb-5">
                                         <span th:if="${item.is_activation eq 0}">
                                             <input type="button" value="과제 활성화" th:attr="data-no=${item.no}"
                                                    onclick="activeAssignment(this.getAttribute('data-no'));"
                                                    class="px-2 py-1 rounded bg-blue-500 text-white hover:bg-blue-600">
                                         </span>
-                                    <span th:if="${item.is_activation eq 1}" class="text-green-500">
+                                <span th:if="${item.is_activation eq 1}" class="text-green-500">
                                         <input type="button" value="과제 비활성화" th:attr="data-no=${item.no}"
                                                onclick="activeAssignment(this.getAttribute('data-no'));"
                                                class="px-2 py-1 rounded bg-blue-500 text-white hover:bg-blue-600">
@@ -76,15 +62,15 @@
                                     </div>
 
                                     </span>
-                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
-        <footer th:replace="~{/include/header_nav_footer.html::footer}"></footer>
-    </div>
+        </div>
+    </section>
+    <footer th:replace="~{/include/header_nav_footer.html::footer}"></footer>
+</div>
 </div>
 </body>
 </html>

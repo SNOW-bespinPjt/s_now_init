@@ -4,10 +4,16 @@ import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.net.URI;
 
 @Controller
 @Log4j2
@@ -16,38 +22,38 @@ public class UserMemberController {
 
 	@Autowired
 	UserMemberService userMemberService;
-	
+
 	/*
 	 * CREATE ACCOUT FORM
 	 */
 	@GetMapping("/create_account_form")
 	public String createAccountForm() {
 		log.info("[UserMemberController] createAccountForm()");
-		
+
 		String nextPage = "user/member/create_account_form";
-		
+
 		return nextPage;
-		
+
 	}
-	
+
 	/*
 	 * CREATE ACCOUNT CONFIRM
 	 */
 	@PostMapping("/create_account_confirm")
 	public String createAccountConfirm(UserMemberDto userMemberDto) {
 		log.info("[UserMemberController] createAccountConfirm()");
-		
+
 		String nextPage = "user/member/create_account_success";
-		
+
 		int result = userMemberService.createAccountConfirm(userMemberDto);
-		
+
 		if (result <= UserMemberService.INSERT_FAIL_AT_DATABASE) {
 			nextPage = "user/member/create_account_fail";
 
 		}
-			
+
 		return nextPage;
-		
+
 	}
 
 	/*
@@ -67,28 +73,39 @@ public class UserMemberController {
      USER LOGIN CONFIRM
     */
 	@PostMapping("/user_login_confirm")
-	public String userLoginConfirm(UserMemberDto userMemberDto, HttpSession session) {
+	@ResponseBody
+	public ResponseEntity<Object> userLoginConfirm(UserMemberDto userMemberDto, HttpSession session) {
 		log.info("[UserMemberController] userLoginConfirm()");
 
-		String nextPage = "user/member/member_login_success";
+
+		HttpHeaders headers = new HttpHeaders();
+
 
 		UserMemberDto loginedUserDto = userMemberService.userLoginConfirm(userMemberDto);
 
-		if(loginedUserDto != null) {
+		if (loginedUserDto != null) {
+			log.info("Login Success!!");
+
 			session.setAttribute("loginedUserDto", loginedUserDto);
 			session.setMaxInactiveInterval(60 * 30);
 
-		} else {
-			nextPage = "user/member/member_login_fail";
+			headers.setLocation(URI.create("/"));
 
+			return new ResponseEntity<>(headers, HttpStatus.MOVED_PERMANENTLY);
+		} else {
+
+			log.info("Login Fail!!");
+
+			headers.setLocation(URI.create("404"));
+
+			return new ResponseEntity<>(headers, HttpStatus.MOVED_PERMANENTLY);
 		}
 
-		return nextPage;
 
 	}
 
 	/*
-  	 USER MODIFY FORM
+       USER MODIFY FORM
    */
 	@GetMapping("/user_modify_form")
 	public String userModifyForm() {
@@ -129,7 +146,7 @@ public class UserMemberController {
 	public String userLogoutConfirm(HttpSession session) {
 		log.info("[UserMemberController] user_logout_confirm()");
 
-		String nextPage = ":/";
+		String nextPage = "redirect:/";
 
 		session.removeAttribute("loginedUserDto");
 
@@ -186,7 +203,7 @@ public class UserMemberController {
 
 		int result = userMemberService.findPasswordConfirm(userMemberDto);
 
-		if(result <= 0) {
+		if (result <= 0) {
 			nextPage = "admin/member/find_password_fail";
 
 		}
@@ -195,5 +212,35 @@ public class UserMemberController {
 
 	}
 
+	/*
+	 * FIND ID FORM
+	 */
+//   @GetMapping("/find_id_form")
+//   public String findIdForm() {
+//      log.info("[UserMemberController] findIdForm()");
+//
+//      String nextPage = "user/member/find_id_form";
+//
+//      return nextPage;
+//
+//   }
+
+	/*
+	 * FIND ID CONFIRM
+	 */
+//   @PostMapping("/find_id_confirm")
+//   public String findIdConfirm(UserMemberDto userMemberDto) throws MessagingException {
+//      log.info("[UserMemberController] findIdConfirm()");
+//
+//      String nextPage = "user/member/find_id_success";
+//
+//      int result = userMemberService.findIdConfirm(userMemberDto);
+//
+//      if(result <= 0)
+//         nextPage = "admin/member/find_id_fail";
+//
+//      return nextPage;
+//
+//   }
 
 }
