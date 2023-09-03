@@ -25,4 +25,7 @@ public interface IUserTdListService {
     // SEARCH TAG CONFIRM
     public List<UserTdListDto> searchTagConfirm(String searchWord, String userId);
 
+    // SEARCH FINISH CONFIRM
+    public List<UserTdListDto> searchFinishConfirm(String user_id);
+
 }

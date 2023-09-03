@@ -175,6 +175,25 @@
 
         // 검색 버튼 클릭 이벤트 END
 
+        // 종료된 TODOLIST 조회 START
+        $(document).on("click", '#finish_btn input[value="finish_btn"]', function (e) {
+            console.log('#finish_btn input[value="finish_btn"] CLICK HANDER!!');
+
+            ajax_tdlist_finish_btn();
+
+        })
+
+        // 종료된 TODOLIST 조회 END
+
+        // 뒤로가기 btn START
+        $(document).on("click", '#finish_btn input[value="back"]', function (e) {
+            console.log('#finish_btn input[value="back"] CLICK HANDER!!');
+
+            ajax_show_tdlist();
+
+        })
+
+        // 뒤로가기 btn 조회 END
 
     }
 
@@ -281,6 +300,8 @@
             success: function (data) {
                 console.log('AJAX SUCCESS - ajax_show_tdlist()');
 
+                remove_list();
+
                 let userTdListDtos = data.userTdListDtos;
                 console.log(userTdListDtos);
 
@@ -306,33 +327,7 @@
 
                 }
 
-                // 마감일 & 체크(활성화) css 변경 START
-                // 오늘 날짜 함수
-                function getCurrentDate() {
-                    const today = new Date();
-                    return today.toISOString().substring(0, 10); // 날짜만 추출 (YYYY-MM-DD)
-                }
-
-                // 각 행을 확인하며 CSS 변경
-                $("#todo_list table tbody tr").each(function () {
-                    const isFinish = $(this).find("td input.is_finish").prop("checked");
-                    const endDate = $(this).find("td:nth-child(5)").text(); // 5번째 열의 텍스트 (마감일)
-
-                    // 마감일이 오늘 날짜 보다 이전이거나 check가 되어 있는 튜플을 회색 처리하며 선 긋기
-                    if (isFinish || endDate < getCurrentDate()) {
-                        $(this).addClass("gray-row"); // 회색으로 표시
-
-                        // 글자를 회색으로 변경하고 가운데에 선 추가
-                        $(this).find("td").css({
-                            "color": "#888",                    // 글자 색상을 회색(#888)으로 설정
-                            "text-decoration": "line-through",  // 가운데 선 추가
-                            "text-decoration-color": "#888"     // 선의 색상을 회색(#888)으로 설정
-                        });
-
-                    }
-
-                });
-                // 마감일 & 체크(활성화) css 변경 END
+                checkedNEndDate();
 
             },
             error: function (data) {
@@ -474,6 +469,7 @@
 
                 }
 
+                $('#search_word .search_bar').val('');
                 checkedNEndDate();
 
             },
@@ -482,6 +478,58 @@
                 alert("정보를 불러오지 못하였습니다");
 
             }
+        });
+
+    }
+
+    function ajax_tdlist_finish_btn() {
+
+        $.ajax({
+            url: '/user/tdlist/search_finish_confirm',
+            type: 'POST',
+            processData: false,
+            contentType: false,
+            // data:formData,
+            success: function (data) {
+                console.log('AJAX SUCCESS - ajax_tdlist_finish_btn()');
+
+                // 앞선 리스트 삭제 후 추가적으로 내용 입력.
+                remove_list();
+
+                let userTdListDtos = data.userTdListDtos;
+                console.log(userTdListDtos);
+
+                for (let i = 0; i < userTdListDtos.length; i++) {
+                    let appendTag = "<tr>";
+                    appendTag += "<td><input type='checkbox' class='is_finish' data-no='" + userTdListDtos[i].no + "'";
+                    if (userTdListDtos[i].is_finish === 1) {
+                        appendTag += " checked"; // is_finish가 1이면 checked 속성을 추가하여 체크된 상태로 만듭니다.
+                    }
+                    appendTag += ">" + "</a></td>";
+                    appendTag += "<td><a href='#none' class='modify' data-no='";
+                    appendTag += userTdListDtos[i].no;
+                    appendTag += "' >" + userTdListDtos[i].content + "</a></td>";
+                    appendTag += "<td>" + userTdListDtos[i].tag + "</td>";
+                    appendTag += "<td>" + userTdListDtos[i].start_date + "</td>";
+                    appendTag += "<td>" + userTdListDtos[i].end_date + "</td>";
+                    appendTag += "<td><input data-no='";
+                    appendTag += userTdListDtos[i].no;
+                    appendTag += "' type='button' value='DELETE'></td>";
+                    appendTag += "</tr>";
+
+                    $("#todo_list tbody").append(appendTag);
+
+                }
+
+
+                checkedNEndDate();
+
+            },
+            error: function (data) {
+                console.log('AJAX ERROR - ajax_tdlist_finish_btn()');
+
+            }
+
         });
 
     }

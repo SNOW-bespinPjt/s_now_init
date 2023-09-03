@@ -131,5 +131,23 @@ public class UserTdListController {
         return msgMap;
 
     }
-    
+
+    @PostMapping("/search_finish_confirm")
+    @ResponseBody
+    public Map<String, Object> searchFinishConfirm(HttpSession session) {
+        log.info("[UserTdListController] searchFinishConfirm()");
+
+        Map<String, Object> msgMap = new HashMap<>();
+
+        UserMemberDto loginedUserDto = (UserMemberDto) session.getAttribute("loginedUserDto");
+        String user_id = loginedUserDto.getId();
+
+        List<UserTdListDto> userTdListDtos = userTdListService.searchFinishConfirm(user_id);
+
+        msgMap.put("userTdListDtos", userTdListDtos);
+
+        return msgMap;
+
+    }
+
 }

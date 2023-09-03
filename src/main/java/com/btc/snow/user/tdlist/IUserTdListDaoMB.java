@@ -39,4 +39,9 @@ public interface IUserTdListDaoMB {
      */
     public List<UserTdListDto> selectListByTag(UserTdListDto userTdListDto);
 
+    /*
+     * SHOW FINISH TODOLIST
+     */
+    public List<UserTdListDto> showFinishTdList(String user_id);
+
 }

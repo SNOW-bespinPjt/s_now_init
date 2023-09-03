@@ -120,5 +120,14 @@ public class UserTdListService implements IUserTdListService {
         }
 
     }
-    
+
+    @Override
+    public List<UserTdListDto> searchFinishConfirm(String user_id) {
+        log.info("[UserTdListService] searchFinishConfirm()");
+
+        List<UserTdListDto> userTdListDtos = iUserTdListDaoMB.showFinishTdList(user_id);
+
+        return userTdListDtos;
+    }
+
 }
