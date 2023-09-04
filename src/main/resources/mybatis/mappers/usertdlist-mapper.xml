@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.btc.snow.user.tdlist.IUserTdListDaoMB">
+
+    <select id="showAllTdList"
+            parameterType="com.btc.snow.user.member.UserMemberDto"
+            resultType="com.btc.snow.user.tdlist.UserTdListDto">
+
+        SELECT *
+        FROM TODOLIST
+        WHERE user_id = #{id}
+          and end_date >= DATE_SUB(NOW(), INTERVAL 3 DAY)
+        ORDER BY is_finish ASC, end_date asc, start_date desc, reg_date desc
+
+
+    </select>
+
+    <insert id="insertTdList"
+            parameterType="com.btc.snow.user.tdlist.UserTdListDto">
+
+        INSERT INTO TODOLIST(user_id,
+                             content,
+                             tag,
+                             start_date,
+                             end_date,
+                             reg_date,
+                             mod_date)
+
+        VALUES (#{user_id},
+                #{content},
+                #{tag},
+                #{start_date},
+                #{end_date},
+                NOW(), NOW())
+
+    </insert>
+
+    <update id="updateTdList" parameterType="com.btc.snow.user.tdlist.UserTdListDto">
+
+        UPDATE
+            TODOLIST
+        SET content    = #{content},
+            tag        = #{tag},
+            start_date = #{start_date},
+            end_date   = #{end_date},
+            mod_date   = NOW()
+        WHERE no = #{no}
+
+    </update>
+
+    <update id="updateIsFinish" parameterType="Integer">
+
+        UPDATE
+            TODOLIST
+        SET is_finish =
+                CASE
+                    WHEN is_finish = 0 THEN 1
+                    WHEN is_finish = 1 THEN 0
+                    END
+        WHERE no = #{no};
+
+    </update>
+
+    <delete id="removeTdList" parameterType="Integer">
+
+        DELETE
+        FROM TODOLIST
+        WHERE no = #{no}
+
+    </delete>
+
+    <select id="selectListByTag"
+            parameterType="com.btc.snow.user.tdlist.UserTdListDto"
+            resultType="com.btc.snow.user.tdlist.UserTdListDto">
+
+        SELECT *
+        FROM TODOLIST
+        WHERE user_id = #{user_id}
+          AND end_date >= DATE_SUB(NOW(), INTERVAL 3 DAY)
+          AND tag = #{tag}
+        ORDER BY is_finish ASC, end_date asc, start_date desc, reg_date desc
+
+    </select>
+
+    <select id="showFinishTdList"
+            parameterType="String"
+            resultType="com.btc.snow.user.tdlist.UserTdListDto">
+
+        SELECT *
+        FROM TODOLIST
+        WHERE user_id = #{user_id}
+          AND (is_finish = 1
+            or
+            <![CDATA[ end_date < NOW() ]]>)
+
+    </select>
+
+</mapper>

@@ -70,6 +70,9 @@ public class UserMemberService implements IUserMemberService {
         log.info("[UserMemberService] memberLoginConfirm()");
 
         UserMemberDto loginedUserDto = iUserMemberDaoMB.selectUserForLogin(userMemberDto);
+        log.info("loginedDto : {} ", loginedUserDto);
+
+
         if (passwordEncoder.matches(userMemberDto.getPw(), loginedUserDto.getPw())) {
             return loginedUserDto;
 

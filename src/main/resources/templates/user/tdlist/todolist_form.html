@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script th:replace="~{/include/common_js.html::jquery_cdn}"></script>
+    <script th:replace="~{/user/tdlist/todolist_form_js.html::js}"></script>
+    <script>
+
+
+    </script>
+</head>
+<body class="flex flex-col items-center justify-center w-5/6 mx-auto">
+
+<div id="defaultModal"
+     class="fixed inset-0 z-50 hidden overflow-y-auto bg-black bg-opacity-50 flex justify-center items-center">
+    <div class="relative w-full max-w-screen-md mx-auto">
+        <!-- Modal content -->
+        <div id="search" class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            <!-- Modal header -->
+            <div class="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
+                <!--헤더-->
+                <h2>MODIFY TODOLIST INFO</h2>
+
+                <button type="button"
+                        class="inline-flex items-center justify-center w-8 h-8 ml-auto text-gray-400 bg-transparent rounded-lg hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white"
+                        data-modal-hide="defaultModal" value="xbutton">
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                         fill="none" viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                              stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                    </svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
+            </div>
+            <!-- Modal body -->
+            <div id="book_list" class="p-6 space-y-6 max-h-[calc(100vh-10rem)] overflow-y-auto flex flex-col">
+                <form name="create_tdlist_form">
+                    <!--					<input type="hidden" id="no_modify" name="no">-->
+                    <input type="text" id="content_modify" name="content" placeholder="INPUT NEW CONTENT">
+                    <input type="text" id="tag_modify" name="tag" placeholder="INPUT NEW TAG">
+                    <input type="date" id="start_date_modify" name="start_date">
+                    <input type="date" id="end_date_modify" name="end_date">
+                </form>
+
+            </div>
+            <!-- Modal footer -->
+            <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
+                <button data-modal-hide="defaultModal" type="button" value="modify"
+                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    MODIFY
+                </button>
+                <button data-modal-hide="defaultModal" type="RESET"
+                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    RESET
+                </button>
+                <button data-modal-hide="defaultModal" type="button" value="cancel"
+                        class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">
+                    CANCEL
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<header th:replace="~{/include/header_nav_footer::header}"></header>
+
+<section class="flex flex-row w-5/6 border-solid mt-7">
+    <div
+            class="items-center justify-center w-screen h-screen mr-8 border-2 rounded-lg bg-slate-100"
+    >
+        <div>
+            <h2>Create ToDoList~</h2>
+        </div>
+
+        <div id="todo_container">
+            <div>
+                <label for="content">Content:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <label for="tag">Tag:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <label for="start_date">Start Date:</label>&nbsp;&nbsp;
+                <label for="end_date">End Date:</label>&nbsp;&nbsp;
+            </div>
+            <form name="create_tdlist_form">
+                <input type="text" id="content" name="content" placeholder="INPUT CONTENT">
+                <input type="text" id="tag" name="tag" placeholder="INPUT TAG">
+                <input type="date" id="start_date" name="start_date">
+                <input type="date" id="end_date" name="end_date">
+                <input type="button" value="Create List">
+            </form>
+        </div>
+
+        <div id="search_word">
+            <form name="search_word_form">
+                <input type="text" class="search_bar" placeholder="INPUT TAG WORD">&nbsp;&nbsp;
+                <input type="button" value="search">&nbsp;&nbsp;
+                <input type="reset" value="reset">
+            </form>
+
+        </div>
+
+        <div id="finish_btn">
+            <span><input type="button" value="finish_btn"></span>
+            <span><input type="button" value="back"></span>
+        </div>
+
+        <div id="todo_list">
+            <table>
+                <thead>
+                <th>체크</th>
+                <th>내용</th>
+                <th>태그</th>
+                <th>시작일</th>
+                <th>마감일</th>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+
+
+    </div>
+    <div class="flex flex-col items-center w-3/4 h-screen border-2 rounded-lg">
+        <div
+                class="flex flex-col items-center justify-center w-11/12 h-40 p-2 mt-6 border-2 rounded-sm"
+        >
+            <h3 class="mb-3">SNOW에 오신 것을 환영합니다 !</h3>
+            <button
+                    class="h-10 px-4 py-2 font-bold text-white bg-green-500 rounded w-52 hover:bg-green-600"
+            >
+                login
+            </button>
+            <div class="mt-3">
+                <a
+                        class="cursor-pointer hover:underline hover:font-thin hover:text-gray-500"
+                >아이디 찾기</a
+                >
+                |
+                <a
+                        class="cursor-pointer hover:underline hover:font-thin hover:text-gray-500"
+                >비밀번호 찾기</a
+                >
+                |
+                <a
+                        class="cursor-pointer hover:underline hover:font-thin hover:text-gray-500"
+                >회원가입</a
+                >
+            </div>
+        </div>
+        <div
+                class="flex flex-col items-center justify-center w-11/12 p-2 mt-6 border-2 rounded-sm h-2/4"
+        >
+            <h3 class="mb-3">SNOW에 오신 것을 환영합니다 !</h3>
+        </div>
+    </div>
+</section>
+
+<footer th:replace="~{/include/header_nav_footer.html::footer}"></footer>
+</body>
+</html>

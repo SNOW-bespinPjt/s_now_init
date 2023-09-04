@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.btc.snow.admin.curriculum.IAdminCurriculumDaoMB">
+
+    <select id="inputNewCurriculum"
+            parameterType="com.btc.snow.admin.curriculum.AdminCurriculumDto">
+
+        SELECT COUNT(*)
+        FROM USER
+        WHERE id = #{id}
+
+    </select>
+
+    <select id="selectUserForLogin"
+            parameterType="com.office.user.member.UserMemberDto"
+            resultType="com.office.user.member.UserMemberDto">
+
+        SELECT *
+        FROM USER
+        WHERE id = #{id}
+
+    </select>
+
+    <!--    <update id="updateAccount" parameterType="com.office.user.member.UserMemberDto">-->
+
+    <!--        UPDATE-->
+    <!--            USER-->
+    <!--        SET mail         = #{mail},-->
+    <!--            phone        = #{phone},-->
+    <!--            home_phone   = #{home_phone},-->
+    <!--            address      = #{address},-->
+    <!--            university   = #{university},-->
+    <!--            department   = #{department},-->
+    <!--            gradu_status = #{gradu_status},-->
+    <!--            img          = #{img},-->
+    <!--            mod_date     = NOW()-->
+    <!--        WHERE no = #{no}-->
+    <!--    </update>-->
+
+    <!--    <select id="getLatestAccountInfo" parameterType="com.office.user.member.UserMemberDto"-->
+    <!--            resultType="com.office.user.member.UserMemberDto">-->
+
+    <!--        SELECT *-->
+    <!--        FROM USER-->
+    <!--        WHERE no = #{no}-->
+    <!--    </select>-->
+
+    <!--    <delete id="deleteUser"-->
+    <!--            parameterType="Integer">-->
+
+    <!--        DELETE-->
+    <!--        FROM USER-->
+    <!--        WHERE no = #{no}-->
+    <!--    </delete>-->
+
+    <!--    <update id="updateUserPW"-->
+    <!--            parameterType="com.office.user.member.UserMemberDto">-->
+
+    <!--        UPDATE-->
+    <!--            USER-->
+    <!--        SET pw = #{pw}-->
+    <!--        WHERE id = #{id}-->
+    <!--          AND name = #{name}-->
+
+    <!--    </update>-->
+
+    <!--	<select id="findId"-->
+    <!--			parameterType="com.office.user.member.UserMemberDto">-->
+
+    <!--		SELECT-->
+    <!--		    id-->
+    <!--		FROM-->
+    <!--			-->
+    <!--		WHERE-->
+    <!--		    name = #{name}-->
+    <!--		AND-->
+    <!--		    mail = #{mail}-->
+
+    <!--	</select>-->
+
+
+</mapper>

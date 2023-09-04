@@ -80,7 +80,7 @@ public class UserMemberController {
 
         HttpHeaders headers = new HttpHeaders();
 
-
+        log.info("user ID: {}", userMemberDto.getId());
         UserMemberDto loginedUserDto = userMemberService.userLoginConfirm(userMemberDto);
 
         if (loginedUserDto != null) {
