@@ -5,6 +5,8 @@ import jakarta.servlet.http.HttpSession;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -51,5 +53,19 @@ public class UserStudyController {
         return nextPage;
     }
 
+    @GetMapping("/study_detail")
+    public String studyDetail(Model model, @RequestParam("no") int no) {
+        log.info("studyDetail()");
 
+        String nextPage = "user/meeting/study_detail";
+
+        UserStudyDto userStudyDto = userStudyService.studyDetail(no);
+        System.out.println("+++++++++++++++++++" + userStudyDto.getTitle());
+        System.out.println("+++++++++++++++++++" + userStudyDto.getBody());
+        System.out.println("+++++++++++++++++++" + userStudyDto.getHit());
+
+        model.addAttribute("userStudyDto", userStudyDto);
+
+        return nextPage;
+    }
 }

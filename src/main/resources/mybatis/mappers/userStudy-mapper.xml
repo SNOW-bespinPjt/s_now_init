@@ -9,4 +9,10 @@
         VALUES (#{user_id}, #{book_no}, #{title}, #{body}, #{total}, #{img}, #{start_date}, #{end_date}, NOW(), NOW())
     </insert>
 
+    <select id="studyDetail" parameterType="Integer" resultType="com.btc.snow.user.meeting.study.UserStudyDto">
+        select *
+        from STUDY
+        where no = #{no}
+    </select>
+
 </mapper>

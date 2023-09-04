@@ -17,5 +17,6 @@ public class UserStudyDto {
     private String end_date;
     private String reg_date;
     private String mod_date;
-   
+    
+
 }

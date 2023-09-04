@@ -5,4 +5,6 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface IUserMealMapper {
     int insertMeal(UserMealDto userMealDto);
+
+    UserMealDto mealDetail(int no);
 }

@@ -9,4 +9,6 @@ public interface IUserStudyMapper {
 //    public List<UserBookDto> selectSearchBooks(String title);
 
     int insertStudy(UserStudyDto userStudyDto);
+
+    UserStudyDto studyDetail(int no);
 }

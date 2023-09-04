@@ -26,5 +26,10 @@ public class UserMealService implements IUserMealService {
         return result;
     }
 
+    public UserMealDto mealDetail(int no) {
+        log.info("mealDetail()");
+
+        return iUserMealMapper.mealDetail(no);
+    }
 }
 
