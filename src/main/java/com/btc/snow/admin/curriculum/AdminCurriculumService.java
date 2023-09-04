@@ -1,6 +1,7 @@
 package com.btc.snow.admin.curriculum;
 
 import com.btc.snow.admin.member.AdminMemberDto;
+import com.btc.snow.user.meeting.book.UserBookItemDto;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +17,15 @@ public class AdminCurriculumService implements IAdminCurriculumService {
     // CONFIG INFO START
     private final int CREATE_CURRICULUM_SUCCESS_AT_DB = 1;
     private final int CREATE_CURRICULUM_FAIL_AT_DB = 0;
-    private final int ERROR_AT_DB = -1;
+    private final int CREATE_ERROR_AT_DB = -1;
+
+    private final int MODIFY_CURRICULUM_SUCCESS_AT_DB = 1;
+    private final int MODIFY_CURRICULUM_FAIL_AT_DB = 0;
+    private final int MODIFY_ERROR_AT_DB = -1;
+
+    private final int DELETE_CURRICULUM_SUCCESS_AT_DB = 1;
+    private final int DELETE_CURRICULUM_FAIL_AT_DB = 0;
+    private final int DELETE_ERROR_AT_DB = -1;
 
     // CONFIG INFO END
 
@@ -42,8 +51,8 @@ public class AdminCurriculumService implements IAdminCurriculumService {
             return CREATE_CURRICULUM_FAIL_AT_DB;
 
         } else {
-            log.info("[createCurriculumConfirm] INPUT NEW CURRICULUM FAIL!!");
-            return ERROR_AT_DB;
+            log.info("[createCurriculumConfirm] DB ERROR!!");
+            return CREATE_ERROR_AT_DB;
 
         }
 
@@ -75,12 +84,99 @@ public class AdminCurriculumService implements IAdminCurriculumService {
 
         }
 
+        // SHOW ALL CURRICULUM WHERE ADMIN_ID
         List<AdminCurriculumDto> adminCurriculumDtos = iAdminCurriculumDaoMB.selectCurriculumById(loginedAdminDto);
-        msgMap.put("adminCurriculumDtos", adminCurriculumDtos);
+        if (adminCurriculumDtos != null) {
+            log.info("[selectAdminCurriculum] SHOW ALL CURRICULUM WITH ADMIN_ID SUCCESS!!");
+            msgMap.put("adminCurriculumDtos", adminCurriculumDtos);
 
-        return msgMap;
+            return msgMap;
+
+        } else {
+            log.info("[selectAdminCurriculum] SHOW ALL CURRICULUM WITH ADMIN_ID FAIL!!");
+
+            return null;
+
+        }
 
     }
 
+    @Override
+    public Map<String, Object> showDetailCurriculum(int no) {
+        log.info("[AdminCurriculumService] showDetailCurriculum()");
+
+        Map<String, Object> msgMap = new HashMap<>();
+
+        AdminCurriculumDto adminCurriculumDto = iAdminCurriculumDaoMB.showDetailByNo(no);
+
+        if (adminCurriculumDto != null) {
+            log.info("[showDetailCurriculum] SHOW DETAIL INFO SUCCESS!!");
+
+            // 담당자 name(이름) 불러오기 START
+            AdminMemberDto adminMemberDto = iAdminCurriculumDaoMB.selectAdminName(adminCurriculumDto.getAdmin_id());
+            log.info("adminMemberDto name" + adminMemberDto.getName());
+
+            // 책 표지(사진) 불러오기 START
+            UserBookItemDto userBookItemDto = iAdminCurriculumDaoMB.selectBookCover(adminCurriculumDto.getBook_no());
+            log.info("userBookDto cover" + userBookItemDto.getCover());
+
+            msgMap.put("userBookItemDto", userBookItemDto);
+            msgMap.put("adminMemberDto", adminMemberDto);
+            msgMap.put("adminCurriculumDto", adminCurriculumDto);
+
+            return msgMap;
+
+        } else {
+            log.info("[showDetailCurriculum] SHOW DETAIL INFO FAIL!!");
+
+            return null;
+
+        }
+
+    }
+
+    @Override
+    public int modifyCurriculumConfirm(AdminCurriculumDto adminCurriculumDto) {
+        log.info("[AdminCurriculumService] modifyCurriculumConfirm()");
+
+        int result = iAdminCurriculumDaoMB.updateCurriculum(adminCurriculumDto);
+
+        if (result > 0) {
+            log.info("[modifyCurriculumConfirm] MODIFY CURRICULUM SUCCESS!!");
+            return MODIFY_CURRICULUM_SUCCESS_AT_DB;
+
+        } else if (result == 0) {
+            log.info("[modifyCurriculumConfirm] MODIFY CURRICULUM FAIL!!");
+            return MODIFY_CURRICULUM_FAIL_AT_DB;
+
+        } else {
+            log.info("[modifyCurriculumConfirm] DB ERROR!!");
+            return MODIFY_ERROR_AT_DB;
+
+        }
+
+    }
+
+    @Override
+    public int deleteCurriculumConfirm(int no) {
+        log.info("[AdminCurriculumService] deleteCurriculumConfirm()");
+
+        int result = iAdminCurriculumDaoMB.removeCurriculum(no);
+
+        if (result > 0) {
+            log.info("[deleteCurriculumConfirm] DELETE CURRICULUM SUCCESS!!");
+            return DELETE_CURRICULUM_SUCCESS_AT_DB;
+
+        } else if (result == 0) {
+            log.info("[deleteCurriculumConfirm] DELETE CURRICULUM FAIL!!");
+            return DELETE_CURRICULUM_FAIL_AT_DB;
+
+        } else {
+            log.info("[deleteCurriculumConfirm] DB ERROR!!");
+            return DELETE_ERROR_AT_DB;
+
+        }
+
+    }
 
 }

@@ -1,0 +1,90 @@
+<script th:fragment="js" th:inline="javascript" type="text/javascript">
+
+    $(document).ready(function () {
+        console.log("DOCUMENT WILL BE READY TO OPERATE NOW")
+
+        // TODOLIST 전체 조회
+        ajax_show_curriculum();
+
+        // 이벤트 핸들러 초기화
+        init_events();
+
+    })
+
+    //init_events() START
+    function init_events() {
+        console.log("init_events() CALLED!!")
+
+
+    }
+
+    //init_events() END
+
+    // 리스트 전체 삭제 START
+    function remove_list() {
+        console.log("remove_list CALLED!!");
+
+        $("#curriculum_container").children().remove();
+
+    }
+
+    // 리스트 전체 삭제 END
+
+    //AJAX START
+    function ajax_show_curriculum() {
+
+        $.ajax({
+            url: '/admin/curriculum/show_all_curriculum',
+            type: 'POST',
+            processData: false,
+            contentType: false,
+            // data:formData,
+            success: function (data) {
+                console.log('AJAX SUCCESS - ajax_show_curriculum()');
+
+                remove_list();
+
+                let adminCurriculumDtos = data.adminCurriculumDtos;
+                console.log(adminCurriculumDtos);
+
+                for (let i = 0; i < adminCurriculumDtos.length; i++) {
+                    let appendTag = "<div class=\"container mx-auto p-2\" data-no='" + adminCurriculumDtos[i].no + "'>";
+                    appendTag += '<div class="bg-white p-2 rounded-lg shadow-md">';
+                    appendTag += '<h2 class="text-lg font-semibold mb-1">' + adminCurriculumDtos[i].title + '</h2>';
+                    appendTag += '<div class="mb-1 text-xs">';
+                    appendTag += adminCurriculumDtos[i].content;
+                    appendTag += "</div>";
+                    appendTag += '<div class="flex space-x-1 mb-1 text-xs">';
+                    appendTag += '<div class="flex-1">';
+                    appendTag += '<p class="font-semibold">' + "평점: " + adminCurriculumDtos[i].grade + " / 5.0" + '</p>';
+                    appendTag += '</div>';
+                    appendTag += '<div class="flex-1">';
+                    appendTag += '<p class="font-semibold">강사명: ' + adminCurriculumDtos[i].admin_id + '</p>';
+                    appendTag += '</div>';
+                    appendTag += '<div class="flex-1">';
+                    appendTag += '<p class="font-semibold">시간 및 날짜: ' + adminCurriculumDtos[i].hour + " 시간" + '</p>';
+                    appendTag += '</div>';
+                    appendTag += '</div>';
+                    appendTag += '<div class="text-right">';
+                    appendTag += '<a href="/admin/curriculum/show_detail_curriculum?no=' + adminCurriculumDtos[i].no + '"' + 'class="bg-blue-500 text-white px-2 py-1 rounded-md hover:bg-blue-600 cursor-pointer text-xs">상세 페이지로 이동</a>';
+                    appendTag += '</div>';
+                    appendTag += '</div>';
+                    appendTag += '</div>';
+
+                    $("#curriculum_container").append(appendTag);
+
+                }
+
+            },
+            error: function (data) {
+                console.log('AJAX ERROR - ajax_show_curriculum()');
+
+            }
+
+        });
+
+    }
+
+
+    //AJAX END
+</script>

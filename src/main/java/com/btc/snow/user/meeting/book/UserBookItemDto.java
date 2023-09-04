@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class UserBookItemDto {
+    private int no;
     private String title;
     private String author;
     private String cover;

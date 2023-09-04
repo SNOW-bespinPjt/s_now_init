@@ -17,4 +17,19 @@ public interface IAdminCurriculumService {
      */
     public Map<String, Object> showAllCurriculum(AdminMemberDto loginedAdminDto);
 
+    /*
+     * SHOW DETAIL CURRICULUM INFO USING NO
+     */
+    public Map<String, Object> showDetailCurriculum(int no);
+
+    /*
+     * SHOW DETAIL CURRICULUM INFO USING NO
+     */
+    public int modifyCurriculumConfirm(AdminCurriculumDto adminCurriculumDto);
+
+    /*
+     * DELETE CURRICULUM CONFIRM
+     */
+    public int deleteCurriculumConfirm(int no);
+    
 }

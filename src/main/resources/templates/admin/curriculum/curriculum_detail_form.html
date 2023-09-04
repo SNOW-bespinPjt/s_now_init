@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script th:replace="~{/include/common_js.html::jquery_cdn}"></script>
+    <link rel="stylesheet" th:href="@{/css/curriculum_detail_form.css}">
+
+</head>
+<body>
+<div class="flex">
+    <!-- nav -->
+    <div>
+        <nav th:replace="~{/include/admin_nav::nav}"></nav>
+    </div>
+    <!--  section & footer  -->
+    <div class="flex flex-col items-center justify-center w-5/6 mx-auto">
+        <section id="section_wrap" class="flex flex-row w-5/6 border-solid mt-7">
+            <!-- ⬅️ -->
+            <div
+                    class="relative  items-center justify-center w-screen h-screen mr-8 border-2 rounded-lg bg-slate-100"
+            >
+                <div class="word">
+                    <h2 class="absolute top-0 left-15 mt-4 text-2xl font-bold ml-14">ADMIN CURRICULUM PAGE</h2>
+                </div>
+                <br>
+                <br>
+                <div class="curriculum_detail">
+                    <ul>
+                        <li><img th:src="${msgMap.userBookItemDto.cover}"></li>
+                        <li>
+                            <table>
+                                <tr>
+                                    <td>담당자</td>
+                                    <td th:text="${msgMap.adminMemberDto.name}"></td>
+                                </tr>
+                                <tr>
+                                    <td>제목</td>
+                                    <td th:text="${msgMap.adminCurriculumDto.title}"></td>
+                                </tr>
+                                <tr>
+                                    <td>내용</td>
+                                    <td th:text="${msgMap.adminCurriculumDto.content}"></td>
+                                </tr>
+                                <tr>
+                                    <td>책 제목</td>
+                                    <td th:text="${msgMap.userBookItemDto.title}"></td>
+                                </tr>
+                                <tr>
+                                    <td>카테고리</td>
+                                    <td th:text="${msgMap.adminCurriculumDto.category}"></td>
+                                </tr>
+                                <tr>
+                                    <td>교육반</td>
+                                    <td th:text="${msgMap.adminCurriculumDto.std_div}"></td>
+                                </tr>
+                                <tr>
+                                    <td>교육 시간</td>
+                                    <td th:text="${msgMap.adminCurriculumDto.hour}"></td>
+                                </tr>
+                                <tr>
+                                    <td>평점</td>
+                                    <td th:text="${msgMap.adminCurriculumDto.grade} + ' / 5.0'"></td>
+                                </tr>
+                                <tr>
+                                    <td>시작일</td>
+                                    <td th:text="${msgMap.adminCurriculumDto.start_date}"></td>
+                                </tr>
+                                <tr>
+                                    <td>종료일</td>
+                                    <td th:text="${msgMap.adminCurriculumDto.end_date}"></td>
+                                </tr>
+                                <tr>
+                                    <td>게시일</td>
+                                    <td th:text="${msgMap.adminCurriculumDto.reg_date}"></td>
+                                </tr>
+                                <tr>
+                                    <td>수업 파일</td>
+                                    <td th:text="${msgMap.adminCurriculumDto.file}"></td>
+                                </tr>
+                            </table>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="buttons mt-6 text-right">
+                    <a class="modify_book_button inline-block px-4 py-2 border border-gray-400 rounded-md bg-gray-200 text-gray-700 hover:bg-gray-300 hover:text-gray-800"
+                       th:href="@{/admin/curriculum/modify_curriculum_form(no=${msgMap.adminCurriculumDto.no})}">커리큘럼
+                        수정</a>
+
+                    <a class="delete_book_button inline-block ml-2 px-4 py-2 border border-red-500 rounded-md bg-red-500 text-white hover:bg-red-600"
+                       th:href="@{/admin/curriculum/delete_curriculum_confirm(no=${msgMap.adminCurriculumDto.no})}">커리큘럼
+                        삭제</a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <footer th:replace="~{/include/header_nav_footer.html::footer}"></footer>
+    </div>
+</div>
+</body>
+</html>

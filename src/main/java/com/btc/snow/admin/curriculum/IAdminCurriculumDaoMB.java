@@ -2,9 +2,12 @@ package com.btc.snow.admin.curriculum;
 
 
 import com.btc.snow.admin.member.AdminMemberDto;
+import com.btc.snow.user.meeting.book.UserBookItemDto;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
+@Mapper
 public interface IAdminCurriculumDaoMB {
 
     // INPUT NEW CURRICULUM
@@ -16,4 +19,18 @@ public interface IAdminCurriculumDaoMB {
     // SHOW ALL ADMIN CURRICULUM
     public List<AdminCurriculumDto> selectAdminCurriculum();
 
+    // SHOW DETAIL CURRICULUM USING NO
+    public AdminCurriculumDto showDetailByNo(int no);
+
+    // UPDATE CURRICULUM INFO
+    public int updateCurriculum(AdminCurriculumDto adminCurriculumDto);
+
+    // GET ADMIN NAME USING ADMIN_ID
+    public AdminMemberDto selectAdminName(String adminId);
+
+    // GET BOOK COVER USING BOOK_NO
+    public UserBookItemDto selectBookCover(int bookNo);
+
+    // DELETE CURRICULUM CONIFRM
+    public int removeCurriculum(int no);
 }
