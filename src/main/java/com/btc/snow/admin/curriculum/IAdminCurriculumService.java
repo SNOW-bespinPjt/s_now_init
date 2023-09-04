@@ -31,5 +31,10 @@ public interface IAdminCurriculumService {
      * DELETE CURRICULUM CONFIRM
      */
     public int deleteCurriculumConfirm(int no);
-    
+
+    /*
+     * SEARCH CURRICULUM CONFIRM USING TITLE WORD
+     */
+    public Map<String, Object> searchTitleConfirm(String searchTitle, AdminMemberDto loginedAdminDto);
+
 }

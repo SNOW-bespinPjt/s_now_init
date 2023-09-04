@@ -6,6 +6,7 @@ import com.btc.snow.user.meeting.book.UserBookItemDto;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface IAdminCurriculumDaoMB {
@@ -33,4 +34,8 @@ public interface IAdminCurriculumDaoMB {
 
     // DELETE CURRICULUM CONIFRM
     public int removeCurriculum(int no);
+
+    // SEARCH TITLE CURRICULUM
+    public List<AdminCurriculumDto> searchTitleByWord(Map<String, Object> msgMap);
+
 }

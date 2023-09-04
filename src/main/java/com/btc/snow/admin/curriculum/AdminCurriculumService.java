@@ -81,7 +81,6 @@ public class AdminCurriculumService implements IAdminCurriculumService {
 
             }
 
-
         }
 
         // SHOW ALL CURRICULUM WHERE ADMIN_ID
@@ -176,6 +175,30 @@ public class AdminCurriculumService implements IAdminCurriculumService {
             return DELETE_ERROR_AT_DB;
 
         }
+
+    }
+
+    @Override
+    public Map<String, Object> searchTitleConfirm(String searchTitle, AdminMemberDto loginedAdminDto) {
+        log.info("[AdminCurriculumService] searchTitleConfirm()");
+
+        Map<String, Object> msgMap = new HashMap<>();
+
+        msgMap.put("searchTitle", searchTitle);
+        msgMap.put("admin_id", loginedAdminDto.getId());
+
+        List<AdminCurriculumDto> adminCurriculumDtos = iAdminCurriculumDaoMB.searchTitleByWord(msgMap);
+
+        if (adminCurriculumDtos != null) {
+            log.info("[searchTitleConfirm] SEARCH TITLE SUCCESS!!");
+
+            msgMap.put("adminCurriculumDtos", adminCurriculumDtos);
+            return msgMap;
+
+        }
+
+        log.info("[searchTitleConfirm] SEARCH TITLE FAIL!!");
+        return null;
 
     }
 

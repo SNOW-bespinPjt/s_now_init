@@ -84,8 +84,6 @@ public class AdminCurriculumController {
 
         AdminMemberDto loginedAdminDto = (AdminMemberDto) session.getAttribute("loginedAdminDto");
 
-        log.info("[AdminCurriculumController] showAllCurriculum() id : " + loginedAdminDto.getId());
-
         return adminCurriculumService.showAllCurriculum(loginedAdminDto);
 
     }
@@ -147,6 +145,20 @@ public class AdminCurriculumController {
 
         nextPage = "admin/curriculum/curriculum_detail_form";
         return nextPage;
+
+    }
+
+    /*
+     * SEARCH TITLE WORD
+     */
+    @PostMapping("/search_title_confirm")
+    @ResponseBody
+    public Map<String, Object> searchTitleConfirm(@RequestParam("search_title") String search_title, HttpSession session) {
+        log.info("[AdminCurriculumController] searchTitleConfirm()");
+
+        AdminMemberDto loginedAdminDto = (AdminMemberDto) session.getAttribute("loginedAdminDto");
+
+        return adminCurriculumService.searchTitleConfirm(search_title, loginedAdminDto);
 
     }
 

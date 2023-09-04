@@ -43,6 +43,9 @@
         SELECT *
         FROM CURRICULUM
         WHERE admin_id = #{id}
+          and
+            <![CDATA[ end_date > DATE_SUB(NOW(), INTERVAL 30 DAY)]]>
+        order by start_date asc
 
     </select>
 
@@ -51,6 +54,7 @@
 
         SELECT *
         FROM CURRICULUM
+        order by start_date asc
 
     </select>
 
@@ -116,30 +120,16 @@
         WHERE no = #{no}
     </delete>
 
-    <!--    <update id="updateUserPW"-->
-    <!--            parameterType="com.office.user.member.UserMemberDto">-->
+    <select id="searchTitleByWord"
+            parameterType="map"
+            resultType="com.btc.snow.admin.curriculum.AdminCurriculumDto">
 
-    <!--        UPDATE-->
-    <!--            USER-->
-    <!--        SET pw = #{pw}-->
-    <!--        WHERE id = #{id}-->
-    <!--          AND name = #{name}-->
+        SELECT *
+        FROM CURRICULUM
+        WHERE admin_id = #{admin_id}
+          AND title like CONCAT('%', #{searchTitle}, '%')
 
-    <!--    </update>-->
-
-    <!--	<select id="findId"-->
-    <!--			parameterType="com.office.user.member.UserMemberDto">-->
-
-    <!--		SELECT-->
-    <!--		    id-->
-    <!--		FROM-->
-    <!--			-->
-    <!--		WHERE-->
-    <!--		    name = #{name}-->
-    <!--		AND-->
-    <!--		    mail = #{mail}-->
-
-    <!--	</select>-->
+    </select>
 
 
 </mapper>

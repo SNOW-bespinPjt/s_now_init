@@ -86,12 +86,16 @@
 
                 <div class="buttons mt-6 text-right">
                     <a class="modify_book_button inline-block px-4 py-2 border border-gray-400 rounded-md bg-gray-200 text-gray-700 hover:bg-gray-300 hover:text-gray-800"
-                       th:href="@{/admin/curriculum/modify_curriculum_form(no=${msgMap.adminCurriculumDto.no})}">커리큘럼
-                        수정</a>
+                       th:href="@{/admin/curriculum/modify_curriculum_form(no=${msgMap.adminCurriculumDto.no})}">
+                        MODIFY</a>
 
                     <a class="delete_book_button inline-block ml-2 px-4 py-2 border border-red-500 rounded-md bg-red-500 text-white hover:bg-red-600"
-                       th:href="@{/admin/curriculum/delete_curriculum_confirm(no=${msgMap.adminCurriculumDto.no})}">커리큘럼
-                        삭제</a>
+                       th:href="@{/admin/curriculum/delete_curriculum_confirm(no=${msgMap.adminCurriculumDto.no})}">
+                        DELETE</a>
+
+                    <a class="delete_book_button inline-block ml-2 px-4 py-2 border border-red-500 rounded-md bg-red-500 text-white hover:bg-red-600"
+                       th:href="@{/admin/curriculum}">
+                        BACK</a>
 
                 </div>
 
