@@ -43,4 +43,7 @@ public interface IAdminAssignmentMB {
 
     // 과제 점수 등록
     int updatePoint(UserAssignmentDto userAssignmentDto);
+
+    // 과제 비활성화 스케줄러
+    void updateAssignmentActivation(AdminAssignmentDto assignment);
 }

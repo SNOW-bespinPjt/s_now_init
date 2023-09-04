@@ -8,9 +8,11 @@ import com.btc.snow.user.member.UserMemberDto;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -150,6 +152,25 @@ public class AdminAssignmentService implements IAdminAssignmentService {
             return ASSIGNMENT_SUCCESS;
         } else {
             return ASSIGNMENT_FAIL;
+        }
+    }
+
+    // 과제 비활성화 스케줄러
+    @Scheduled(cron = "0 0 0 * * ?") // 매일 자정에 실행
+    public void updateAssignmentActivation() {
+        log.info("[AdminAssignmentService] updateAssignmentActivation()");
+
+        LocalDate today = LocalDate.now();
+
+        // 모든 과제 리스트
+        List<AdminAssignmentDto> assignments = iAdminAssignmentMB.selectAssignments();
+
+        for (AdminAssignmentDto assignment : assignments) {
+            if (assignment.getEnd_date() != null && assignment.getEnd_date().equals(today)) {
+                // end_date가 오늘 이전이면 is_activation을 0으로 설정
+                assignment.setIs_activation(0);
+                iAdminAssignmentMB.updateAssignmentActivation(assignment);
+            }
         }
     }
 }

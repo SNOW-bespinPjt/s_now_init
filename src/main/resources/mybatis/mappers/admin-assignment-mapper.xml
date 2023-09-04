@@ -91,4 +91,13 @@
         WHERE no = #{no}
     </update>
 
+    <update id="updateAssignmentActivation">
+        UPDATE
+            ASSIGNMENT
+        SET is_activation = #{is_activation},
+            start_date    = null,
+            end_date      = null
+        WHERE no = #{no}
+    </update>
+
 </mapper>
