@@ -29,24 +29,22 @@
                                 </div>
                             </div>
                             <div class="flex flex-col items-center pt-4 pr-4 mb-5">
-                                    <span th:if="${item.is_submit == 0}">
-                                        <p class="text-red-600">미제출</p>
-                                    </span>
+                                <span th:if="${item.is_submit == 0}">
+                                    <p class="text-red-600">미제출</p>
+                                </span>
                                 <span class="text-green-500" th:unless="${item.is_submit == 0}">
-                                        <p class="text-blue-600">제출완료</p>
-                                        <div class="flex">
-                                            <svg class="text-green-500 w-4 h-4" fill="none" stroke="currentColor"
-                                                 stroke-width="2" viewBox="0 0 24 24"
-                                                 xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M5 13l4 4L19 7" stroke-linecap="round"
-                                                      stroke-linejoin="round"/>
-                                            </svg>
-<!--                                           <p class="ml-2 font-thin text-slate-400"-->
-<!--                                              th:utext="${#dates.format(item.mod_date, 'yyyy-MM-dd')}"></p>-->
-                                            <p class="ml-2 font-thin text-slate-400" th:text="${item.mod_date}"></p>
-                                            <p class="ml-2 font-thin text-slate-400" th:text="${item.file_user_name}"></p>
-                                        </div>
-                                    </span>
+                                    <p class="text-blue-600">제출완료</p>
+                                    <div class="flex">
+                                        <svg class="text-green-500 w-4 h-4" fill="none" stroke="currentColor"
+                                             stroke-width="2" viewBox="0 0 24 24"
+                                             xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M5 13l4 4L19 7" stroke-linecap="round"
+                                                  stroke-linejoin="round"/>
+                                        </svg>
+                                        <p class="ml-2 font-thin text-slate-400" th:text="${item.mod_date}"></p>
+                                        <p class="ml-2 font-thin text-slate-400" th:text="${item.file_user_name}"></p>
+                                    </div>
+                                </span>
                             </div>
                         </div>
                     </div>

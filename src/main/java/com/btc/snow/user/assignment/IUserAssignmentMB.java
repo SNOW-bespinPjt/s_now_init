@@ -14,6 +14,7 @@ public interface IUserAssignmentMB {
 
     // 모든 사용자의 정보 가져오기
     List<UserMemberDto> getAllUsers();
+    List<UserAssignmentDto> selectAssignmentListWithSameId(int groupId);
 
     // 과제 등록
     int insertAssignment(UserAssignmentDto userAssignmentDto);
@@ -28,6 +29,4 @@ public interface IUserAssignmentMB {
 
     // 과제 삭제
     int deleteAssignment(int no);
-
-
 }

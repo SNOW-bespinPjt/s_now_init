@@ -201,7 +201,7 @@ public class AdminAssignmentController {
     public String deleteAssignmentConfirm(@RequestParam("no") int no) {
         log.info("[AdminAssignmentController] deleteAssignmentConfirm()");
 
-        String nextPage = "redirect:/admin/assignment/";
+        nextPage = "redirect:/admin/assignment/";
 
         int result = adminAssignmentService.deleteAssignmentConfirm(no);
 
@@ -258,15 +258,14 @@ public class AdminAssignmentController {
     public String AssignmentInputPoint(UserAssignmentDto userAssignmentDto) {
         log.info("[UserAssignmentController] AssignmentInputPoint()");
 
-        return nextPage;
-    }
+        nextPage = "redirect:/admin/assignment/check?no=" + userAssignmentDto.getGroup_id();
 
-    /*
-     * 과제 점수 수정
-     */
-    @PostMapping("/assignment_modify_point")
-    public String AssignmentModifyPoint(UserAssignmentDto userAssignmentDto) {
-        log.info("[UserAssignmentController] AssignmentModifyPoint()");
+        int result = adminAssignmentService.AssignmentInputPoint(userAssignmentDto);
+        if (result > 0) {
+            log.info("[UserAssignmentController] SUCCESS INPUT POINT");
+        } else {
+            log.info("[UserAssignmentController] FAIL INPUT POINT");
+        }
 
         return nextPage;
     }

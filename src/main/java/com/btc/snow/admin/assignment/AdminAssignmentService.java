@@ -1,6 +1,5 @@
 package com.btc.snow.admin.assignment;
 
-
 import com.btc.snow.admin.member.AdminMemberDto;
 import com.btc.snow.user.assignment.IUserAssignmentMB;
 import com.btc.snow.user.assignment.UserAssignmentDto;
@@ -30,8 +29,8 @@ public class AdminAssignmentService implements IAdminAssignmentService {
     IUserAssignmentMB iUserAssignmentMB;
 
     // 상수 : 공통상수 빼기
-    final static public int ASSIGNMENT_SUCCESS = 1;     //성공
-    final static public int ASSIGNMENT_FAIL = 0;        //실패
+    final static public int ASSIGNMENT_SUCCESS = 1;     // 성공
+    final static public int ASSIGNMENT_FAIL = 0;        // 실패
 
     // 과제 리스트
     @Override
@@ -54,7 +53,6 @@ public class AdminAssignmentService implements IAdminAssignmentService {
             // 과제 등록 후 생성된 no 값을 가져오기
             int assignmentNo = iAdminAssignmentMB.getGeneratedNo(adminAssignmentDto);
 
-
             // 모든 사용자의 정보 가져오기
             List<UserMemberDto> users = iUserAssignmentMB.getAllUsers();
 
@@ -72,10 +70,8 @@ public class AdminAssignmentService implements IAdminAssignmentService {
 
         } else {
             return ASSIGNMENT_FAIL;
-
         }
     }
-
 
     // 과제 활성화
     @Override
@@ -89,19 +85,17 @@ public class AdminAssignmentService implements IAdminAssignmentService {
 
         int result = 0;
         if (is_activation == 0) {
-            // 비활성화를 비활성화로
+            // 비활성화를 활성화로
             result = iAdminAssignmentMB.updateAdminActive(no);
         } else {
             // 활성화를 비활성화로
             result = iAdminAssignmentMB.updateAdminInactive(no);
         }
 
-
         if (result > 0) {
             log.info("ADMIN ASSIGNMENT ACTIVE SUCCESS!!");
-
         } else {
-            log.info("ADMIN ASSIGNMENT ACTIVE FAIl!!");
+            log.info("ADMIN ASSIGNMENT ACTIVE FAIL!!");
         }
 
         return result;
@@ -146,4 +140,16 @@ public class AdminAssignmentService implements IAdminAssignmentService {
         return iAdminAssignmentMB.selectSubmitUser(no);
     }
 
+    // 과제 점수 등록
+    @Override
+    public int AssignmentInputPoint(UserAssignmentDto userAssignmentDto) {
+        log.info("[AdminAssignmentService] AssignmentInputPoint()");
+
+        int result = iAdminAssignmentMB.updatePoint(userAssignmentDto);
+        if (result > 0) {
+            return ASSIGNMENT_SUCCESS;
+        } else {
+            return ASSIGNMENT_FAIL;
+        }
+    }
 }

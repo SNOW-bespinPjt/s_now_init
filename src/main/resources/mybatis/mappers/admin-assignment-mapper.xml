@@ -79,10 +79,16 @@
         FROM USER
     </select>
 
-    <select id="selectSubmitUser" parameterType="int" resultType="com.btc.snow.user.assignment.UserAssignmentDto">
+    <select id="selectSubmitUser" parameterType="Integer" resultType="com.btc.snow.user.assignment.UserAssignmentDto">
         SELECT *
         FROM ASSIGNMENT
         WHERE group_id = #{no}
     </select>
+
+    <update id="updatePoint" parameterType="com.btc.snow.user.assignment.UserAssignmentDto">
+        UPDATE ASSIGNMENT
+        SET point = #{point}
+        WHERE no = #{no}
+    </update>
 
 </mapper>

@@ -7,6 +7,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Log4j2
@@ -25,8 +26,25 @@ public class UserAssignmentService implements IUserAssignmentService {
     public List<UserAssignmentDto> listAssignment() {
         log.info("[UserAssignmentService] listAssignment()");
 
-        return iUserAssignmentMB.selectAssignments();
+        // is_activation = 1
+        List<UserAssignmentDto> userAssignmentDtos = iUserAssignmentMB.selectAssignments();
+
+        List<UserAssignmentDto> additionalAssignments = new ArrayList<>();
+
+        for (UserAssignmentDto dto : userAssignmentDtos) {
+            int group_id = dto.getNo();
+
+            // no와 group_id가 같은 목록을 가져오는 SQL 쿼리
+            List<UserAssignmentDto> assignmentsWithSameId = iUserAssignmentMB.selectAssignmentListWithSameId(group_id);
+
+            additionalAssignments.addAll(assignmentsWithSameId);
+        }
+
+        userAssignmentDtos.addAll(additionalAssignments);
+
+        return userAssignmentDtos;
     }
+
 
     // 과제 등록
     @Override

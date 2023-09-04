@@ -37,20 +37,21 @@ public class UserAssignmentController {
      * 과제 리스트(과제 페이지)
      */
     @GetMapping("/") //수정 필요 ~ : 공부 -> 적용
-    public ModelAndView List(HttpSession session) {
+    public String List(HttpSession session, Model model) {
         log.info("[UserAssignmentController] List()");
 
         nextPage = "user/assignment/list_assignments";
 
         List<UserAssignmentDto> userAssignmentDtos = userAssignmentService.listAssignment();
 
-        ModelAndView mv = new ModelAndView();
-        mv.setViewName(nextPage);
-        mv.addObject("userAssignmentDtos", userAssignmentDtos); // 변수 이름을 "results"에서 "userAssignmentDtos"로 변경
+        //ModelAndView mv = new ModelAndView(nextPage);
+        model.addAttribute("userAssignmentDtos", userAssignmentDtos);
+        for(UserAssignmentDto dto : userAssignmentDtos){
+            System.out.printf("is : " + dto.getIs_submit());
+        }
 
-        return mv;
+        return nextPage;
     }
-
 
     /*
      * 과제 등록
@@ -114,11 +115,11 @@ public class UserAssignmentController {
         // 회원에 맞는 정보 가져오기
         UserMemberDto loginedUserDto = (UserMemberDto) session.getAttribute("loginedUserDto");
         int user_no = loginedUserDto.getNo();
-        UserAssignmentDto userAssignmentDto = userAssignmentService.getUserAssignmentInfo(user_no, no);
+        UserAssignmentDto userAssignmentInfo = userAssignmentService.getUserAssignmentInfo(user_no, no);
 
         Map<String, Object> msg = new HashMap<>();
         msg.put("adminAssignmentDto", adminAssignmentDto);
-        msg.put("userAssignmentDto", userAssignmentDto);
+        msg.put("userAssignmentInfo", userAssignmentInfo);
 
         ModelAndView mv = new ModelAndView(nextPage);
         mv.addObject("msg", msg);

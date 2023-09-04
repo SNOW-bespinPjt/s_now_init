@@ -31,4 +31,6 @@ public interface IAdminAssignmentService {
     List<UserMemberDto> getUserList();
     List<UserAssignmentDto> checkAssignmentList(int no);
 
+    // 과제 점수 등록
+    int AssignmentInputPoint(UserAssignmentDto userAssignmentDto);
 }

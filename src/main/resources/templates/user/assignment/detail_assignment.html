@@ -32,7 +32,7 @@
                            th:text="${msg.adminAssignmentDto.file_admin_name}">
                         </a>
                     </div>
-                    <div th:if="${msg.userAssignmentDto.is_submit eq 0}"
+                    <div th:if="${msg.userAssignmentInfo.is_submit eq 0}"
                          class="flex space-x-4 mt-7 justify-center">
                         <form th:action="@{/user/assignment/registration_confirm}"
                               name="detail_assignment" method="post"
@@ -52,7 +52,7 @@
                                 class="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400"
                         />
                     </div>
-                    <div th:unless="${msg.userAssignmentDto.is_submit eq 0}"
+                    <div th:unless="${msg.userAssignmentInfo.is_submit eq 0}"
                          class="flex space-x-4 mt-7 justify-center">
                         <form th:action="@{/user/assignment/assignment_modify_confirm}"
                               name="detail_assignment" method="post"
@@ -71,7 +71,6 @@
                                 onclick="goBack()"
                                 class="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400"
                         />
-                        <p class="items-center text-gray-700">나의 과제 : <span th:value="${msg.userAssignmentDto.file_user_name}"></span></p>
                     </div>
                 </div>
             </div>

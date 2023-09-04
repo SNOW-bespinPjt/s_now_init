@@ -21,5 +21,4 @@ public interface IUserAssignmentService {
 
     // 과제 삭제
     int deleteAssignmentConfirm(int no);
-
 }

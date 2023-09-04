@@ -40,4 +40,7 @@ public interface IAdminAssignmentMB {
 
     // 과제 등록 후 생성된 no값 반환
     int getGeneratedNo(AdminAssignmentDto adminAssignmentDto);
+
+    // 과제 점수 등록
+    int updatePoint(UserAssignmentDto userAssignmentDto);
 }
