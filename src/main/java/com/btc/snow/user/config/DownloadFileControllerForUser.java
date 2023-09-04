@@ -18,17 +18,20 @@ import java.nio.file.Paths;
 @Log4j2
 @Controller
 public class DownloadFileControllerForUser {
+
+    private static final String DOWNLOAD_DIR = "c:/snow/admin/assignment/";
+
     @GetMapping("/downloadFromUser")
     public ResponseEntity<Resource> downloadFile(@RequestParam String file, @RequestParam String user_id) {
         log.info("[DownloadFileControllerForUser] downloadFile");
         log.info("downloadFromUser file :::::::::::: " + file);
         log.info("downloadFromUser user_id  :::::::::::: " + user_id);
 
-        String download_dir = "c:/snow/user/assignment" + user_id;
+//        String download_dir = "c:/snow/user/assignment" + user_id;
 
         try {
             // 파일 경로 생성
-            Path filePath = Paths.get(download_dir).resolve(file).normalize();
+            Path filePath = Paths.get(DOWNLOAD_DIR + user_id).resolve(file).normalize();
             Resource resource = new UrlResource(filePath.toUri());
 
             if (resource.exists() && resource.isReadable()) {

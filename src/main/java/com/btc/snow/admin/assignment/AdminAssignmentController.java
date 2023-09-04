@@ -66,7 +66,7 @@ public class AdminAssignmentController {
     @PostMapping("/registration_confirm")
     public String RegistrationConfirm(AdminAssignmentDto adminAssignmentDto,
                                       HttpSession session,
-                                      @RequestParam("file_admin") MultipartFile file,
+                                      @RequestParam("file") MultipartFile file,
                                       Model model) {
         log.info("[AdminAssignmentController] RegistrationConfirm()");
 
@@ -79,14 +79,14 @@ public class AdminAssignmentController {
         log.info("과제 등록 admin_no --->" + admin_no);
         adminAssignmentDto.setAdmin_no(admin_no);
 
-        adminAssignmentDto.setFile_name(file.getOriginalFilename());
-        log.info("adminAssignmentDto : " + adminAssignmentDto.getFile_name());
+        adminAssignmentDto.setFile_admin_name(file.getOriginalFilename());
+        log.info("adminAssignmentDto : " + adminAssignmentDto.getFile_admin_name());
 
         // 파일 저장
         String saveFileName = uploadFileServiceForAdmin.upload(file);
 
         if (saveFileName != null) {
-            adminAssignmentDto.setFile(saveFileName); // 파일 저장이 되면 그걸 넣어주기
+            adminAssignmentDto.setFile_admin(saveFileName); // 파일 저장이 되면 그걸 넣어주기
             int result = adminAssignmentService.RegistrationConfirm(adminAssignmentDto);
 
             if (result <= 0)
@@ -166,21 +166,21 @@ public class AdminAssignmentController {
     }
 
     @PostMapping("/assignment_modify_confirm")
-    public String modifyAssignmentConfirm(@RequestParam("file_admin") MultipartFile file,
+    public String modifyAssignmentConfirm(@RequestParam("file") MultipartFile file,
                                           AdminAssignmentDto adminAssignmentDto) {
         log.info("[AdminAssignmentController] modifyAssignmentConfirm()");
 
 //        nextPage = "redirect:/admin/assignment/assignment_modify_form?no=" + adminAssignmentDto.getNo();
         nextPage = "redirect:/admin/assignment/";
 
-        adminAssignmentDto.setFile_name(file.getOriginalFilename());
-        log.info("adminAssignmentDto : " + adminAssignmentDto.getFile_name());
+        adminAssignmentDto.setFile_admin_name(file.getOriginalFilename());
+        log.info("adminAssignmentDto : " + adminAssignmentDto.getFile_admin_name());
 
         // SAVE FILE
         if (!file.getOriginalFilename().equals("")) {
             String savedFileName = uploadFileServiceForAdmin.upload(file);
             if (savedFileName != null)
-                adminAssignmentDto.setFile(savedFileName);
+                adminAssignmentDto.setFile_admin(savedFileName);
         }
 
         int result = adminAssignmentService.modifyAssignmentConfirm(adminAssignmentDto);

@@ -58,51 +58,57 @@
                         <div class="flex flex-col w-11/12 bg-white h-5/6">
                             <table>
                                 <tbody>
-                                <!-- userAssignmentDtos와 userMemberDtos를 동일한 순서로 순회 -->
+                                <!-- combinedDtos 반복 -->
                                 <tr th:each="combinedDto : ${combinedDtos}">
-                                    <!-- userMemberDtos의 데이터를 표시 -->
-                                    <td th:text="${combinedDto.memberDto.id}"></td>
-                                    <td th:text="${combinedDto.memberDto.name}"></td>
-                                    <!-- userAssignmentDtos의 데이터를 표시 -->
+                                    <!-- userMemberDtos 반복 -->
+                                <tr th:each="memberDto : ${combinedDto.memberDto}">
+                                    <!-- memberDto의 데이터 표시 -->
+                                    <td th:text="${memberDto.id}"></td>
+                                    <td th:text="${memberDto.name}"></td>
+                                    <!-- userAssignmentDtos의 데이터 표시 -->
                                     <td class="submit-cell">
-                                        <span class="text-gray-500" th:if="${combinedDto.assignmentDto.is_submit eq 0}">
-                                            미제출
-                                        </span>
+            <span class="text-gray-500" th:if="${combinedDto.assignmentDto.is_submit eq 0}">
+                미제출
+            </span>
                                         <span class="text-green-500"
                                               th:unless="${combinedDto.assignmentDto.is_submit eq 0}">
-                                            <a class="px-4 py-2 text-green-600"
-                                               th:download="${combinedDto.assignmentDto.file_name}"
-                                               th:href="@{/downloadFromUser(file=${combinedDto.assignmentDto.file}, user_id=${combinedDto.memberDto.id})}"
-                                               th:text="${combinedDto.assignmentDto.file_name}">
-                                            </a>
-                                            <div class="flex">
-                                                <svg
-                                                        class="w-6 h-6"
-                                                        fill="none"
-                                                        stroke="currentColor"
-                                                        stroke-width="1.5"
-                                                        viewBox="0 0 24 24"
-                                                        xmlns="http://www.w3.org/2000/svg"
-                                                >
-                                                    <path
-                                                            d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
-                                                            stroke-linecap="round"
-                                                            stroke-linejoin="round"
-                                                    />
-                                                    <path
-                                                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                                                            stroke-linecap="round"
-                                                            stroke-linejoin="round"
-                                                    />
-                                                </svg>
-                                                <p class="ml-2 font-thin text-slate-400">
-                                                    제출일 <span th:text="${combinedDto.assignmentDto.mod_date}"></span>
-                                                </p>
-                                            </div>
-                                        </span>
+                <!-- userAssignmentDtos의 데이터 표시 -->
+                <a class="px-4 py-2 text-green-600"
+                   th:download="${combinedDto.assignmentDto.file_user_name}"
+                   th:href="@{/downloadFromUser(file=${combinedDto.assignmentDto.file_user}, user_id=${memberDto.id})}"
+                   th:text="${combinedDto.assignmentDto.file_user_name}">
+                </a>
+                <div class="flex items-center">
+                    <svg
+                            class="w-6 h-6"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.5"
+                            viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path
+                                d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                        />
+                        <path
+                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                        />
+                    </svg>
+                    <p class="ml-2 font-thin text-slate-400">
+<!--                        제출일 <span th:text="${combinedDto.assignmentDto.mod_date}"></span>-->
+                        제출일 <span th:text="${#dates.format(combinedDto.assignmentDto.mod_date, 'yyyy-MM-dd')}"></span>
+                                            </p>
+                </div>
+            </span>
                                     </td>
                                 </tr>
+                                </tr>
                                 </tbody>
+
                             </table>
                         </div>
                     </div>

@@ -13,8 +13,8 @@
     </select>
 
     <insert id="insertAssignment" parameterType="com.btc.snow.admin.assignment.AdminAssignmentDto">
-        INSERT INTO ASSIGNMENT (admin_no, title, body, file, file_name, reg_date, mod_date)
-        VALUES (#{admin_no}, #{title}, #{body}, #{file}, #{file_name}, NOW(), NOW())
+        INSERT INTO ASSIGNMENT (admin_no, title, body, file_admin, file_admin_name, reg_date, mod_date)
+        VALUES (#{admin_no}, #{title}, #{body}, #{file_admin}, #{file_admin_name}, NOW(), NOW())
     </insert>
 
     <update id="updateAdminActive" parameterType="Integer">
@@ -51,9 +51,9 @@
     <update id="updateAssignment" parameterType="Integer">
         UPDATE ASSIGNMENT
         SET
-        <if test="file != null">
-            file = #{file},
-            file_name = #{file_name},
+        <if test="file_admin  != null">
+            file_admin = #{file_admin},
+            file_admin_name  = #{file_admin_name},
         </if>
         title = #{title},
         body = #{body},

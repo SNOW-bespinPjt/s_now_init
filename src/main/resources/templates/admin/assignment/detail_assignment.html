@@ -32,10 +32,10 @@
                         <!-- 이거 파일업로드로 해야되서 바꿔야해 -->
                         <div>
                             <!-- 다운로드 버튼 -->
-                            <a th:href="@{/downloadFromAdmin(file=${adminAssignmentDto.file})}"
+                            <a th:href="@{/downloadFromAdmin(file=${adminAssignmentDto.file_admin})}"
                                class="px-4 py-2 bg-blue-50 text-gray-700 rounded hover:bg-blue-100"
-                               th:download="${adminAssignmentDto.file_name}"
-                               th:text="${adminAssignmentDto.file_name}">
+                               th:download="${adminAssignmentDto.file_admin_name}"
+                               th:text="${adminAssignmentDto.file_admin_name}">
                             </a>
                         </div>
                         <div th:if="${session.loginedAdminDto.getNo() eq adminAssignmentDto.admin_no}"

@@ -41,7 +41,10 @@
                                                 <path d="M5 13l4 4L19 7" stroke-linecap="round"
                                                       stroke-linejoin="round"/>
                                             </svg>
+<!--                                           <p class="ml-2 font-thin text-slate-400"-->
+<!--                                              th:utext="${#dates.format(item.mod_date, 'yyyy-MM-dd')}"></p>-->
                                             <p class="ml-2 font-thin text-slate-400" th:text="${item.mod_date}"></p>
+                                            <p class="ml-2 font-thin text-slate-400" th:text="${item.file_user_name}"></p>
                                         </div>
                                     </span>
                             </div>

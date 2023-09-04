@@ -13,15 +13,9 @@
     </select>
 
     <insert id="insertAssignment" parameterType="com.btc.snow.user.assignment.UserAssignmentDto">
-        INSERT INTO ASSIGNMENT (user_no, group_id, file, file_name, is_submit, reg_date, mod_date)
-        VALUES (#{user_no}, #{group_id}, #{file}, #{file_name}, 1, NOW(), NOW())
+        INSERT INTO ASSIGNMENT (user_no, group_id, file_user, file_user_name, is_submit, reg_date, mod_date)
+        VALUES (#{user_no}, #{group_id}, #{file_user}, #{file_user_name}, 1, NOW(), NOW())
     </insert>
-
-    <!--    <select id="selectIsSubmitNum" parameterType="map" resultType="int">-->
-    <!--        SELECT *-->
-    <!--        FROM ASSIGNMENT-->
-    <!--        WHERE group_id = #{group_id} AND user_no = #{user_no}-->
-    <!--    </select>-->
 
     <select id="selectIsSubmitNum" parameterType="map" resultType="java.lang.Boolean">
         SELECT is_submit
@@ -39,11 +33,10 @@
 
     <update id="updateAssignment" parameterType="com.btc.snow.user.assignment.UserAssignmentDto">
         UPDATE ASSIGNMENT
-        SET file      = #{file},
-            file_name = #{file_name},
-            mod_date  = NOW()
-        WHERE
-            group_id = #{no}
+        SET file_user      = #{file_user},
+            file_user_name = #{file_user_name},
+            mod_date       = NOW()
+        WHERE group_id = #{no}
     </update>
 
 

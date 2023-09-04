@@ -69,7 +69,7 @@ public class UserAssignmentController {
     @PostMapping("/registration_confirm")
     public String RegistrationConfirm(UserAssignmentDto userAssignmentDto,
                                       HttpSession session,
-                                      @RequestParam("file_user") MultipartFile file) {
+                                      @RequestParam("file") MultipartFile file) {
         log.info("[UserAssignmentController] RegistrationConfirm()");
 
         nextPage = "redirect:/user/assignment/";
@@ -86,14 +86,14 @@ public class UserAssignmentController {
         userAssignmentDto.setGroup_id(group_id);
 
         // file_name 저장
-        userAssignmentDto.setFile_name(file.getOriginalFilename());
-        log.info("userAssignmentDto : " + userAssignmentDto.getFile_name());
+        userAssignmentDto.setFile_user_name(file.getOriginalFilename());
+        log.info("userAssignmentDto : " + userAssignmentDto.getFile_user_name());
 
         // file 저장
         String saveFileName = uploadFileServiceForUser.upload(file, loginedUserDto.getId());
 
         if (saveFileName != null) {
-            userAssignmentDto.setFile(saveFileName); // 파일 저장이 되면 그걸 넣어주기
+            userAssignmentDto.setFile_user(saveFileName); // 파일 저장이 되면 그걸 넣어주기
             int result = userAssignmentService.RegistrationConfirm(userAssignmentDto);
 
             if (result <= 0) {
@@ -141,7 +141,7 @@ public class UserAssignmentController {
      * 과제 수정
      */
     @PostMapping("/assignment_modify_confirm")
-    public String modifyAssignmentConfirm(@RequestParam("file_user") MultipartFile file,
+    public String modifyAssignmentConfirm(@RequestParam("file") MultipartFile file,
                                           UserAssignmentDto userAssignmentDto,
                                           HttpSession session) {
         log.info("[UserAssignmentController] modifyAssignmentConfirm()");
@@ -160,14 +160,14 @@ public class UserAssignmentController {
         userAssignmentDto.setGroup_id(group_id);
 
         // file_name 저장
-        userAssignmentDto.setFile_name(file.getOriginalFilename());
-        log.info("userAssignmentDto : " + userAssignmentDto.getFile_name());
+        userAssignmentDto.setFile_user_name(file.getOriginalFilename());
+        log.info("userAssignmentDto : " + userAssignmentDto.getFile_user_name());
 
         // SAVE FILE
         if (!file.getOriginalFilename().equals("")) {
             String savedFileName = uploadFileServiceForUser.upload(file, loginedUserDto.getId());
             if (savedFileName != null)
-                userAssignmentDto.setFile(savedFileName);
+                userAssignmentDto.setFile_user(savedFileName);
         }
 
         int result = userAssignmentService.modifyAssignmentConfirm(userAssignmentDto);

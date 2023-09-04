@@ -22,8 +22,8 @@ public class DownloadFileControllerForAdmin {
 
     @GetMapping("/downloadFromAdmin")
     public ResponseEntity<Resource> downloadFile(@RequestParam String file) {
-        log.info("[DownloadFileControllerForAdmin] downloadFile");
-        log.info("downloadFromAdmin file name :::::::::::: " + file);
+        log.info("[DownloadFileController] downloadFile");
+        log.info("download file name :::::::::::: " + file);
 
         try {
             // 파일 경로 생성

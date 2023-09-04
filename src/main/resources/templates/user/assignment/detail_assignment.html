@@ -26,10 +26,10 @@
                     <div class="mb-4 h-auto pt-16 pb-20" th:text="${userAssignmentDto.body}"></div>
                     <div>
                         <!-- 다운로드 버튼 -->
-                        <a th:href="@{/downloadFromAdmin(file=${userAssignmentDto.file})}"
+                        <a th:href="@{/downloadFromUser(file =${userAssignmentDto.file_user})}"
                            class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100"
-                           th:download="${userAssignmentDto.file_name}"
-                           th:text="${userAssignmentDto.file_name}">
+                           th:download="${userAssignmentDto.file_user_name }"
+                           th:text="${userAssignmentDto.file_user_name}">
                         </a>
                     </div>
                     <div th:if="${result eq 0}"
@@ -38,7 +38,7 @@
                               name="detail_assignment" method="post"
                               enctype="multipart/form-data">
                             <input type="hidden" name="no" th:value="${userAssignmentDto.no}">
-                            <input type="file" name="file_user"
+                            <input type="file" name="file"
                                    class="bg-gray-200 border border-gray-400 rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-blue-500"
                             >
                             <input type="button" value="과제 제출" onclick="uploadFile()"
@@ -58,7 +58,7 @@
                               name="detail_assignment" method="post"
                               enctype="multipart/form-data">
                             <input type="hidden" name="no" th:value="${userAssignmentDto.no}">
-                            <input type="file" name="file_user"
+                            <input type="file" name="file"
                                    class="bg-gray-200 border border-gray-400 rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-blue-500"
                             >
                             <input type="button" value="과제 수정" onclick="uploadFile()"
@@ -71,7 +71,6 @@
                                 onclick="goBack()"
                                 class="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400"
                         />
-                        <p class="text-gray-500 items-center">내가 낸 파일 : <span th:text="${userAssignmentDto.file_name}"></span></p>
                     </div>
                 </div>
             </div>
