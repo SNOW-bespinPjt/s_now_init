@@ -20,7 +20,7 @@
                     <div class="flex flex-col w-11/12 bg-white h-5/6">
                         <div class="flex w-full border-b-2 h-1/4 border-b-slate-300"
                              th:each="item, iterStat : ${userAssignmentDtos}">
-                            <div class="w-11/12 p-4">
+                            <div class="w-11/12 p-4" th:if="${item.group_id == 0}">
                                 <a th:href="@{/user/assignment/get_assignment(no=${item.no})}" th:text="${item.title}"
                                    type="button"></a>
                                 <div class="flex">
@@ -28,11 +28,12 @@
                                             th:text="${item.end_date}"></span></span>
                                 </div>
                             </div>
-                            <div class="flex flex-col items-center pt-4 pr-4 mb-5">
-                                <span th:if="${item.is_submit == 0}">
+                            <div class="flex flex-col items-center pt-4 pr-4 mb-5" th:if="${item.group_id == 0}">
+                                <!-- item.user_no eq session.loginedUserDto.getNo() -->
+                                <span th:if="${item.is_submit == 0 && item.no == item.group_id && item.user_no eq session.loginedUserDto.getNo()}">
                                     <p class="text-red-600">미제출</p>
                                 </span>
-                                <span class="text-green-500" th:unless="${item.is_submit == 0}">
+                                <span class="text-green-500" th:unless="${item.is_submit == 0 && item.no == item.group_id && item.user_no eq session.loginedUserDto.getNo()}">
                                     <p class="text-blue-600">제출완료</p>
                                     <div class="flex">
                                         <svg class="text-green-500 w-4 h-4" fill="none" stroke="currentColor"
@@ -41,8 +42,8 @@
                                             <path d="M5 13l4 4L19 7" stroke-linecap="round"
                                                   stroke-linejoin="round"/>
                                         </svg>
-                                        <p class="ml-2 font-thin text-slate-400" th:text="${item.mod_date}"></p>
-                                        <p class="ml-2 font-thin text-slate-400" th:text="${item.file_user_name}"></p>
+                                        <p class="ml-2 font-thin text-slate-400" th:text="${item.mod_date}"
+                                           th:if="${item.is_submit == 0 && item.no == item.group_id && item.user_no eq session.loginedUserDto.getNo()}"></p>
                                     </div>
                                 </span>
                             </div>
