@@ -29,11 +29,17 @@
           AND user_no = #{user_no}
     </select>
 
-
-    <select id="selectAssignment" parameterType="Integer" resultType="com.btc.snow.user.assignment.UserAssignmentDto">
+    <select id="selectDetail" parameterType="Integer" resultType="com.btc.snow.admin.assignment.AdminAssignmentDto">
         SELECT *
         FROM ASSIGNMENT
         WHERE no = #{no}
+    </select>
+
+
+    <select id="selectAssignmentInfo" parameterType="Integer" resultType="com.btc.snow.user.assignment.UserAssignmentDto">
+        SELECT *
+        FROM ASSIGNMENT
+        WHERE user_no = #{user_no} AND group_id = #{no}
     </select>
 
     <update id="submitAssignment" parameterType="com.btc.snow.user.assignment.UserAssignmentDto">
@@ -43,7 +49,7 @@
             is_submit      = 1,
             reg_date       = NOW(),
             mod_date       = NOW()
-        WHERE group_id = #{no}
+        WHERE group_id = #{no} AND user_no = #{user_no}
     </update>
 
     <update id="updateAssignment" parameterType="com.btc.snow.user.assignment.UserAssignmentDto">
@@ -51,7 +57,7 @@
         SET file_user      = #{file_user},
             file_user_name = #{file_user_name},
             mod_date       = NOW()
-        WHERE group_id = #{no}
+        WHERE group_id = #{no} AND user_no = #{user_no}
     </update>
 
 

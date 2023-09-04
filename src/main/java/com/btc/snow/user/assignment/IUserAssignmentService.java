@@ -1,5 +1,7 @@
 package com.btc.snow.user.assignment;
 
+import com.btc.snow.admin.assignment.AdminAssignmentDto;
+
 import java.util.List;
 
 public interface IUserAssignmentService {
@@ -11,13 +13,13 @@ public interface IUserAssignmentService {
     int RegistrationConfirm(UserAssignmentDto userAssignmentDto);
 
     // 과제 상세페이지
-    Integer getIsSubmit(int no, int user_no);
-    UserAssignmentDto getAssignment(int no);
+    AdminAssignmentDto getDetail(int no);
+    UserAssignmentDto getUserAssignmentInfo(int user_id, int no);
 
     // 과제 수정
     int modifyAssignmentConfirm(UserAssignmentDto userAssignmentDto);
 
     // 과제 삭제
     int deleteAssignmentConfirm(int no);
-    ;
+
 }

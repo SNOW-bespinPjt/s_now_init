@@ -1,5 +1,6 @@
 package com.btc.snow.user.assignment;
 
+import com.btc.snow.admin.assignment.AdminAssignmentDto;
 import com.btc.snow.user.member.UserMemberDto;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.log4j.Log4j2;
@@ -32,7 +33,7 @@ public class UserAssignmentService implements IUserAssignmentService {
     public int RegistrationConfirm(UserAssignmentDto userAssignmentDto) {
         log.info("[UserAssignmentService] RegistrationConfirm()");
 
-        int result = iUserAssignmentMB.insertAssignment(userAssignmentDto);
+        int result = iUserAssignmentMB.submitAssignment(userAssignmentDto);
 
         if (result > 0) {
             return ASSIGNMENT_SUCCESS;
@@ -45,18 +46,17 @@ public class UserAssignmentService implements IUserAssignmentService {
 
     // 과제 상세페이지
     @Override
-    public Integer getIsSubmit(int group_id, int user_no) {
-        log.info("[UserAssignmentService] getAssignment()");
+    public AdminAssignmentDto getDetail(int no) {
+        log.info("[UserAssignmentService] getDetail()");
 
-            Boolean isSubmit = iUserAssignmentMB.selectIsSubmitNum(group_id, user_no);
-            return (isSubmit != null && isSubmit) ? 1 : 0;
-
+        return iUserAssignmentMB.selectDetail(no);
     }
-    @Override
-    public UserAssignmentDto getAssignment(int no) {
-        log.info("[UserAssignmentService] getAssignment()");
 
-        return iUserAssignmentMB.selectAssignment(no);
+    @Override
+    public UserAssignmentDto getUserAssignmentInfo(int user_no, int no) {
+        log.info("[UserAssignmentService] getUserAssignmentInfo()");
+
+        return iUserAssignmentMB.selectAssignmentInfo(user_no, no);
     }
 
     // 과제 수정

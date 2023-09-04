@@ -19,7 +19,7 @@ import java.nio.file.Paths;
 @Controller
 public class DownloadFileControllerForUser {
 
-    private static final String DOWNLOAD_DIR = "c:/snow/admin/assignment/";
+    private static final String DOWNLOAD_DIR = "c:/snow/user/assignment";
 
     @GetMapping("/downloadFromUser")
     public ResponseEntity<Resource> downloadFile(@RequestParam String file, @RequestParam String user_id) {
@@ -31,7 +31,7 @@ public class DownloadFileControllerForUser {
 
         try {
             // 파일 경로 생성
-            Path filePath = Paths.get(DOWNLOAD_DIR + user_id).resolve(file).normalize();
+            Path filePath = Paths.get(DOWNLOAD_DIR + "/" + user_id).resolve(file).normalize();
             Resource resource = new UrlResource(filePath.toUri());
 
             if (resource.exists() && resource.isReadable()) {

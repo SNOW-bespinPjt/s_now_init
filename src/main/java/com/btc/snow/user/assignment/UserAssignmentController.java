@@ -1,5 +1,6 @@
 package com.btc.snow.user.assignment;
 
+import com.btc.snow.admin.assignment.AdminAssignmentDto;
 import com.btc.snow.user.config.UploadFileServiceForUser;
 import com.btc.snow.user.member.UserMemberDto;
 import jakarta.servlet.http.HttpSession;
@@ -15,7 +16,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Log4j2
 @Controller
@@ -41,27 +44,13 @@ public class UserAssignmentController {
 
         List<UserAssignmentDto> userAssignmentDtos = userAssignmentService.listAssignment();
 
-        // is_submit 값 가져오기
-        UserMemberDto loginedUserDto = (UserMemberDto) session.getAttribute("loginedUserDto");
-
-        List<Integer> results = new ArrayList<>(); // is_submit 값을 저장할 리스트
-
-        for (UserAssignmentDto userAssignmentDto : userAssignmentDtos) {
-            int user_no = loginedUserDto.getNo();
-            int group_id = userAssignmentDto.getNo();
-
-            int result = userAssignmentService.getIsSubmit(group_id, user_no);
-            results.add(result);
-        }
-
         ModelAndView mv = new ModelAndView();
         mv.setViewName(nextPage);
-        mv.addObject("userAssignmentDtos", userAssignmentDtos);
-        mv.addObject("results", results);
+        mv.addObject("userAssignmentDtos", userAssignmentDtos); // 변수 이름을 "results"에서 "userAssignmentDtos"로 변경
 
         return mv;
-
     }
+
 
     /*
      * 과제 등록
@@ -120,18 +109,19 @@ public class UserAssignmentController {
         nextPage = "user/assignment/detail_assignment";
 
         // no에 맞는 페이지 가져오기
-        UserAssignmentDto userAssignmentDto = userAssignmentService.getAssignment(no);
+        AdminAssignmentDto adminAssignmentDto = userAssignmentService.getDetail(no);
 
-        // is_submit 값 가져오기
+        // 회원에 맞는 정보 가져오기
         UserMemberDto loginedUserDto = (UserMemberDto) session.getAttribute("loginedUserDto");
         int user_no = loginedUserDto.getNo();
-        int group_id = userAssignmentDto.getNo();
-        int result = userAssignmentService.getIsSubmit(group_id, user_no);
+        UserAssignmentDto userAssignmentDto = userAssignmentService.getUserAssignmentInfo(user_no, no);
 
-        ModelAndView mv = new ModelAndView();
-        mv.setViewName(nextPage);
-        mv.addObject("userAssignmentDto", userAssignmentDto);
-        mv.addObject("result", result);
+        Map<String, Object> msg = new HashMap<>();
+        msg.put("adminAssignmentDto", adminAssignmentDto);
+        msg.put("userAssignmentDto", userAssignmentDto);
+
+        ModelAndView mv = new ModelAndView(nextPage);
+        mv.addObject("msg", msg);
 
         return mv;
     }
@@ -208,15 +198,8 @@ public class UserAssignmentController {
     public ModelAndView MyAssignment(@RequestParam("no") int no) {
         log.info("[UserAssignmentController] MyAssignment()");
 
-        nextPage = "user/assignment/detail_assignment";
 
-        UserAssignmentDto userAssignmentDto = userAssignmentService.getAssignment(no);
-
-        ModelAndView mv = new ModelAndView();
-        mv.setViewName(nextPage);
-        mv.addObject("userAssignmentDto", userAssignmentDto);
-
-        return mv;
+        return null;
     }
 
 }
