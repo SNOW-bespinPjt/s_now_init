@@ -5,6 +5,7 @@ import com.btc.snow.user.member.UserMemberDto;
 import jakarta.servlet.http.HttpSession;
 
 import java.util.List;
+import java.util.Map;
 
 public interface IAdminAssignmentService {
 

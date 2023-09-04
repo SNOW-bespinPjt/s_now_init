@@ -27,7 +27,7 @@
                     <div>
                         <!-- 다운로드 버튼 -->
                         <a th:href="@{/downloadFromAdmin(file=${userAssignmentDto.file})}"
-                           class="px-4 py-2 bg-blue-500 text-gray-700 rounded hover:bg-blue-600"
+                           class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100"
                            th:download="${userAssignmentDto.file_name}"
                            th:text="${userAssignmentDto.file_name}">
                         </a>
@@ -71,6 +71,7 @@
                                 onclick="goBack()"
                                 class="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400"
                         />
+                        <p class="text-gray-500 items-center">내가 낸 파일 : <span th:text="${userAssignmentDto.file_name}"></span></p>
                     </div>
                 </div>
             </div>

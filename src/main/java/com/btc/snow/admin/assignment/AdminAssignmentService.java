@@ -9,7 +9,9 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Log4j2
 @Service
@@ -101,7 +103,6 @@ public class AdminAssignmentService implements IAdminAssignmentService {
         return iAdminAssignmentMB.deleteAssignment(no);
     }
 
-
     // 과제 제출 학생 리스트
     @Override
     public List<UserMemberDto> getUserList() {
@@ -109,6 +110,7 @@ public class AdminAssignmentService implements IAdminAssignmentService {
 
         return iAdminAssignmentMB.selectUsers();
     }
+
     @Override
     public List<UserAssignmentDto> checkAssignmentList(int no) {
         log.info("[AdminAssignmentService] checkAssignmentList()");

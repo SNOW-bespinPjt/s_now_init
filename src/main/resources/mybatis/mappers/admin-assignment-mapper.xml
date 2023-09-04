@@ -75,7 +75,7 @@
         FROM USER
     </select>
 
-    <select id="selectSubmitUser" parameterType="map" resultType="com.btc.snow.user.assignment.UserAssignmentDto">
+    <select id="selectSubmitUser" parameterType="int" resultType="com.btc.snow.user.assignment.UserAssignmentDto">
         SELECT *
         FROM ASSIGNMENT
         WHERE group_id = #{no}

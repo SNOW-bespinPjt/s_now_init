@@ -37,15 +37,15 @@
         WHERE no = #{no}
     </select>
 
-    <update id="updateAssignment" parameterType="Integer">
+    <update id="updateAssignment" parameterType="com.btc.snow.user.assignment.UserAssignmentDto">
         UPDATE ASSIGNMENT
         SET file      = #{file},
             file_name = #{file_name},
             mod_date  = NOW()
         WHERE
-            no = #{no}
-
+            group_id = #{no}
     </update>
+
 
     <delete id="deleteAssignment" parameterType="Integer">
         DELETE

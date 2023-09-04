@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -222,16 +223,29 @@ public class AdminAssignmentController {
     @GetMapping("/check")
     public ModelAndView checkAssignmentList(@RequestParam("no") int no) {
         log.info("[AdminAssignmentController] checkAssignmentList()");
+        log.info("[AdminAssignmentController] no() --> ", no);
 
         nextPage = "admin/assignment/check_assignments";
 
         List<UserMemberDto> userMemberDtos = adminAssignmentService.getUserList();
         List<UserAssignmentDto> userAssignmentDtos = adminAssignmentService.checkAssignmentList(no);
 
-        ModelAndView mv = new ModelAndView();
-        mv.setViewName(nextPage);
-        mv.addObject("userAssignmentDtos", userAssignmentDtos);
-        mv.addObject("userMemberDtos", userMemberDtos);
+        List<CombinedDto> combinedDtos = new ArrayList<>();
+
+        // UserMemberDto와 UserAssignmentDto를 조합
+        for (UserAssignmentDto assignmentDto : userAssignmentDtos) {
+            for (UserMemberDto memberDto : userMemberDtos) {
+                if (assignmentDto.getUser_no() == memberDto.getNo()) {
+                    CombinedDto combinedDto = new CombinedDto();
+                    combinedDto.setAssignmentDto(assignmentDto);
+                    combinedDto.setMemberDto(memberDto);
+                    combinedDtos.add(combinedDto);
+                }
+            }
+        }
+
+        ModelAndView mv = new ModelAndView(nextPage);
+        mv.addObject("combinedDtos", combinedDtos);
 
         return mv;
     }
@@ -268,7 +282,6 @@ public class AdminAssignmentController {
         return nextPage;
 
     }
-
 
 
 }

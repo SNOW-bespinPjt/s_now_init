@@ -22,7 +22,7 @@ public class DownloadFileControllerForUser {
     public ResponseEntity<Resource> downloadFile(@RequestParam String file, @RequestParam String user_id) {
         log.info("[DownloadFileControllerForUser] downloadFile");
         log.info("downloadFromUser file :::::::::::: " + file);
-        log.info("downloadFromUser user_id  :::::::::::: " + file);
+        log.info("downloadFromUser user_id  :::::::::::: " + user_id);
 
         String download_dir = "c:/snow/user/assignment" + user_id;
 

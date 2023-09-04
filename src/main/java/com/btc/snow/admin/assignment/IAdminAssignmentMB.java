@@ -35,5 +35,7 @@ public interface IAdminAssignmentMB {
 
     // 과제 제출 학생 리스트
     List<UserMemberDto> selectUsers();
+
     List<UserAssignmentDto> selectSubmitUser(int no);
+
 }

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8"/>
+    <meta charset="UTF-8">
     <title>Title</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script crossOrigin="anonymous"
@@ -57,52 +57,49 @@
                         <h2 class="text-2xl font-bold">USER SUBMISSION LIST</h2>
                         <div class="flex flex-col w-11/12 bg-white h-5/6">
                             <table>
-                                <thead>
-                                <tr>
-                                    <th>User Name</th>
-                                    <th>과제 제출 여부</th>
-                                    <th>과제 다운로드</th>
-                                </tr>
-                                </thead>
                                 <tbody>
-                                <!-- userAssignmentDtos를 순회하며 표 형태로 출력 -->
-                                <tr th:each="item : ${userAssignmentDtos}">
-                                    <td th:text="${item.user_no}">User Name</td>
+                                <!-- userAssignmentDtos와 userMemberDtos를 동일한 순서로 순회 -->
+                                <tr th:each="combinedDto : ${combinedDtos}">
+                                    <!-- userMemberDtos의 데이터를 표시 -->
+                                    <td th:text="${combinedDto.memberDto.id}"></td>
+                                    <td th:text="${combinedDto.memberDto.name}"></td>
+                                    <!-- userAssignmentDtos의 데이터를 표시 -->
                                     <td class="submit-cell">
-                                            <span class="text-gray-500" th:if="${item.is_submit eq 0}">
-                                                미제출
-                                            </span>
-                                        <span class="text-green-500" th:unless="${item.is_submit eq 0}">
-                                                <a class="px-4 py-2 text-green-600"
-                                                   th:download="${item.file_name}"
-                                                   th:href="@{/downloadFromUser(file=${item.file})}"
-                                                   th:text="${item.file_name}">
-                                                </a>
-                                                <div class="flex">
-                                                    <svg
-                                                            class="w-6 h-6"
-                                                            fill="none"
-                                                            stroke="currentColor"
-                                                            stroke-width="1.5"
-                                                            viewBox="0 0 24 24"
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                    >
-                                                        <path
-                                                                d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
-                                                                stroke-linecap="round"
-                                                                stroke-linejoin="round"
-                                                        />
-                                                        <path
-                                                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                                                                stroke-linecap="round"
-                                                                stroke-linejoin="round"
-                                                        />
-                                                    </svg>
-                                                    <p class="ml-2 font-thin text-slate-400">
-                                                        제출일 <span th:text="${item.mod_date}"></span>
-                                                    </p>
-                                                </div>
-                                            </span>
+                                        <span class="text-gray-500" th:if="${combinedDto.assignmentDto.is_submit eq 0}">
+                                            미제출
+                                        </span>
+                                        <span class="text-green-500"
+                                              th:unless="${combinedDto.assignmentDto.is_submit eq 0}">
+                                            <a class="px-4 py-2 text-green-600"
+                                               th:download="${combinedDto.assignmentDto.file_name}"
+                                               th:href="@{/downloadFromUser(file=${combinedDto.assignmentDto.file}, user_id=${combinedDto.memberDto.id})}"
+                                               th:text="${combinedDto.assignmentDto.file_name}">
+                                            </a>
+                                            <div class="flex">
+                                                <svg
+                                                        class="w-6 h-6"
+                                                        fill="none"
+                                                        stroke="currentColor"
+                                                        stroke-width="1.5"
+                                                        viewBox="0 0 24 24"
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                >
+                                                    <path
+                                                            d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
+                                                            stroke-linecap="round"
+                                                            stroke-linejoin="round"
+                                                    />
+                                                    <path
+                                                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                                                            stroke-linecap="round"
+                                                            stroke-linejoin="round"
+                                                    />
+                                                </svg>
+                                                <p class="ml-2 font-thin text-slate-400">
+                                                    제출일 <span th:text="${combinedDto.assignmentDto.mod_date}"></span>
+                                                </p>
+                                            </div>
+                                        </span>
                                     </td>
                                 </tr>
                                 </tbody>
