@@ -17,6 +17,10 @@
         VALUES (#{admin_no}, #{title}, #{body}, #{file_admin}, #{file_admin_name}, NOW(), NOW())
     </insert>
 
+    <select id="getGeneratedNo" resultType="int" parameterType="com.btc.snow.admin.assignment.AdminAssignmentDto">
+        SELECT LAST_INSERT_ID()
+    </select>
+
     <update id="updateAdminActive" parameterType="Integer">
         UPDATE
             ASSIGNMENT
@@ -53,7 +57,7 @@
         SET
         <if test="file_admin  != null">
             file_admin = #{file_admin},
-            file_admin_name  = #{file_admin_name},
+            file_admin_name = #{file_admin_name},
         </if>
         title = #{title},
         body = #{body},
