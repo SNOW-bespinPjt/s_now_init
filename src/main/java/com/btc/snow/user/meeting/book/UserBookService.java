@@ -66,12 +66,7 @@ public class UserBookService implements IUserBookService {
 
         List<UserBookDto> userBookDtos = iUserBookMapper.selectSearchBooks(title);
 
-        log.info("userBookDtos {}", userBookDtos);
-        log.info("userBookDtos {}", userBookDtos.size());
-
         map.put("userBookDtos", userBookDtos);
-
-        log.info("============================>" + userBookDtos);
 
         return map;
     }

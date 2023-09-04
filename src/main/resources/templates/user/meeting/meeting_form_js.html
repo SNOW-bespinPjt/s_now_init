@@ -7,11 +7,16 @@
         // 이벤트 핸들러 초기화(등록)
         init_events();
         setFormatDatepicker();
+
     });
 
     //STUDY FORM 등록 버튼 클릭
     function submitStudy() {
-        let form = document.querySelector(".studyform");
+        let form = document.querySelector("form.studyform");
+
+        console.log("------------------------------------");
+        let book_no = form.book_no.value;
+        console.log('book_no: ', book_no);
 
         form.submit();
 
@@ -19,7 +24,7 @@
 
     //MEAL FORM 등록 버튼 클릭
     function submitMeal() {
-        let form = document.querySelector(".studyform");
+        let form = document.querySelector(".mealform");
 
         form.submit();
 
@@ -29,7 +34,7 @@
         $(function () {
 
             var dateFormat = "yy-mm-dd",
-                from = $("#start_date, #date")
+                from = $("#start_date")
                     .datepicker({
                         showMonthAfterYear: true, //연도,달 순서로 지정
                         changeMonth: true,//달 변경 지정
@@ -51,7 +56,21 @@
                 })
                     .on("change", function () {
                         from.datepicker("option", "maxDate", getDate(this));//시작일의 maxDate 지정
+                    }),
+                date = $("#date")
+                    .datetimepicker({
+                        showMonthAfterYear: true, //연도,달 순서로 지정
+                        changeMonth: true,//달 변경 지정
+                        dateFormat: "yy-mm-dd",//날짜 포맷
+                        dayNamesMin: ["일", "월", "화", "수", "목", "금", "토"],//요일 이름 지정
+                        monthNamesShort: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],//월 이름 지정
+                        minDate: 0, //오늘 이전 날짜를 선택할 수 없음
+
+                        timeFormat: "HH:mm",
+                        controlType: "select",
+                        oneLine: true
                     });
+
 
             function getDate(element) {
                 var date;
@@ -98,6 +117,7 @@
                 console.log("selected study_form");
 
                 $(".studyform").children().remove();
+                $(".mealform").children().remove();
 
                 let appendTag = "";
 
@@ -108,8 +128,9 @@
                 appendTag += "<span>정원: </span>";
                 appendTag += "<input type='number' min='1' max='50' name='total'><br>";
                 appendTag += "<textarea name='body' placeholder='내용을 입력하세요.' cols='50' rows='10'></textarea><br>";
-                appendTag += "<input type='file' name='img'>";
+                appendTag += "<input type='file' name='file'>";
                 appendTag += "<input data-modal-target=\"defaultModal\" data-modal-toggle=\"defaultModal\" class=\"block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800\" type=\"button\" value=\"도서 검색\" onclick=\"modallToggle()\"><br>"
+                appendTag += "<input type='hidden' name='book_no'>";
                 appendTag += "<input type='button' value='등록' onclick='submitStudy();'>";
 
                 $(".studyform").append(appendTag);
@@ -118,21 +139,21 @@
             } else {
                 console.log("selected meal_form");
 
-                $("#meeting_section .studyform").children().remove();
+                $(".studyform").children().remove();
+                $(".mealform").children().remove();
 
                 let appendTag = "";
 
                 appendTag += "<input type='text' name='title' placeholder='제목을 입력하세요.'><br>";
                 appendTag += "<input type='text' id='date' name='date' value='식사일'><br>";
-                appendTag += "<input type='text' id='time' name='time' value='시간'>";
                 appendTag += "<span>정원: </span>";
                 appendTag += "<input type='number' min='1' max='50' name='total'><br>";
                 appendTag += "<textarea name='body' placeholder='내용을 입력하세요.' cols='50' rows='10'></textarea><br>";
-                appendTag += "<input type='file' name='img'><br>";
+                appendTag += "<input type='file' name='file'><br>";
                 appendTag += "<input type='button' value='등록' onclick='submitMeal();'>";
 
 
-                $("#meeting_section .studyform").append(appendTag);
+                $("#meeting_section .mealform").append(appendTag);
 
                 setFormatDatepicker();
             }
@@ -154,7 +175,13 @@
             let bookNo = $(this).data('no');
             console.log('bookno====' + bookNo);
 
-            document.querySelector("form.studyform").book_no.value = bookNo;
+            // document.querySelector(".meeting_form input[name='book_no']").val(bookNo);
+            // document.querySelectorAll(".meeting_form input[name='book_no']").value = bookNo;
+
+            $('form.studyform input[name="book_no"]').val(bookNo);
+            console.log("----> ", $('form.studyform input[name="book_no"]').val());
+
+            console.log('================' + bookNo);
 
             modallToggle();
 
@@ -163,74 +190,74 @@
 
 
     // AJAX START
-    function ajax_writeStudy(title, start_date, end_date, total, body, file) {
-        console.log('ajax_writeStudy() CALLED!');
+    // function ajax_writeStudy(title, start_date, end_date, total, body, file) {
+    //     console.log('ajax_writeStudy() CALLED!');
+    //
+    //     let formData = new FormData();
+    //     formData.append("title", title);
+    //     formData.append("start_date", start_date);
+    //     formData.append("end_date", end_date);
+    //     formData.append("total", total);
+    //     formData.append("body", body);
+    //     formData.append("img", file);
+    //
+    //
+    //     $.ajax({
+    //         url: '/user/study/write_study',
+    //         method: 'POST',
+    //         enctype: 'multipart/form-data',
+    //         processData: false,
+    //         contentType: false,
+    //         data: formData,
+    //         success: function (data) {
+    //             console.log('AJAX SUCCESS - ajax_writeStudy()');
+    //
+    //             if (data == '' || data == null || data.result <= 0)
+    //                 alert('스터디 등록에 문제가 발생 했습니다.');
+    //             else
+    //                 alert('스터디가 정상 등록 되었습니다.');
+    //
+    //         },
+    //         error: function (data) {
+    //             console.log('AJAX ERROR - ajax_writeStudy()');
+    //
+    //             alert('스터디 등록에 문제가 발생 했습니다.');
+    //
+    //         },
+    //         complete: function (data) {
+    //             console.log('AJAX COMPLETE - ajax_writeStudy()');
+    //
+    //
+    //         }
+    //     });
+    // }
 
-        let formData = new FormData();
-        formData.append("title", title);
-        formData.append("start_date", start_date);
-        formData.append("end_date", end_date);
-        formData.append("total", total);
-        formData.append("body", body);
-        formData.append("img", file);
-
-
-        $.ajax({
-            url: '/user/study/write_study',
-            method: 'POST',
-            enctype: 'multipart/form-data',
-            processData: false,
-            contentType: false,
-            data: formData,
-            success: function (data) {
-                console.log('AJAX SUCCESS - ajax_writeStudy()');
-
-                if (data == '' || data == null || data.result <= 0)
-                    alert('스터디 등록에 문제가 발생 했습니다.');
-                else
-                    alert('스터디가 정상 등록 되었습니다.');
-
-            },
-            error: function (data) {
-                console.log('AJAX ERROR - ajax_writeStudy()');
-
-                alert('스터디 등록에 문제가 발생 했습니다.');
-
-            },
-            complete: function (data) {
-                console.log('AJAX COMPLETE - ajax_writeStudy()');
-
-
-            }
-        });
-    }
-
-    function ajax_writeMeal(title, body, files) {
-
-        $.ajax({
-            url: '/user/meeting/write_meal',
-            method: 'GET',
-            processData: false,
-            contentType: false,
-            success: function () {
-                console.log('AJAX SUCCESS - ajax_writeMeal()');
-
-
-            },
-            error: function (data) {
-                console.log('AJAX ERROR - ajax_writeMeal()');
-
-                // alert('일정 등록에 문제가 발생 했습니다.');
-
-            },
-            complete: function (data) {
-                console.log('AJAX COMPLETE - ajax_writeMeal()');
-
-                // hideWritePlansView();
-
-            }
-        });
-    }
+    // function ajax_writeMeal(title, body, files) {
+    //
+    //     $.ajax({
+    //         url: '/user/meeting/write_meal',
+    //         method: 'GET',
+    //         processData: false,
+    //         contentType: false,
+    //         success: function () {
+    //             console.log('AJAX SUCCESS - ajax_writeMeal()');
+    //
+    //
+    //         },
+    //         error: function (data) {
+    //             console.log('AJAX ERROR - ajax_writeMeal()');
+    //
+    //             // alert('일정 등록에 문제가 발생 했습니다.');
+    //
+    //         },
+    //         complete: function (data) {
+    //             console.log('AJAX COMPLETE - ajax_writeMeal()');
+    //
+    //             // hideWritePlansView();
+    //
+    //         }
+    //     });
+    // }
 
     function ajax_getSearchBook(bookKeyword) {
         console.log('ajax_getSearchBook() CALLED!')
@@ -250,7 +277,7 @@
 
                 let userBookDtos = data.userBookDtos;
 
-                $('#book_list').empty();
+                $('#book_list').children().remove();
 
                 for (let i = 0; i < userBookDtos.length; i++) {
                     appendTag += "<div class='flex flex-row w-full border-b-2 border-gray-100'>"

@@ -1,4 +1,4 @@
-package com.btc.snow.user.meeting.study;
+package com.btc.snow.user.meeting.meal;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
@@ -9,7 +9,7 @@ import java.util.UUID;
 
 @Log4j2
 @Service
-public class StudyUploadFileService {
+public class MealUploadFileService {
 
     public String upload(MultipartFile file, String id) {
         log.info("upload()");
@@ -20,7 +20,7 @@ public class StudyUploadFileService {
         // File 저장
         String fileOriName = file.getOriginalFilename();
         String fileExtension = fileOriName.substring(fileOriName.lastIndexOf("."), fileOriName.length());
-        String uploadDir = "c:\\snow\\user\\meeting\\study";
+        String uploadDir = "c:\\snow\\user\\meeting\\meal";
 
         UUID uuid = UUID.randomUUID();
         String uniqueName = uuid.toString().replace("-", "");

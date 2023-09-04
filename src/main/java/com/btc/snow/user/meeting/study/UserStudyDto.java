@@ -1,7 +1,6 @@
 package com.btc.snow.user.meeting.study;
 
 import lombok.Data;
-import org.springframework.web.multipart.MultipartFile;
 
 @Data
 public class UserStudyDto {
@@ -18,5 +17,5 @@ public class UserStudyDto {
     private String end_date;
     private String reg_date;
     private String mod_date;
-    private MultipartFile file;
+   
 }

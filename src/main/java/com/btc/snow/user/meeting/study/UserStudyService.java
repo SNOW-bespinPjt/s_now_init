@@ -15,7 +15,7 @@ public class UserStudyService implements IUserStudyService {
 
     public int writeStudy(UserStudyDto userStudyDto) {
         log.info("writeStudy()");
-        log.info("userStudytDto {}", userStudyDto.getImg());
+     
         int result = iUserStudyMapper.insertStudy(userStudyDto);
 
         if (result <= 0) {
