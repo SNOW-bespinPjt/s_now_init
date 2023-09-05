@@ -131,7 +131,7 @@
                         }
 
 
-                        appendTag += "     <div class=\" w-1/4 border-2 rounded-md shadow-xl mb-5 mr-4 h-48 \" >\n" +
+                        appendTag += "     <div class=\" w-1/8 border-2 rounded-md shadow-xl mb-5 mr-4 h-1/8 \" >\n" +
                             "<div class='relative h-full'>" + `<p class=${statusColor}>` + strStatus + "</p>" + "<div class='absolute bottom-0 right-0'>" + updateStatus + "</div>" + "</div>" +
                             "                </div> "
 
@@ -388,39 +388,8 @@
 
 
             let arr = [[${userAttendanceDtos}]]
-            // let pageMakerDto = [[${pageMakerDto}]]
             let nextAtag = ''
             $('.section2').children().remove();
-
-            // console.log("pageMakerDto" + pageMakerDto.startPage)
-            // console.log("pageMakerDto prev : " + pageMakerDto.prev)
-            // console.log("pageMakerDto.criteria.pageNum : " + pageMakerDto.criteria.pageNum)
-            // console.log("pageMakerDto.startPage : " + pageMakerDto.startPage)
-            // console.log("pageMakerDto.endPage : " + pageMakerDto.endPage)
-            // console.log("pageMakerDto.total : " + pageMakerDto.total)
-            // console.log("pageMakerDto.totalPage : " + pageMakerDto.totalPage)
-
-            // if (pageMakerDto.prev) {
-            //     $('#pageNum').append('<a href="#" data-pagenum="' + (pageMakerDto.startPage - 1) + '">PRE</a>');
-            // }
-            //
-            // if (pageMakerDto.criteria.pageNum > 10) {
-            //     $('#pageNum').append('<a href="#none" data-pagenum="1">1</a><span>s...</span>');
-            // }
-            //
-            // for (let p = parseInt(pageMakerDto.startPage); p <= parseInt(pageMakerDto.endPage); p++) {
-            //     nextAtag += '<a href="#none" data-pagenum="' + p + '" class="mr-4 mt-3 text-slate-400">' + p + '</a>'
-            // }
-
-
-            //
-
-            //
-            // if (pageMakerDto.next) {
-            //     $('#pageNum').append('<a href="#none" data-pagenum="' + (pageMakerDto.endPage + 1) + '">NEX</a>')
-            // }
-            //
-            // $('#pageNum').append("<span>" + pageMakerDto.totalPage + "</span>")
 
 
             for (let i = 0; i < size; i++) {
@@ -471,7 +440,7 @@
                 }
 
 
-                appendTag += "     <div class=\" w-1/4 border-2 rounded-md shadow-xl mb-5 mr-4 h-48 \" >\n" +
+                appendTag += "     <div class=\" w-1/4 border-2 rounded-md shadow-xl mb-5 mr-4 h-16\" >\n" +
                     "<div class='relative h-full'>" + `<p class=${statusColor}>` + strStatus + "</p>" + "<p>" + regDate + "</p>" + "<div class='absolute bottom-0 right-0'>" + updateStatus + "</div>" + "</div>" +
                     "                </div> "
 
@@ -498,46 +467,8 @@
                 "</div>"
 
 
-            $(".category p").removeClass("font-semibold").addClass("text-slate-400")
-            $(".attendence").addClass("font-semibold").removeClass("text-slate-400")
             $(".section2").children().remove()
             $(".section2").append(attendenceBody)
-       
-
-            // $(document).on('click', '#pageNum a[data-pagenum=' + pageMakerDto.criteria.pageNum + ']', function () {
-            //     console.log("page number click!!")
-            //
-            //     let pageNum = $(this).data('pagenum')
-            //
-            //     $.ajax({
-            //         url: '/mypage?pageNum=' + pageNum,
-            //         method: 'POST',
-            //         processData: false,
-            //         contentType: false,
-            //         success: function (data) {
-            //             console.log('AJAX SUCCESS - ajax_attendence()');
-            //             console.log("data : ", data)
-            //             // attendenceTab([[${data.size()}]])
-            //
-            //
-            //         }
-            //
-            //         ,
-            //         error: function (data) {
-            //             console.log('AJAX ERROR - ajax_writeStudy()');
-            //
-            //             // alert('일정 등록에 문제가 발생 했습니다.');
-            //
-            //         }
-            //         ,
-            //         complete: function (data) {
-            //             console.log('AJAX COMPLETE - ajax_writeStudy()');
-            //
-            //
-            //         }
-            //     })
-            //
-            // })
 
 
         }
