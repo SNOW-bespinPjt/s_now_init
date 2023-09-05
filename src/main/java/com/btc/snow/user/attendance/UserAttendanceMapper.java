@@ -42,5 +42,5 @@ public interface UserAttendanceMapper {
 
     int updateAttendenceUstatus(SubmitDto submitDto);
 
-    int getTotalCnt(String uId);
+    int getTotalCnt(String uNo);
 }
