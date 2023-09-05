@@ -44,5 +44,8 @@ public interface UserAttendanceMapper {
 
     int getTotalCnt(String uNo);
 
-    void updateAttendenceBy();
+
+    void updateAttendenceByAfternoon();
+
+    void updateAttendenceByMorning();
 }

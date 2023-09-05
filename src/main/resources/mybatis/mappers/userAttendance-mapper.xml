@@ -110,7 +110,7 @@
 
     </select>
 
-    <update id="updateAttendenceBy">
+    <update id="updateAttendenceByMorning">
 
         <![CDATA[
         SET
@@ -119,7 +119,21 @@
         insert into ATTENDENCE(u_id, astatus, tstatus, reg_date, mod_date)
         select u.id, '3', @currentDateTime, now(), now()
         from USER u
-        where u.id not in (select u_id from ATTENDENCE where HOUR (date)<12)
+        where u.id not in (select u_id from ATTENDENCE where HOUR (reg_date) <12)
+        ]]>
+
+    </update>
+
+    <update id="updateAttendenceByAfternoon">
+
+        <![CDATA[
+        SET
+        @currentDateTime = NOW();
+
+        insert into ATTENDENCE(u_id, astatus, tstatus, reg_date, mod_date)
+        select u.id, '3', @currentDateTime, now(), now()
+        from USER u
+        where u.id not in (select u_id from ATTENDENCE where HOUR (reg_date) >= 14 AND HOUR (reg_date) < 18)
         ]]>
 
     </update>

@@ -264,10 +264,19 @@ public class UserAttendanceService implements IUserAttendanceService {
     //1. 12시 체크
     @Scheduled(cron = "0 0 12 * * 5", zone = "Asia/Seoul")
     public void updateAttendenceBy() {
-        log.info("updateAttendence()");
+        log.info("updateAttendenceByMorning()");
 
 
-        userAttendanceMapper.updateAttendenceBy();
+        userAttendanceMapper.updateAttendenceByMorning();
+    }
+
+    //1. 18시  오후 출석체크
+    @Scheduled(cron = "0 0 18 * * 5", zone = "Asia/Seoul")
+    public void updateAttendenceByAfternoon() {
+        log.info("updateAttendenceByAfternoon()");
+
+
+        userAttendanceMapper.updateAttendenceByAfternoon();
     }
 
 
