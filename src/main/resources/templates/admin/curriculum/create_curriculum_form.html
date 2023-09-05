@@ -5,7 +5,7 @@
     <title>Title</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script th:replace="~{/include/common_js.html::jquery_cdn}"></script>
-    <script th:replace="~{/admin/curriculum/curriculum_form_js.html::js}"></script>
+    <script th:replace="~{/admin/curriculum/create_curriculum_form_js.html::js}"></script>
 
 
 </head>
@@ -18,167 +18,186 @@
     <!--  section & footer  -->
     <div class="flex flex-col items-center justify-center w-5/6 mx-auto">
         <h2 class="relative   top-0 left-0 mt-4 text-2xl font-bold ml-14">
-            ADMIN CURRICULUM CREATE</h2>
+            ADMIN CURRICULUM CREATE FORM</h2>
         <section class="flex flex-row w-5/6 border-solid mt-7">
             <!-- ⬅️ -->
             <div
-                    class="absolute relative items-center justify-center w-screen h-screen mr-8 border-2 rounded-lg bg-slate-100"
+                    class="absolute relative items-center justify-center w-screen h-screen mr-8"
             >
-                <div id="search_info" class="buttons mt-6 text-right">
-                    <input type="text" id="searchInput" class="mr-2 px-2 py-1 border rounded-md"
-                           placeholder="검색어를 입력하세요">
-                    <a class="search_curriculum_button inline-block ml-2 px-4 py-2 border border-green-500 rounded-md bg-green-500 text-white hover:bg-red-600"
-                       href="#none">커리큘럼
-                        검색</a>
-                    <a class="back_button inline-block ml-2 px-4 py-2 border border-green-500 rounded-md bg-green-500 text-white hover:bg-red-600"
-                       href="#none">뒤로가기
-                    </a>
+                <div id="create_curriculum_wrap" class="items-center justify-center">
+                    <div class="max-w-lg mx-auto bg-white rounded-lg shadow-lg p-6">
+                        <form action="/admin/curriculum/create_curriculum_confirm" method="POST"
+                              class="create_curriculum_form space-y-4"
+                              enctype="multipart/form-data">
+                            <!-- Admin ID -->
+                            <div>
+                                <label for="admin_id" class="block font-medium">Admin ID</label>
+                                <input type="text" id="admin_id" name="admin_id"
+                                       class="w-full border-gray-300 rounded-md p-2" required>
+                            </div>
 
-                </div>
-                <br/>
-                <div id="curriculum_container">
+                            <!-- Book No (You can use a select element if it's based on existing books) -->
+                            <div id="book_search">
+                                <label for="book_no" class="block font-medium">Book No</label>
+                                <input type="text" id="book_no" name="book_no"
+                                       class="w-full border-gray-300 rounded-md p-2" required>
 
+                                <input
+                                        data-modal-target="defaultModal"
+                                        data-modal-toggle="defaultModal"
+                                        class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                                        type="button"
+                                        value="도서 검색"
+                                        onclick="modallToggle()"
+                                >
 
-                </div>
+                            </div>
 
-                <div class="buttons mt-6 text-right">
-                    <a class="create_curriculum_button inline-block px-4 py-2 border border-gray-400 rounded-md bg-gray-200 text-gray-700 hover:bg-red-600 hover:text-white"
-                       href="#none">커리큘럼
-                        생성</a>
+                            <!-- 모달 START  -->
+                            <div
+                                    id="defaultModal"
+                                    tabindex="-1"
+                                    aria-hidden="true"
+                                    class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] bg-slate backdrop-blur-xl flex justify-center items-center max-h-full bg-black bg-opacity-50"
+                            >
+                                <div class="relative w-full max-w-2xl max-h-full">
+                                    <!-- Modal content -->
+                                    <div id="search" class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                        <!-- Modal header -->
+                                        <div
+                                                class="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600 modal_form"
+                                        >
+                                            <input type="text" class="bookName" name="bookKeyword"
+                                                   placeholder="도서이름을 입력해주세요.">
+                                            <input type="button" value="검색" onclick="ajax_getSearchBook()">
+                                            <button
+                                                    type="button"
+                                                    class="inline-flex items-center justify-center w-8 h-8 ml-auto text-sm text-gray-400 bg-transparent rounded-lg hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white"
+                                                    data-modal-hide="defaultModal"
+                                                    onclick="modallToggle()"
+                                            >
+                                                <svg
+                                                        class="w-3 h-3"
+                                                        aria-hidden="true"
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        fill="none"
+                                                        viewBox="0 0 14 14"
+                                                >
+                                                    <path
+                                                            stroke="currentColor"
+                                                            stroke-linecap="round"
+                                                            stroke-linejoin="round"
+                                                            stroke-width="2"
+                                                            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                                                    />
+                                                </svg>
+                                                <span class="sr-only">Close modal</span>
+                                            </button>
+                                        </div>
+                                        <!-- Modal body -->
+                                        <div id="book_list" class="p-6 space-y-6">
+                                            <ul>
 
-                </div>
+                                            </ul>
+                                        </div>
+                                        <!-- Modal footer -->
+                                        <div
+                                                class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600"
+                                        >
+                                            <button
+                                                    data-modal-hide="defaultModal"
+                                                    type="button"
+                                                    onclick="modallToggle()"
+                                                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                                            >
+                                                I accept
+                                            </button>
+                                            <button
+                                                    data-modal-hide="defaultModal"
+                                                    type="button"
+                                                    onclick="modallToggle()"
+                                                    class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600"
+                                            >
+                                                Decline
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 모달 END  -->
 
+                            <!-- Title -->
+                            <div>
+                                <label for="title" class="block font-medium">Title</label>
+                                <input type="text" id="title" name="title" class="w-full border-gray-300 rounded-md p-2"
+                                       required>
+                            </div>
 
-            </div>
+                            <!-- Content -->
+                            <div>
+                                <label for="content" class="block font-medium">Content</label>
+                                <input id="content" name="content" rows="4"
+                                       class="w-full border-gray-300 rounded-md p-2" required></input>
+                            </div>
 
-            <!-- ➡️ -->
-            <div class="flex flex-col items-center w-3/4 h-screen border-2 rounded-lg">
-                <!-- ➡️⬆️️ -->
+                            <!-- Category -->
+                            <div>
+                                <label for="category" class="block font-medium">Category</label>
+                                <input type="text" id="category" name="category"
+                                       class="w-full border-gray-300 rounded-md p-2" required>
+                            </div>
 
-                <!-- beforn login : contentDiv -->
-                <div id="contentDiv"
-                     class="flex flex-col items-center justify-center w-11/12 h-40 p-2 mt-6 border-2 rounded-sm"
-                     th:if="${session.loginedAdminDto == null}">
-                    <h3 class="mb-3">이곳은 ADMIN 페이지 입니다 !</h3>
-                    <a class="mx-auto h-10 px-4 py-2 font-bold items-center text-white bg-green-500 rounded w-52 hover:bg-green-600 text-center"
-                       id="loginLink"
-                    >
-                        login
-                    </a>
-                    <div class="mt-3.5 text-xs text-gray-700">
-                        <a
-                                class="cursor-pointer hover:underline hover:font-thin hover:text-gray-500"
-                                th:href="@{/admin/member/find_id_form}"
-                        >아이디 찾기</a
-                        >
-                        |
-                        <a
-                                class="cursor-pointer hover:underline hover:font-thin hover:text-gray-500"
-                                th:href="@{/admin/member/find_password_form}"
-                        >비밀번호 찾기</a
-                        >
-                        |
-                        <a
-                                class="cursor-pointer hover:underline hover:font-thin hover:text-gray-500"
-                                th:href="@{/admin/member/create_account_form}"
-                        >회원가입</a
-                        >
-                    </div>
-                </div>
-                <!-- member_login_form -->
-                <div id="member_login_form" style="display: none"
-                     class="flex flex-col items-center justify-center w-11/12 h-40 p-2 mt-6 border-2 rounded-sm">
-                    <div>
-                        MEMBER LOGIN FORM
-                    </div>
-                    <div>
-                        <form th:action="@{/admin/member/member_login_confirm}" name="member_login_form"
-                              method="post">
-                            <input type="text" name="id" placeholder="INPUT ID"><br>
-                            <input type="password" name="pw" placeholder="INPUT PW"><br>
-                            <input type="button" value="member login" onclick="memberLoginForm();">
-                            <input type="reset" value="reset">
+                            <!-- Student Division (Dropdown Select) -->
+                            <div>
+                                <label for="std_div" class="block font-medium">Student Division</label>
+                                <select id="std_div" name="std_div" class="w-full border-gray-300 rounded-md p-2"
+                                        required>
+                                    <option value="엔지니어">엔지니어</option>
+                                    <option value="개발자">개발자</option>
+                                </select>
+                            </div>
+
+                            <!-- Hour -->
+                            <div>
+                                <label for="hour" class="block font-medium">Hour</label>
+                                <input type="number" id="hour" name="hour" class="w-full border-gray-300 rounded-md p-2"
+                                       required>
+                            </div>
+
+                            <!-- File -->
+                            <div>
+                                <label for="file" class="block font-medium">File</label>
+                                <input type="file" id="file" name="file" class="w-full border-gray-300 rounded-md p-2">
+                            </div>
+
+                            <!-- Start Date (Datepicker) -->
+                            <div>
+                                <label for="start_date" class="block font-medium">Start Date</label>
+                                <input type="date" id="start_date" name="start_date"
+                                       class="w-full border-gray-300 rounded-md p-2" required>
+                            </div>
+
+                            <!-- End Date (Datepicker) -->
+                            <div>
+                                <label for="end_date" class="block font-medium">End Date</label>
+                                <input type="date" id="end_date" name="end_date"
+                                       class="w-full border-gray-300 rounded-md p-2" required>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <div class="text-right">
+                                <button type="button"
+                                        class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600">Create
+                                    Curriculum
+                                </button>
+                            </div>
                         </form>
                     </div>
-                    <div class="mt-3.5 text-xs text-gray-700">
-                        <a
-                                class="cursor-pointer hover:underline hover:font-thin hover:text-gray-500"
-                                th:href="@{/admin/member/find_id_form}"
-                        >아이디 찾기</a
-                        >
-                        |
-                        <a
-                                class="cursor-pointer hover:underline hover:font-thin hover:text-gray-500"
-                                th:href="@{/admin/member/find_password_form}"
-                        >비밀번호 찾기</a
-                        >
-                        |
-                        <a
-                                class="cursor-pointer hover:underline hover:font-thin hover:text-gray-500"
-                                th:href="@{/admin/member/create_account_form}"
-                        >회원가입</a
-                        >
-                    </div>
-                </div>
-
-                <!--  after login -->
-                <div class="flex flex-col items-center justify-center w-11/12 h-40 p-2 mt-6 border-2 rounded-sm"
-                     th:if="${session.loginedAdminDto != null}">
-                    <h3 class="mb-3">환영합니다</h3>
-
-                    <span th:text="${session.loginedAdminDto.id}"
-                          class="mx-auto h-10 px-4 py-2 font-bold items-center text-white bg-green-500 rounded w-52 hover:bg-green-600 text-center"> 님</span>
-                    <div class="mt-3.5 text-xs text-gray-700">
-                        <a th:href="@{/admin/member/member_modify_form}"
-                           class="cursor-pointer hover:underline hover:font-thin hover:text-gray-500"
-                        >나의 정보</a
-                        >
-                        |
-                        <a th:href="@{/admin/member/member_logout_confirm}"
-                           class="cursor-pointer hover:underline hover:font-thin hover:text-gray-500"
-                        >로그아웃</a
-                        >
-                    </div>
-                </div>
-
-
-                <!-- find_id_form -->
-                <!-- find_password_form -->
-                <div id="find_password_form" style="display: none"
-                     class="flex flex-col items-center justify-center w-11/12 h-40 p-2 mt-6 border-2 rounded-sm">
-                    <div>
-                        <h3>FIND PASSWORD FORM</h3>
-                        <p>(We will send you a new password)</p>
-                    </div>
-
-                    <div>
-                        <form th:action="@{/admin/member/find_password_confirm}" method="post"
-                              name="find_password_form"><br>
-                            <input type="text" name="id" placeholder="INPUT ADMIN ID."><br>
-                            <input type="text" name="name" placeholder="INPUT ADMIN NAME."><br>
-                            <input type="email" name="mail" placeholder="INPUT ADMIN MAIL."><br>
-                            <input type="button" value="FIND PASSWORD" onclick="findPassword();">
-                            <input type="reset" value="RESET">
-                        </form>
-                    </div>
-
-                    <div>
-                        <a th:href="@{/admin/member/create_account_form}">create account</a>
-                        <a th:href="@{/admin/member/member_login_form.html}">login</a>
-                    </div>
-
-                </div>
-
-                <!-- ➡️⬇️ -->
-                <div
-                        class="flex flex-col items-center justify-center w-11/12 p-2 mt-6 border-2 rounded-sm h-2/4"
-                >
-                    <h3 class="mb-3">SNOW에 오신 것을 환영합니다 !</h3>
                 </div>
             </div>
         </section>
-        <footer th:replace="~{/include/header_nav_footer.html::footer}"></footer>
     </div>
 </div>
 </body>
+
 </html>

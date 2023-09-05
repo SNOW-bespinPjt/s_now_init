@@ -77,6 +77,7 @@ public class AdminCurriculumController {
     /*
      * SHOW ALL CURRICULUM WHERE ADMIN_ID or SUPER ADMIN
      */
+    //path 변수에 넣는게 좋다.
     @PostMapping("/show_all_curriculum")
     @ResponseBody
     public Map<String, Object> showAllCurriculum(HttpSession session) {
