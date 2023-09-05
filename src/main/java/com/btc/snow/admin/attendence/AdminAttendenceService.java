@@ -49,4 +49,12 @@ public class AdminAttendenceService implements IAdminAttendenceService {
 
         return map;
     }
+
+    @Override
+    public int updateStatusForSubmit(int no) {
+        log.info("updateStatusForSubmit(int no)");
+
+
+        return iAdminAttendenceMapper.updateStatusForSubmit(no);
+    }
 }

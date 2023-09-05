@@ -1,0 +1,77 @@
+<script th:fragment="toggle" th:inline="javascript" type="text/javascript">
+
+
+    function modalToggle(no) {
+        console.log("modalToogle()")
+        console.log(no)
+        $('#defaultModal').toggleClass('hidden');
+        $('.submitFile').data("no", no)
+    }
+
+    function submitConfirm() {
+        console.log("submitConfirm()")
+        let submitNo = $('.submitFile').data('no')
+
+
+        $.ajax({
+            url: '/admin/attendence/download?no=' + submitNo,
+            type: 'POST',
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                console.log("ajax_submitDoc() success")
+                console.log(data)
+
+            },
+            error: function (data) {
+                console.log("ajax_submitDoc() error")
+            },
+            complete: function (data) {
+                console.log('AJAX COMPLETE - ajax_submitDoc()');
+
+            }
+        })
+
+
+    }
+
+    function approveConfirm(no) {
+        console.log("approveConfirm()!!")
+        console.log("no : ", no)
+        $.ajax({
+            url: '/admin/attendence/approve?no=' + no,
+            type: 'POST',
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                console.log("ajax_submitDoc() success")
+                console.log(data)
+                $(".satusSelect").children().remove()
+                $('.status0').addClass("hidden")
+                $('.status1').removeClass("hidden")
+
+
+                $(location).attr('href', "/mypage")
+            },
+            error: function (data) {
+                console.log("ajax_submitDoc() error")
+            },
+            complete: function (data) {
+                console.log('AJAX COMPLETE - ajax_submitDoc()');
+
+            }
+        })
+
+
+    }
+
+    function cancleConfirm(no) {
+        console.log("cancleConfirm()!!")
+
+
+    }
+
+
+</script>

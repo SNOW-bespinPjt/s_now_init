@@ -12,4 +12,6 @@ public interface IAdminAttendenceMapper {
     List<SubmitDto> selectSubmitInfo(Map<String, Object> map);
 
     int getTotalCntOfSubmit();
+
+    int updateStatusForSubmit(int no);
 }

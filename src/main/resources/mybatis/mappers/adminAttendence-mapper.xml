@@ -31,4 +31,12 @@
 
     </select>
 
+    <update id="updateStatusForSubmit" parameterType="Integer">
+        update SUBMIT
+        set status = 1
+        where no = #{no};
+
+
+    </update>
+
 </mapper>
