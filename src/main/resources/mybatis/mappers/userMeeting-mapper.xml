@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.btc.snow.user.meeting.IUserMeetingMapper">
+
+    <select id="selectStudy" resultType="com.btc.snow.user.meeting.study.UserStudyDto">
+        select *
+        from STUDY
+        order by reg_date desc limit 5
+    </select>
+
+    <select id="selectMeal" resultType="com.btc.snow.user.meeting.meal.UserMealDto">
+        select *
+        from MEAL
+        order by reg_date desc limit 5
+    </select>
+</mapper>

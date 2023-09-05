@@ -6,22 +6,102 @@
 
         // 이벤트 핸들러 초기화(등록)
         init_events();
-
+        setFormatDatepicker();
 
     });
 
-    $.datepicker.setDefaults({
-        dateFormat: 'yy-mm-dd',
-        prevText: '이전 달',
-        nextText: '다음 달',
-        monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-        monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-        dayNames: ['일', '월', '화', '수', '목', '금', '토'],
-        dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
-        dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
-        showMonthAfterYear: true,
-        yearSuffix: '년'
-    });
+    //STUDY FORM 등록 버튼 클릭
+    function submitStudy() {
+        let form = document.querySelector("form.studyform");
+
+        console.log("------------------------------------");
+        let book_no = form.book_no.value;
+        console.log('book_no: ', book_no);
+
+        form.submit();
+
+    }
+
+    //MEAL FORM 등록 버튼 클릭
+    function submitMeal() {
+        let form = document.querySelector(".mealform");
+
+        form.submit();
+
+    }
+
+    function setFormatDatepicker() {
+        $(function () {
+
+            var dateFormat = "yy-mm-dd",
+                from = $("#start_date")
+                    .datepicker({
+                        showMonthAfterYear: true, //연도,달 순서로 지정
+                        changeMonth: true,//달 변경 지정
+                        dateFormat: "yy-mm-dd",//날짜 포맷
+                        dayNamesMin: ["일", "월", "화", "수", "목", "금", "토"],//요일 이름 지정
+                        monthNamesShort: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],//월 이름 지정
+                        minDate: 0 //오늘 이전 날짜를 선택할 수 없음
+                    })
+                    .on("change", function () {
+                        to.datepicker("option", "minDate", getDate(this));//종료일의 minDate 지정
+                    }),
+                to = $("#end_date").datepicker({
+                    showMonthAfterYear: true,
+                    changeMonth: true,
+                    dateFormat: "yy-mm-dd",
+                    dayNamesMin: ["일", "월", "화", "수", "목", "금", "토"],
+                    monthNamesShort: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
+                    minDate: '+1D' //내일부터 선택가능, 지정형식 예(+1D +1M +1Y)
+                })
+                    .on("change", function () {
+                        from.datepicker("option", "maxDate", getDate(this));//시작일의 maxDate 지정
+                    }),
+                date = $("#date")
+                    .datetimepicker({
+                        showMonthAfterYear: true, //연도,달 순서로 지정
+                        changeMonth: true,//달 변경 지정
+                        dateFormat: "yy-mm-dd",//날짜 포맷
+                        dayNamesMin: ["일", "월", "화", "수", "목", "금", "토"],//요일 이름 지정
+                        monthNamesShort: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],//월 이름 지정
+                        minDate: 0, //오늘 이전 날짜를 선택할 수 없음
+
+                        timeFormat: "HH:mm",
+                        controlType: "select",
+                        oneLine: true
+                    });
+
+
+            function getDate(element) {
+                var date;
+                try {
+                    date = $.datepicker.parseDate(dateFormat, element.value);
+                    if (element.id == 'start_date') {
+                        date.setDate(date.getDate() + 1);//종료일은 시작보다 하루 이후부터 지정할 수 있도록 설정
+                    } else {
+                        date.setDate(date.getDate() - 1);//시작일은 종료일보다 하루 전부터 지정할 수 있도록 설정
+                    }
+                } catch (error) {
+                    date = null;
+                }
+                return date;
+            }
+
+
+        });
+
+        $(function () {
+            $("#start_date, #end_date").datepicker();
+
+            $("#start_date").datepicker('setDate', 'today');
+
+            $("#date").datepicker();
+
+            $("#date").datepicker('setDate', 'today');
+
+        });
+
+    }
 
     function init_events() {
         console.log("init_events READY!!");
@@ -29,187 +109,82 @@
         $(document).on('change', 'select.meeting_select', function (e) {
             console.log('meeting_select CHANGE HANDLER!!');
 
-            let meetingSelected = $('#meeting_section select.meeting_select').val();
+
+            let meetingSelected = $('#meeting_section .meeting_select').val();
 
 
             if (meetingSelected == "study") {
-                console.log("go ajax_study_form");
+                console.log("selected study_form");
 
-                $("#meeting_section form.meeting_form").children().remove();
-
+                $(".studyform").children().remove();
+                $(".mealform").children().remove();
 
                 let appendTag = "";
 
                 appendTag += "<input type='text' name='title' placeholder='제목을 입력하세요.'><br>";
                 appendTag += "<span>기간: </span>";
-                appendTag += "<input type='text' id='start_date'> <span>~</span>";
-                appendTag += "<input type='text' id='end_date'> <br>";
+                appendTag += "<input type='text' id='start_date' name='start_date' value='시작일'>";
+                appendTag += "<input type='text' id='end_date' name='end_date' value='종료일'> <br>";
                 appendTag += "<span>정원: </span>";
-                appendTag += "<input type='number' min='1' name='total'><br>";
+                appendTag += "<input type='number' min='1' max='50' name='total'><br>";
                 appendTag += "<textarea name='body' placeholder='내용을 입력하세요.' cols='50' rows='10'></textarea><br>";
-                appendTag += "<input type='file' name='img' placeholder='이미지를 선택하세요.'>";
-                appendTag += "<input type='button' name='modal' value='도서 검색 모달 해야함!!!!!!'><br>";
-                appendTag += "<input type='submit' value='등록'>";
+                appendTag += "<input type='file' name='file'>";
+                appendTag += "<input data-modal-target=\"defaultModal\" data-modal-toggle=\"defaultModal\" class=\"block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800\" type=\"button\" value=\"도서 검색\" onclick=\"modallToggle()\"><br>"
+                appendTag += "<input type='hidden' name='book_no'>";
+                appendTag += "<input type='button' value='등록' onclick='submitStudy();'>";
 
-                $("#meeting_section form.meeting_form").append(appendTag);
+                $(".studyform").append(appendTag);
 
-                $(function () {
-                    $("#start_date, #end_date").datepicker({
-                        dateFormat: 'yy.mm.dd'
-                    });
-                });
-
+                setFormatDatepicker();
             } else {
-                console.log("go ajax_meal_form");
+                console.log("selected meal_form");
 
-                $("#meeting_section form.meeting_form").children().remove();
+                $(".studyform").children().remove();
+                $(".mealform").children().remove();
 
                 let appendTag = "";
 
                 appendTag += "<input type='text' name='title' placeholder='제목을 입력하세요.'><br>";
+                appendTag += "<input type='text' id='date' name='date' value='식사일'><br>";
+                appendTag += "<span>정원: </span>";
+                appendTag += "<input type='number' min='1' max='50' name='total'><br>";
                 appendTag += "<textarea name='body' placeholder='내용을 입력하세요.' cols='50' rows='10'></textarea><br>";
-                appendTag += "<input type='file' name='img' placeholder='이미지를 선택하세요.'><br>";
-                appendTag += "<input class= 'meal' type='submit' value='등록'>";
-
-                $("#meeting_section form.meeting_form").append(appendTag);
-
-                // ajax_writeMeal()
-
-            }
+                appendTag += "<input type='file' name='file'><br>";
+                appendTag += "<input type='button' value='등록' onclick='submitMeal();'>";
 
 
-        });
+                $("#meeting_section .mealform").append(appendTag);
 
-    }
-
-
-    // STUDY FORM 등록 버튼 클릭
-    $(document).on('click', '#meeting_section input[value="등록"].study', function (e) {
-        console.log('submit BUTTON CLICK HANDLER!!');
-
-        let title = $('#meeting_section .meeting_form input[name="title"]').val();
-        let body = $('#meeting_section .meeting_form input[name="body"]').val();
-        let loginedUserDto = [[${session.loginedUserDto}]];
-
-        if (title == '') {
-            alert("INPUT FORM TITLE");
-            $('#meeting_section .meeting_form input[name="title"]').focus();
-
-        } else if (body == '') {
-            alert("INPUT FORM BODY");
-            $('#meeting_section .meeting_form input[name="body"]').focus();
-
-        } else {
-            // alert("성공적으로 등록 되었습니다.");
-
-            ajax_writeStudy(title, body, loginedUserDto.id);
-
-        }
-
-    });
-
-    // MEAL FORM 등록 버튼 클릭
-    $(document).on('click', '#meeting_section input[value="등록"].meal', function (e) {
-        console.log('submit MEAL BUTTON CLICK HANDLER!!');
-
-        let title = $('#meeting_section .meeting_form input[name="title"]').val();
-        let body = $('#meeting_section .meeting_form input[name="body"]').val();
-        let file = $('#meeting_section .meeting_form input[name="file"]').val();
-
-        let loginedUserDto = [[${session.loginedUserDto}]];
-
-        console.log('title ' + title);
-
-        if (title == '') {
-            alert("INPUT FORM TITLE");
-            $('#meeting_section .meeting_form input[name="title"]').focus();
-
-        } else if (body == '') {
-            alert("INPUT FORM BODY");
-            $('#meeting_section .meeting_form input[name="body"]').focus();
-
-        } else if (file == '') {
-            alert("INPUT FORM FILE");
-            $('#meeting_section .meeting_form input[name="file"]').focus();
-
-        } else {
-            // alert("sfgahg;org;oreo;gro");
-
-            let inputFile = $('#meeting_section .meeting_form input[name="file"]');
-            let files = inputFile[0].files;
-
-            ajax_writeMeal(title, body, files[0], loginedUserDto.id);
-        }
-
-    });
-
-    //도서 검색
-    $(document).on('keyup', '#search input[name="bookKeyword"]', function (e) {
-        console.log('BOOK SEARCH KEYUP HANDLER!!');
-
-        let bookKeyword = $(this).val();
-
-        // if (bookKeyword == '') {
-        //     alert("INPUT BOOK NAME");
-        //     $('#search input[name="bookKeyword"]').focus();
-        //
-        // } else {
-        // }
-        ajax_getSearchBook(bookKeyword);
-    });
-
-
-    // AJAX START
-    function ajax_writeStudy(title, body) {
-
-        $.ajax({
-            url: '/user/study/write_study',
-            method: 'POST',
-            processData: false,
-            contentType: false,
-            success: function () {
-                console.log('AJAX SUCCESS - ajax_writeStudy()');
-
-
-            },
-            error: function (data) {
-                console.log('AJAX ERROR - ajax_writeStudy()');
-
-                // alert('일정 등록에 문제가 발생 했습니다.');
-
-            },
-            complete: function (data) {
-                console.log('AJAX COMPLETE - ajax_writeStudy()');
-
-
+                setFormatDatepicker();
             }
         });
-    }
 
-    function ajax_writeMeal(title, body, files, loginedUserDto) {
+        //도서 검색
+        $(document).on('keyup', '#search input[name="bookKeyword"]', function (e) {
+            console.log('BOOK SEARCH KEYUP HANDLER!!');
 
-        $.ajax({
-            url: '/user/meeting/write_meal',
-            method: 'GET',
-            processData: false,
-            contentType: false,
-            success: function () {
-                console.log('AJAX SUCCESS - ajax_writeMeal()');
+            let bookKeyword = $(this).val();
 
+            ajax_getSearchBook(bookKeyword);
+        });
 
-            },
-            error: function (data) {
-                console.log('AJAX ERROR - ajax_writeMeal()');
+        //도서 선택
+        $(document).on('click', '#book_list a', function (e) {
+            console.log('book list CLICKED HANDLER!!');
 
-                alert('일정 등록에 문제가 발생 했습니다.');
+            let bookNo = $(this).data('no');
+            console.log('bookno====' + bookNo);
 
-            },
-            complete: function (data) {
-                console.log('AJAX COMPLETE - ajax_writeMeal()');
+            // document.querySelector(".meeting_form input[name='book_no']").val(bookNo);
+            // document.querySelectorAll(".meeting_form input[name='book_no']").value = bookNo;
 
-                // hideWritePlansView();
+            $('form.studyform input[name="book_no"]').val(bookNo);
+            console.log("----> ", $('form.studyform input[name="book_no"]').val());
 
-            }
+            console.log('================' + bookNo);
+
+            modallToggle();
+
         });
     }
 
@@ -231,24 +206,38 @@
 
                 let userBookDtos = data.userBookDtos;
 
+                $('#book_list').children().remove();
+
                 for (let i = 0; i < userBookDtos.length; i++) {
-
-
-                    appendTag += "<li>";
-                    appendTag += "<a href='#none' data-no='" + userBookDtos[i].no + "'>" + userBookDtos[i].title + "</a>";
-                    appendTag += "</li>";
+                    appendTag += "<div class='flex flex-row w-full border-b-2 border-gray-100'>"
+                    appendTag += "<div class='w-1/4 mb-3'>";
+                    appendTag += "<a href='#none' data-no='" + userBookDtos[i].no + "'>";
+                    appendTag += "<img src='";
+                    appendTag += userBookDtos[i].cover;
+                    appendTag += "'/>";
+                    appendTag += "</div>"
+                    appendTag += "<div class='w-3/4 flex flex-col justify-center items-center'>";
+                    appendTag += "<div class=' w-full font-bold text-lg mb-2'>";
+                    appendTag += userBookDtos[i].title;
+                    appendTag += "</div>";
+                    appendTag += "<div class=' w-full font-semibold text-sm text-gray-300 '>";
+                    appendTag += userBookDtos[i].author;
+                    appendTag += "</div>";
+                    appendTag += "<div class=' w-full font-semibold text-md text-gray-300 '>";
+                    appendTag += userBookDtos[i].publisher;
+                    appendTag += "</div>";
+                    appendTag += "</a>";
+                    appendTag += "</div>"
+                    appendTag += "</div>";
                 }
 
-                $("#book_list ul").append(appendTag);
-
-                // $('#book_list ul').empty();
+                $("#book_list").append(appendTag);
 
             },
             error: function (data) {
                 console.log("book search error!!!");
             }
-        })
+        });
     }
-
 
 </script>
