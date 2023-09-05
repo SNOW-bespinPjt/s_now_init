@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script th:src="@{/assignment/admin/js/goBack.js}" type="text/javascript"></script>
+    <script th:src="@{/assignment/admin/js/assignment_modify_form.js}" type="text/javascript"></script>
+</head>
+<body>
+<div class="flex">
+    <!-- nav -->
+    <div>
+        <nav th:replace="~{/include/admin_nav::nav}"></nav>
+    </div>
+    <!--  section & footer  -->
+    <div class="flex flex-col items-center justify-center w-5/6 mx-auto">
+        <section class="flex flex-row w-5/6 border-solid mt-7">
+            <div
+                    class="relative flex items-center justify-center w-screen h-screen mr-8 border-2 rounded-lg bg-slate-100"
+            >
+                <div class="word">
+                    <h2 class="absolute top-0 left-0 mt-4 text-2xl font-bold ml-14">MODIFY ASSIGNMENT FORM</h2>
+                </div>
+                <div class="assignment_modify_form">
+                    <form th:action="@{/admin/assignment/assignment_modify_confirm}"
+                          name="assignment_modify_form" method="post"
+                          enctype="multipart/form-data"
+                    >
+                        <input type="hidden" name="no" th:value="${adminAssignmentDto.no}">
+                        <input type="text" name="title" class="font-bold border mb-4 px-4 py-2 rounded-lg w-full"
+                               placeholder="INPUT TITLE"
+                               th:value="${adminAssignmentDto.title}">
+                        <textarea name="body" placeholder="INPUT BODY" class="border mb-4 p-4 rounded-lg w-full"
+                                  th:text="${adminAssignmentDto.body}"></textarea>
+                        <input type="file" name="file" class="mb-4">
+                        <div class="space-x-4">
+                            <input type="button" value="MODIFY" onclick="modifyAssignmentForm();"
+                                   class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+                            <input type="reset" value="reset"
+                                   class="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400">
+                            <input
+                                    type="button"
+                                    value="확인"
+                                    onclick="goBack()"
+                                    class="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400"
+                            />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+        <footer th:replace="~{/include/header_nav_footer.html::footer}"></footer>
+    </div>
+</div>
+</body>
+</html>

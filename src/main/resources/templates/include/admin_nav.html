@@ -1,12 +1,13 @@
-<nav th:fragment="nav" class="h-full bg-gray-500 text-white p-10 my-auto">
+<!--<nav th:fragment="nav" class="h-full bg-gray-500 text-white p-10 my-auto">-->
+<nav th:fragment="nav" class="h-full bg-gray-500 text-white p-10">
     <a th:href="@{/admin}" class="block mb-4 hover:bg-gray-600 py-2 px-16 rounded transition duration-200">홈</a>
-    <a th:href="@{/admin/assignment/list}"
+    <a th:href="@{/admin/assignment/}"
        class="block mb-4 hover:bg-gray-600 py-2 px-16 rounded transition duration-200"
        th:if="${session.loginedAdminDto != null}">과제</a>
-    <a th:href="@{/admin/member/listup_user}"
+    <a th:href="@{/admin/member/list_user}"
        class="block mb-4 hover:bg-gray-600 py-2 px-16 rounded transition duration-200"
        th:if="${session.loginedAdminDto != null}">학생</a>
-    <a th:href="@{/admin/member/listup_admin}"
+    <a th:href="@{/admin/member/list_admin}"
        class="block mb-4 hover:bg-gray-600 py-2 px-16 rounded transition duration-200"
        th:if="${session.loginedAdminDto != null}">관리자</a>
     <span id="navAlert" th:if="${session.loginedAdminDto == null}">

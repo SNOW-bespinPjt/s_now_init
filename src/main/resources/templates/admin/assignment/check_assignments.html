@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script crossOrigin="anonymous"
+            integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
+            src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <style>
+        .download-link {
+            color: #007AFF;
+            text-decoration: underline;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .apple-box {
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .border-b-slate-300 {
+            border-bottom: 2px solid #CBD5E0;
+        }
+    </style>
+
+</head>
+<body>
+<div class="flex">
+    <!-- nav -->
+    <div>
+        <nav th:replace="~{/include/admin_nav::nav}"></nav>
+    </div>
+    <!--  section & footer  -->
+    <div class="flex flex-col items-center justify-center w-5/6 mx-auto">
+        <section class="flex flex-row w-5/6 border-solid mt-7">
+            <div
+                    class="relative flex items-center justify-center w-screen h-screen mr-8 border-2 rounded-lg bg-slate-100"
+            >
+                <div class="absolute top-0 left-0 mt-6 ml-14 w-full">
+                    <div>
+                        <h2 class="text-2xl font-bold mb-12">USER SUBMISSION LIST</h2>
+                        <div class="flex flex-col w-11/12 bg-white h-5/6">
+                            <table class="min-w-full bg-white rounded-lg overflow-hidden">
+                                <tbody>
+                                <!-- userAssignmentDtos와 userMemberDtos를 동일한 순서로 순회 -->
+                                <tr class="border-b-slate-300" th:each="combinedDto : ${combinedDtos}">
+                                    <!-- userMemberDtos의 데이터를 표시 -->
+                                    <td class="px-4 py-2 whitespace-nowrap text-center">
+                                        <span th:text="${combinedDto.memberDto.id}"></span>
+                                    </td>
+                                    <td class="px-4 py-2 whitespace-nowrap text-center">
+                                        <span th:text="${combinedDto.memberDto.name}"></span>
+                                    </td>
+                                    <!-- userAssignmentDtos의 데이터를 표시 -->
+                                    <td class="px-3 py-2 whitespace-nowrap">
+                <span class="text-red-600"
+                      th:if="${combinedDto.assignmentDto.is_submit eq 0}"
+                > 미제출 </span>
+                                        <span
+                                                th:unless="${combinedDto.assignmentDto.is_submit eq 0}"
+                                        > <span class="text-green-600"> 제출 &nbsp;</span>
+                    <a class="underline pb-4"
+                       th:download="${combinedDto.assignmentDto.file_user_name}"
+                       th:href="@{/downloadFromUser(file=${combinedDto.assignmentDto.file_user}, user_id=${combinedDto.memberDto.id})}"
+                       th:text="${combinedDto.assignmentDto.file_user_name }"
+                    ></a>
+                    <span class="flex items-center mt-3">
+                        <svg class="w-4 h-4 text-blue-500 mr-1" fill="none" stroke="currentColor"
+                             stroke-width="2" viewBox="0 0 24 24"
+                             xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path d="M5 13l4 4L19 7" stroke-linecap="round"
+                                  stroke-linejoin="round"/>
+                        </svg>
+                        <span class="font-thin text-slate-400 text-xs">
+                            제출일 <span th:text="${combinedDto.assignmentDto.mod_date}"></span>
+                        </span>
+                    </span>
+                </span>
+                                    </td>
+                                    <td class="px-6 py-2 whitespace-nowrap">
+                                        <div class="apple-box">
+                                            <div class="apple-text">점수</div>
+                                            <span class="font-bold text-2xl"
+                                                  th:text="${combinedDto.assignmentDto.point}"></span>
+                                            <span>/ 10</span>
+                                        </div>
+                                        <!-- '점수 입력' 링크를 클릭하면 해당 행의 폼을 표시 -->
+                                        <a class="text-gray-700 hover:underline mt-2 block"
+                                           href="#"
+                                           onclick="showScoreInputForm('scoreForm-${combinedDto.assignmentDto.id}')"
+                                           th:if="${combinedDto.assignmentDto.is_submit eq 1}">점수 입력</a>
+                                        <!-- 각 행에 대한 폼 -->
+                                        <form class="hidden mt-2" id="scoreForm-${combinedDto.assignmentDto.id}"
+                                              method="post" th:action="@{/admin/assignment/assignment_input_point}">
+                                            <input name="no" th:value="${combinedDto.assignmentDto.no}" type="hidden"/>
+                                            <input name="group_id" th:value="${combinedDto.assignmentDto.group_id}"
+                                                   type="hidden"/>
+                                            <div class="flex mt-2">
+                <span class="mt-1 flex">
+                    <input class="py-1 px-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                           max="10" min="0" name="point" placeholder="점수" type="number"/>
+                </span>
+                                                <button class="ml-2 p-1 bg-gray-200 text-white rounded hover:bg-gray-300"
+                                                        type="submit">
+                                                    확인
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <footer th:replace="~{/include/header_nav_footer.html::footer}"></footer>
+    </div>
+</div>
+</body>
+<script>
+    function showScoreInputForm(formId) {
+        // 폼을 표시합니다.
+        const form = document.getElementById(formId);
+        form.classList.remove('hidden');
+    }
+</script>
+
+</html>

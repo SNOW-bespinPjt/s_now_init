@@ -6,7 +6,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://code.jquery.com/jquery-3.7.0.js"
             integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossOrigin="anonymous"></script>
-    <script th:src="@{/admin/js/approval.js}" type="text/javascript"></script>
+    <script th:src="@{/assignment/admin/js/approval.js}" type="text/javascript"></script>
 </head>
 <body>
 <div class="flex">
@@ -22,7 +22,7 @@
             >
                 <div class="absolute top-0 left-0 mt-4 ml-14">
                     <div>
-                        <h3 class="font-bold">ADMIN LIST</h3>
+                        <h3 class="font-bold">USER LIST</h3>
                         <div th:if="${session.loginedAdminDto.getId() eq 'super admin'}"
                              class="overflow-x-auto">
                             <table class="table-auto border-collapse border border-gray-400">
@@ -32,18 +32,17 @@
                                     <th class="px-4 py-2">이름</th>
                                     <th class="px-4 py-2">메일</th>
                                     <th class="px-4 py-2">연락처</th>
-                                    <th class="px-4 py-2">직무</th>
                                     <th class="px-4 py-2">승인</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr th:each="item : ${adminMemberDtos}">
+                                <tr th:each="item : ${userMemberDtos}">
                                     <td class="border px-4 py-2" th:text="${item.id}"></td>
                                     <td class="border px-4 py-2" th:text="${item.name}"></td>
                                     <td class="border px-4 py-2" th:text="${item.mail}"></td>
                                     <td class="border px-4 py-2" th:text="${item.phone}"></td>
-                                    <td class="border px-4 py-2" th:text="${item.position}"></td>
                                     <td class="border px-4 py-2">
+                                        <!-- 이거 그거 뭐냐 가입 승인 등 -->
                                         <span th:if="${item.is_approval eq 0}">
                                             <input type="button" value="승인처리" th:attr="data-no=${item.no}"
                                                    onclick="approveAdmin(this.getAttribute('data-no'));"

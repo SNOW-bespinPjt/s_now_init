@@ -148,7 +148,7 @@ public class AdminMemberController {
     }
 
     /*
-     * 로그아웃확인
+     * 로그아웃 확인
      */
     @GetMapping("/member_logout_confirm")
     public String logoutConfirm(HttpSession session) {
@@ -156,7 +156,6 @@ public class AdminMemberController {
 
         String nextPage = "redirect:/admin";
 
-//		session.invalidate();
         session.removeAttribute("loginedAdminDto");
 
         return nextPage;
@@ -164,7 +163,7 @@ public class AdminMemberController {
     }
 
     /*
-     * 계정수정
+     * 계정 수정
      */
     @GetMapping("/member_modify_form")
     public String modifyAccountForm(HttpSession session) {
@@ -213,22 +212,42 @@ public class AdminMemberController {
     /*
      * 관리자 리스트
      */
-    @GetMapping("/listup_admin")
+    @GetMapping("/list_admin")
     public ModelAndView listupAdmin() {
         log.info("[AdminMemberController] listupAdmin()");
 
-        String nextPage = "admin/member/listup_admins";
+        String nextPage = "admin/member/list_admins";
 
         List<AdminMemberDto> adminMemberDtos = adminMemberService.listupAdmin();
 
-        ModelAndView mv = new ModelAndView();                // 1)객체 생성
-        mv.setViewName(nextPage);                            // 2)뷰 설정
-        mv.addObject("adminMemberDtos", adminMemberDtos);    // 3) 데이터 추가
+        ModelAndView mv = new ModelAndView();                               // 1)객체 생성
+        mv.setViewName(nextPage);                                           // 2)뷰 설정
+        mv.addObject("adminMemberDtos", adminMemberDtos);       // 3) 데이터 추가
 
-        return mv;                                            // 4) MV 반환
+        return mv;                                                          // 4) MV 반환
 
     }
 
+    /*
+     * 학생 리스트
+     */
+    @GetMapping("/list_user")
+    public ModelAndView listupUser() {
+        log.info("[AdminMemberController] listupUser()");
+
+        String nextPage = "admin/member/list_users";  //있지만 승인 DB 컬럼이 없어서 수정이 필요함
+
+        List<AdminMemberDto> adminMemberDtos = adminMemberService.listupAdmin();   //아직없음
+
+        ModelAndView mv = new ModelAndView();                               // 1)객체 생성
+        mv.setViewName(nextPage);                                           // 2)뷰 설정
+        mv.addObject("adminMemberDtos", adminMemberDtos);       // 3) 데이터 추가
+
+        return mv;                                                          // 4) MV 반환
+
+    }
+    
+    
     /*
      * 관리자 승인 처리
      */
