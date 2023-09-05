@@ -14,7 +14,53 @@
 
 <section class="flex flex-row w-5/6 border-solid mt-7">
     <div>
-        <a th:href="@{/user/meeting/meeting_form}">모임 개설</a>
+        <div class="font-semibold ">
+            <a th:href="@{/user/meeting/meeting_form}">모임 개설</a>
+        </div>
+
+
+        <div th:each="userStudyDto : ${userStudyDtos}">
+            <h3>스터디</h3>
+
+            <div class="img">
+                <!--            <img th:src="@{'/UploadImg/' + ${userStudyDto.img}}">-->
+            </div>
+            <div class="title">
+                <a th:href="@{/user/study/study_detail(no=${userStudyDto.no})}" th:text="${userStudyDto.title}"></a>
+            </div>
+            <div th:text="${userStudyDto.body}" class="body">
+
+            </div>
+            <div th:text="${userStudyDto.total}" class="count">
+
+            </div>
+            <div th:text="${userStudyDto.hit}" class="hit">
+
+            </div>
+
+        </div>
+
+
+        <div th:each="userMealDto : ${userMealDtos}">
+            <h3>식사</h3>
+
+            <div class="img">
+                <!--            <img th:src="@{'/UploadImg/' + ${userStudyDto.img}}">-->
+            </div>
+            <div class="title">
+                <a th:href="@{/user/meal/meal_detail(no=${userMealDto.no})}" th:text="${userMealDto.title}"></a>
+            </div>
+            <div th:text="${userMealDto.body}" class="body">
+
+            </div>
+            <div th:text="${userMealDto.total}" class="count">
+
+            </div>
+            <div th:text="${userMealDto.hit}" class="hit">
+
+            </div>
+
+        </div>
     </div>
 </section>
 

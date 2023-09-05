@@ -7,7 +7,6 @@
 
 
     <insert id="qrCheckConfrim" parameterType="HashMap">
-
         insert into ATTENDENCE(u_id, astatus, tstatus, reg_date, mod_date)
         values (#{u_id}, #{i}, #{i1}, now(), now())
 
@@ -15,7 +14,6 @@
 
     <select id="selectAttendenceStatus" parameterType="HashMap"
             resultType="com.btc.snow.user.attendance.UserAttendanceDto">
-
         select *
         from ATTENDENCE
         where u_id = #{u_id}
@@ -34,14 +32,82 @@
     </select>
 
 
-    <select id="selectAllUserforAttendence" parameterType="String"
-            resultType="java.util.List">
+    <select id="selectAllUserforAttendence" parameterType="HashMap"
+            resultType="HashMap">
 
         select *
         from ATTENDENCE
         where u_id = #{u_id}
+        order by reg_date desc
 
     </select>
 
+    <select id="selectValidAttDto" parameterType="HashMap" resultType="com.btc.snow.user.attendance.UserAttendanceDto">
+        select *
+        from ATTENDENCE
+        where u_id = #{u_id}
+          AND ustatus = #{ustatus}
+    </select>
+
+    <update id="updateUstatus">
+        update ATTENDENCE
+        set ustatus=1
+        where reg_date &lt;= now() - interval 2 week;
+
+    </update>
+
+    <select id="selectAbsentAttendence" parameterType="String"
+            resultType="HashMap">
+        select *
+        from ATTENDENCE
+        where u_id = #{Id}
+          and astatus = 3
+
+    </select>
+
+    <select id="selectACKAttendence" parameterType="String"
+            resultType="HashMap">
+        select *
+        from ATTENDENCE
+        where u_id = #{Id}
+          and astatus = 0
+
+    </select>
+
+    <select id="selectTardyAttendence" parameterType="String"
+            resultType="HashMap">
+        select *
+        from ATTENDENCE
+        where u_id = #{Id}
+          and astatus = 1
+
+    </select>
+
+    <insert id="updateDocumentToSubmit" parameterType="com.btc.snow.include.SubmitDto">
+        insert into SUBMIT(a_no, content, file, u_id, reg_date, mod_date)
+        values (#{a_no}, #{content}, #{file}, #{u_id}, now(), now())
+
+    </insert>
+
+    <select id="selectUpdateStatus" parameterType="String" resultType="com.btc.snow.include.SubmitDto">
+        select status
+        from SUBMIT
+        where u_id = #{u_id}
+
+    </select>
+
+    <update id="updateAttendenceUstatus" parameterType="com.btc.snow.include.SubmitDto">
+        update ATTENDENCE
+        set ustatus = 1
+        where no = #{a_no}
+
+    </update>
+
+    <select id="getTotalCnt" parameterType="String" resultType="Integer">
+        select count(*)
+        from ATTENDENCE
+        where u_id = #{u_id}
+
+    </select>
 
 </mapper>

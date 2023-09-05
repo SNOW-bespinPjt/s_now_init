@@ -13,4 +13,24 @@ public class UserStudyService implements IUserStudyService {
     IUserStudyMapper iUserStudyMapper;
 
 
+    public int writeStudy(UserStudyDto userStudyDto) {
+        log.info("writeStudy()");
+
+        int result = iUserStudyMapper.insertStudy(userStudyDto);
+
+        if (result <= 0) {
+            log.info("writeStudy() FAIL");
+
+        } else {
+            log.info("writeStudy() SUCCESS");
+
+        }
+        return result;
+    }
+    
+    public UserStudyDto studyDetail(int no) {
+        log.info("studyDetail()");
+
+        return iUserStudyMapper.studyDetail(no);
+    }
 }

@@ -2,7 +2,17 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.btc.snow.user.meeting.study.IUserStudyMapperMapper">
+<mapper namespace="com.btc.snow.user.meeting.study.IUserStudyMapper">
 
+    <insert id="insertStudy" parameterType="com.btc.snow.user.meeting.study.UserStudyDto">
+        insert into STUDY (user_id, book_no, title, body, total, img, start_date, end_date, reg_date, mod_date)
+        VALUES (#{user_id}, #{book_no}, #{title}, #{body}, #{total}, #{img}, #{start_date}, #{end_date}, NOW(), NOW())
+    </insert>
+
+    <select id="studyDetail" parameterType="Integer" resultType="com.btc.snow.user.meeting.study.UserStudyDto">
+        select *
+        from STUDY
+        where no = #{no}
+    </select>
 
 </mapper>

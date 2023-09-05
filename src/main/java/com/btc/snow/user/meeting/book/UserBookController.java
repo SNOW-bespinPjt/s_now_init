@@ -18,7 +18,6 @@ public class UserBookController {
     @ResponseBody
     public Object searchBook(@RequestParam("title") String title) {
         log.info("searchBook()");
-        log.info("========== {}", title);
 
         Map<String, Object> map = userBookService.searchBook(title);
 
