@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalTime;
+import java.util.List;
 
 @Controller
 @RequestMapping("/")
@@ -60,6 +61,16 @@ public class HomeController {
 
         } else {
             modelAndView.addObject("qrValidStatus", 0);
+        }
+
+        if (currentTime.isAfter(lastNoonTime)) {
+
+            try {
+                List<UserAttendanceDto> userAttendanceDtoList = (List<UserAttendanceDto>) userAttendanceService.selectUserAfterLastNoonTime(userMemberDto.getId());
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+
         }
 
 

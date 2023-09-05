@@ -83,7 +83,7 @@ public class UserAttendanceController {
 
         log.info("qrCheckConfrim() called");
         log.info("qrCheckConfrim() u_id : " + u_id);
-        int result = (Integer) userAttendanceService.qrChackConfirm(u_id);
+        int result = (Integer) userAttendanceService.qrCheckConfirm(u_id);
 
         log.info("hey  : " + result);
 

@@ -48,4 +48,6 @@ public interface UserAttendanceMapper {
     void updateAttendenceByAfternoon();
 
     void updateAttendenceByMorning();
+
+    Object selectAfterNoonTimeAttendence(String id);
 }

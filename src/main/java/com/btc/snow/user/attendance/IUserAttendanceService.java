@@ -11,7 +11,7 @@ import java.util.List;
 public interface IUserAttendanceService {
     public Object qrCreate(UserMemberDto userMemberDto) throws WriterException;
 
-    public Object qrChackConfirm(String u_id);
+    public Object qrCheckConfirm(String u_id);
 
 
     public Object selectUserforAttendence(String u_id);

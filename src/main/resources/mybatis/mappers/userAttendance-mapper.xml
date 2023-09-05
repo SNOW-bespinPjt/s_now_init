@@ -6,6 +6,19 @@
 <mapper namespace="com.btc.snow.user.attendance.UserAttendanceMapper">
 
 
+    <!--    우선 수정 -->
+    <!--    <resultMap id="attendenceDtoList" type="com.btc.snow.include.SubmitDto">-->
+    <!--        <id property="no" column="no"/>-->
+    <!--        <id property="a_no" column="a_no"/>-->
+    <!--        <id property="status" column="status"/>-->
+    <!--        <id property="content" column="content"/>-->
+    <!--        <id property="file" column="file"/>-->
+    <!--        <id property="reg_date" column="reg_date"/>-->
+    <!--        <id property="mod_date" column="mod_date"/>-->
+    <!--        <id property="u_id" column="u_id"/>-->
+    <!--    </resultMap>-->
+
+
     <insert id="qrCheckConfrim" parameterType="HashMap">
         insert into ATTENDENCE(u_id, astatus, tstatus, reg_date, mod_date)
         values (#{u_id}, #{i}, #{i1}, now(), now())
@@ -137,5 +150,10 @@
         ]]>
 
     </update>
+
+    <select id="selectAfterNoonTimeAttendence" parameterType="String" resultMap="">
+
+
+    </select>
 
 </mapper>
