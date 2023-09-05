@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+import java.util.Map;
+
 @Log4j2
 @Controller
 @RequestMapping("/user/study")
@@ -60,11 +63,25 @@ public class UserStudyController {
         String nextPage = "user/meeting/study_detail";
 
         UserStudyDto userStudyDto = userStudyService.studyDetail(no);
-        System.out.println("+++++++++++++++++++" + userStudyDto.getTitle());
-        System.out.println("+++++++++++++++++++" + userStudyDto.getBody());
-        System.out.println("+++++++++++++++++++" + userStudyDto.getHit());
+
+        userStudyService.updateHit(no);
 
         model.addAttribute("userStudyDto", userStudyDto);
+
+        return nextPage;
+    }
+
+    @GetMapping("/study_list")
+    public String studyList(Model model) {
+        log.info("studyList()");
+
+        String nextPage = "user/meeting/study_list";
+
+        Map<String, Object> studyMap = userStudyService.studyList();
+
+        List<UserStudyDto> userStudyDtos = (List<UserStudyDto>) studyMap.get("userStudyDtos");
+
+        model.addAttribute("userStudyDtos", userStudyDtos);
 
         return nextPage;
     }
