@@ -10,6 +10,9 @@
     <a th:href="@{/admin/member/list_admin}"
        class="block mb-4 hover:bg-gray-600 py-2 px-16 rounded transition duration-200"
        th:if="${session.loginedAdminDto != null}">관리자</a>
+    <a th:href="@{/admin/attendence}"
+       class="block mb-4 hover:bg-gray-600 py-2 px-16 rounded transition duration-200"
+       th:if="${session.loginedAdminDto != null && session.loginedAdminDto.position =='교육기관'}">출결관리</a>
     <span id="navAlert" th:if="${session.loginedAdminDto == null}">
     <a class="block mb-4 hover:bg-gray-600 py-2 px-16 rounded transition duration-200"
     >과제</a>
@@ -17,5 +20,7 @@
     >학생</a>
     <a class="block mb-4 hover:bg-gray-600 py-2 px-16 rounded transition duration-200"
     >관리자</a>
+    <a class="block mb-4 hover:bg-gray-600 py-2 px-16 rounded transition duration-200"
+    >출결관리</a>
     </span>
 </nav>

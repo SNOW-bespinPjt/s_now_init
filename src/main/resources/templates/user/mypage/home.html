@@ -90,20 +90,19 @@
                         let strStatus = ""
                         let statusColor = ""
                         let updateStatus = ""
-
+                        let regDate = ""
 
                         if (data[i].astatus === 0) {
                             strStatus += "출석"
                             statusColor += "text-green-400"
-
+                            regDate = data[i].reg_date
                         }
                         if (data[i].astatus === 1) {
                             strStatus += "지각"
                             statusColor += "text-orange-400"
+                            regDate = data[i].reg_date
                             if (data[i].ustatus === 0) {
-                                updateStatus = "<button class=\"mr-2 mb-2 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded\" data-no='" + data[i].no + "' onclick=\"modalToggle(" + data[i].no + ")\">" +
-                                    "제출\n" +
-                                    "</button>"
+                                updateStatus = "' onclick=\"modalToggle(" + data[i].no + ")\""
                             } else {
                                 updateStatus = "<button class=\"mr-2 mb-2 bg-transparent text-white bg-gray-300 cursor-not-allowed font-semibold  py-2 px-4 border border-blue-500 hover:border-transparent rounded\">" +
                                     "대기중\n" +
@@ -114,27 +113,26 @@
 
                         if (data[i].astatus === 2) {
                             strStatus += "병결"
-
+                            regDate = arr[i].reg_date
                         }
                         if (data[i].astatus === 3) {
                             strStatus += "무단결석"
                             statusColor += "text-red-400"
+                            regDate = data[i].reg_date
                             if (data[i].ustatus === 0) {
-                                updateStatus = "<button class=\"mr-2 mb-2 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded\" data-no='" + data[i].no + "' onclick=\"modalToggle(" + arr[i].no + ")\">" +
-                                    "제출\n" +
-                                    "</button>"
+                                updateStatus = "' onclick=\"modalToggle(" + data[i].no + ")\""
                             } else {
                                 updateStatus = "<button class=\"mr-2 mb-2 bg-transparent text-white bg-gray-300 cursor-not-allowed font-semibold  py-2 px-4 border border-blue-500 hover:border-transparent rounded\">" +
                                     "대기중\n" +
                                     "</button>"
                             }
+
                         }
 
 
-                        appendTag += "     <div class=\" w-1/8 border-2 rounded-md shadow-xl mb-5 mr-4 h-1/8 \" >\n" +
-                            "<div class='relative h-full'>" + `<p class=${statusColor}>` + strStatus + "</p>" + "<div class='absolute bottom-0 right-0'>" + updateStatus + "</div>" + "</div>" +
+                        appendTag += "     <div class=\"w-1/4 border-2 rounded-md shadow-xl mb-5 mr-4 h-16\" " + updateStatus + " > " +
+                            "<div class='relative h-full'>" + `<p class=${statusColor}>` + strStatus + "</p>" + "<p>" + regDate + "</p>" + "</div>" +
                             "                </div> "
-
                         let attendenceBody = "<div class=\"flex flex-col w-full h-full m-4\">\n" +
                             "            <div class=\"w-full border-b-2 h-full border-b-slate-200\">\n" +
                             "                <div class=\"mb-4 text-lg font-bold border-b-2 border-gray-200 pb-4\">출결사항</div>" +
@@ -191,20 +189,19 @@
                         let strStatus = ""
                         let statusColor = ""
                         let updateStatus = ""
-
+                        let regDate = ""
 
                         if (data[i].astatus === 0) {
                             strStatus += "출석"
                             statusColor += "text-green-400"
-
+                            regDate = data[i].reg_date
                         }
                         if (data[i].astatus === 1) {
                             strStatus += "지각"
                             statusColor += "text-orange-400"
+                            regDate = data[i].reg_date
                             if (data[i].ustatus === 0) {
-                                updateStatus = "<button class=\"mr-2 mb-2 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded\" data-no='" + data[i].no + "' onclick=\"modalToggle(" + data[i].no + ")\">" +
-                                    "제출\n" +
-                                    "</button>"
+                                updateStatus = "' onclick=\"modalToggle(" + data[i].no + ")\""
                             } else {
                                 updateStatus = "<button class=\"mr-2 mb-2 bg-transparent text-white bg-gray-300 cursor-not-allowed font-semibold  py-2 px-4 border border-blue-500 hover:border-transparent rounded\">" +
                                     "대기중\n" +
@@ -215,25 +212,25 @@
 
                         if (data[i].astatus === 2) {
                             strStatus += "병결"
-
+                            regDate = arr[i].reg_date
                         }
                         if (data[i].astatus === 3) {
                             strStatus += "무단결석"
                             statusColor += "text-red-400"
+                            regDate = data[i].reg_date
                             if (data[i].ustatus === 0) {
-                                updateStatus = "<button class=\"mr-2 mb-2 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded\" data-no='" + data[i].no + "' onclick=\"modalToggle(" + data[i].no + ")\">" +
-                                    "제출\n" +
-                                    "</button>"
+                                updateStatus = "' onclick=\"modalToggle(" + data[i].no + ")\""
                             } else {
                                 updateStatus = "<button class=\"mr-2 mb-2 bg-transparent text-white bg-gray-300 cursor-not-allowed font-semibold  py-2 px-4 border border-blue-500 hover:border-transparent rounded\">" +
                                     "대기중\n" +
                                     "</button>"
                             }
+
                         }
 
 
-                        appendTag += "     <div class=\" w-1/4 border-2 rounded-md shadow-xl mb-5 mr-4 h-48 \" >\n" +
-                            "<div class='relative h-full'>" + `<p class=${statusColor}>` + strStatus + "</p>" + "<div class='absolute bottom-0 right-0'>" + updateStatus + "</div>" + "</div>" +
+                        appendTag += "     <div class=\"w-1/4 border-2 rounded-md shadow-xl mb-5 mr-4 h-16\" " + updateStatus + " > " +
+                            "<div class='relative h-full'>" + `<p class=${statusColor}>` + strStatus + "</p>" + "<p>" + regDate + "</p>" + "</div>" +
                             "                </div> "
 
                         let attendenceBody = "<div class=\"flex flex-col w-full h-full m-4\">\n" +
@@ -294,20 +291,19 @@
                         let strStatus = ""
                         let statusColor = ""
                         let updateStatus = ""
-
+                        let regDate = ""
 
                         if (data[i].astatus === 0) {
                             strStatus += "출석"
                             statusColor += "text-green-400"
-
+                            regDate = data[i].reg_date
                         }
                         if (data[i].astatus === 1) {
                             strStatus += "지각"
                             statusColor += "text-orange-400"
+                            regDate = data[i].reg_date
                             if (data[i].ustatus === 0) {
-                                updateStatus = "<button class=\"mr-2 mb-2 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded\" data-no='" + data[i].no + "' onclick=\"modalToggle(" + arr[i].no + ")\">" +
-                                    "제출\n" +
-                                    "</button>"
+                                updateStatus = "' onclick=\"modalToggle(" + data[i].no + ")\""
                             } else {
                                 updateStatus = "<button class=\"mr-2 mb-2 bg-transparent text-white bg-gray-300 cursor-not-allowed font-semibold  py-2 px-4 border border-blue-500 hover:border-transparent rounded\">" +
                                     "대기중\n" +
@@ -318,15 +314,14 @@
 
                         if (data[i].astatus === 2) {
                             strStatus += "병결"
-
+                            regDate = arr[i].reg_date
                         }
                         if (data[i].astatus === 3) {
                             strStatus += "무단결석"
                             statusColor += "text-red-400"
+                            regDate = data[i].reg_date
                             if (data[i].ustatus === 0) {
-                                updateStatus = "<button class=\"mr-2 mb-2 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded\" data-no='" + data[i].no + "' onclick=\"modalToggle(" + data[i].no + ")\">" +
-                                    "제출\n" +
-                                    "</button>"
+                                updateStatus = "' onclick=\"modalToggle(" + data[i].no + ")\""
                             } else {
                                 updateStatus = "<button class=\"mr-2 mb-2 bg-transparent text-white bg-gray-300 cursor-not-allowed font-semibold  py-2 px-4 border border-blue-500 hover:border-transparent rounded\">" +
                                     "대기중\n" +
@@ -336,8 +331,8 @@
                         }
 
 
-                        appendTag += "     <div class=\" w-1/4 border-2 rounded-md shadow-xl mb-5 mr-4 h-48 \" >\n" +
-                            "<div class='relative h-full'>" + `<p class=${statusColor}>` + strStatus + "</p>" + "<div class='absolute bottom-0 right-0'>" + updateStatus + "</div>" + "</div>" +
+                        appendTag += "     <div class=\"w-1/4 border-2 rounded-md shadow-xl mb-5 mr-4 h-16\" " + updateStatus + " > " +
+                            "<div class='relative h-full'>" + `<p class=${statusColor}>` + strStatus + "</p>" + "<p>" + regDate + "</p>" + "</div>" +
                             "                </div> "
 
                         let attendenceBody = "<div class=\"flex flex-col w-full h-full m-4\">\n" +
@@ -408,9 +403,7 @@
                     statusColor += "text-orange-400"
                     regDate = arr[i].reg_date
                     if (arr[i].ustatus === 0) {
-                        updateStatus = "<button class=\"mr-2 mb-2 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded\" data-no='" + arr[i].no + "' onclick=\"modalToggle(" + arr[i].no + ")\">" +
-                            "제출\n" +
-                            "</button>"
+                        updateStatus = "' onclick=\"modalToggle(" + arr[i].no + ")\""
                     } else {
                         updateStatus = "<button class=\"mr-2 mb-2 bg-transparent text-white bg-gray-300 cursor-not-allowed font-semibold  py-2 px-4 border border-blue-500 hover:border-transparent rounded\">" +
                             "대기중\n" +
@@ -428,9 +421,7 @@
                     statusColor += "text-red-400"
                     regDate = arr[i].reg_date
                     if (arr[i].ustatus === 0) {
-                        updateStatus = "<button class=\"mr-2 mb-2 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded\" data-no='" + arr[i].no + "' onclick=\"modalToggle(" + arr[i].no + ")\">" +
-                            "제출\n" +
-                            "</button>"
+                        updateStatus = "' onclick=\"modalToggle(" + arr[i].no + ")\""
                     } else {
                         updateStatus = "<button class=\"mr-2 mb-2 bg-transparent text-white bg-gray-300 cursor-not-allowed font-semibold  py-2 px-4 border border-blue-500 hover:border-transparent rounded\">" +
                             "대기중\n" +
@@ -440,8 +431,8 @@
                 }
 
 
-                appendTag += "     <div class=\" w-1/4 border-2 rounded-md shadow-xl mb-5 mr-4 h-16\" >\n" +
-                    "<div class='relative h-full'>" + `<p class=${statusColor}>` + strStatus + "</p>" + "<p>" + regDate + "</p>" + "<div class='absolute bottom-0 right-0'>" + updateStatus + "</div>" + "</div>" +
+                appendTag += "     <div class=\"w-1/4 border-2 rounded-md shadow-xl mb-5 mr-4 h-16\" " + updateStatus + " > " +
+                    "<div class='relative h-full'>" + `<p class=${statusColor}>` + strStatus + "</p>" + "<p>" + regDate + "</p>" + "</div>" +
                     "                </div> "
 
 
@@ -465,8 +456,8 @@
                 + "</div>" + "<div class='flex flex-wrap items-center justify-center mt-6'>" + appendTag + "</div>" + "</div>" +
                 "</div>" +
                 "</div>"
-
-
+            $(".category p").removeClass("font-semibold").addClass("text-slate-400")
+            $(".attendence").addClass("font-semibold").removeClass("text-slate-400")
             $(".section2").children().remove()
             $(".section2").append(attendenceBody)
 
