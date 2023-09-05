@@ -22,4 +22,7 @@ public interface IUserAssignmentService {
 
     // 과제 삭제
     int deleteAssignmentConfirm(int no);
+
+    // 나의 과제
+    List<UserAssignmentDto> myAssignment(int user_id);
 }

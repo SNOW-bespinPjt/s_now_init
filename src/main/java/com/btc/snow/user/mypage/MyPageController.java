@@ -2,6 +2,8 @@ package com.btc.snow.user.mypage;
 
 
 import com.btc.snow.include.page.PageDefine;
+import com.btc.snow.user.assignment.UserAssignmentDto;
+import com.btc.snow.user.assignment.UserAssignmentService;
 import com.btc.snow.user.attendance.UserAttendanceDto;
 import com.btc.snow.user.attendance.UserAttendanceService;
 import com.btc.snow.user.member.UserMemberDto;
@@ -25,6 +27,8 @@ public class MyPageController {
     @Autowired
     UserAttendanceService userAttendanceService;
 
+    @Autowired
+    UserAssignmentService userAssignmentService;
 
     @Autowired
     MyPageService myPageService;
@@ -59,8 +63,15 @@ public class MyPageController {
         modelAndView.addObject("ratio", Math.round(ratio));
 //        modelAndView.addObject("pageMakerDto", pageMakerDto);
 
-        modelAndView.setViewName("/user/mypage/home");
 
+        // --------------------- 나의 과제 ------------------------
+        //
+        int user_no = userMemberDto.getNo();
+        List<UserAssignmentDto> userAssignmentDtos = userAssignmentService.myAssignment(user_no);
+
+        modelAndView.addObject("userAssignmentDtos", userAssignmentDtos);
+
+        modelAndView.setViewName("/user/mypage/home");
 
         return modelAndView;
     }

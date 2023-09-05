@@ -7,10 +7,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Log4j2
 @Service
@@ -81,15 +78,6 @@ public class UserAssignmentService implements IUserAssignmentService {
             }
         }
 
-        log.info("===========> " + relevantUserAssignmentDtos.get(0).getNo());
-        log.info("===========> " + relevantUserAssignmentDtos.get(0).getAdmin_no());
-        log.info("===========> " + relevantUserAssignmentDtos.get(0).getUser_no());
-        log.info("===========> " + relevantUserAssignmentDtos.get(0).getTitle());
-        log.info("===========> " + relevantUserAssignmentDtos.get(0).getBody());
-        log.info("===========> " + relevantUserAssignmentDtos.get(0).getGroup_id());
-        log.info("===========> " + relevantUserAssignmentDtos.get(0).getEnd_date());
-        log.info("===========> " + relevantUserAssignmentDtos.get(0).getMod_date());
-
         return relevantUserAssignmentDtos;
     }
 
@@ -138,5 +126,32 @@ public class UserAssignmentService implements IUserAssignmentService {
         log.info("[UserAssignmentService] deleteAssignmentConfirm()");
 
         return iUserAssignmentMB.deleteAssignment(no);
+    }
+
+    // 나의 과제
+    @Override
+    public List<UserAssignmentDto> myAssignment(int user_no) {
+        log.info("[UserAssignmentService] myAssignment()");
+
+        // 로그인 멤버의 과제목록 가져오는 Dtos
+        List<UserAssignmentDto> userAssignments = iUserAssignmentMB.selectMyAssignment(user_no);
+
+        // 중복된 과제를 방지하기 위한 Set 사용
+        // Set을 사용하면 중복 검사와 중복 제거를 간결하게 처리할 수 있으며, 코드가 간단하고 이해하기 쉬워서 사용
+        // 중복 방지, 빠른 검색, 하지만 순서 저장은 안함 - 저장된 순서 순회는 불가
+        // HashSet: HashSet은 Set 인터페이스를 구현한 클래스 중 하나로, 해시 테이블을 사용하여 요소를 저장
+        Set<String> assignmentTitles = new HashSet<>();
+
+        for (UserAssignmentDto dto : userAssignments) {
+            int no = dto.getGroup_id();
+            String title = iUserAssignmentMB.selectAssignmentTitle(no);
+
+            // 중복된 title이 없으면 추가
+            if (assignmentTitles.add(title)) {
+                dto.setTitle(title);
+            }
+        }
+
+        return userAssignments;
     }
 }

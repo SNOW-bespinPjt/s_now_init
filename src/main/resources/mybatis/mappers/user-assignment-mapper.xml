@@ -12,7 +12,8 @@
         ORDER BY reg_date DESC
     </select>
 
-    <select id="selectAssignmentListWithSameId" parameterType="Integer" resultType="com.btc.snow.user.assignment.UserAssignmentDto">
+    <select id="selectAssignmentListWithSameId" parameterType="Integer"
+            resultType="com.btc.snow.user.assignment.UserAssignmentDto">
         SELECT *
         FROM ASSIGNMENT
         WHERE group_id = #{group_id}
@@ -42,11 +43,12 @@
         WHERE no = #{no}
     </select>
 
-
-    <select id="selectAssignmentInfo" parameterType="Integer" resultType="com.btc.snow.user.assignment.UserAssignmentDto">
+    <select id="selectAssignmentInfo" parameterType="Integer"
+            resultType="com.btc.snow.user.assignment.UserAssignmentDto">
         SELECT *
         FROM ASSIGNMENT
-        WHERE user_no = #{user_no} AND group_id = #{no}
+        WHERE user_no = #{user_no}
+          AND group_id = #{no}
     </select>
 
     <update id="submitAssignment" parameterType="com.btc.snow.user.assignment.UserAssignmentDto">
@@ -56,7 +58,8 @@
             is_submit      = 1,
             reg_date       = NOW(),
             mod_date       = NOW()
-        WHERE group_id = #{no} AND user_no = #{user_no}
+        WHERE group_id = #{no}
+          AND user_no = #{user_no}
     </update>
 
     <update id="updateAssignment" parameterType="com.btc.snow.user.assignment.UserAssignmentDto">
@@ -64,9 +67,9 @@
         SET file_user      = #{file_user},
             file_user_name = #{file_user_name},
             mod_date       = NOW()
-        WHERE group_id = #{no} AND user_no = #{user_no}
+        WHERE group_id = #{no}
+          AND user_no = #{user_no}
     </update>
-
 
     <delete id="deleteAssignment" parameterType="Integer">
         DELETE
@@ -74,5 +77,17 @@
         WHERE
             no = #{no}
     </delete>
+
+    <select id="selectMyAssignment" parameterType="Integer" resultType="com.btc.snow.user.assignment.UserAssignmentDto">
+        SELECT *
+        FROM ASSIGNMENT
+        WHERE user_no = #{user_no}
+    </select>
+
+    <select id="selectAssignmentTitle" resultType="string">
+        SELECT title
+        FROM ASSIGNMENT
+        WHERE no = #{no}
+    </select>
 
 </mapper>

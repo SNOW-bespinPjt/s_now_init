@@ -29,4 +29,8 @@ public interface IUserAssignmentMB {
 
     // 과제 삭제
     int deleteAssignment(int no);
+
+    // 나의 과제
+    List<UserAssignmentDto> selectMyAssignment(int user_no);
+    String selectAssignmentTitle(int no);
 }

@@ -64,7 +64,6 @@
         mod_date = NOW()
         WHERE
         no = #{no}
-
     </update>
 
     <delete id="deleteAssignment" parameterType="Integer">
