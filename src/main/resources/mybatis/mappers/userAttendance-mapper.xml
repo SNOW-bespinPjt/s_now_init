@@ -106,7 +106,7 @@
     <select id="getTotalCnt" parameterType="String" resultType="Integer">
         select count(*)
         from ATTENDENCE
-        where u_id = #{u_id}
+        where u_id = #{u_no}
 
     </select>
 
