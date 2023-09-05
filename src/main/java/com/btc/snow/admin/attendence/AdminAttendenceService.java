@@ -57,4 +57,11 @@ public class AdminAttendenceService implements IAdminAttendenceService {
 
         return iAdminAttendenceMapper.updateStatusForSubmit(no);
     }
+
+    @Override
+    public int updateStatusForSubmitToCancle(int no) {
+        log.info("updateStatusForSubmitToCancle(int no)");
+
+        return iAdminAttendenceMapper.cancelSubmit(no);
+    }
 }
