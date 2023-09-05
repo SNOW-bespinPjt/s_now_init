@@ -4,6 +4,11 @@
 
 <mapper namespace="com.btc.snow.user.meeting.meal.IUserMealMapper">
 
+    <insert id="insertMeal" parameterType="com.btc.snow.user.meeting.meal.UserMealDto">
+        insert into MEAL (user_id, title, body, total, img, date, reg_date, mod_date)
+        VALUES (#{user_id}, #{title}, #{body}, #{total}, #{img}, #{date}, NOW(), NOW())
+    </insert>
+
     <select id="mealDetail" parameterType="Integer" resultType="com.btc.snow.user.meeting.meal.UserMealDto">
         select *
         from MEAL
