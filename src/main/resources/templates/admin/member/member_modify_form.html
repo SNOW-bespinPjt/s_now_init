@@ -6,7 +6,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://code.jquery.com/jquery-3.7.0.js"
             integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossOrigin="anonymous"></script>
-    <script th:src="@{/admin/js/member_modify_form.js}" type="text/javascript"></script>
+    <script th:src="@{/assignment/admin/js/member_modify_form.js}" type="text/javascript"></script>
 </head>
 <body>
 <div class="flex">
@@ -21,7 +21,7 @@
                     class="relative flex items-center justify-center w-screen h-screen mr-8 border-2 rounded-lg bg-slate-100"
             >
                 <div class="word">
-                    <h2 class="absolute top-0 left-0 mt-4 text-2xl font-bold ml-14">CREATE ACCOUNT FORM</h2>
+                    <h2 class="absolute top-0 left-0 mt-4 text-2xl font-bold ml-14">MODIFY ACCOUNT FORM</h2>
                 </div>
                 <div class="member_modify_form">
                     <form th:action="@{/admin/member/member_modify_confirm}" name="member_modify_form" method="post">

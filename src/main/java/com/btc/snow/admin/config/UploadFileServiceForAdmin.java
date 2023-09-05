@@ -1,4 +1,4 @@
-package com.btc.snow.admin.assignment;
+package com.btc.snow.admin.config;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
@@ -9,10 +9,10 @@ import java.util.UUID;
 
 @Log4j2
 @Service
-public class UploadFileService {
+public class UploadFileServiceForAdmin {
 
     public String upload(MultipartFile file) {
-        log.info("[UploadFileService] upload()");
+        log.info("[UploadFileServiceForAdmin] upload()");
 
         // 저장 유무
         boolean result = false;
@@ -21,7 +21,6 @@ public class UploadFileService {
         String fileOriName = file.getOriginalFilename();
         String fileExtension = fileOriName.substring(fileOriName.lastIndexOf("."), fileOriName.length());
         String uploadDir = "c:\\snow\\admin\\assignment";
-//        String uploadDir = "c:\\snow\\member\\" + user_id; // 아이디별로 받겠다 여기에 키득
 
         UUID uuid = UUID.randomUUID(); // 랜덤으로 유니크한 값을 생성해서 보내주는 메소드 (덮어쓰기 방지)
         String uniqueName = uuid.toString().replace("-", ""); // 값이 000-000-.. 이런형식이라서 걍 "-" 없애기 [선택사항]
@@ -43,12 +42,12 @@ public class UploadFileService {
 
         // 성공시 저장
         if (result == true) {
-            log.info("[UploadFileService] FILE UPLOAD SUCCESS!!");
+            log.info("[UploadFileServiceForAdmin] FILE UPLOAD SUCCESS!!");
 
             return uniqueName + fileExtension;
 
         } else {
-            log.info("[UploadFileService] FILE UPLOAD FAIL!!");
+            log.info("[UploadFileServiceForAdmin] FILE UPLOAD FAIL!!");
 
             return null;
 

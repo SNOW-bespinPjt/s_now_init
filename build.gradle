@@ -37,14 +37,14 @@ dependencies {
     testImplementation group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: '2.17.2'
 
     // CONTROL FILE
-//    implementation 'commons-io:commons-io:2.6'
+    implementation 'commons-io:commons-io:2.6'
 
     // SECURITY
     implementation 'org.springframework.boot:spring-boot-starter-security'
 
     // DB
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.0'
-//    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     runtimeOnly 'mysql:mysql-connector-java'
 
 
@@ -60,9 +60,7 @@ dependencies {
     //OAUTH2 CLIENT
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 
-    implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.5'
-    runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.5'
-    runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.5'
+
 
     //FIRE BASE
     // https://mvnrepository.com/artifact/com.google.firebase/firebase-admin
@@ -71,6 +69,5 @@ dependencies {
 }
 
 tasks.named('test') {
-    useJUnitPlatform();
-
+    useJUnitPlatform()
 }

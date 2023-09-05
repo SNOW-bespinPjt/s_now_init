@@ -10,9 +10,9 @@ function createAssignmentForm() {
         alert('INPUT BODY');
         form.body.focus();
 
-    } else if (form.file_admin.value == '') {
+    } else if (form.file.value == '') {
         alert('INPUT FILE');
-        form.file_admin.focus();
+        form.file.focus();
 
     } else {
         form.submit();

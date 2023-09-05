@@ -1,9 +1,9 @@
-package com.btc.snow.admin.assignment;
+package com.btc.snow.user.assignment;
 
 import lombok.Data;
 
 @Data
-public class AdminAssignmentDto {
+public class UserAssignmentDto {
     private int no; //'과제 번호(as_no)',
     private int admin_no; //'관리자 번호(강사 admin_no)',
     private int user_no; //'유저 번호(교육생 user_no)',
