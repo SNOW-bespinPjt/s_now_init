@@ -19,7 +19,7 @@
                     <h2 class="text-2xl font-bold mb-10">ASSIGNMENT LIST</h2>
                     <div class="flex flex-col w-11/12 bg-white h-5/6">
                         <div class="flex w-full border-b-2 h-1/4 border-b-slate-300" th:each="item : ${userAssignmentDtos}">
-                            <div class="w-11/12 p-4">
+                            <div class="w-11/12 p-4 text-xl font-bold text-gray-700">
                                 <a th:href="@{/user/assignment/get_assignment(no=${item.no})}" th:text="${item.title}"
                                    type="button"></a>
                                 <div class="flex">
