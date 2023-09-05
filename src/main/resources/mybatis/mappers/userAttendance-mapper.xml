@@ -110,4 +110,18 @@
 
     </select>
 
+    <update id="updateAttendenceBy">
+
+        <![CDATA[
+        SET
+        @currentDateTime = NOW();
+
+        insert into ATTENDENCE(u_id, astatus, tstatus, reg_date, mod_date)
+        select u.id, '3', @currentDateTime, now(), now()
+        from USER u
+        where u.id not in (select u_id from ATTENDENCE where HOUR (date)<12)
+        ]]>
+
+    </update>
+
 </mapper>

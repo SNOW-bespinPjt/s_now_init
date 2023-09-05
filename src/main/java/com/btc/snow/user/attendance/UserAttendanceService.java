@@ -260,6 +260,16 @@ public class UserAttendanceService implements IUserAttendanceService {
         userAttendanceMapper.updateUstatus();
     }
 
+    //오후 12시   오후 6시 최종 출결 체크
+    //1. 12시 체크
+    @Scheduled(cron = "0 0 12 * * 5", zone = "Asia/Seoul")
+    public void updateAttendenceBy() {
+        log.info("updateAttendence()");
+
+
+        userAttendanceMapper.updateAttendenceBy();
+    }
+
 
 //    @Override
 //    public SubmitDto selectAttendanceSubmit(String id) {

@@ -43,4 +43,6 @@ public interface UserAttendanceMapper {
     int updateAttendenceUstatus(SubmitDto submitDto);
 
     int getTotalCnt(String uNo);
+
+    void updateAttendenceBy();
 }

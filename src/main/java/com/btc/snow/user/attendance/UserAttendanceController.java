@@ -38,8 +38,11 @@ public class UserAttendanceController {
     @ResponseBody
     public Object uploadFile(UserAttendanceDto userAttendanceDto, HttpSession session) throws IOException, FirebaseAuthException {
         log.info("file {}", userAttendanceDto.getFile());
+
         Map<String, Object> resMap = new HashMap<>();
+
         log.info("uploadFile()!!");
+
         SubmitDto submitDto = new SubmitDto();
         submitDto.setA_no(userAttendanceDto.getNo());
 
