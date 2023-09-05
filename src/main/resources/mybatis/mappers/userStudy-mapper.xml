@@ -21,10 +21,17 @@
         where no = #{no}
     </update>
 
-    <select id="selectStudy" resultType="com.btc.snow.user.meeting.study.UserStudyDto">
+    <select id="selectStudy" parameterType="HashMap" resultType="com.btc.snow.user.meeting.study.UserStudyDto">
         select *
         from STUDY
         order by reg_date desc
+            LIMIT #{skip}, #{amount}
     </select>
 
+    <select id="getTotalCntOfSubmit" resultType="Integer">
+        select count(*)
+        from STUDY
+
+
+    </select>
 </mapper>

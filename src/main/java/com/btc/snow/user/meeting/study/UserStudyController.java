@@ -59,7 +59,7 @@ public class UserStudyController {
     @GetMapping("/study_detail")
     public String studyDetail(Model model, @RequestParam("no") int no) {
         log.info("studyDetail()");
-
+        
         String nextPage = "user/meeting/study_detail";
 
         UserStudyDto userStudyDto = userStudyService.studyDetail(no);
@@ -72,16 +72,18 @@ public class UserStudyController {
     }
 
     @GetMapping("/study_list")
-    public String studyList(Model model) {
+    public String studyList(Model model, @RequestParam(value = "pageNum", required = false, defaultValue = "1") int pageNum,
+                            @RequestParam(value = "amount", required = false, defaultValue = "5") int amount) {
         log.info("studyList()");
 
         String nextPage = "user/meeting/study_list";
 
-        Map<String, Object> studyMap = userStudyService.studyList();
+        Map<String, Object> studyMap = userStudyService.studyList(pageNum, amount);
 
         List<UserStudyDto> userStudyDtos = (List<UserStudyDto>) studyMap.get("userStudyDtos");
 
         model.addAttribute("userStudyDtos", userStudyDtos);
+        model.addAttribute("pageMakerDto", studyMap.get("pageMakerDto"));
 
         return nextPage;
     }
