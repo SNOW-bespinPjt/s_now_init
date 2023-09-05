@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Log4j2
 @Service
@@ -23,28 +25,39 @@ public class UserAssignmentService implements IUserAssignmentService {
 
     // 과제 리스트
     @Override
-    public List<UserAssignmentDto> listAssignment() {
+    public Object listAssignment(HttpSession session) {
         log.info("[UserAssignmentService] listAssignment()");
 
-        // is_activation = 1
-        List<UserAssignmentDto> userAssignmentDtos = iUserAssignmentMB.selectAssignments();
+        Map<String, Object> map = new HashMap<>();
 
-        List<UserAssignmentDto> additionalAssignments = new ArrayList<>();
+        // 로그인 회원 번호 찾기
+        UserMemberDto loginedUserDto = (UserMemberDto) session.getAttribute("loginedUserDto");
+        int user_no = loginedUserDto.getNo();
 
-        for (UserAssignmentDto dto : userAssignmentDtos) {
+        // is_activation = 1 인 모든 과제 리스트 불러오기
+        List<UserAssignmentDto> allUserAssignmentDtos = iUserAssignmentMB.selectAssignments();
+
+        // 사용자와 관련된 과제 목록을 저장할 리스트 생성
+        List<UserAssignmentDto> relevantUserAssignmentDtos = new ArrayList<>();
+
+        // 모든 과 목록을 순회하면서 사용자와 관련된 과제만 필터링
+        for (UserAssignmentDto dto : allUserAssignmentDtos) {
             int group_id = dto.getNo();
 
-            // no와 group_id가 같은 목록을 가져오는 SQL 쿼리
-            List<UserAssignmentDto> assignmentsWithSameId = iUserAssignmentMB.selectAssignmentListWithSameId(group_id);
+            // is_activation = 1 인 과제 중에서 현재 로그인한 사용자와 관련된 과제 필터링
+            List<UserAssignmentDto> userSpecificAssignments = iUserAssignmentMB.selectAssignmentListWithSameId(group_id, user_no);
 
-            additionalAssignments.addAll(assignmentsWithSameId);
+            if (!userSpecificAssignments.isEmpty()) {
+                // 사용자와 관련된 과제가 존재할 경우, relevantUserAssignmentDtos에 추가
+                relevantUserAssignmentDtos.addAll(userSpecificAssignments);
+            }
         }
 
-        userAssignmentDtos.addAll(additionalAssignments);
+        map.put("allUserAssignmentDtos", allUserAssignmentDtos);
+        map.put("relevantUserAssignmentDtos", relevantUserAssignmentDtos);
 
-        return userAssignmentDtos;
+        return map;
     }
-
 
     // 과제 등록
     @Override

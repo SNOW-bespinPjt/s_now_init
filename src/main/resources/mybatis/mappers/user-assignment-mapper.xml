@@ -12,10 +12,11 @@
         ORDER BY reg_date DESC
     </select>
 
-    <select id="selectAssignmentListWithSameId" resultType="com.btc.snow.user.assignment.UserAssignmentDto">
+    <select id="selectAssignmentListWithSameId" parameterType="Integer" resultType="com.btc.snow.user.assignment.UserAssignmentDto">
         SELECT *
         FROM ASSIGNMENT
         WHERE group_id = #{group_id}
+          AND user_no = #{user_no}
     </select>
 
     <select id="getAllUsers" resultType="com.btc.snow.user.member.UserMemberDto">

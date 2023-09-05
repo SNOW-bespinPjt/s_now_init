@@ -17,7 +17,7 @@
         VALUES (#{admin_no}, #{title}, #{body}, #{file_admin}, #{file_admin_name}, NOW(), NOW())
     </insert>
 
-    <select id="getGeneratedNo" resultType="int" parameterType="com.btc.snow.admin.assignment.AdminAssignmentDto">
+    <select id="getGeneratedNo" resultType="Integer" parameterType="com.btc.snow.admin.assignment.AdminAssignmentDto">
         SELECT LAST_INSERT_ID()
     </select>
 
