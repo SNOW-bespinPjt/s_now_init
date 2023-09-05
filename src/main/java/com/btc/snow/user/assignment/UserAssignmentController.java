@@ -43,9 +43,9 @@ public class UserAssignmentController {
         nextPage = "user/assignment/list_assignments";
 
         // USER 허용 과제 리스트 불러오기
-        Map<String, Object> map = (Map<String, Object>) userAssignmentService.listAssignment(session);
+        List<UserAssignmentDto> userAssignmentDtos = userAssignmentService.listAssignment(session);
 
-        model.addAttribute("map", map);
+        model.addAttribute("userAssignmentDtos", userAssignmentDtos);
 
         return nextPage;
     }

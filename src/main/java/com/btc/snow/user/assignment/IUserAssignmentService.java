@@ -8,7 +8,7 @@ import java.util.List;
 public interface IUserAssignmentService {
 
     // 과제 리스트(과제 페이지)
-    Object listAssignment(HttpSession session);
+    List<UserAssignmentDto> listAssignment(HttpSession session);
 
     // 과제 등록
     int RegistrationConfirm(UserAssignmentDto userAssignmentDto);

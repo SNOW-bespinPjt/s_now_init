@@ -25,23 +25,21 @@ public class UserAssignmentService implements IUserAssignmentService {
 
     // 과제 리스트
     @Override
-    public Object listAssignment(HttpSession session) {
+    public List<UserAssignmentDto> listAssignment(HttpSession session) {
         log.info("[UserAssignmentService] listAssignment()");
-
-        Map<String, Object> map = new HashMap<>();
 
         // 로그인 회원 번호 찾기
         UserMemberDto loginedUserDto = (UserMemberDto) session.getAttribute("loginedUserDto");
         int user_no = loginedUserDto.getNo();
 
         // is_activation = 1 인 모든 과제 리스트 불러오기
-        List<UserAssignmentDto> allUserAssignmentDtos = iUserAssignmentMB.selectAssignments();
+        List<UserAssignmentDto> userAssignmentDtos = iUserAssignmentMB.selectAssignments();
 
         // 사용자와 관련된 과제 목록을 저장할 리스트 생성
         List<UserAssignmentDto> relevantUserAssignmentDtos = new ArrayList<>();
 
-        // 모든 과 목록을 순회하면서 사용자와 관련된 과제만 필터링
-        for (UserAssignmentDto dto : allUserAssignmentDtos) {
+        // 모든 과목 목록을 순회하면서 사용자와 관련된 과제만 필터링
+        for (UserAssignmentDto dto : userAssignmentDtos) {
             int group_id = dto.getNo();
 
             // is_activation = 1 인 과제 중에서 현재 로그인한 사용자와 관련된 과제 필터링
@@ -49,14 +47,50 @@ public class UserAssignmentService implements IUserAssignmentService {
 
             if (!userSpecificAssignments.isEmpty()) {
                 // 사용자와 관련된 과제가 존재할 경우, relevantUserAssignmentDtos에 추가
-                relevantUserAssignmentDtos.addAll(userSpecificAssignments);
+                UserAssignmentDto relevantAssignment = new UserAssignmentDto();
+
+                // 필요한 컬럼 값을 복사
+                relevantAssignment.setNo(dto.getNo());
+                relevantAssignment.setAdmin_no(dto.getAdmin_no());
+                relevantAssignment.setUser_no(dto.getUser_no());
+                relevantAssignment.setTitle(dto.getTitle());
+                relevantAssignment.setBody(dto.getBody());
+                relevantAssignment.setGroup_id(dto.getGroup_id());
+                relevantAssignment.setEnd_date(dto.getEnd_date());
+                relevantAssignment.setMod_date(dto.getMod_date());
+
+                // userSpecificAssignments의 값이 없는 컬럼을 업데이트 : group_id, user_no, is_submit, mod_date
+                if (userSpecificAssignments.get(0).getGroup_id() != 0) {
+                    relevantAssignment.setGroup_id(userSpecificAssignments.get(0).getGroup_id());
+                }
+                if (userSpecificAssignments.get(0).getUser_no() != 0) {
+                    relevantAssignment.setUser_no(userSpecificAssignments.get(0).getUser_no());
+                }
+                if (userSpecificAssignments.get(0).getIs_submit() != 0) {
+                    relevantAssignment.setIs_submit(userSpecificAssignments.get(0).getIs_submit());
+                }
+                if (userSpecificAssignments.get(0).getEnd_date() != null) {
+                    relevantAssignment.setEnd_date(userSpecificAssignments.get(0).getEnd_date());
+                }
+                if (userSpecificAssignments.get(0).getMod_date() != null) {
+                    relevantAssignment.setMod_date(userSpecificAssignments.get(0).getMod_date());
+                }
+
+                // relevantUserAssignmentDtos에 추가
+                relevantUserAssignmentDtos.add(relevantAssignment);
             }
         }
 
-        map.put("allUserAssignmentDtos", allUserAssignmentDtos);
-        map.put("relevantUserAssignmentDtos", relevantUserAssignmentDtos);
+        log.info("===========> " + relevantUserAssignmentDtos.get(0).getNo());
+        log.info("===========> " + relevantUserAssignmentDtos.get(0).getAdmin_no());
+        log.info("===========> " + relevantUserAssignmentDtos.get(0).getUser_no());
+        log.info("===========> " + relevantUserAssignmentDtos.get(0).getTitle());
+        log.info("===========> " + relevantUserAssignmentDtos.get(0).getBody());
+        log.info("===========> " + relevantUserAssignmentDtos.get(0).getGroup_id());
+        log.info("===========> " + relevantUserAssignmentDtos.get(0).getEnd_date());
+        log.info("===========> " + relevantUserAssignmentDtos.get(0).getMod_date());
 
-        return map;
+        return relevantUserAssignmentDtos;
     }
 
     // 과제 등록
