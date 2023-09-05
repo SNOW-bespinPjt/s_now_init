@@ -9,6 +9,7 @@ function createAccountForm() {
     } else if (form.pw.value == '') {
         alert('INPUT PW');
         form.pw.focus();
+        form.pw.focus();
 
     } else if (form.name.value == '') {
         alert('INPUT NAME');

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script th:replace="~{/include/common_js.html::jquery_cdn}" type="text/javascript"></script>
+
+</head>
+<body>
+
+<header th:replace="~{/include/header_nav_footer.html::header}"></header>
+
+<nav th:replace="~{/include/header_nav_footer.html::nav}"></nav>
+
+<section>
+    <div>
+        <div class="title" th:text="${userMealDto.title}"></div>
+        <div class="hit" th:text="${userMealDto.hit}"></div>
+        <div class="reg_date" th:text="${userMealDto.reg_date}"></div>
+        <div class="user_id" th:text="${userMealDto.user_id}"></div>
+        <div class="img" th:text="${userMealDto.img}"></div>
+        <div class="date" th:text="${userMealDto.date}"></div>
+        <div class="body" th:text="${userMealDto.body}"></div>
+
+
+        <div>
+            <input type="button" value="참여">
+        </div>
+
+
+    </div>
+</section>
+
+<footer th:replace="~{/include/header_nav_footer.html::footer}"></footer>
+
+</body>
+</html>

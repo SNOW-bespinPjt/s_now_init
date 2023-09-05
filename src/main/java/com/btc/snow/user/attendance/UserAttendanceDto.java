@@ -1,6 +1,7 @@
 package com.btc.snow.user.attendance;
 
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 @Data
 public class UserAttendanceDto {
@@ -10,5 +11,6 @@ public class UserAttendanceDto {
     int tstatus;
     String reg_date;
     String mod_date;
+    MultipartFile file;
 
 }
