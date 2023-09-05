@@ -20,7 +20,7 @@ public class UploadFileServiceForUser {
         // File 저장
         String fileOriName = file.getOriginalFilename();
         String fileExtension = fileOriName.substring(fileOriName.lastIndexOf("."), fileOriName.length());
-        String uploadDir = "c:\\snow\\user\\assignment\\" + user_id; // user_id 별로 받아야지
+        String uploadDir = "c:\\snow\\user\\assignment\\" + user_id; // 저장할 주소 !! user_id 별로 받아야지
 
         UUID uuid = UUID.randomUUID(); // 랜덤으로 유니크한 값을 생성해서 보내주는 메소드 (덮어쓰기 방지)
         String uniqueName = uuid.toString().replace("-", ""); // 값이 000-000-.. 이런형식이라서 걍 "-" 없애기 [선택사항]

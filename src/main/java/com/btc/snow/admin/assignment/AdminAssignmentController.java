@@ -270,17 +270,4 @@ public class AdminAssignmentController {
         return nextPage;
     }
 
-
-    /*
-     * 과제 미제출 학생 메일 보내기
-     */
-    @PostMapping("/send_mail_not_submit_user")
-    public String SendMailForNotSubmitUser(AdminMemberDto adminMemberDto) {
-        log.info("[AdminMemberController] SendMailForNotSubmitUser()");
-
-        return nextPage;
-
-    }
-
-
 }

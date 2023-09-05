@@ -6,6 +6,7 @@ import com.btc.snow.user.assignment.UserAssignmentDto;
 import com.btc.snow.user.member.IUserMemberDaoMB;
 import com.btc.snow.user.member.UserMemberDto;
 import jakarta.servlet.http.HttpSession;
+import lombok.Value;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -160,17 +162,32 @@ public class AdminAssignmentService implements IAdminAssignmentService {
     public void updateAssignmentActivation() {
         log.info("[AdminAssignmentService] updateAssignmentActivation()");
 
+        // 타입 맞추기 : 변환할 수 없는 타입인 'LocalDate' 및 'String'의 객체 사이에 있습니다
+        // LocalDate today = LocalDate.now();
+
+        // 현재 날짜
         LocalDate today = LocalDate.now();
+
+        // 포맷터를 정의
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        // LocalDate를 문자열로 변
+        String dateString = today.format(formatter);
+        log.info("현재 날짜 문자열: " + dateString);
 
         // 모든 과제 리스트
         List<AdminAssignmentDto> assignments = iAdminAssignmentMB.selectAssignments();
 
         for (AdminAssignmentDto assignment : assignments) {
-            if (assignment.getEnd_date() != null && assignment.getEnd_date().equals(today)) {
+            if (assignment.getEnd_date() != null && dateString.equals(assignment.getEnd_date())) {
+                // today 무조건 할당될 수 있는 값 : assignment.getEnd_date() 조회되어져 가져오는 값 >> 할당되는게 보장되어 있는 값이 있어야 뒤에 null 값이 있어도 return
                 // end_date가 오늘 이전이면 is_activation을 0으로 설정
                 assignment.setIs_activation(0);
                 iAdminAssignmentMB.updateAssignmentActivation(assignment);
             }
         }
+
+        // 과제 미제출 학생 메일 보내기
+
     }
 }
