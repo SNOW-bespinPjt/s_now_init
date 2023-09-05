@@ -1,6 +1,7 @@
 package com.btc.snow.user.mypage;
 
 
+import com.btc.snow.include.page.PageDefine;
 import com.btc.snow.user.attendance.UserAttendanceDto;
 import com.btc.snow.user.attendance.UserAttendanceService;
 import com.btc.snow.user.member.UserMemberDto;
@@ -11,6 +12,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -28,7 +30,9 @@ public class MyPageController {
     MyPageService myPageService;
 
     @GetMapping(value = {"", "/"})
-    public Object home(HttpSession httpSession) {
+    public Object home(HttpSession httpSession,
+                       @RequestParam(value = "pageNum", required = false, defaultValue = PageDefine.DEFAULT_PAGE_NUMBER) int pageNum,
+                       @RequestParam(value = "amount", required = false, defaultValue = PageDefine.DEFAULT_AMOUNT) int amount) {
         HttpHeaders headers = new HttpHeaders();
         log.info("home()!!!");
         UserMemberDto userMemberDto = (UserMemberDto) httpSession.getAttribute("loginedUserDto");
@@ -38,19 +42,24 @@ public class MyPageController {
         List<UserAttendanceDto> userAttendanceDtos = null;
 
         userAttendanceDtos = userAttendanceService.selectAllUserforAttendence(u_id);
+//        PageMakerDto pageMakerDto = userAttendanceService.listAttendence(u_id, pageNum, amount);
 
-        double ratio = ((double) userAttendanceDtos.size() / (double) 214) * 100.0;
 
+        double ratio = 0;
+        
+        if (userAttendanceDtos != null) {
+            ratio = ((double) userAttendanceDtos.size() / (double) 214) * 100.0;
+        }
+
+        assert userAttendanceDtos != null;
         log.info("dtos.size() {} ", userAttendanceDtos.size());
         log.info("ratio {}", Math.round(ratio));
 
-        if (userAttendanceDtos != null) {
-            modelAndView.addObject("userAttendanceDtos", userAttendanceDtos);
-            modelAndView.addObject("ratio", Math.round(ratio));
-            modelAndView.setViewName("/user/mypage/home");
-        } else {
-            modelAndView.setViewName("/user/mypage/home");
-        }
+        modelAndView.addObject("userAttendanceDtos", userAttendanceDtos);
+        modelAndView.addObject("ratio", Math.round(ratio));
+//        modelAndView.addObject("pageMakerDto", pageMakerDto);
+
+        modelAndView.setViewName("/user/mypage/home");
 
 
         return modelAndView;

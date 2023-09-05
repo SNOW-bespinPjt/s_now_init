@@ -32,12 +32,13 @@
     </select>
 
 
-    <select id="selectAllUserforAttendence" parameterType="String"
+    <select id="selectAllUserforAttendence" parameterType="HashMap"
             resultType="HashMap">
 
         select *
         from ATTENDENCE
         where u_id = #{u_id}
+        order by reg_date desc
 
     </select>
 
@@ -79,6 +80,33 @@
         from ATTENDENCE
         where u_id = #{Id}
           and astatus = 1
+
+    </select>
+
+    <insert id="updateDocumentToSubmit" parameterType="com.btc.snow.include.SubmitDto">
+        insert into SUBMIT(a_no, content, file, u_id, reg_date, mod_date)
+        values (#{a_no}, #{content}, #{file}, #{u_id}, now(), now())
+
+    </insert>
+
+    <select id="selectUpdateStatus" parameterType="String" resultType="com.btc.snow.include.SubmitDto">
+        select status
+        from SUBMIT
+        where u_id = #{u_id}
+
+    </select>
+
+    <update id="updateAttendenceUstatus" parameterType="com.btc.snow.include.SubmitDto">
+        update ATTENDENCE
+        set ustatus = 1
+        where no = #{a_no}
+
+    </update>
+
+    <select id="getTotalCnt" parameterType="String" resultType="Integer">
+        select count(*)
+        from ATTENDENCE
+        where u_id = #{u_id}
 
     </select>
 

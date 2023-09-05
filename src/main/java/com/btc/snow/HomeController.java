@@ -46,6 +46,7 @@ public class HomeController {
 
             if (userMemberDto != null) {
                 UserAttendanceDto userAttendanceDto = (UserAttendanceDto) userAttendanceService.selectUserforAttendence(userMemberDto.getId());
+//                SubmitDto submitDto = userAttendanceService.selectAttendanceSubmit(userMemberDto.getId());
 
                 if (userAttendanceDto == null) {
                     modelAndView.addObject("status", 0);

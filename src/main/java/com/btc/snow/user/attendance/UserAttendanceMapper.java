@@ -1,6 +1,7 @@
 package com.btc.snow.user.attendance;
 
 
+import com.btc.snow.include.SubmitDto;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -19,7 +20,7 @@ public interface UserAttendanceMapper {
 
     int isValidStatus(Map<Object, Object> map);
 
-    List<UserAttendanceDto> selectAllUserforAttendence(String uId);
+    List<UserAttendanceDto> selectAllUserforAttendence(Map<String, Object> map);
 
     UserAttendanceDto selectValidAttDto(Map<String, Object> map);
 
@@ -32,4 +33,14 @@ public interface UserAttendanceMapper {
     List<UserAttendanceDto> selectACKAttendence(String id);
 
     List<UserAttendanceDto> selectTardyAttendence(String id);
+
+
+    int updateDocumentToSubmit(SubmitDto submitDto);
+
+    int selectUpdateStatus(String id);
+
+
+    int updateAttendenceUstatus(SubmitDto submitDto);
+
+    int getTotalCnt(String uId);
 }

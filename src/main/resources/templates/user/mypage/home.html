@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html
+        lang="en"
+        xmlns:th="http://www.thymeleaf.org"
+>
 <head>
     <meta charset="UTF-8"/>
     <title>Title</title>
@@ -10,13 +13,67 @@
             crossorigin="anonymous"
     ></script>
     <script th:inline="javascript">
+        function renderAfterSubmit(no) {
+            $(`button[data-no=${no}]`).text("대기중")
+            $(`button[data-no=${no}]`).addClass('text-white bg-gray-300 cursor-not-allowed')
+            $(`button[data-no=${no}]`).removeClass("text-blue-700 hover:bg-blue-500 hover:text-white border-blue-500")
+            $(`button[data-no=${no}]`).removeAttr("onclick")
+        }
 
-        $(document).ready(function () {
-            let dtoSize = Math.ceil([[${userAttendanceDtos.size()}]] / 214);
-            let width = document.querySelector(".attendenceRatio");
-            console.log(width.style);
-            console.log("width: " + dtoSize + "%");
-        })
+
+        // $(document).ready(function () {
+        //     let dtoSize = Math.ceil([[${userAttendanceDtos.size()}]] / 214);
+        //     let width = document.querySelector(".attendenceRatio");
+        //     console.log(width.style);
+        //     console.log("width: " + dtoSize + "%");
+        //
+        //
+        // })
+        //
+        // function setPage() {
+        //
+        //
+        // }
+
+        function imgUrlSumbmit(e) {
+            console.log(" ajax_submitDoc() ")
+            // let form = document.fileUploadForm;
+            let no = $('.submitFile').data("no")
+            $("#a_no").val(no)
+            let uploadForm = $("#fileUploadForm")
+            let formData = new FormData(uploadForm[0])
+
+
+            // let form = new FormData();
+
+            // let inputFile = $("#file_input")[0].files
+
+            $.ajax({
+                url: '/user/attendence/docs',
+                type: 'POST',
+                data: formData,
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    console.log("ajax_submitDoc() success")
+                    console.log(data)
+                    renderAfterSubmit(no);
+                    modalToggle()
+                    $(location).attr('href', "/mypage")
+                },
+                error: function (data) {
+                    console.log("ajax_submitDoc() error")
+                },
+                complete: function (data) {
+                    console.log('AJAX COMPLETE - ajax_submitDoc()');
+
+                }
+            })
+
+
+        }
+
 
         function ajax_selectTardy() {
             console.log(" ajax_selectTardy() ")
@@ -43,9 +100,15 @@
                         if (data[i].astatus === 1) {
                             strStatus += "지각"
                             statusColor += "text-orange-400"
-                            updateStatus = "<button class=\"mr-2 mb-2 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded\">\n" +
-                                "  제출\n" +
-                                "</button>"
+                            if (data[i].ustatus === 0) {
+                                updateStatus = "<button class=\"mr-2 mb-2 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded\" data-no='" + data[i].no + "' onclick=\"modalToggle(" + data[i].no + ")\">" +
+                                    "제출\n" +
+                                    "</button>"
+                            } else {
+                                updateStatus = "<button class=\"mr-2 mb-2 bg-transparent text-white bg-gray-300 cursor-not-allowed font-semibold  py-2 px-4 border border-blue-500 hover:border-transparent rounded\">" +
+                                    "대기중\n" +
+                                    "</button>"
+                            }
 
                         }
 
@@ -56,15 +119,20 @@
                         if (data[i].astatus === 3) {
                             strStatus += "무단결석"
                             statusColor += "text-red-400"
-                            updateStatus = "<button class=\" mr-2 mb-2 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded\">\n" +
-                                "  제출\n" +
-                                "</button>"
-
+                            if (data[i].ustatus === 0) {
+                                updateStatus = "<button class=\"mr-2 mb-2 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded\" data-no='" + data[i].no + "' onclick=\"modalToggle(" + arr[i].no + ")\">" +
+                                    "제출\n" +
+                                    "</button>"
+                            } else {
+                                updateStatus = "<button class=\"mr-2 mb-2 bg-transparent text-white bg-gray-300 cursor-not-allowed font-semibold  py-2 px-4 border border-blue-500 hover:border-transparent rounded\">" +
+                                    "대기중\n" +
+                                    "</button>"
+                            }
                         }
 
 
                         appendTag += "     <div class=\" w-1/4 border-2 rounded-md shadow-xl mb-5 mr-4 h-48 \" >\n" +
-                            "<div class='h-full relative'>" + `<p class=${statusColor}>` + strStatus + "</p>" + "<div class='absolute bottom-0 right-0'>" + updateStatus + "</div>" + "</div>" +
+                            "<div class='relative h-full'>" + `<p class=${statusColor}>` + strStatus + "</p>" + "<div class='absolute bottom-0 right-0'>" + updateStatus + "</div>" + "</div>" +
                             "                </div> "
 
                         let attendenceBody = "<div class=\"flex flex-col w-full h-full m-4\">\n" +
@@ -82,9 +150,9 @@
                             "                <span class=\"w-2 h-2 mr-1 bg-orange-500 rounded-full\"></span>\n" +
                             "                지각\n" +
                             "            </span>"
-                            + "</div>" + "<div class='mt-6 flex flex-wrap items-center justify-center'>" + appendTag + "</div>" +
+                            + "</div>" + "<div class='flex flex-wrap items-center justify-center mt-6'>" + appendTag + "</div>" +
+                            "</div>" +
                             "</div>"
-                        "</div>"
 
 
                         $(".section2").children().remove()
@@ -118,6 +186,7 @@
                     console.log('AJAX SUCCESS - ajax_writeStudy()');
                     console.log("data : ", data)
                     let appendTag = ""
+
                     for (let i = 0; i < data.length; i++) {
                         let strStatus = ""
                         let statusColor = ""
@@ -132,9 +201,15 @@
                         if (data[i].astatus === 1) {
                             strStatus += "지각"
                             statusColor += "text-orange-400"
-                            updateStatus = "<button class=\"mr-2 mb-2 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded\">\n" +
-                                "  제출\n" +
-                                "</button>"
+                            if (data[i].ustatus === 0) {
+                                updateStatus = "<button class=\"mr-2 mb-2 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded\" data-no='" + data[i].no + "' onclick=\"modalToggle(" + data[i].no + ")\">" +
+                                    "제출\n" +
+                                    "</button>"
+                            } else {
+                                updateStatus = "<button class=\"mr-2 mb-2 bg-transparent text-white bg-gray-300 cursor-not-allowed font-semibold  py-2 px-4 border border-blue-500 hover:border-transparent rounded\">" +
+                                    "대기중\n" +
+                                    "</button>"
+                            }
 
                         }
 
@@ -145,15 +220,20 @@
                         if (data[i].astatus === 3) {
                             strStatus += "무단결석"
                             statusColor += "text-red-400"
-                            updateStatus = "<button class=\" mr-2 mb-2 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded\">\n" +
-                                "  제출\n" +
-                                "</button>"
-
+                            if (data[i].ustatus === 0) {
+                                updateStatus = "<button class=\"mr-2 mb-2 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded\" data-no='" + data[i].no + "' onclick=\"modalToggle(" + data[i].no + ")\">" +
+                                    "제출\n" +
+                                    "</button>"
+                            } else {
+                                updateStatus = "<button class=\"mr-2 mb-2 bg-transparent text-white bg-gray-300 cursor-not-allowed font-semibold  py-2 px-4 border border-blue-500 hover:border-transparent rounded\">" +
+                                    "대기중\n" +
+                                    "</button>"
+                            }
                         }
 
 
                         appendTag += "     <div class=\" w-1/4 border-2 rounded-md shadow-xl mb-5 mr-4 h-48 \" >\n" +
-                            "<div class='h-full relative'>" + `<p class=${statusColor}>` + strStatus + "</p>" + "<div class='absolute bottom-0 right-0'>" + updateStatus + "</div>" + "</div>" +
+                            "<div class='relative h-full'>" + `<p class=${statusColor}>` + strStatus + "</p>" + "<div class='absolute bottom-0 right-0'>" + updateStatus + "</div>" + "</div>" +
                             "                </div> "
 
                         let attendenceBody = "<div class=\"flex flex-col w-full h-full m-4\">\n" +
@@ -171,7 +251,7 @@
                             "                <span class=\"w-2 h-2 mr-1 bg-orange-500 rounded-full\"></span>\n" +
                             "                지각\n" +
                             "            </span>"
-                            + "</div>" + "<div class='mt-6 flex flex-wrap items-center justify-center'>" + appendTag + "</div>" +
+                            + "</div>" + "<div class='flex flex-wrap items-center justify-center mt-6'>" + appendTag + "</div>" +
                             "</div>"
                         "</div>"
 
@@ -224,9 +304,15 @@
                         if (data[i].astatus === 1) {
                             strStatus += "지각"
                             statusColor += "text-orange-400"
-                            updateStatus = "<button class=\"mr-2 mb-2 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded\">\n" +
-                                "  제출\n" +
-                                "</button>"
+                            if (data[i].ustatus === 0) {
+                                updateStatus = "<button class=\"mr-2 mb-2 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded\" data-no='" + data[i].no + "' onclick=\"modalToggle(" + arr[i].no + ")\">" +
+                                    "제출\n" +
+                                    "</button>"
+                            } else {
+                                updateStatus = "<button class=\"mr-2 mb-2 bg-transparent text-white bg-gray-300 cursor-not-allowed font-semibold  py-2 px-4 border border-blue-500 hover:border-transparent rounded\">" +
+                                    "대기중\n" +
+                                    "</button>"
+                            }
 
                         }
 
@@ -237,15 +323,21 @@
                         if (data[i].astatus === 3) {
                             strStatus += "무단결석"
                             statusColor += "text-red-400"
-                            updateStatus = "<button class=\" mr-2 mb-2 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded\">\n" +
-                                "  제출\n" +
-                                "</button>"
+                            if (data[i].ustatus === 0) {
+                                updateStatus = "<button class=\"mr-2 mb-2 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded\" data-no='" + data[i].no + "' onclick=\"modalToggle(" + data[i].no + ")\">" +
+                                    "제출\n" +
+                                    "</button>"
+                            } else {
+                                updateStatus = "<button class=\"mr-2 mb-2 bg-transparent text-white bg-gray-300 cursor-not-allowed font-semibold  py-2 px-4 border border-blue-500 hover:border-transparent rounded\">" +
+                                    "대기중\n" +
+                                    "</button>"
+                            }
 
                         }
 
 
                         appendTag += "     <div class=\" w-1/4 border-2 rounded-md shadow-xl mb-5 mr-4 h-48 \" >\n" +
-                            "<div class='h-full relative'>" + `<p class=${statusColor}>` + strStatus + "</p>" + "<div class='absolute bottom-0 right-0'>" + updateStatus + "</div>" + "</div>" +
+                            "<div class='relative h-full'>" + `<p class=${statusColor}>` + strStatus + "</p>" + "<div class='absolute bottom-0 right-0'>" + updateStatus + "</div>" + "</div>" +
                             "                </div> "
 
                         let attendenceBody = "<div class=\"flex flex-col w-full h-full m-4\">\n" +
@@ -263,7 +355,7 @@
                             "                <span class=\"w-2 h-2 mr-1 bg-orange-500 rounded-full\"></span>\n" +
                             "                지각\n" +
                             "            </span>"
-                            + "</div>" + "<div class='mt-6 flex flex-wrap items-center justify-center'>" + appendTag + "</div>" +
+                            + "</div>" + "<div class='flex flex-wrap items-center justify-center mt-6'>" + appendTag + "</div>" +
                             "</div>"
                         "</div>"
 
@@ -296,44 +388,91 @@
 
 
             let arr = [[${userAttendanceDtos}]]
-            console.log(typeof arr[0].astatus)
+            // let pageMakerDto = [[${pageMakerDto}]]
+            let nextAtag = ''
+            $('.section2').children().remove();
+
+            // console.log("pageMakerDto" + pageMakerDto.startPage)
+            // console.log("pageMakerDto prev : " + pageMakerDto.prev)
+            // console.log("pageMakerDto.criteria.pageNum : " + pageMakerDto.criteria.pageNum)
+            // console.log("pageMakerDto.startPage : " + pageMakerDto.startPage)
+            // console.log("pageMakerDto.endPage : " + pageMakerDto.endPage)
+            // console.log("pageMakerDto.total : " + pageMakerDto.total)
+            // console.log("pageMakerDto.totalPage : " + pageMakerDto.totalPage)
+
+            // if (pageMakerDto.prev) {
+            //     $('#pageNum').append('<a href="#" data-pagenum="' + (pageMakerDto.startPage - 1) + '">PRE</a>');
+            // }
+            //
+            // if (pageMakerDto.criteria.pageNum > 10) {
+            //     $('#pageNum').append('<a href="#none" data-pagenum="1">1</a><span>s...</span>');
+            // }
+            //
+            // for (let p = parseInt(pageMakerDto.startPage); p <= parseInt(pageMakerDto.endPage); p++) {
+            //     nextAtag += '<a href="#none" data-pagenum="' + p + '" class="mr-4 mt-3 text-slate-400">' + p + '</a>'
+            // }
+
+
+            //
+
+            //
+            // if (pageMakerDto.next) {
+            //     $('#pageNum').append('<a href="#none" data-pagenum="' + (pageMakerDto.endPage + 1) + '">NEX</a>')
+            // }
+            //
+            // $('#pageNum').append("<span>" + pageMakerDto.totalPage + "</span>")
+
 
             for (let i = 0; i < size; i++) {
                 let strStatus = ""
                 let statusColor = ""
                 let updateStatus = ""
-
+                let regDate = ""
 
                 if (arr[i].astatus === 0) {
                     strStatus += "출석"
                     statusColor += "text-green-400"
-
+                    regDate = arr[i].reg_date
                 }
                 if (arr[i].astatus === 1) {
                     strStatus += "지각"
                     statusColor += "text-orange-400"
-                    updateStatus = "<button class=\"mr-2 mb-2 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded\">\n" +
-                        "  제출\n" +
-                        "</button>"
+                    regDate = arr[i].reg_date
+                    if (arr[i].ustatus === 0) {
+                        updateStatus = "<button class=\"mr-2 mb-2 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded\" data-no='" + arr[i].no + "' onclick=\"modalToggle(" + arr[i].no + ")\">" +
+                            "제출\n" +
+                            "</button>"
+                    } else {
+                        updateStatus = "<button class=\"mr-2 mb-2 bg-transparent text-white bg-gray-300 cursor-not-allowed font-semibold  py-2 px-4 border border-blue-500 hover:border-transparent rounded\">" +
+                            "대기중\n" +
+                            "</button>"
+                    }
 
                 }
 
                 if (arr[i].astatus === 2) {
                     strStatus += "병결"
-
+                    regDate = arr[i].reg_date
                 }
                 if (arr[i].astatus === 3) {
                     strStatus += "무단결석"
                     statusColor += "text-red-400"
-                    updateStatus = "<button class=\" mr-2 mb-2 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded\">\n" +
-                        "  제출\n" +
-                        "</button>"
+                    regDate = arr[i].reg_date
+                    if (arr[i].ustatus === 0) {
+                        updateStatus = "<button class=\"mr-2 mb-2 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded\" data-no='" + arr[i].no + "' onclick=\"modalToggle(" + arr[i].no + ")\">" +
+                            "제출\n" +
+                            "</button>"
+                    } else {
+                        updateStatus = "<button class=\"mr-2 mb-2 bg-transparent text-white bg-gray-300 cursor-not-allowed font-semibold  py-2 px-4 border border-blue-500 hover:border-transparent rounded\">" +
+                            "대기중\n" +
+                            "</button>"
+                    }
 
                 }
 
 
                 appendTag += "     <div class=\" w-1/4 border-2 rounded-md shadow-xl mb-5 mr-4 h-48 \" >\n" +
-                    "<div class='h-full relative'>" + `<p class=${statusColor}>` + strStatus + "</p>" + "<div class='absolute bottom-0 right-0'>" + updateStatus + "</div>" + "</div>" +
+                    "<div class='relative h-full'>" + `<p class=${statusColor}>` + strStatus + "</p>" + "<p>" + regDate + "</p>" + "<div class='absolute bottom-0 right-0'>" + updateStatus + "</div>" + "</div>" +
                     "                </div> "
 
 
@@ -354,14 +493,52 @@
                 "                <span class=\"w-2 h-2 mr-1 bg-orange-500 rounded-full\"></span>\n" +
                 "                지각\n" +
                 "            </span>"
-                + "</div>" + "<div class='mt-6 flex flex-wrap items-center justify-center'>" + appendTag + "</div>" + "</div>" +
+                + "</div>" + "<div class='flex flex-wrap items-center justify-center mt-6'>" + appendTag + "</div>" + "</div>" +
                 "</div>" +
                 "</div>"
+
 
             $(".category p").removeClass("font-semibold").addClass("text-slate-400")
             $(".attendence").addClass("font-semibold").removeClass("text-slate-400")
             $(".section2").children().remove()
             $(".section2").append(attendenceBody)
+       
+
+            // $(document).on('click', '#pageNum a[data-pagenum=' + pageMakerDto.criteria.pageNum + ']', function () {
+            //     console.log("page number click!!")
+            //
+            //     let pageNum = $(this).data('pagenum')
+            //
+            //     $.ajax({
+            //         url: '/mypage?pageNum=' + pageNum,
+            //         method: 'POST',
+            //         processData: false,
+            //         contentType: false,
+            //         success: function (data) {
+            //             console.log('AJAX SUCCESS - ajax_attendence()');
+            //             console.log("data : ", data)
+            //             // attendenceTab([[${data.size()}]])
+            //
+            //
+            //         }
+            //
+            //         ,
+            //         error: function (data) {
+            //             console.log('AJAX ERROR - ajax_writeStudy()');
+            //
+            //             // alert('일정 등록에 문제가 발생 했습니다.');
+            //
+            //         }
+            //         ,
+            //         complete: function (data) {
+            //             console.log('AJAX COMPLETE - ajax_writeStudy()');
+            //
+            //
+            //         }
+            //     })
+            //
+            // })
+
 
         }
 
@@ -418,20 +595,29 @@
 
         }
 
+        function modalToggle(no) {
+            console.log("modalToogle()")
+            console.log("no", no)
+            $('#defaultModal').toggleClass('hidden');
+            $(this).data('no', no)
 
+
+            $('.submitFile').data("no", no)
+
+        }
     </script>
-
 </head>
 <body class="flex flex-col items-center justify-center w-5/6 mx-auto">
+<div th:replace="~{/include/modal.html::modal}"></div>
 <header th:replace="~{/include/header_nav_footer::header}"></header>
 <section class="flex flex-row w-5/6 border-solid mt-7">
     <div class="relative h-screen p-4 mr-3 border-4 divide-y-reverse rounded-lg w-96">
         <div class="w-full font-bold border-b-2 border-b-slate-200 h-60">
-                            <span
-                                    th:text="${session.loginedUserDto.id}+'('+${session.loginedUserDto.name}+')'"
-                                    class="text-xl font-semibold"
-                            >Sample username</span
-                            >
+                    <span
+                            th:text="${session.loginedUserDto.id}+'('+${session.loginedUserDto.name}+')'"
+                            class="text-xl font-semibold"
+                    >Sample username</span
+                    >
             <div class="rounded-full"></div>
         </div>
 
@@ -469,7 +655,7 @@
         <div class="flex flex-col w-full h-full m-4">
             <div class="w-full border-b-2 h-1/3 border-b-slate-200">
                 <div class="mb-4 text-lg font-bold">출결사항</div>
-                <div class="relative flex flex-col items-center justify-center">
+                <div th:if="${userAttendanceDtos.size()>0}" class="relative flex flex-col items-center justify-center">
                     <p class="mb-4 text-2xl text-green-500">출석일 / 총 출석일</p>
 
                     <div class="text-4xl font-bold font-extrabold mb-9">
@@ -492,6 +678,7 @@
                 <div class="mt-3 text-lg font-bold">스케쥴</div>
             </div>
         </div>
+        <div id="pageNum">hi</div>
     </div>
 </section>
 <footer th:replace="~{/include/header_nav_footer.html::footer}"></footer>

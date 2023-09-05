@@ -1,7 +1,10 @@
 package com.btc.snow.user.attendance;
 
 
+import com.btc.snow.admin.assignment.UploadFileService;
+import com.btc.snow.include.SubmitDto;
 import com.btc.snow.user.member.UserMemberDto;
+import com.google.firebase.auth.FirebaseAuthException;
 import com.google.zxing.WriterException;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.log4j.Log4j2;
@@ -13,8 +16,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.IOException;
 import java.net.URI;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @Controller
@@ -24,6 +30,37 @@ public class UserAttendanceController {
 
     @Autowired
     UserAttendanceService userAttendanceService;
+
+    @Autowired
+    UploadFileService uploadFileService;
+
+    @PostMapping("/attendence/docs")
+    @ResponseBody
+    public Object uploadFile(UserAttendanceDto userAttendanceDto, HttpSession session) throws IOException, FirebaseAuthException {
+        log.info("file {}", userAttendanceDto.getFile());
+        Map<String, Object> resMap = new HashMap<>();
+        log.info("uploadFile()!!");
+        SubmitDto submitDto = new SubmitDto();
+        submitDto.setA_no(userAttendanceDto.getNo());
+
+
+        log.info("userAttendanceDto getNo{}", userAttendanceDto.getNo());
+
+        String savedFileName = uploadFileService.upload(userAttendanceDto.getFile());
+        UserMemberDto userMemberDto = (UserMemberDto) session.getAttribute("loginedUserDto");
+        log.info("userMemberDto {}", userMemberDto.getId());
+
+        if (savedFileName != null) {
+            submitDto.setU_id(userMemberDto.getId());
+            submitDto.setFile(savedFileName);
+
+            return userAttendanceService.submitDocument(submitDto);
+        } else {
+            return null;
+        }
+
+
+    }
 
 
     @GetMapping("/attendance")
@@ -112,14 +149,16 @@ public class UserAttendanceController {
         UserMemberDto userMemberDto = (UserMemberDto) session.getAttribute("loginedUserDto");
         List<UserAttendanceDto> userAttendanceDtos = null;
         if (request.equals("absent")) {
-
             userAttendanceDtos = userAttendanceService.selectAbsentAttendence(userMemberDto.getId());
+
         }
         if (request.equals("attendanceACK")) {
             userAttendanceDtos = userAttendanceService.selectACKAttendence(userMemberDto.getId());
+
         }
         if (request.equals("tardy")) {
             userAttendanceDtos = userAttendanceService.selectTardyAttendence(userMemberDto.getId());
+
         }
 
 

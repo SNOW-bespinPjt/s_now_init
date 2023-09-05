@@ -1,6 +1,9 @@
 package com.btc.snow.user.attendance;
 
 
+import com.btc.snow.include.SubmitDto;
+import com.btc.snow.include.page.Criteria;
+import com.btc.snow.include.page.PageMakerDto;
 import com.btc.snow.user.member.UserMemberDto;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
@@ -149,16 +152,22 @@ public class UserAttendanceService implements IUserAttendanceService {
     public List<UserAttendanceDto> selectAllUserforAttendence(String u_id) {
         log.info("selectAllUserforAttendence : ");
         log.info(" u_id : " + u_id);
+        List<UserAttendanceDto> userAttendanceDtos;
+        Map<String, Object> map = new HashMap<>();
+        map.put("u_id", u_id);
+  
 
-        List<UserAttendanceDto> userAttendanceDtos = userAttendanceMapper.selectAllUserforAttendence(u_id);
+        userAttendanceDtos = userAttendanceMapper.selectAllUserforAttendence(map);
+
+        log.info("userAttendenceDtos {}", userAttendanceDtos);
 
         if (userAttendanceDtos == null) {
-            log.info("usetrAttendenceDtos niull!!");
+            log.info("usetrAttendenceDtos null!!");
 
             return null;
 
         } else {
-            log.info("usetrAttendenceDtos success {}!!", userAttendanceDtos.get(0));
+
 
             return userAttendanceDtos;
 
@@ -203,6 +212,45 @@ public class UserAttendanceService implements IUserAttendanceService {
         return userAttendanceMapper.selectTardyAttendence(id);
     }
 
+    @Override
+    public Object submitDocument(SubmitDto submitDto) {
+        log.info("submitDocument(SubmitDto submitDto)");
+        Map<String, Object> map = new HashMap<>();
+
+        int result = userAttendanceMapper.updateDocumentToSubmit(submitDto);
+//        SubmitDto selectSubmitDto = userAttendanceMapper.selectUpdateStatus(submitDto.getU_id());
+        map.put("result", result);
+        if (result <= 0) {
+            log.info("submitDocument FAIL");
+        } else {
+            log.info("submitDocument SUCCESS");
+            result = userAttendanceMapper.updateAttendenceUstatus(submitDto);
+            map.put("updateAttendence", result);
+            if (result <= 0) {
+                log.info("updateAttendenceUstatus Fail!!");
+            }
+            if (result > 0) {
+                log.info("updateAttendenceUstatus Success!!");
+            }
+
+        }
+
+
+//        map.put("status", status);
+
+        return map;
+    }
+
+    @Override
+    public PageMakerDto listAttendence(String uId, int pageNum, int amount) {
+        log.info("listAttendence(String uId, int pageNum, int amount)");
+
+        Criteria criteria = new Criteria(pageNum, amount);
+        int totalCnt = userAttendanceMapper.getTotalCnt(uId);
+
+        return new PageMakerDto(criteria, totalCnt);
+    }
+
 
     //2주 전 데이터 ustatus update (1 -> 업데이트 불가능)
     @Scheduled(cron = "0 0 0 * * *", zone = "Asia/Seoul")
@@ -213,4 +261,12 @@ public class UserAttendanceService implements IUserAttendanceService {
     }
 
 
+//    @Override
+//    public SubmitDto selectAttendanceSubmit(String id) {
+//
+//        SubmitDto submitDto = userAttendanceMapper.selectUpdateStatus(id);
+//
+//
+//        return null;
+//    }
 }
