@@ -49,20 +49,20 @@ public class UserMemberService implements IUserMemberService {
 			case INSERT_FAIL_AT_DATABASE:
 				log.info("[UserMemberService] INSERT FAIL AT DATABASE");
 				break;
-				
+
 			case INSERT_SUCCESS_AT_DATABASE:
 				log.info("[UserMemberService] INSERT SUCCESS AT DATABASE");
 				break;
 
 			}
-			
+
 			return result;
-			
+
 		} else {
 			return INSERT_DUPLICATE_ID_AT_DATABASE;
-			
+
 		}
-		
+
 	}
 
 	@Override

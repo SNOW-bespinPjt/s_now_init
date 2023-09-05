@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script th:replace="~{/include/common_js.html::jquery_cdn}"></script>
+    <script th:replace="~{/admin/curriculum/create_curriculum_form_js.html::js}"></script>
+
+
+</head>
+<body>
+<div class="flex">
+    <!-- nav -->
+    <div>
+        <nav th:replace="~{/include/admin_nav::nav}"></nav>
+    </div>
+    <!--  section & footer  -->
+    <div class="flex flex-col items-center justify-center w-5/6 mx-auto">
+        <h2 class="relative   top-0 left-0 mt-4 text-2xl font-bold ml-14">
+            ADMIN CURRICULUM CREATE FORM</h2>
+        <section class="flex flex-row w-5/6 border-solid mt-7">
+            <!-- ⬅️ -->
+            <div
+                    class="absolute relative items-center justify-center w-screen h-screen mr-8"
+            >
+                <div id="create_curriculum_wrap" class="items-center justify-center">
+                    <div class="max-w-lg mx-auto bg-white rounded-lg shadow-lg p-6">
+                        <form action="/admin/curriculum/create_curriculum_confirm" method="POST"
+                              class="create_curriculum_form space-y-4"
+                              enctype="multipart/form-data">
+                            <!-- Admin ID -->
+                            <div>
+                                <label for="admin_id" class="block font-medium">Admin ID</label>
+                                <input type="text" id="admin_id" name="admin_id"
+                                       class="w-full border-gray-300 rounded-md p-2" required>
+                            </div>
+
+                            <!-- Book No (You can use a select element if it's based on existing books) -->
+                            <div id="book_search">
+                                <label for="book_no" class="block font-medium">Book No</label>
+                                <input type="text" id="book_no" name="book_no"
+                                       class="w-full border-gray-300 rounded-md p-2" required>
+
+                                <input
+                                        data-modal-target="defaultModal"
+                                        data-modal-toggle="defaultModal"
+                                        class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                                        type="button"
+                                        value="도서 검색"
+                                        onclick="modallToggle()"
+                                >
+
+                            </div>
+
+                            <!-- 모달 START  -->
+                            <div
+                                    id="defaultModal"
+                                    tabindex="-1"
+                                    aria-hidden="true"
+                                    class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] bg-slate backdrop-blur-xl flex justify-center items-center max-h-full bg-black bg-opacity-50"
+                            >
+                                <div class="relative w-full max-w-2xl max-h-full">
+                                    <!-- Modal content -->
+                                    <div id="search" class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                        <!-- Modal header -->
+                                        <div
+                                                class="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600 modal_form"
+                                        >
+                                            <input type="text" class="bookName" name="bookKeyword"
+                                                   placeholder="도서이름을 입력해주세요.">
+                                            <input type="button" value="검색" onclick="ajax_getSearchBook()">
+                                            <button
+                                                    type="button"
+                                                    class="inline-flex items-center justify-center w-8 h-8 ml-auto text-sm text-gray-400 bg-transparent rounded-lg hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white"
+                                                    data-modal-hide="defaultModal"
+                                                    onclick="modallToggle()"
+                                            >
+                                                <svg
+                                                        class="w-3 h-3"
+                                                        aria-hidden="true"
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        fill="none"
+                                                        viewBox="0 0 14 14"
+                                                >
+                                                    <path
+                                                            stroke="currentColor"
+                                                            stroke-linecap="round"
+                                                            stroke-linejoin="round"
+                                                            stroke-width="2"
+                                                            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                                                    />
+                                                </svg>
+                                                <span class="sr-only">Close modal</span>
+                                            </button>
+                                        </div>
+                                        <!-- Modal body -->
+                                        <div id="book_list" class="p-6 space-y-6">
+                                            <ul>
+
+                                            </ul>
+                                        </div>
+                                        <!-- Modal footer -->
+                                        <div
+                                                class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600"
+                                        >
+                                            <button
+                                                    data-modal-hide="defaultModal"
+                                                    type="button"
+                                                    onclick="modallToggle()"
+                                                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                                            >
+                                                I accept
+                                            </button>
+                                            <button
+                                                    data-modal-hide="defaultModal"
+                                                    type="button"
+                                                    onclick="modallToggle()"
+                                                    class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600"
+                                            >
+                                                Decline
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 모달 END  -->
+
+                            <!-- Title -->
+                            <div>
+                                <label for="title" class="block font-medium">Title</label>
+                                <input type="text" id="title" name="title" class="w-full border-gray-300 rounded-md p-2"
+                                       required>
+                            </div>
+
+                            <!-- Content -->
+                            <div>
+                                <label for="content" class="block font-medium">Content</label>
+                                <input id="content" name="content" rows="4"
+                                       class="w-full border-gray-300 rounded-md p-2" required></input>
+                            </div>
+
+                            <!-- Category -->
+                            <div>
+                                <label for="category" class="block font-medium">Category</label>
+                                <input type="text" id="category" name="category"
+                                       class="w-full border-gray-300 rounded-md p-2" required>
+                            </div>
+
+                            <!-- Student Division (Dropdown Select) -->
+                            <div>
+                                <label for="std_div" class="block font-medium">Student Division</label>
+                                <select id="std_div" name="std_div" class="w-full border-gray-300 rounded-md p-2"
+                                        required>
+                                    <option value="엔지니어">엔지니어</option>
+                                    <option value="개발자">개발자</option>
+                                </select>
+                            </div>
+
+                            <!-- Hour -->
+                            <div>
+                                <label for="hour" class="block font-medium">Hour</label>
+                                <input type="number" id="hour" name="hour" class="w-full border-gray-300 rounded-md p-2"
+                                       required>
+                            </div>
+
+                            <!-- File -->
+                            <div>
+                                <label for="file" class="block font-medium">File</label>
+                                <input type="file" id="file" name="file" class="w-full border-gray-300 rounded-md p-2">
+                            </div>
+
+                            <!-- Start Date (Datepicker) -->
+                            <div>
+                                <label for="start_date" class="block font-medium">Start Date</label>
+                                <input type="date" id="start_date" name="start_date"
+                                       class="w-full border-gray-300 rounded-md p-2" required>
+                            </div>
+
+                            <!-- End Date (Datepicker) -->
+                            <div>
+                                <label for="end_date" class="block font-medium">End Date</label>
+                                <input type="date" id="end_date" name="end_date"
+                                       class="w-full border-gray-300 rounded-md p-2" required>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <div class="text-right">
+                                <button type="button"
+                                        class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600">Create
+                                    Curriculum
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+</body>
+
+</html>
