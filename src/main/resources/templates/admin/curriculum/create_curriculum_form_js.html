@@ -3,6 +3,9 @@
     $(document).ready(function () {
         console.log("DOCUMENT WILL BE READY TO OPERATE NOW")
 
+        $('#start_date').val(new Date().toISOString().substring(0, 10));
+        $('#end_date').val(new Date().toISOString().substring(0, 10));
+
         // 이벤트 핸들러 초기화
         init_events();
 
@@ -11,9 +14,6 @@
     //init_events() START
     function init_events() {
         console.log("init_events() CALLED!!")
-
-        $('#start_date').val(new Date().toISOString().substring(0, 10));
-        $('#end_date').val(new Date().toISOString().substring(0, 10));
 
         // 도서 검색 입력 HANDLER START
         $(document).on('keyup', '#create_curriculum_wrap input[name="bookKeyword"]', function (e) {
@@ -28,7 +28,7 @@
 
         // 도서 검색 입력 HANDLER END
 
-        // 도서 목록 리스트 CLICK HANDLER END
+        // 도서 목록 리스트 CLICK HANDLER START
         $(document).on('click', '#book_list a', function (e) {
             console.log('book list CLICKED HANDLER!!');
 
@@ -45,9 +45,81 @@
 
         });
 
+        // 도서 목록 리스트 CLICK HANDLER END
+
+        // CREATE BTN CLICK HANDLER START
+        $(document).on('click', '#buttons .create_btn', function (e) {
+            console.log('#buttons .create_btn CLICK HANDLER!!');
+
+            createCurriculum();
+
+        });
+
+        // CREATE BTN CLICK HANDLER END
+
+        // RESET BTN CLICK HANDLER START
+        $(document).on('click', '#buttons .reset_btn', function (e) {
+            console.log('#buttons .reset_btn CLICK HANDLER!!');
+
+            $('#start_date').val(new Date().toISOString().substring(0, 10));
+            $('#end_date').val(new Date().toISOString().substring(0, 10));
+
+        });
+
+        // RESET BTN CLICK HANDLER END
+
+        // CANCEL BTN CLICK HANDLER START
+        $(document).on('click', '#buttons .cancel_btn', function (e) {
+            console.log('#buttons .cancel_btn CLICK HANDLER!!');
+
+            $('#start_date').val(new Date().toISOString().substring(0, 10));
+            $('#end_date').val(new Date().toISOString().substring(0, 10));
+
+        });
+
+        // CANCEL BTN CLICK HANDLER END
+
     }
 
     //init_events() END
+
+    // CREATE BTN CLICK HANDLER START
+    function createCurriculum() {
+        console.log('createCurriculum() CALLED!!');
+
+        let form = $(".create_curriculum_form");
+
+        if (form.find("input[name='title']").val() == '') {
+            alert("INPUT TITLE");
+            form.find("input[name='title']").focus();
+
+        } else if (form.find("input[name='content']").val() == '') {
+            alert("INPUT CONTENT");
+            form.find("textarea[name='content']").focus();
+
+        } else if (form.find("input[name='category']").val() == '') {
+            alert("INPUT CATEGORY");
+            form.find("select[name='category']").focus();
+
+        } else if (form.find("select[name='std_div']").val() == '') {
+            alert("INPUT STD_DIV");
+            form.find("input[name='std_div']").focus();
+
+        } else if (form.find("input[name='start_date']").val() == '') {
+            alert("INPUT START_DATE");
+            form.find("input[name='start_date']").focus();
+
+        } else if (form.find("input[name='end_date']").val() == '') {
+            alert("INPUT END_DATE");
+            form.find("input[name='end_date']").focus();
+
+        } else {
+            form.submit();
+        }
+
+    }
+
+    // CREATE BTN CLICK HANDLER END
 
     // MODAL TOGGLE ON/OFF START
     function modallToggle() {

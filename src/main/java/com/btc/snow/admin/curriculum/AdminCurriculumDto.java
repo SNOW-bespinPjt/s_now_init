@@ -15,7 +15,7 @@ public class AdminCurriculumDto {
     private String std_div;
     private int isedu;
     private int hour;
-    private String file;
+    private String file_name;
     private int grade;
     private String start_date;
     private String end_date;

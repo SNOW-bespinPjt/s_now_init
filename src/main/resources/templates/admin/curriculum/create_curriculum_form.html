@@ -7,7 +7,6 @@
     <script th:replace="~{/include/common_js.html::jquery_cdn}"></script>
     <script th:replace="~{/admin/curriculum/create_curriculum_form_js.html::js}"></script>
 
-
 </head>
 <body>
 <div class="flex">
@@ -29,12 +28,6 @@
                         <form action="/admin/curriculum/create_curriculum_confirm" method="POST"
                               class="create_curriculum_form space-y-4"
                               enctype="multipart/form-data">
-                            <!-- Admin ID -->
-                            <div>
-                                <label for="admin_id" class="block font-medium">Admin ID</label>
-                                <input type="text" id="admin_id" name="admin_id"
-                                       class="w-full border-gray-300 rounded-md p-2" required>
-                            </div>
 
                             <!-- Book No (You can use a select element if it's based on existing books) -->
                             <div id="book_search">
@@ -136,7 +129,7 @@
                             <!-- Content -->
                             <div>
                                 <label for="content" class="block font-medium">Content</label>
-                                <input id="content" name="content" rows="4"
+                                <input type="text" id="content" name="content" rows="4"
                                        class="w-full border-gray-300 rounded-md p-2" required></input>
                             </div>
 
@@ -152,6 +145,7 @@
                                 <label for="std_div" class="block font-medium">Student Division</label>
                                 <select id="std_div" name="std_div" class="w-full border-gray-300 rounded-md p-2"
                                         required>
+                                    <option value=''>---- 교육반을 고르시오 ---</option>
                                     <option value="엔지니어">엔지니어</option>
                                     <option value="개발자">개발자</option>
                                 </select>
@@ -160,7 +154,7 @@
                             <!-- Hour -->
                             <div>
                                 <label for="hour" class="block font-medium">Hour</label>
-                                <input type="number" id="hour" name="hour" class="w-full border-gray-300 rounded-md p-2"
+                                <input type="text" id="hour" name="hour" class="w-full border-gray-300 rounded-md p-2"
                                        required>
                             </div>
 
@@ -185,10 +179,20 @@
                             </div>
 
                             <!-- Submit Button -->
-                            <div class="text-right">
+                            <div id="buttons" class="text-right">
                                 <button type="button"
-                                        class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600">Create
+                                        class="create_btn px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600"
+                                >
+                                    Create
                                     Curriculum
+                                </button>
+                                <button type="reset"
+                                        class="reset_btn px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-red-500">
+                                    reset
+                                </button>
+                                <button type="button"
+                                        class="cancel_btn px-4 py-2 bg-red-500 text-white rounded-md hover:bg-green-600">
+                                    cancel
                                 </button>
                             </div>
                         </form>

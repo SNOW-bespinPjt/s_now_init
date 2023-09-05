@@ -77,7 +77,10 @@
                                 </tr>
                                 <tr>
                                     <td>수업 파일</td>
-                                    <td th:text="${msgMap.adminCurriculumDto.file}"></td>
+                                    <td>
+                                        <a th:href="@{/downloadFromCurriculum(file=${msgMap.adminCurriculumDto.file_name}, admin_id=${msgMap.adminCurriculumDto.admin_id})}"
+                                           th:text="${msgMap.adminCurriculumDto.file_name}"
+                                           th:download="${msgMap.adminCurriculumDto.file_name}"></a></td>
                                 </tr>
                             </table>
                         </li>
