@@ -83,6 +83,7 @@
         SELECT *
         FROM ASSIGNMENT
         WHERE group_id = #{no}
+        ORDER BY is_submit = 1, mod_date DESC
     </select>
 
     <update id="updatePoint" parameterType="com.btc.snow.user.assignment.UserAssignmentDto">
