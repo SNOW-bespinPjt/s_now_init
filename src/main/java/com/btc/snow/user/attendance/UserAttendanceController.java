@@ -38,8 +38,11 @@ public class UserAttendanceController {
     @ResponseBody
     public Object uploadFile(UserAttendanceDto userAttendanceDto, HttpSession session) throws IOException, FirebaseAuthException {
         log.info("file {}", userAttendanceDto.getFile());
+
         Map<String, Object> resMap = new HashMap<>();
+
         log.info("uploadFile()!!");
+
         SubmitDto submitDto = new SubmitDto();
         submitDto.setA_no(userAttendanceDto.getNo());
 
@@ -80,7 +83,7 @@ public class UserAttendanceController {
 
         log.info("qrCheckConfrim() called");
         log.info("qrCheckConfrim() u_id : " + u_id);
-        int result = (Integer) userAttendanceService.qrChackConfirm(u_id);
+        int result = (Integer) userAttendanceService.qrCheckConfirm(u_id);
 
         log.info("hey  : " + result);
 

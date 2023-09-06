@@ -47,4 +47,15 @@ public class AdminAttendenceController {
 
         return result;
     }
+
+    @PostMapping("/cancel")
+    @ResponseBody
+    public Object cancelStatusForSubmit(@RequestParam("no") int no) {
+        log.info("cancelStatusForSubmit()");
+        log.info("no : ", no);
+        int result = adminAttendenceService.updateStatusForSubmitToCancle(no);
+
+
+        return result;
+    }
 }

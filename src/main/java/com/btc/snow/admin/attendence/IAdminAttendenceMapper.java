@@ -14,4 +14,6 @@ public interface IAdminAttendenceMapper {
     int getTotalCntOfSubmit();
 
     int updateStatusForSubmit(int no);
+
+    int cancelSubmit(int no);
 }

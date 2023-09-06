@@ -7,10 +7,12 @@ import org.springframework.web.multipart.MultipartFile;
 public class UserAttendanceDto {
     int no;
     String u_id;
+    int ustatus;
     int astatus;
     int tstatus;
     String reg_date;
     String mod_date;
+    String status;
     MultipartFile file;
 
 }
