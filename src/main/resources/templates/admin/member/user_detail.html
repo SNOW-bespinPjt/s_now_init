@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script crossOrigin="anonymous"
+            integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
+            src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script th:src="@{/assignment/admin/js/approval.js}" type="text/javascript"></script>
+</head>
+<body>
+<div class="flex">
+    <!-- nav -->
+    <div>
+        <nav th:replace="~{/include/admin_nav::nav}"></nav>
+    </div>
+    <!--  section & footer  -->
+    <div class="flex flex-col items-center justify-center w-5/6 mx-auto">
+        <section class="flex flex-row w-5/6 border-solid mt-7">
+            <div
+                    class="flex items-center justify-center w-screen h-full mr-8 border-2 rounded-lg bg-slate-100"
+            >
+                <div class="mt-4 ml-14">
+                    <div>
+                        <span class="font-bold text-2xl" th:text="${userMemberDto.name}"></span>
+                        <div class="overflow-x-auto p-4">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                                <div class="bg-white rounded-lg shadow-md p-4">
+                                    <div>
+                                        <img alt="Male Image"
+                                             class="mx-auto w-full" th:if="${userMemberDto.gender eq '남'}"
+                                             th:src="@{/assignment/admin/img/user_M.png}"/>
+                                        <img alt="Female Image"
+                                             class="mx-auto w-full" th:src="@{/assignment/admin/img/user_W.png}"
+                                             th:unless="${userMemberDto.gender eq '남'}"/>
+                                    </div>
+                                    <div>
+                                        <span>아이디 : </span>
+                                        <span th:text="${userMemberDto.id}"></span>
+                                    </div>
+                                    <div>
+                                        <span>이름 : </span>
+                                        <span th:text="${userMemberDto.name}"></span>
+                                    </div>
+                                    <div>
+                                        <span>메일 : </span>
+                                        <span th:text="${userMemberDto.mail}"></span>
+                                    </div>
+                                    <div>
+                                        <span>개인 전화 : </span>
+                                        <span th:text="${userMemberDto.phone}"></span>
+                                    </div>
+                                    <div>
+                                        <span>집 전화 : </span>
+                                        <span th:text="${userMemberDto.home_phone}"></span>
+                                    </div>
+                                    <div>
+                                        <span>집 주소 : </span>
+                                        <span th:text="${userMemberDto.address}"></span>
+                                    </div>
+                                    <div>
+                                        <span>성별 : </span>
+                                        <span th:text="${userMemberDto.gender}"></span>
+                                    </div>
+                                    <div>
+                                        <span>생년월일 : </span>
+                                        <span th:text="${userMemberDto.birthdate}"></span>
+                                    </div>
+                                    <div>
+                                        <span>나이 : </span>
+                                        <span th:text="${userMemberDto.age}"></span>
+                                    </div>
+                                    <div>
+                                        <span>대학교 : </span>
+                                        <span th:text="${userMemberDto.university}"></span>
+                                    </div>
+                                    <div>
+                                        <span>학과 : </span>
+                                        <span th:text="${userMemberDto.department}"></span>
+                                    </div>
+<!--                                    <div>-->
+<!--                                        <span>졸업여부 : </span>-->
+<!--                                        <span th:text="${userMemberDto.gradu_status}"></span>-->
+<!--                                    </div>-->
+                                    <div>
+                                        <span>가입일 : </span>
+                                        <span th:text="${userMemberDto.reg_date}"></span>
+                                    </div>
+                                    <div>
+                                        <span>BTC 코인 : </span>
+                                        <span th:text="${userMemberDto.coin}"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <footer th:replace="~{/include/header_nav_footer.html::footer}"></footer>
+    </div>
+</div>
+</body>
+</html>

@@ -36,7 +36,9 @@
                                              th:unless="${item.gender eq '남'}"/>
                                     </div>
                                     <div class="text-center mt-4">
-                                        <p class="text-lg font-semibold" th:text="${item.id}"></p>
+                                        <a th:href="@{'/admin/member/user_detail?no=' + ${item.no}}">
+                                            <p class="text-lg font-semibold" th:text="${item.id}"></p>
+                                        </a>
                                         <p th:text="${item.name}"></p>
                                     </div>
                                 </div>

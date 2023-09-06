@@ -31,4 +31,6 @@ public interface IAdminDaoMB {
     int deleteAdmin(int no);
 
     AdminMemberDto selectAdminForFindId(Map<String, Object> map);
+
+    UserMemberDto selectUser(int no);
 }

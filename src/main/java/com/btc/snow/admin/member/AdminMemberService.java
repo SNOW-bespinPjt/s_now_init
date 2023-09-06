@@ -127,6 +127,14 @@ public class AdminMemberService implements IAdminService {
         return iAdminDaoMB.selectUsers();
     }
 
+    // 학생 디테일 페이지
+    @Override
+    public UserMemberDto UserDetail(int no) {
+        log.info("[AdminMemberService] UserMemberDto()");
+
+        return iAdminDaoMB.selectUser(no);
+    }
+
     // 관리자 권한 설정
     @Override
     public int setAdminApproval(int no) {

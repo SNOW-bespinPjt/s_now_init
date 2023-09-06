@@ -24,6 +24,9 @@ public interface IAdminService {
     // 학생 리스트
     List<UserMemberDto> listupUser();
 
+    // 학생 디테일 페이지
+    UserMemberDto UserDetail(int no);
+
     // 관리자 권한 승인
     int setAdminApproval(int no);
 
@@ -44,4 +47,5 @@ public interface IAdminService {
 
     // 회원탈퇴
     int SignOutConfirm(int no);
+
 }

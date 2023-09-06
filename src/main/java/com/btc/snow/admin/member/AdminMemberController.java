@@ -252,16 +252,16 @@ public class AdminMemberController {
      * 학생 디테일 페이지
      */
     @GetMapping("/user_detail")
-    public ModelAndView UserDetail() {
+    public ModelAndView UserDetail(@RequestParam("no") int no) {
         log.info("[AdminMemberController] UserDetail()");
 
         String nextPage = "admin/member/user_detail";
 
-        List<UserMemberDto> userMemberDtos = adminMemberService.listupUser();
+        UserMemberDto userMemberDto = adminMemberService.UserDetail(no);
 
         ModelAndView mv = new ModelAndView();
         mv.setViewName(nextPage);
-        mv.addObject("userMemberDtos", userMemberDtos);
+        mv.addObject("userMemberDto", userMemberDto);
 
         return mv;
 
