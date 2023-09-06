@@ -259,11 +259,11 @@ public class AdminMemberController {
 
         List<UserMemberDto> userMemberDtos = adminMemberService.listupUser();
 
-        ModelAndView mv = new ModelAndView();                               // 1)객체 생성
-        mv.setViewName(nextPage);                                           // 2)뷰 설정
-        mv.addObject("userMemberDtos", userMemberDtos);       // 3) 데이터 추가
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName(nextPage);
+        mv.addObject("userMemberDtos", userMemberDtos);
 
-        return mv;                                                          // 4) MV 반환
+        return mv;
 
     }
     
