@@ -12,4 +12,7 @@ public class SubmitDto {
     String reg_date;
     String mod_date;
     String u_id;
+
+    String name;
+    String mail;
 }
