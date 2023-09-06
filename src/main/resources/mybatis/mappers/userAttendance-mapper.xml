@@ -92,10 +92,10 @@
     </select>
 
 
-    <select id="selectACKAttendence" parameterType="String" resultType="HashMap">
+    <select id="selectACKAttendence" parameterType="String" resultMap="attendenceDtoListForSatus">
         select *
         from ATTENDENCE
-        where u_id = #{Id}
+        where u_id = #{id}
           and astatus = 0
 
 
@@ -133,7 +133,7 @@
 
     </update>
 
-    <select id="getTotalCnt" parameterType="String" resultType="Integer">
+    <select id="getTotalCnt" parameterType="String" resultType="int">
         select count(*)
         from ATTENDENCE
         where u_id = #{u_no}
@@ -172,6 +172,14 @@
         select *
         from ATTENDENCE
         where DATE (date) = CURDATE() AND HOUR (date) >= 18;
+
+    </select>
+
+    <select id="isValidAttendence" parameterType="String" resultType="Integer">
+        select count(*)
+        from ATTENDENCE
+        where u_id = #{id}
+          and astatus = 0
 
     </select>
 

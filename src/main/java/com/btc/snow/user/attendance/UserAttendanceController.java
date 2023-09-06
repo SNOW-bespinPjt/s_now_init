@@ -1,5 +1,6 @@
 package com.btc.snow.user.attendance;
 
+import com.btc.snow.admin.assignment.UploadFileService;
 import com.btc.snow.include.SubmitDto;
 import com.btc.snow.user.member.UserMemberDto;
 import com.google.firebase.auth.FirebaseAuthException;
@@ -155,7 +156,7 @@ public class UserAttendanceController {
         }
         if (request.equals("attendanceACK")) {
             userAttendanceDtos = userAttendanceService.selectACKAttendence(userMemberDto.getId());
-
+            log.info("userAttendanceDtos {}", userAttendanceDtos.get(0).getStatus());
         }
         if (request.equals("tardy")) {
             userAttendanceDtos = userAttendanceService.selectTardyAttendence(userMemberDto.getId());

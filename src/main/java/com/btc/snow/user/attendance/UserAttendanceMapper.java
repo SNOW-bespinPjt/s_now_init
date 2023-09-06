@@ -51,4 +51,6 @@ public interface UserAttendanceMapper {
     Object selectAfterNoonTimeAttendence(String id);
 
     UserAttendanceDto coinByAttendence(String id);
+
+    int isValidAttendence(String id);
 }
