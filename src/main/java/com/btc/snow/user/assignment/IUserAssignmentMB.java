@@ -42,6 +42,4 @@ public interface IUserAssignmentMB {
 
     List<UserAssignmentDto> selectAssignmentForMyPage(int no);
 
-    // 코인 설정을 위한
-    List<UserAssignmentDto> coinByAssignment(int user_no);
 }

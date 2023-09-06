@@ -25,5 +25,4 @@ public interface IUserStudyMapper {
 
     int listCount();
 
-    List<UserStudyDto> coinByStudy(String id);
 }
