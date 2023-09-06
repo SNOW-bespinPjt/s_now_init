@@ -296,7 +296,7 @@ public class AdminMemberController {
     /*
      * 회원 탈퇴
      */
-    @PostMapping("/member_signout_confirm")
+    @GetMapping("/member_signout_confirm")
     public Object SignOutConfirm(HttpSession session) {
         log.info("[AdminController] SignOutConfirm()");
 

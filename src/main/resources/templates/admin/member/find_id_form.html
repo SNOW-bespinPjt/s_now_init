@@ -19,30 +19,29 @@
                 <div class="w-full max-w-md p-4">
                     <h3 class="text-2xl font-semibold mb-2">아이디 찾기</h3>
                     <p class="text-gray-600">(메일로 아이디를 보내드릴게요!)</p>
-
-                    <form method="post" name="find_id_form" th:action="@{/admin/member/find_id_confirm}" class="mt-4">
+                    <form class="mt-4" method="post" name="find_id_form" th:action="@{/admin/member/find_id_confirm}">
                         <div class="mb-4">
-                            <input name="name" placeholder="아이디 찾을 관리자 이름" type="text"
-                                   class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-green-300">
+                            <input class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-green-300" name="name" placeholder="아이디 찾을 관리자 이름"
+                                   type="text">
                         </div>
                         <div class="mb-4">
-                            <input name="mail" placeholder="메일 주소" type="email"
-                                   class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-green-300">
+                            <input class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-green-300" name="mail" placeholder="메일 주소"
+                                   type="email">
                         </div>
                         <div class="mb-4">
-                            <input onclick="findId();" type="button" value="아이디 찾기"
-                                   class="w-full bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-700 cursor-pointer">
+                            <input class="w-full bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-700 cursor-pointer" onclick="findId();" type="button"
+                                   value="아이디 찾기">
                         </div>
                         <div>
-                            <input type="reset" value="초기화"
-                                   class="w-full bg-gray-300 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-400 cursor-pointer">
+                            <input class="w-full bg-gray-300 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-400 cursor-pointer" type="reset"
+                                   value="초기화">
                         </div>
                         <div class="mt-4 items-center text-center">
-                            <a th:href="@{/admin/member/create_account_form}"
-                               class="text-blue-500 hover:underline hover:text-blue-700">회원가입</a>
+                            <a class="text-blue-500 hover:underline hover:text-blue-700"
+                               th:href="@{/admin/member/create_account_form}">회원가입</a>
                             <span class="mx-2 text-gray-600">|</span>
-                            <a th:href="@{/admin/member/member_login_form.html}"
-                               class="text-blue-500 hover:underline hover:text-blue-700">로그인</a>
+                            <a class="text-blue-500 hover:underline hover:text-blue-700"
+                               th:href="@{/admin/member/member_login_form.html}">로그인</a>
                         </div>
                     </form>
                 </div>
