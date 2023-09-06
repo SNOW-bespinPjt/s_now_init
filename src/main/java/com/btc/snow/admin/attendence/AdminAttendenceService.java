@@ -36,7 +36,10 @@ public class AdminAttendenceService implements IAdminAttendenceService {
 
 
         List<SubmitDto> submitDtos = iAdminAttendenceMapper.selectSubmitInfo(map);
+        
+
         int totalCnt = iAdminAttendenceMapper.getTotalCntOfSubmit();
+
         log.info("submitDtos Value getA_no() {}", submitDtos.get(0).getA_no());
         log.info("submitDtos Value getNo() {}", submitDtos.get(0).getNo());
         log.info("submitDtos Value getFile() {}", submitDtos.get(0).getFile());

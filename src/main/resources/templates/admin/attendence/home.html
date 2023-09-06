@@ -26,30 +26,34 @@
     </div>
     <!--  section & footer  -->
     <div class="flex flex-col items-center justify-center w-5/6 mx-auto">
-        <section class="flex flex-row w-5/6 border-solid mt-7">
+        <section class="flex flex-col w-5/6 border-solid mt-7">
             <!-- ⬅️ -->
-
+            <h2 class="mt-4 text-2xl font-bold ml-14">SUBMIT PAGE</h2>
             <div
-                    class="relative flex items-center justify-center w-screen h-screen mr-8 border-2 rounded-lg bg-slate-100"
+                    class="relative flex items-center justify-center w-screen h-full mr-8 border-2 rounded-lg bg-slate-100"
             >
 
-                <h2 class="absolute top-0 left-0 mt-4 text-2xl font-bold ml-14">SUBMIT PAGE</h2>
+
                 <div class="flex flex-col w-11/12 bg-white h-full" id="pageNumWrap">
                     <!--
                                         <div class="flex w-full border-b-2 h-1/4 border-b-slate-300" th:each=" submit :${adminSubmitDtos}"
                                              th:onclick="'modalToggle('+${submit.no}+')'">-->
-                    <div class="flex w-full border-b-2 h-1/4 border-b-slate-300" th:each=" submit :${adminSubmitDtos}"
+                    <div class="flex  w-full border-b-2 h-1/4 border-b-slate-300"
+                         th:each=" submit :${adminSubmitDtos}"
                     >
                         <div class="w-11/12 p-4">
-                            <p class="font-bold " th:text="${submit.no}"></p>
+                            <p class="font-semibold text-md " th:text="${submit.no + '.'}"></p>
+                            <p class="font-bold text-lg" th:text="${submit.name}"></p>
+                            <p class="font-semibold text-sm text-green-400" th:text="${submit.mail}"></p>
+
                             <!--                            <p class="font-thin truncate" th:text="${sumbit.content}"></p>-->
-                            <p class="font-thin truncate" th:text="${submit.u_id}"></p>
+                            <p class="font-thin truncate mb-6" th:text="${submit.u_id}"></p>
                             <a th:href="@{/downloadFromAdmin(file=${submit.file})}"
                                class="px-4 py-2 bg-blue-50 text-gray-700 rounded hover:bg-blue-100"
                                th:download="${submit.file}"
                                th:text="${submit.file}">
                             </a>
-                            <p class="font-thin truncate" th:text="${submit.status}"></p>
+                            <!--                            <p class="font-thin truncate" th:text="${submit.status}"></p>-->
                         </div>
                         <div class="flex flex-col items-center p-4 mb-5">
                             <p class="font-bold text-blue-400" th:text="${submit.reg_date}"></p>
@@ -128,7 +132,7 @@
 
                     </div>
 
-                    <div class="flex" id="pageNumDiv">
+                    <div class=" flex justify-center items-center" id="pageNumDiv">
 
 
                         <div class="totalPage">

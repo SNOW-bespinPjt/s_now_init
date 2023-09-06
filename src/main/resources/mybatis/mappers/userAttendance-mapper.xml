@@ -18,6 +18,17 @@
     </resultMap>
 
 
+    <resultMap id="attendenceDtoListForSatus" type="com.btc.snow.user.attendance.UserAttendanceDto">
+        <id property="no" column="no"/>
+        <id property="u_id" column="u_id"/>
+        <id property="astatus" column="astatus"/>
+        <id property="tstatus" column="tstatus"/>
+        <id property="ustatus" column="ustatus"/>
+        <id property="status" column="status"/>
+        <id property="reg_date" column="reg_date"/>
+        <id property="mod_date" column="mod_date"/>
+    </resultMap>
+
     <insert id="qrCheckConfrim" parameterType="HashMap">
         insert into ATTENDENCE(u_id, astatus, tstatus, reg_date, mod_date)
         values (#{u_id}, #{i}, #{i1}, now(), now())
@@ -45,12 +56,14 @@
 
 
     <select id="selectAllUserforAttendence" parameterType="HashMap"
-            resultType="HashMap">
+            resultMap="attendenceDtoListForSatus">
 
         select *
-        from ATTENDENCE
-        where u_id = #{u_id}
-        order by reg_date desc
+        from ATTENDENCE A
+                 inner join SUBMIT S on S.a_no = A.no
+        where A.u_id = #{u_id}
+        order by A.reg_date desc
+
 
     </select>
 
@@ -71,27 +84,33 @@
     <select id="selectAbsentAttendence" parameterType="String"
             resultType="HashMap">
         select *
-        from ATTENDENCE
-        where u_id = #{Id}
+        from ATTENDENCE A
+                 inner join SUBMIT S on S.a_no = A.no
+        where A.u_id = #{id}
           and astatus = 3
+        order by A.reg_date desc
 
     </select>
 
-    <select id="selectACKAttendence" parameterType="String"
-            resultType="HashMap">
+
+    <select id="selectACKAttendence" parameterType="String" resultType="HashMap">
         select *
         from ATTENDENCE
         where u_id = #{Id}
           and astatus = 0
 
+
     </select>
+
 
     <select id="selectTardyAttendence" parameterType="String"
             resultType="HashMap">
         select *
-        from ATTENDENCE
-        where u_id = #{Id}
+        from ATTENDENCE A
+                 inner join SUBMIT S on S.a_no = A.no
+        where A.u_id = #{id}
           and astatus = 1
+        order by A.reg_date desc
 
     </select>
 

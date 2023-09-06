@@ -12,6 +12,7 @@ public class UserAttendanceDto {
     int tstatus;
     String reg_date;
     String mod_date;
+    String status;
     MultipartFile file;
 
 }

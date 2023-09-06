@@ -13,12 +13,25 @@
         <id property="reg_date" column="reg_date"/>
         <id property="mod_date" column="mod_date"/>
         <id property="u_id" column="u_id"/>
+        <id property="name" column="name"/>
+        <id property="mail" column="mail"/>
     </resultMap>
 
 
     <select id="selectSubmitInfo" parameterType="HashMap" resultMap="submitDtos">
-        select *
-        from SUBMIT
+
+        select S.no,
+               S.status,
+               S.content,
+               S.file,
+               U.name,
+               U.mail,
+               S.a_no,
+               S.reg_date,
+               S.mod_date
+        from SUBMIT S
+                 inner join
+             USER U on S.u_id = U.id
         order by reg_date desc
         LIMIT #{skip},#{amount}
 
@@ -47,6 +60,6 @@
 
 
     </update>
-    
+
 
 </mapper>
