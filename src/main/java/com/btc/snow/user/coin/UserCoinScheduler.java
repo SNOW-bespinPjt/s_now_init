@@ -1,3 +1,4 @@
+/*
 package com.btc.snow.user.coin;
 
 import com.btc.snow.user.assignment.IUserAssignmentMB;
@@ -39,12 +40,14 @@ public class UserCoinScheduler {
     @Scheduled(cron = "59 59 23 * * *") // 매일 자정되기 전에 실행
     public void scheduledUpdateCoin(HttpSession session) {
         log.info("[UserCoinScheduler] scheduledUpdateCoin()");
-        /*
+        */
+/*
         coin 정책
         출석 : 하루 최대 2점 (오전출석 1점, 오후출석 1점)
         스터디 : 개설 시 2점
         과제 : 점수에 따라 1, 3, 5점
-        */
+        *//*
+
 
         // 현재 날짜
         LocalDate today = LocalDate.now();
@@ -130,3 +133,4 @@ public class UserCoinScheduler {
     }
 
 }
+*/
