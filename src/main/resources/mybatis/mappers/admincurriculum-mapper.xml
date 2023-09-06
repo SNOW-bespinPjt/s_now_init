@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.btc.snow.admin.curriculum.IAdminCurriculumDaoMB">
+
+    <insert id="inputNewCurriculum"
+            parameterType="com.btc.snow.admin.curriculum.AdminCurriculumDto">
+        INSERT INTO CURRICULUM(admin_id,
+                               book_no,
+                               title,
+                               content,
+                               category,
+                               std_div,
+                               hour,
+                               file_name,
+                               start_date,
+                               end_date,
+                               reg_date,
+                               mod_date)
+        VALUES (#{admin_id},
+                #{book_no, jdbcType=INTEGER},
+                #{title},
+                #{content},
+                #{category},
+                #{std_div},
+                #{hour, jdbcType=INTEGER},
+                #{file_name, jdbcType = VARCHAR},
+                #{start_date},
+                #{end_date},
+                NOW(), NOW())
+    </insert>
+
+    <select id="selectCurriculumById"
+            parameterType="com.btc.snow.admin.member.AdminMemberDto"
+            resultType="com.btc.snow.admin.curriculum.AdminCurriculumDto">
+
+        SELECT *
+        FROM CURRICULUM
+        WHERE admin_id = #{id}
+        order by start_date asc
+
+    </select>
+
+    <select id="selectAdminCurriculum"
+            resultType="com.btc.snow.admin.curriculum.AdminCurriculumDto">
+
+        SELECT *
+        FROM CURRICULUM
+        order by start_date asc
+
+    </select>
+
+    <select id="showDetailByNo"
+            parameterType="Integer"
+            resultType="com.btc.snow.admin.curriculum.AdminCurriculumDto">
+
+        SELECT *
+        FROM CURRICULUM
+        where no = #{no}
+
+    </select>
+
+    <select id="selectAdminName"
+            parameterType="String"
+            resultType="com.btc.snow.admin.member.AdminMemberDto">
+
+        SELECT distinct a.name
+        FROM CURRICULUM c
+                 INNER JOIN ADMIN a
+                            ON
+                                c.admin_id = a.id
+        WHERE c.admin_id = #{admin_id}
+
+    </select>
+
+    <select id="selectBookCover"
+            parameterType="Integer"
+            resultType="com.btc.snow.user.meeting.book.UserBookItemDto">
+
+        select distinct b.cover, b.title
+        from CURRICULUM c
+                 inner join BOOK b on c.book_no = b.no
+        where c.book_no = #{book_no}
+
+
+    </select>
+
+    <update id="updateCurriculum"
+            parameterType="com.btc.snow.admin.curriculum.AdminCurriculumDto">
+
+        UPDATE
+            CURRICULUM
+        SET book_no    = #{book_no},
+            title      = #{title},
+            content    = #{content},
+            category   = #{category},
+            std_div    = #{std_div},
+            hour       = #{hour},
+            file_name  = #{file_name},
+            start_date = #{start_date},
+            end_date   = #{end_date},
+            mod_date   = NOW()
+        WHERE no = #{no}
+
+    </update>
+
+    <delete id="removeCurriculum"
+            parameterType="Integer">
+
+        DELETE
+        FROM CURRICULUM
+        WHERE no = #{no}
+    </delete>
+
+    <select id="searchTitleByWord"
+            parameterType="map"
+            resultType="com.btc.snow.admin.curriculum.AdminCurriculumDto">
+
+        SELECT *
+        FROM CURRICULUM
+        WHERE admin_id = #{admin_id}
+          AND title like CONCAT('%', #{searchTitle}, '%')
+
+    </select>
+
+
+</mapper>

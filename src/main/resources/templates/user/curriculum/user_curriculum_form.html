@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script th:replace="~{/include/common_js.html::jquery_cdn}"></script>
+    <script th:replace="~{/user/curriculum/user_curriculum_form_js.html::js}"></script>
+
+
+</head>
+<body>
+<div class="flex">
+    <!-- nav -->
+    <div>
+        <nav th:replace="~{/include/header_nav_footer::nav}"></nav>
+    </div>
+    <!--  section & footer  -->
+    <div class="flex flex-col items-center justify-center w-5/6 mx-auto">
+        <h2 class="relative   top-0 left-0 mt-4 text-2xl font-bold ml-14">
+            USER CURRICULUM PAGE</h2>
+        <section class="flex flex-row w-5/6 border-solid mt-7">
+            <!-- ⬅️ -->
+            <div
+                    class="absolute relative items-center justify-center w-screen h-screen mr-8 border-2 rounded-lg bg-slate-100"
+            >
+                <div id="search_info" class="buttons mt-6 text-right">
+                    <input type="text" id="searchInput" class="mr-2 px-2 py-1 border rounded-md"
+                           placeholder="검색어를 입력하세요">
+                    <a class="search_curriculum_button inline-block ml-2 px-4 py-2 border border-green-500 rounded-md bg-green-500 text-white hover:bg-red-600"
+                       href="#none">커리큘럼
+                        검색</a>
+                    <a class="back_button inline-block ml-2 px-4 py-2 border border-green-500 rounded-md bg-green-500 text-white hover:bg-red-600"
+                       href="#none">뒤로가기
+                    </a>
+
+                </div>
+                <br/>
+                <div id="curriculum_container">
+
+
+                </div>
+
+            </div>
+
+            <div class="flex flex-col items-center w-3/4 h-screen border-2 rounded-lg">
+                <div
+                        th:if="${session.loginedUserDto == null}"
+                        class="flex flex-col items-center justify-center w-11/12 h-40 p-2 mt-6 border-2 rounded-lg"
+                >
+                    <h3 class="mb-3">SNOW에 오신 것을 환영합니다 !</h3>
+                    <a href="/user/member/user_login_form">
+                        <button
+                                class="h-10 px-4 py-2 font-bold text-white bg-green-500 rounded w-52 hover:bg-green-600"
+                        >
+                            login
+                        </button>
+                    </a>
+                    <div class="mt-3">
+                        <a
+                                class="cursor-pointer hover:underline hover:font-thin hover:text-gray-500"
+                        >아이디 찾기</a
+                        >
+                        |
+                        <a
+                                class="cursor-pointer hover:underline hover:font-thin hover:text-gray-500"
+                        >비밀번호 찾기</a
+                        >
+                        |
+                        <a
+                                class="cursor-pointer hover:underline hover:font-thin hover:text-gray-500"
+                        >회원가입</a
+                        >
+                    </div>
+                </div>
+
+                <div
+                        th:unless="${session.loginedUserDto == null}"
+                        class="flex flex-col items-center justify-center w-11/12 h-40 p-2 mt-6 border-2 rounded-lg"
+                >
+                    <div>
+                        <p
+                                th:if="${qrValidStatus != 0 && status != 0 && (userAttendanceDto != null || userAttendanceDto.astatus =='0') }"
+                                th:text="'출석 '+${userAttendanceDto.reg_date}"
+                                class="font-semibold text-green-400"
+                        ></p>
+                        <p th:unless="${qrValidStatus != 0 && status != 0 && (userAttendanceDto != null || userAttendanceDto.astatus =='0') }"
+                           th:text="결석"
+                           class="font-semibold text-red-400"
+                        >
+                        </p>
+                    </div>
+                    <h3 class="mb-3">SNOW에 오신 것을 환영합니다 !</h3>
+                    <div th:if="${qrValidStatus != 0}">
+                        <a th:href="@{/user/attendance}">
+                            <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 24 24"
+                                    fill="currentColor"
+                                    class="w-10 h-10 cursor-pointer"
+                            >
+                                <path
+                                        fill-rule="evenodd"
+                                        d="M3 4.875C3 3.839 3.84 3 4.875 3h4.5c1.036 0 1.875.84 1.875 1.875v4.5c0 1.036-.84 1.875-1.875 1.875h-4.5A1.875 1.875 0 013 9.375v-4.5zM4.875 4.5a.375.375 0 00-.375.375v4.5c0 .207.168.375.375.375h4.5a.375.375 0 00.375-.375v-4.5a.375.375 0 00-.375-.375h-4.5zm7.875.375c0-1.036.84-1.875 1.875-1.875h4.5C20.16 3 21 3.84 21 4.875v4.5c0 1.036-.84 1.875-1.875 1.875h-4.5a1.875 1.875 0 01-1.875-1.875v-4.5zm1.875-.375a.375.375 0 00-.375.375v4.5c0 .207.168.375.375.375h4.5a.375.375 0 00.375-.375v-4.5a.375.375 0 00-.375-.375h-4.5zM6 6.75A.75.75 0 016.75 6h.75a.75.75 0 01.75.75v.75a.75.75 0 01-.75.75h-.75A.75.75 0 016 7.5v-.75zm9.75 0A.75.75 0 0116.5 6h.75a.75.75 0 01.75.75v.75a.75.75 0 01-.75.75h-.75a.75.75 0 01-.75-.75v-.75zM3 14.625c0-1.036.84-1.875 1.875-1.875h4.5c1.036 0 1.875.84 1.875 1.875v4.5c0 1.035-.84 1.875-1.875 1.875h-4.5A1.875 1.875 0 013 19.125v-4.5zm1.875-.375a.375.375 0 00-.375.375v4.5c0 .207.168.375.375.375h4.5a.375.375 0 00.375-.375v-4.5a.375.375 0 00-.375-.375h-4.5zm7.875-.75a.75.75 0 01.75-.75h.75a.75.75 0 01.75.75v.75a.75.75 0 01-.75.75h-.75a.75.75 0 01-.75-.75v-.75zm6 0a.75.75 0 01.75-.75h.75a.75.75 0 01.75.75v.75a.75.75 0 01-.75.75h-.75a.75.75 0 01-.75-.75v-.75zM6 16.5a.75.75 0 01.75-.75h.75a.75.75 0 01.75.75v.75a.75.75 0 01-.75.75h-.75a.75.75 0 01-.75-.75v-.75zm9.75 0a.75.75 0 01.75-.75h.75a.75.75 0 01.75.75v.75a.75.75 0 01-.75.75h-.75a.75.75 0 01-.75-.75v-.75zm-3 3a.75.75 0 01.75-.75h.75a.75.75 0 01.75.75v.75a.75.75 0 01-.75.75h-.75a.75.75 0 01-.75-.75v-.75zm6 0a.75.75 0 01.75-.75h.75a.75.75 0 01.75.75v.75a.75.75 0 01-.75.75h-.75a.75.75 0 01-.75-.75v-.75z"
+                                        clip-rule="evenodd"
+                                />
+                            </svg>
+                        </a>
+                    </div>
+                    <div>
+                        <a th:href="@{/user/member/user_logout_confirm}">Logout</a>
+                        <a th:href="@{/mypage}">MyPage</a>
+                    </div>
+                </div>
+
+                <div
+                        class="flex flex-col items-center justify-center w-11/12 p-2 mt-6 border-2 rounded-sm h-2/4"
+                >
+                    <h3 class="mb-3">SNOW에 오신 것을 환영합니다 !</h3>
+                </div>
+            </div>
+        </section>
+
+        <footer th:replace="~{/include/header_nav_footer.html::footer}"></footer>
+</body>
+</html>

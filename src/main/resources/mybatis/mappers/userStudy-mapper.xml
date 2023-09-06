@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.btc.snow.user.meeting.study.IUserStudyMapper">
+
+    <insert id="insertStudy" parameterType="com.btc.snow.user.meeting.study.UserStudyDto">
+        insert into STUDY (user_id, book_no, title, body, total, img, start_date, end_date, reg_date, mod_date, status)
+        VALUES (#{user_id}, #{book_no}, #{title}, #{body}, #{total}, #{img}, #{start_date}, #{end_date}, NOW(), NOW(),
+                #{status})
+    </insert>
+
+    <select id="studyDetail" parameterType="Integer" resultType="com.btc.snow.user.meeting.study.UserStudyDto">
+        select *
+        from STUDY
+        where no = #{no}
+    </select>
+
+    <update id="updateHit">
+        update STUDY
+        set hit = hit + 1
+        where no = #{no}
+    </update>
+
+    <update id="updateStatus">
+        UPDATE STUDY
+        SET status = 1
+        WHERE start_date > CURDATE()
+    </update>
+
+    <select id="listCount" resultType="Integer">
+        select count(*)
+        from STUDY
+        where status = 1
+    </select>
+
+    <select id="selectStudy" parameterType="HashMap" resultType="com.btc.snow.user.meeting.study.UserStudyDto">
+        select *
+        from STUDY
+        order by reg_date desc
+            LIMIT #{skip}, #{amount}
+    </select>
+
+    <select id="getTotalCntOfSubmit" resultType="Integer">
+        select count(*)
+        from STUDY
+
+
+    </select>
+</mapper>

@@ -1,0 +1,180 @@
+<script th:fragment="js" th:inline="javascript" type="text/javascript">
+
+    $(document).ready(function () {
+        console.log("DOCUMENT WILL BE READY TO OPERATE NOW")
+        
+        // 이벤트 핸들러 초기화
+        init_events();
+
+    })
+
+    //init_events() START
+    function init_events() {
+        console.log("init_events() CALLED!!")
+
+        // 도서 검색 입력 HANDLER START
+        $(document).on('keyup', '#create_curriculum_wrap input[name="bookKeyword"]', function (e) {
+            console.log('BOOK SEARCH KEYUP HANDLER!!');
+
+            let bookKeyword = $(this).val();
+            console.log("bookKeyword : " + bookKeyword);
+
+            ajax_getSearchBook(bookKeyword);
+
+        });
+
+        // 도서 검색 입력 HANDLER END
+
+        // 도서 목록 리스트 CLICK HANDLER START
+        $(document).on('click', '#book_list a', function (e) {
+            console.log('book list CLICKED HANDLER!!');
+
+            let bookNo = $(this).data('no');
+            console.log('bookno====' + bookNo);
+
+            // document.querySelector(".meeting_form input[name='book_no']").val(bookNo);
+            // document.querySelectorAll(".meeting_form input[name='book_no']").value = bookNo;
+
+            $('#book_search input[name="book_no"]').val(bookNo);
+            console.log("----> ", $('#book_search input[name="book_no"]').val());
+
+            console.log('================' + bookNo);
+
+        });
+
+        // 도서 목록 리스트 CLICK HANDLER END
+
+        // MODIFY BTN CLICK HANDLER START
+        $(document).on('click', '#buttons .modify_btn', function (e) {
+            console.log('#buttons .create_btn CLICK HANDLER!!');
+
+            modifyCurriculum();
+
+        });
+
+        // MODIFY BTN CLICK HANDLER END
+
+        // CANCEL BTN CLICK HANDLER START
+        $(document).on('click', '#buttons .cancel_btn', function (e) {
+            console.log('#buttons .cancel_btn CLICK HANDLER!!');
+
+            window.history.back();
+
+        });
+
+        // CANCEL BTN CLICK HANDLER END
+
+    }
+
+    //init_events() END
+
+    // MODIFY BTN CLICK HANDLER START
+    function modifyCurriculum() {
+        console.log('modifyCurriculum() CALLED!!');
+
+        let form = $(".modify_curriculum_form");
+
+        if (form.find("input[name='title']").val() == '') {
+            alert("INPUT TITLE");
+            form.find("input[name='title']").focus();
+
+        } else if (form.find("input[name='content']").val() == '') {
+            alert("INPUT CONTENT");
+            form.find("textarea[name='content']").focus();
+
+        } else if (form.find("input[name='category']").val() == '') {
+            alert("INPUT CATEGORY");
+            form.find("select[name='category']").focus();
+
+        } else if (form.find("select[name='std_div']").val() == '') {
+            alert("INPUT STD_DIV");
+            form.find("input[name='std_div']").focus();
+
+        } else if (form.find("input[name='start_date']").val() == '') {
+            alert("INPUT START_DATE");
+            form.find("input[name='start_date']").focus();
+
+        } else if (form.find("input[name='end_date']").val() == '') {
+            alert("INPUT END_DATE");
+            form.find("input[name='end_date']").focus();
+
+        } else {
+            form.submit();
+        }
+
+    }
+
+    // MODIFY BTN CLICK HANDLER END
+
+    // MODAL TOGGLE ON/OFF START
+    function modallToggle() {
+        console.log('modallToggle');
+        const modal = document.querySelector('#defaultModal');
+
+        modal.classList.toggle('hidden');
+
+        $(".modal_form input[name='bookKeyword']").val('');
+
+    }
+
+    // MODAL TOGGLE ON/OFF END
+
+    //AJAX START
+    function ajax_getSearchBook(bookKeyword) {
+        console.log('ajax_getSearchBook() CALLED!')
+
+        // let formData = new FormData();
+        // formData.append('item', bookKeyword);
+        let appendTag = '';
+
+        $.ajax({
+            url: '/book/search_book?title=' + bookKeyword,
+            type: 'GET',
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            // processData: false,
+            // contentType: false,
+            // data: formData,
+            success: function (data) {
+                console.log("book search success!!!")
+                console.log(data)
+
+                let userBookDtos = data.userBookDtos;
+
+                $('#book_list').children().remove();
+
+                for (let i = 0; i < userBookDtos.length; i++) {
+                    appendTag += "<div class='flex flex-row w-full border-b-2 border-gray-100'>"
+                    appendTag += "<div class='w-1/4 mb-3'>";
+                    appendTag += "<a href='#none' data-no='" + userBookDtos[i].no + "'>";
+                    appendTag += "<img src='";
+                    appendTag += userBookDtos[i].cover;
+                    appendTag += "'/>";
+                    appendTag += "</div>"
+                    appendTag += "<div class='w-3/4 flex flex-col justify-center items-center'>";
+                    appendTag += "<div class=' w-full font-bold text-lg mb-2'>";
+                    appendTag += userBookDtos[i].title;
+                    appendTag += "</div>";
+                    appendTag += "<div class=' w-full font-semibold text-sm text-gray-300 '>";
+                    appendTag += userBookDtos[i].author;
+                    appendTag += "</div>";
+                    appendTag += "<div class=' w-full font-semibold text-md text-gray-300 '>";
+                    appendTag += userBookDtos[i].publisher;
+                    appendTag += "</div>";
+                    appendTag += "</a>";
+                    appendTag += "</div>"
+                    appendTag += "</div>";
+                }
+
+                $("#book_list").append(appendTag);
+
+            },
+            error: function (data) {
+                console.log("book search error!!!");
+            }
+        });
+
+    }
+
+    //AJAX END
+</script>

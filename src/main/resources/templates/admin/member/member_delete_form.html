@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/common.css}">
+    <script th:src="@{/assignment/admin/js/member_login_form.js}" type="text/javascript"></script>
+
+</head>
+<body>
+<header th:replace="~{/include/header_nav_footer::header}"></header>
+<section>
+    <div id="section_wrap">
+        <div class="word">
+            MEMBER DELETE FORM
+        </div>
+
+        <div class="member_delete_form">
+            <form th:action="@{/admin/member/member_delete_confirm}" name="member_delete_form" method="post">
+                <input type="password" name="pw" placeholder="INPUT PW"><br>
+                <input type="button" value="delete" onclick="memberDeleteForm();">
+                <input th:href="@{/admin}" value="홈으로">
+            </form>
+        </div>
+
+        <div class="go_create_account_form">
+            <a th:href="@{/admin/member/create_account_form}">create account</a>
+        </div>
+    </div>
+</section>
+<footer th:replace="~{/include/header_nav_footer.html::footer}"></footer>
+</body>
+</html>

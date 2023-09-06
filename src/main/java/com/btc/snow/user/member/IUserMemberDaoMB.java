@@ -8,12 +8,12 @@ public interface IUserMemberDaoMB {
     /*
      * CHECK DUPLICATE ID
      */
-    public boolean isUser(String m_id);
+	public boolean isUser(String id);
 
     /*
      * INSERT NEW ACCOUNT
      */
-    public int insertUserMember(UserMemberDto memberDto);
+	public int insertUserMember(UserMemberDto memberDto);
 
     /*
      * USER LOGIN CONFIRM
@@ -33,7 +33,7 @@ public interface IUserMemberDaoMB {
     /*
      * USER DELETE CONFIRM
      */
-    public int deleteUser(int u_m_no);
+    public int deleteUser(int no);
 
     /*
      * UPDATE USER PW

@@ -47,6 +47,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     runtimeOnly 'mysql:mysql-connector-java'
 
+
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     annotationProcessor 'org.projectlombok:lombok'
@@ -60,6 +61,10 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 
 
+
+    //FIRE BASE
+    // https://mvnrepository.com/artifact/com.google.firebase/firebase-admin
+    implementation group: 'com.google.firebase', name: 'firebase-admin', version: '8.1.0'
 
 }
 

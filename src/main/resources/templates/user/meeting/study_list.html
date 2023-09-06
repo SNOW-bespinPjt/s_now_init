@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+            integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script th:replace="~{/include/pageStudyList_js::listjs}" type="text/javascript"></script>
+
+</head>
+<body class="flex flex-col items-center justify-center w-5/6 mx-auto">
+
+<header th:replace="~{/include/header_nav_footer.html::header}"></header>
+
+<nav th:replace="~{/include/header_nav_footer.html::nav}"></nav>
+
+<section id="meeting_list" class="flex flex-col items-center justify-center w-full mx-auto mt-7">
+    <div class="w-5/6">
+        <div class="flex items-center mb-8">
+            <img th:src="@{/img/study.png}" class="w-8 h-8">
+            <span class="ml-2 text-2xl font-semibold">스터디</span>
+        </div>
+        <div th:each="userStudyDto : ${userStudyDtos}" th:if="${userStudyDto.status == 1}"
+             class="flex flex-row border-b-4 grid-cols-6">
+
+            <div class="img gap-1 mr-4">
+                <img th:src="@{'/snow/user/meeting/study/' + ${userStudyDto.img}}">
+            </div>
+            <div class="flex flex-col mr-4">
+                <div class="title gap-3">
+                    <a th:href="@{/user/study/study_detail(no=${userStudyDto.no})}" th:text="${userStudyDto.title}"></a>
+                </div>
+                <div th:text="${userStudyDto.body}" class="body">
+                </div>
+            </div>
+            <div th:text="${userStudyDto.total}" class="count gap-1 mr-4">
+
+            </div>
+            <div th:text="${userStudyDto.hit}" class="hit gap-1 mr-4">
+
+            </div>
+
+        </div>
+    </div>
+
+    <div id="pageNumDiv">
+
+        <div class="totalPage">
+
+        </div>
+
+    </div>
+
+</section>
+
+<footer th:replace="~{/include/header_nav_footer.html::footer}"></footer>
+
+</body>
+</html>
