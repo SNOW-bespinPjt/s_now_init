@@ -1,7 +1,6 @@
 package com.btc.snow.user.assignment;
 
 import com.btc.snow.admin.assignment.AdminAssignmentDto;
-import com.btc.snow.admin.assignment.StatisticsDto;
 import com.btc.snow.user.member.UserMemberDto;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.log4j.Log4j2;
