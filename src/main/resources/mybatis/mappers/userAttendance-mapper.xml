@@ -6,6 +6,29 @@
 <mapper namespace="com.btc.snow.user.attendance.UserAttendanceMapper">
 
 
+    <!--    우선 수정 -->
+    <resultMap id="attendenceDtoList" type="com.btc.snow.user.attendance.UserAttendanceDto">
+        <id property="no" column="no"/>
+        <id property="u_id" column="u_id"/>
+        <id property="astatus" column="astatus"/>
+        <id property="tstatus" column="tstatus"/>
+        <id property="ustatus" column="ustatus"/>
+        <id property="reg_date" column="reg_date"/>
+        <id property="mod_date" column="mod_date"/>
+    </resultMap>
+
+
+    <resultMap id="attendenceDtoListForSatus" type="com.btc.snow.user.attendance.UserAttendanceDto">
+        <id property="no" column="no"/>
+        <id property="u_id" column="u_id"/>
+        <id property="astatus" column="astatus"/>
+        <id property="tstatus" column="tstatus"/>
+        <id property="ustatus" column="ustatus"/>
+        <id property="status" column="status"/>
+        <id property="reg_date" column="reg_date"/>
+        <id property="mod_date" column="mod_date"/>
+    </resultMap>
+
     <insert id="qrCheckConfrim" parameterType="HashMap">
         insert into ATTENDENCE(u_id, astatus, tstatus, reg_date, mod_date)
         values (#{u_id}, #{i}, #{i1}, now(), now())
@@ -33,12 +56,13 @@
 
 
     <select id="selectAllUserforAttendence" parameterType="HashMap"
-            resultType="HashMap">
+            resultMap="attendenceDtoListForSatus">
 
         select *
         from ATTENDENCE
         where u_id = #{u_id}
         order by reg_date desc
+
 
     </select>
 
@@ -59,27 +83,33 @@
     <select id="selectAbsentAttendence" parameterType="String"
             resultType="HashMap">
         select *
-        from ATTENDENCE
-        where u_id = #{Id}
+        from ATTENDENCE A
+                 inner join SUBMIT S on S.a_no = A.no
+        where A.u_id = #{id}
           and astatus = 3
+        order by A.reg_date desc
 
     </select>
 
-    <select id="selectACKAttendence" parameterType="String"
-            resultType="HashMap">
+
+    <select id="selectACKAttendence" parameterType="String" resultType="HashMap">
         select *
         from ATTENDENCE
         where u_id = #{Id}
           and astatus = 0
 
+
     </select>
+
 
     <select id="selectTardyAttendence" parameterType="String"
             resultType="HashMap">
         select *
-        from ATTENDENCE
-        where u_id = #{Id}
+        from ATTENDENCE A
+                 inner join SUBMIT S on S.a_no = A.no
+        where A.u_id = #{id}
           and astatus = 1
+        order by A.reg_date desc
 
     </select>
 
@@ -106,7 +136,42 @@
     <select id="getTotalCnt" parameterType="String" resultType="Integer">
         select count(*)
         from ATTENDENCE
-        where u_id = #{u_id}
+        where u_id = #{u_no}
+
+    </select>
+
+    <update id="updateAttendenceByMorning">
+
+            <![CDATA[
+        SET
+        @currentDateTime = NOW();
+
+        insert into ATTENDENCE(u_id, astatus, tstatus, reg_date, mod_date)
+        select u.id, '3', @currentDateTime, now(), now()
+        from USER u
+        where u.id not in (select u_id from ATTENDENCE where HOUR (reg_date) <12)
+        ]]>
+
+        </update>
+
+    <update id="updateAttendenceByAfternoon">
+
+            <![CDATA[
+        SET
+        @currentDateTime = NOW();
+
+        insert into ATTENDENCE(u_id, astatus, tstatus, reg_date, mod_date)
+        select u.id, '3', @currentDateTime, now(), now()
+        from USER u
+        where u.id not in (select u_id from ATTENDENCE where HOUR (reg_date) >= 14 AND HOUR (reg_date) < 18)
+        ]]>
+
+        </update>
+
+    <select id="selectAfterNoonTimeAttendence" parameterType="String" resultMap="attendenceDtoList">
+        select *
+        from ATTENDENCE
+        where DATE (date) = CURDATE() AND HOUR (date) >= 18;
 
     </select>
 

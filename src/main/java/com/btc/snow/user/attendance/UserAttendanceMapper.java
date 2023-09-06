@@ -42,7 +42,13 @@ public interface UserAttendanceMapper {
 
     int updateAttendenceUstatus(SubmitDto submitDto);
 
-    int getTotalCnt(String uId);
+    int getTotalCnt(String uNo);
+
+    void updateAttendenceByAfternoon();
+
+    void updateAttendenceByMorning();
+
+    Object selectAfterNoonTimeAttendence(String id);
 
     UserAttendanceDto coinByAttendence(String id);
 }

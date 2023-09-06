@@ -40,4 +40,16 @@ public class UserMeetingService {
 
         return map;
     }
+
+    public Map<String, Object> mainStudy() {
+        log.info("mainStudy()");
+
+        Map<String, Object> map = new HashMap<>();
+
+        List<UserStudyDto> userStudyDtos = iUserMeetingMapper.mainStudy();
+
+        map.put("userStudyDtos", userStudyDtos);
+
+        return map;
+    }
 }

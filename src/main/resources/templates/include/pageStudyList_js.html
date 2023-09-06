@@ -1,0 +1,99 @@
+<script th:fragment="listjs" th:inline="javascript" type="text/javascript">
+
+
+    $(document).ready(function () {
+        console.log('READY!!');
+
+        setPage();
+        init_main_event()
+
+    })
+
+
+    function setPage() {
+        console.log('setPage() CALLED!!');
+
+        let pageMakerDto = [[${pageMakerDto}]];
+
+        console.log("pageMakerDto startPage", pageMakerDto.startPage)
+        console.log("pageMakerDto endPage", pageMakerDto.endPage)
+        console.log("pageMakerDto criteria pageNum", pageMakerDto.criteria.pageNum)
+
+        /* PAGE UI */
+        $('#pageNumDiv').children().remove();
+
+        // 이전 페이지
+        if (pageMakerDto.prev) {
+            $('#pageNumDiv').append('<a href="#none" data-pagenum="' + (pageMakerDto.startPage - 1) + '">PRE</a>');
+        }
+
+        // // 처음 페이지
+        if (pageMakerDto.criteria.pageNum > 10) {
+            $('#pageNumDiv').append('<a href="#none" data-pagenum="1">1</a><span>...</span>');
+        }
+
+        // 페이지 넘버링
+        for (let p = parseInt(pageMakerDto.startPage); p <= parseInt(pageMakerDto.endPage); p++) {
+            $('#pageNumDiv').append('<a href="#none" data-pagenum="' + p + '">' + p + '</a>');
+        }
+
+        // 페이지 하이라이트
+        $('#pageNumDiv a[data-pagenum=' + pageMakerDto.criteria.pageNum + ']').addClass('text-blue-500 text-lg');
+
+        // 다음 페이지
+        if (pageMakerDto.next) {
+            $('#pageNumDiv').append('<a href="#none" data-pagenum="' + (pageMakerDto.endPage + 1) + '">NEX</a>');
+        }
+        //
+        // // 전체 페이지
+        $('#pageNumDiv .totalPage').text(pageMakerDto.totalPage);
+
+    }
+
+
+    function init_main_event() {
+        console.log('init_main_event() CALLED!!');
+
+        // 페이지 번호 클릭 시
+        $(document).on('click', '#pageNumDiv  a', function () {
+            console.log('page number CLICK HANDLER');
+
+            let pageNum = $(this).data('pagenum');
+
+            location.href = '/user/study/study_list?pageNum=' + pageNum;
+
+        });
+
+
+        // 페이지 번호 입력 시
+        // $(document).on('click', '#pageNumDiv  a', function () {
+        //     console.log('page_goto BUTTON CLICK HANDLER');
+        //
+        //     let targetPageNum = $('#section_wrap input[name="page_target_num"]').val();
+        //     let totalPageNum = $('#section_wrap span.page_total_num').text();
+        //
+        //     if (targetPageNum == '' || targetPageNum == ' ' || targetPageNum == null) {
+        //         alert('이동하고자 하는 페이지 숫자를 입력하세요!');
+        //         $('#section_wrap input[name="page_target_num"]').focus();
+        //         return;
+        //
+        //     } else if (parseInt(targetPageNum) < 1) {
+        //         alert('1페이지 미만은 존재하지 않습니다!');
+        //         $('#section_wrap input[name="page_target_num"]').val('');
+        //         $('#section_wrap input[name="page_target_num"]').focus();
+        //         return;
+        //
+        //     } else if (parseInt(targetPageNum) > parseInt(totalPageNum)) {
+        //         alert(totalPageNum + '을(를) 초과할 수 없습니다!');
+        //         $('#section_wrap input[name="page_target_num"]').val('');
+        //         $('#section_wrap input[name="page_target_num"]').focus();
+        //         return;
+        //
+        //     }
+        //
+        //     location.href = '/board/list?pageNum=' + targetPageNum;
+        //
+        // });
+
+    }
+</script>

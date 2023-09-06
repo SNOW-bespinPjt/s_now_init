@@ -31,20 +31,16 @@ public class UserAttendanceService implements IUserAttendanceService {
     @Autowired
     UserAttendanceMapper userAttendanceMapper;
 
-
     public Object qrCreate(UserMemberDto userMemberDto) throws WriterException {
         log.info("Service qrCreate() called");
 
-
         int width = 200;
         int height = 200;
-
 
         // do update confirm?u_m_no=1
         String url = "http://localhost:8090/user/attendence/confirm?u_id=" + userMemberDto.getId();
 
         BitMatrix encode = new MultiFormatWriter().encode(url, BarcodeFormat.QR_CODE, width, height);
-        Map<String, Object> map = new HashMap<>();
 
 
         try {
@@ -55,7 +51,6 @@ public class UserAttendanceService implements IUserAttendanceService {
 
             return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG).body(out.toByteArray());
 
-
         } catch (Exception e) {
             log.error(e);
         }
@@ -63,8 +58,8 @@ public class UserAttendanceService implements IUserAttendanceService {
     }
 
     @Override
-    public Object qrChackConfirm(String u_id) {
-        log.info("Service qrChackConfirm() called");
+    public Object qrCheckConfirm(String u_id) {
+        log.info("Service qrCheckConfirm() called");
         LocalTime currTime = LocalTime.now();
         LocalTime morningTime = LocalTime.of(9, 10);
         LocalTime noonTime = LocalTime.of(14, 10);
@@ -155,7 +150,7 @@ public class UserAttendanceService implements IUserAttendanceService {
         List<UserAttendanceDto> userAttendanceDtos;
         Map<String, Object> map = new HashMap<>();
         map.put("u_id", u_id);
-  
+
 
         userAttendanceDtos = userAttendanceMapper.selectAllUserforAttendence(map);
 
@@ -258,6 +253,34 @@ public class UserAttendanceService implements IUserAttendanceService {
         log.info("updateAttendenceUstatus()!!");
 
         userAttendanceMapper.updateUstatus();
+    }
+
+    //오후 12시   오후 6시 최종 출결 체크
+    //1. 12시 체크
+    @Scheduled(cron = "0 0 12 * * 5", zone = "Asia/Seoul")
+    public void updateAttendenceBy() {
+        log.info("updateAttendenceByMorning()");
+
+
+        userAttendanceMapper.updateAttendenceByMorning();
+    }
+
+    //1. 18시  오후 출석체크
+    @Scheduled(cron = "0 0 18 * * 5", zone = "Asia/Seoul")
+    public void updateAttendenceByAfternoon() {
+        log.info("updateAttendenceByAfternoon()");
+
+
+        userAttendanceMapper.updateAttendenceByAfternoon();
+    }
+
+
+    // 6시 이후 view에 표시될 정보
+    public Object selectUserAfterLastNoonTime(String id) {
+        log.info("selectUserAfterLastNoonTime");
+
+
+        return userAttendanceMapper.selectAfterNoonTimeAttendence(id);
     }
 
 
