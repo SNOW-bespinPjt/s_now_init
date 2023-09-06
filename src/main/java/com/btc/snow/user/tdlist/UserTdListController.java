@@ -34,7 +34,7 @@ public class UserTdListController {
     public String selectTdListForm() {
         log.info("[UserTdListController] selectTdListForm()");
 
-        String nextPage = "user/member/todolist_form";
+        String nextPage = "user/tdlist/todolist_form";
 
         return nextPage;
 
@@ -63,42 +63,42 @@ public class UserTdListController {
 
     @PostMapping("/create_tdlist_confirm")
     @ResponseBody
-    public void createTdListConfirm(UserTdListDto userTdListDto, HttpSession session) {
+    public int createTdListConfirm(UserTdListDto userTdListDto, HttpSession session) {
         log.info("[UserTdListController] createTdListConfirm()");
 
         UserMemberDto loginedUserDto = (UserMemberDto) session.getAttribute("loginedUserDto");
 
         userTdListDto.setUser_id(loginedUserDto.getId());
 
-        userTdListService.createTdListConfirm(userTdListDto);
+        return userTdListService.createTdListConfirm(userTdListDto);
 
     }
 
     @PostMapping("/modify_tdlist_confirm")
     @ResponseBody
-    public void modifyTdListConfirm(UserTdListDto userTdListDto) {
+    public int modifyTdListConfirm(UserTdListDto userTdListDto) {
         log.info("[UserTdListController] modifyTdListConfirm()");
 
-        userTdListService.modifyTdListConfirm(userTdListDto);
+        return userTdListService.modifyTdListConfirm(userTdListDto);
 
     }
 
     @PostMapping("/modify_isfinish_confirm")
     @ResponseBody
-    public void modifyIsFinishConfirm(@RequestParam("className") int className) {
+    public int modifyIsFinishConfirm(@RequestParam("className") int className) {
         log.info("[UserTdListController] modifyTdListConfirm()");
 
-        userTdListService.modifyIsFinishConfirm(className);
+        return userTdListService.modifyIsFinishConfirm(className);
 
     }
 
     @PostMapping("/delete_tdlist_confirm")
     @ResponseBody
-    public void deleteTdListConfirm(@RequestParam("className") int className) {
+    public int deleteTdListConfirm(@RequestParam("className") int className) {
         log.info("[UserTdListController] deleteTdListConfirm()");
         log.info("className.NO : " + className);
 
-        userTdListService.deleteTdListConfirm(className);
+        return userTdListService.deleteTdListConfirm(className);
 
     }
 

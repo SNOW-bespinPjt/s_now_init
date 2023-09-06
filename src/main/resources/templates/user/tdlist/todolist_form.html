@@ -7,6 +7,7 @@
 
     <script th:replace="~{/include/common_js.html::jquery_cdn}"></script>
     <script th:replace="~{/user/tdlist/todolist_form_js.html::js}"></script>
+
 </head>
 <body class="flex flex-col items-center justify-center w-5/6 mx-auto">
 
@@ -62,7 +63,7 @@
 </div>
 
 
-<header th:replace="~{/include/header_nav_footer::header}"></header>
+<header th:replace="~{/include/header_nav_footer.html::header}"></header>
 
 <section class="flex flex-row w-5/6 border-solid mt-7">
     <div
@@ -115,41 +116,6 @@
 
                 </tbody>
             </table>
-        </div>
-
-
-    </div>
-    <div class="flex flex-col items-center w-3/4 h-screen border-2 rounded-lg">
-        <div
-                class="flex flex-col items-center justify-center w-11/12 h-40 p-2 mt-6 border-2 rounded-sm"
-        >
-            <h3 class="mb-3">SNOW에 오신 것을 환영합니다 !</h3>
-            <button
-                    class="h-10 px-4 py-2 font-bold text-white bg-green-500 rounded w-52 hover:bg-green-600"
-            >
-                login
-            </button>
-            <div class="mt-3">
-                <a
-                        class="cursor-pointer hover:underline hover:font-thin hover:text-gray-500"
-                >아이디 찾기</a
-                >
-                |
-                <a
-                        class="cursor-pointer hover:underline hover:font-thin hover:text-gray-500"
-                >비밀번호 찾기</a
-                >
-                |
-                <a
-                        class="cursor-pointer hover:underline hover:font-thin hover:text-gray-500"
-                >회원가입</a
-                >
-            </div>
-        </div>
-        <div
-                class="flex flex-col items-center justify-center w-11/12 p-2 mt-6 border-2 rounded-sm h-2/4"
-        >
-            <h3 class="mb-3">SNOW에 오신 것을 환영합니다 !</h3>
         </div>
     </div>
 </section>

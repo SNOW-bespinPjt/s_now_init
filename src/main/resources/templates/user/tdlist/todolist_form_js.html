@@ -271,12 +271,28 @@
             data: formData,
             success: function (data) {
                 console.log('AJAX SUCCESS - ajax_create_tdlist_confirm()');
-                alert("리스트가 생성되었습니다.");
 
-                remove_list();
-                ajax_show_tdlist();
-                $("#content").val('');
-                $("#tag").val('');
+                if (date > 0) {
+                    alert("리스트가 생성되었습니다.");
+
+                    remove_list();
+                    ajax_show_tdlist();
+                    $("#content").val('');
+                    $("#tag").val('');
+
+                } else if (date == 0) {
+                    alert("리스트를 생성하는데 실패하였습니다.");
+
+                    $("#content").val('');
+                    $("#tag").val('');
+
+                } else {
+                    alert("★ ERROR AT DB!! 관리자에게 문의해주시기 바랍니다.");
+
+                    $("#content").val('');
+                    $("#tag").val('');
+
+                }
 
             },
             error: function (data) {

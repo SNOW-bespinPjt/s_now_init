@@ -57,11 +57,6 @@ public class SpringSecurityConfig {
                         .requestMatchers("/css/**", "/error/**", "/img/**", "/js/**", "", "/",
                                 "/user/member/create_account_form",
                                 "/user/member/create_account_confirm",
-                                "/user/board/review_board",
-                                "/user/board/review_detail",
-                                "/user/board/",
-                                "/user/board/free_board_list",
-                                "/user/board/free_board_detail",
                                 "/UploadImg/**").permitAll()
                         .anyRequest().authenticated()  // 해당 경로 외의 요청은 모두 인증 필요
                 )

@@ -11,6 +11,21 @@ import java.util.List;
 @Log4j2
 public class UserTdListService implements IUserTdListService {
 
+    // CONFIG INFO START
+    private final int CREATE_TODOLIST_SUCCESS_AT_DB = 1;
+    private final int CREATE_TODOLIST_FAIL_AT_DB = 0;
+    private final int CREATE_ERROR_AT_DB = -1;
+
+    private final int MODIFY_TODOLIST_SUCCESS_AT_DB = 1;
+    private final int MODIFY_TODOLIST_FAIL_AT_DB = 0;
+    private final int MODIFY_ERROR_AT_DB = -1;
+
+    private final int DELETE_TODOLIST_SUCCESS_AT_DB = 1;
+    private final int DELETE_TODOLIST_FAIL_AT_DB = 0;
+    private final int DELETE_ERROR_AT_DB = -1;
+
+    // CONFIG INFO END
+
     private IUserTdListDaoMB iUserTdListDaoMB;
 
     public UserTdListService(IUserTdListDaoMB iUserTdListDaoMB) {
@@ -37,12 +52,17 @@ public class UserTdListService implements IUserTdListService {
         if (result > 0) {
             log.info("[UserTdListService] INSERT TODOLIST SUCCESS!!");
 
-            return result;
+            return CREATE_TODOLIST_SUCCESS_AT_DB;
+
+        } else if (result == 0) {
+            log.info("[UserTdListService] INSERT TODOLIST FAIL!!");
+            return CREATE_TODOLIST_FAIL_AT_DB;
+
+        } else {
+            log.info("[UserTdListService] CREATE ERROR AT DB!!");
+            return CREATE_ERROR_AT_DB;
 
         }
-
-        log.info("[UserTdListService] INSERT TODOLIST FAIL!!");
-        return result;
 
     }
 
@@ -52,13 +72,17 @@ public class UserTdListService implements IUserTdListService {
 
         int result = iUserTdListDaoMB.updateTdList(userTdListDto);
 
-        if (result <= 0) {
+        if (result > 0) {
             log.info("[UserTdListService] MODIFY TODOLIST SUCCESS!!");
-            return result;
+            return MODIFY_TODOLIST_SUCCESS_AT_DB;
+
+        } else if (result == 0) {
+            log.info("[UserTdListService] MODIFY TODOLIST FAIL!!");
+            return MODIFY_TODOLIST_FAIL_AT_DB;
 
         } else {
-            log.info("[UserTdListService] MODIFY TODOLIST FAIL!!");
-            return result;
+            log.info("[UserTdListService] MODIFY ERROR AT DB!!");
+            return MODIFY_ERROR_AT_DB;
 
         }
 
@@ -71,12 +95,15 @@ public class UserTdListService implements IUserTdListService {
         if (result > 0) {
             log.info("[UserTdListService]" + className + ".NO MODIFY IS_FINISH SUCCESS!!");
 
-            return result;
+            return MODIFY_TODOLIST_SUCCESS_AT_DB;
+
+        } else if (result == 0) {
+            log.info("[UserTdListService]" + className + ".NO MODIFY IS_FINISH FAIL!!");
+            return MODIFY_TODOLIST_FAIL_AT_DB;
 
         } else {
-            log.info("[UserTdListService]" + className + ".NO MODIFY IS_FINISH FAIL!!");
-            return result;
-
+            log.info("[UserTdListService] MODIFY ERROR AT DB!!");
+            return MODIFY_ERROR_AT_DB;
         }
 
     }
@@ -89,13 +116,18 @@ public class UserTdListService implements IUserTdListService {
 
         if (result <= 0) {
             log.info("[UserTdListService] DELETE TODOLIST SUCCESS!!");
-            return result;
+            return DELETE_TODOLIST_SUCCESS_AT_DB;
+
+        } else if (result == 0) {
+            log.info("[UserTdListService] DELETE TODOLIST FAIL!!");
+            return DELETE_TODOLIST_FAIL_AT_DB;
 
         } else {
-            log.info("[UserTdListService] DELETE TODOLIST FAIL!!");
-            return result;
+            log.info("[UserTdListService] DELETE ERROR AT DB!!");
+            return DELETE_ERROR_AT_DB;
 
         }
+
     }
 
     @Override
@@ -106,6 +138,7 @@ public class UserTdListService implements IUserTdListService {
 
         userTdListDto.setUser_id(userId);
         userTdListDto.setTag(searchWord);
+        userTdListDto.setContent(searchWord);
 
         List<UserTdListDto> userTdListDtos = iUserTdListDaoMB.selectListByTag(userTdListDto);
 
@@ -128,6 +161,7 @@ public class UserTdListService implements IUserTdListService {
         List<UserTdListDto> userTdListDtos = iUserTdListDaoMB.showFinishTdList(user_id);
 
         return userTdListDtos;
+        
     }
 
 }
