@@ -48,12 +48,10 @@
             success: function (data) {
                 console.log("ajax_submitDoc() success")
                 console.log(data)
-                $(".satusSelect").children().remove()
-                $('.status0').addClass("hidden")
-                $('.status1').removeClass("hidden")
 
+                $(".satusSelect[data-no=" + no + "]").addClass("hidden");
+                $(".status1Select[data-no=" + no + "]").removeClass("hidden");
 
-                $(location).attr('href', "/mypage")
             },
             error: function (data) {
                 console.log("ajax_submitDoc() error")
@@ -69,6 +67,29 @@
 
     function cancleConfirm(no) {
         console.log("cancleConfirm()!!")
+
+        $.ajax({
+            url: '/admin/attendence/cancel?no=' + no,
+            type: 'POST',
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                console.log("ajax_submitDoc() success")
+                console.log(data)
+
+                $(".satusSelect[data-no=" + no + "]").addClass("hidden");
+                $(".status2Select[data-no=" + no + "]").removeClass("hidden");
+
+            },
+            error: function (data) {
+                console.log("ajax_submitDoc() error")
+            },
+            complete: function (data) {
+                console.log('AJAX COMPLETE - ajax_submitDoc()');
+
+            }
+        })
 
 
     }

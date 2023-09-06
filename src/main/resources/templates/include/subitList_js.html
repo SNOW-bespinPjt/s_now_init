@@ -32,7 +32,7 @@
 
         // 페이지 넘버링
         for (let p = parseInt(pageMakerDto.startPage); p <= parseInt(pageMakerDto.endPage); p++) {
-            $('#pageNumDiv').append('<a href="#none" data-pagenum="' + p + '">' + p + '</a>');
+            $('#pageNumDiv').append('<a class="flexe justify-center my-3 items-center p-3 mr-4 border border-gray-300 cursor-pointer w-14 h-14 rounded-xl  hover:border-gray-400" href="#none" data-pagenum="' + p + '">' + "<span>" + p + "</span>" + '</a>');
         }
 
         // 페이지 하이라이트

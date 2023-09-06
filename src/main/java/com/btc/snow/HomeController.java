@@ -69,11 +69,22 @@ public class HomeController {
             modelAndView.addObject("qrValidStatus", 0);
         }
 
+        if (currentTime.isAfter(lastNoonTime)) {
+
+            try {
+                List<UserAttendanceDto> userAttendanceDtoList = (List<UserAttendanceDto>) userAttendanceService.selectUserAfterLastNoonTime(userMemberDto.getId());
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
         //스터디
         Map<String, Object> studyMap = userMeetingService.mainStudy();
         List<UserStudyDto> userStudyDtos = (List<UserStudyDto>) studyMap.get("userStudyDtos");
 
         modelAndView.addObject("userStudyDtos", userStudyDtos);
+
 
         return modelAndView;
     }

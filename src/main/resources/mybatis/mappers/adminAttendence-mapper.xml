@@ -3,6 +3,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.btc.snow.admin.attendence.IAdminAttendenceMapper">
+
     <resultMap id="submitDtos" type="com.btc.snow.include.SubmitDto">
         <id property="no" column="no"/>
         <id property="a_no" column="a_no"/>
@@ -12,12 +13,25 @@
         <id property="reg_date" column="reg_date"/>
         <id property="mod_date" column="mod_date"/>
         <id property="u_id" column="u_id"/>
+        <id property="name" column="name"/>
+        <id property="mail" column="mail"/>
     </resultMap>
 
 
     <select id="selectSubmitInfo" parameterType="HashMap" resultMap="submitDtos">
-        select *
-        from SUBMIT
+
+        select S.no,
+               S.status,
+               S.content,
+               S.file,
+               U.name,
+               U.mail,
+               S.a_no,
+               S.reg_date,
+               S.mod_date
+        from SUBMIT S
+                 inner join
+             USER U on S.u_id = U.id
         order by reg_date desc
         LIMIT #{skip},#{amount}
 
@@ -38,5 +52,14 @@
 
 
     </update>
+
+    <update id="cancelSubmit" parameterType="Integer">
+        update SUBMIT
+        set status = 2
+        where no = #{no};
+
+
+    </update>
+
 
 </mapper>
