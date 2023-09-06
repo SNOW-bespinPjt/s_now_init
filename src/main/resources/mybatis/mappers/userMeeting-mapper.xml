@@ -13,7 +13,7 @@
     <select id="selectMeal" resultType="com.btc.snow.user.meeting.meal.UserMealDto">
         select *
         from MEAL
-        order by reg_date desc limit 4
+        order by date asc limit 4
     </select>
 
     <select id="mainStudy" resultType="com.btc.snow.user.meeting.study.UserStudyDto">

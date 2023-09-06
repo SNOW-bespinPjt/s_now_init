@@ -79,15 +79,15 @@ public class HomeController {
         }
 
 
-        if (currentTime.isAfter(lastNoonTime)) {
-
-            try {
-                List<UserAttendanceDto> userAttendanceDtoList = (List<UserAttendanceDto>) userAttendanceService.selectUserAfterLastNoonTime(userMemberDto.getId());
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-
-        }
+//        if (currentTime.isAfter(lastNoonTime)) {
+//
+//            try {
+//                List<UserAttendanceDto> userAttendanceDtoList = (List<UserAttendanceDto>) userAttendanceService.selectUserAfterLastNoonTime(userMemberDto.getId());
+//            } catch (Exception e) {
+//                throw new RuntimeException(e);
+//            }
+//
+//        }
 
 
         //스터디

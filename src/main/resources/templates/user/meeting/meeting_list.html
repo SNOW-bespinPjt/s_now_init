@@ -20,14 +20,16 @@
             <a th:href="@{/user/meeting/meeting_form}" class="border border-gray-200 rounded-md p-2 bg-gray-200">모임
                 개설</a>
         </div>
+
+        <!--        식사 리스트-->
         <div class="flex items-center mb-8">
             <img th:src="@{/img/meal.png}" class="w-8 h-8">
             <span class="ml-2 text-2xl font-semibold">식사</span>
         </div>
         <div th:each="userMealDto : ${userMealDtos}" class="flex flex-row border-b-4 grid-cols-6">
 
-            <div class="img">
-                <img th:src="@{'/snow/user/meeting/meal/' + ${userMealDto.img}}">
+            <div class="img w-24 h-24">
+                <img th:src="@{'/UploadImg/' + ${userMealDto.img}}">
             </div>
             <div class="flex flex-col mr-4">
                 <div class="title gap-3">
@@ -49,14 +51,15 @@
             <a th:href="@{/user/meal/meal_list}">더보기</a>
         </div>
 
+        <!--        스터디 리스트-->
         <div class="flex items-center mb-8">
             <img th:src="@{/img/study.png}" class="w-8 h-8">
             <span class="ml-2 text-2xl font-semibold">스터디</span>
         </div>
         <div th:each="userStudyDto : ${userStudyDtos}" class="flex flex-row border-b-4 grid-cols-6">
 
-            <div class="img gap-1 mr-4">
-                <img th:src="@{'/snow/user/meeting/study/' + ${userStudyDto.img}}">
+            <div class="img w-24 h-24">
+                <img th:src="@{'/UploadImg/' + ${userStudyDto.img}}">
             </div>
             <div class="flex flex-col mr-4">
                 <div class="title gap-3">

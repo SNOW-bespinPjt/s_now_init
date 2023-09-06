@@ -1,5 +1,7 @@
 package com.btc.snow.user.meeting.meal;
 
+import com.btc.snow.include.page.Criteria;
+import com.btc.snow.include.page.PageMakerDto;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,18 +44,59 @@ public class UserMealService implements IUserMealService {
         iUserMealMapper.updateHit(no);
     }
 
-    public Map<String, Object> mealList() {
+    public Map<String, Object> mealList(int pageNum, int amount) {
         log.info("mealList()");
 
         iUserMealMapper.updateStatus();
+        int listCount = iUserMealMapper.listCount();
 
+        Criteria criteria = new Criteria(pageNum, amount);
         Map<String, Object> map = new HashMap<>();
 
-        List<UserMealDto> userMealDtos = iUserMealMapper.selectMeal();
+        map.put("skip", criteria.getSkip());
+        map.put("amount", criteria.getAmount());
+
+        List<UserMealDto> userMealDtos = iUserMealMapper.selectMeal(map);
+
+        PageMakerDto pageMakerDto = new PageMakerDto(criteria, listCount);
+
 
         map.put("userMealDtos", userMealDtos);
+        map.put("pageMakerDto", pageMakerDto);
 
         return map;
     }
+
+    public int mealAttend(int mealNo, String id) {
+        log.info("mealAttend()");
+
+        HashMap<String, Object> map = new HashMap<>();
+
+        map.put("mealNo", mealNo);
+        map.put("id", id);
+
+        int result = iUserMealMapper.mealAttend(map);
+
+        return result;
+
+    }
+
+    public int removeButton(int mealNo, String id) {
+        log.info("removeButton()");
+
+        HashMap<String, Object> map = new HashMap<>();
+
+        log.info("mealNo==={}", mealNo);
+        log.info("id==={}", id);
+
+        map.put("mealNo", mealNo);
+        map.put("id", id);
+
+        int result = iUserMealMapper.removeButton(map);
+
+        return result;
+
+    }
 }
+
 

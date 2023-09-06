@@ -6,10 +6,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -111,15 +108,28 @@ public class UserStudyController {
     }
 
     @PostMapping("/study_attend")
-    public String studyAttend(@RequestParam("studyNo") int studyNo, HttpSession session) {
+    @ResponseBody
+    public int studyAttend(@RequestParam("studyNo") int studyNo, HttpSession session) {
         log.info("studyAttend()");
-
-        String nextPage = "redirect:/user/meeting/list";
 
         UserMemberDto loginedUserDto = (UserMemberDto) session.getAttribute("loginedUserDto");
 
-        userStudyService.studyAttend(studyNo, loginedUserDto.getId());
+        int result = userStudyService.studyAttend(studyNo, loginedUserDto.getId());
 
-        return nextPage;
+        return result;
     }
+
+    @PostMapping("/button_remove")
+    @ResponseBody
+    public int buttonRemove(@RequestParam("studyNo") int studyNo, HttpSession session) {
+        log.info("buttonRemove()");
+
+        UserMemberDto loginedUserDto = (UserMemberDto) session.getAttribute("loginedUserDto");
+
+        int result = userStudyService.removeButton(studyNo, loginedUserDto.getId());
+
+        return result;
+    }
+
+
 }

@@ -25,8 +25,8 @@
         <div th:each="userStudyDto : ${userStudyDtos}" th:if="${userStudyDto.status == 1}"
              class="flex flex-row border-b-4 grid-cols-6">
 
-            <div class="img gap-1 mr-4">
-                <img th:src="@{'/snow/user/meeting/study/' + ${userStudyDto.img}}">
+            <div class="img">
+                <img th:src="@{'/UploadImg/' + ${userStudyDto.img}}">
             </div>
             <div class="flex flex-col mr-4">
                 <div class="title gap-3">

@@ -85,7 +85,7 @@ public class UserStudyService implements IUserStudyService {
         return map;
     }
 
-    public void studyAttend(int studyNo, String id) {
+    public int studyAttend(int studyNo, String id) {
         log.info("studyAttend()");
 
         HashMap<String, Object> map = new HashMap<>();
@@ -93,6 +93,26 @@ public class UserStudyService implements IUserStudyService {
         map.put("studyNo", studyNo);
         map.put("id", id);
 
-        iUserStudyMapper.studyAttend(map);
+        int result = iUserStudyMapper.studyAttend(map);
+
+        return result;
+
+    }
+
+    public int removeButton(int studyNo, String id) {
+        log.info("removeButton()");
+
+        HashMap<String, Object> map = new HashMap<>();
+
+        log.info("studyNo==={}", studyNo);
+        log.info("id==={}", id);
+
+        map.put("studyNo", studyNo);
+        map.put("id", id);
+
+        int result = iUserStudyMapper.removeButton(map);
+
+        return result;
+
     }
 }

@@ -49,9 +49,16 @@
     </select>
 
     <insert id="studyAttend" parameterType="hashmap">
-        INSERT INTO STUDYPROMISE (member_id, user_id, study_no, reg_date, mod_date)
-        SELECT #{memberId}, s.user_id, #{studyNo}, NOW(), NOW()
+        INSERT INTO STUDYPROMISE (member_id, study_title, user_id, study_no, reg_date, mod_date)
+        SELECT s.user_id, s.title, #{id}, #{studyNo}, NOW(), NOW()
         FROM STUDY s
         WHERE s.no = #{studyNo}
     </insert>
+
+    <select id="removeButton" parameterType="hashmap" resultType="Integer">
+        select count(*)
+        from STUDYPROMISE
+        where user_id = #{id}
+          and study_no = #{studyNo}
+    </select>
 </mapper>

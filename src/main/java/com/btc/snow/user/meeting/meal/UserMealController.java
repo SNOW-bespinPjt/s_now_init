@@ -6,10 +6,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -72,18 +69,49 @@ public class UserMealController {
     }
 
     @GetMapping("/meal_list")
-    public String mealList(Model model) {
+    public String mealList(Model model, @RequestParam(value = "pageNum", required = false, defaultValue = "1") int pageNum,
+                           @RequestParam(value = "amount", required = false, defaultValue = "5") int amount, HttpSession session) {
         log.info("mealList()");
 
         String nextPage = "user/meeting/meal_list";
 
-        Map<String, Object> mealMap = userMealService.mealList();
+        UserMemberDto loginedUserDto = (UserMemberDto) session.getAttribute("loginedUserDto");
+
+        model.addAttribute("loginedUserDto", loginedUserDto);
+
+        Map<String, Object> mealMap = userMealService.mealList(pageNum, amount);
 
         List<UserMealDto> userMealDtos = (List<UserMealDto>) mealMap.get("userMealDtos");
 
+
         model.addAttribute("userMealDtos", userMealDtos);
+        model.addAttribute("pageMakerDto", mealMap.get("pageMakerDto"));
 
         return nextPage;
+    }
+
+    @PostMapping("/meal_attend")
+    @ResponseBody
+    public int mealAttend(@RequestParam("mealNo") int mealNo, HttpSession session) {
+        log.info("mealAttend()");
+
+        UserMemberDto loginedUserDto = (UserMemberDto) session.getAttribute("loginedUserDto");
+
+        int result = userMealService.mealAttend(mealNo, loginedUserDto.getId());
+
+        return result;
+    }
+
+    @PostMapping("/button_remove")
+    @ResponseBody
+    public int buttonRemove(@RequestParam("mealNo") int mealNo, HttpSession session) {
+        log.info("buttonRemove()");
+
+        UserMemberDto loginedUserDto = (UserMemberDto) session.getAttribute("loginedUserDto");
+
+        int result = userMealService.removeButton(mealNo, loginedUserDto.getId());
+
+        return result;
     }
 
 }

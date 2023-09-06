@@ -12,7 +12,9 @@ public interface IUserStudyService {
 
     public Map<String, Object> studyList(int pageNum, int amount);
 
-    public void studyAttend(int studyNo, String id);
+    public int studyAttend(int studyNo, String id);
+
+    public int removeButton(int studyNo, String id);
 
 
 }

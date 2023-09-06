@@ -29,5 +29,7 @@ public interface IUserStudyMapper {
     List<UserStudyDto> coinByStudy(String id);
 
 
-    void studyAttend(HashMap<String, Object> map);
+    int studyAttend(HashMap<String, Object> map);
+
+    int removeButton(HashMap<String, Object> map);
 }

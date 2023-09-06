@@ -1,0 +1,136 @@
+<script th:fragment="js" th:inline="javascript" type="text/javascript">
+
+
+    $(document).ready(function () {
+        console.log("DOCUMENT READY!!");
+
+        // 이벤트 핸들러 초기화(등록)
+        init_events();
+
+
+    });
+
+
+    function init_events() {
+        console.log("init_events READY!!");
+
+        mealButtonRemove();
+
+
+        //식사 참여 버튼 클릭
+        $(document).on('click', '#meal_detail input[value="참여"]', function (e) {
+            console.log('meal detail BUTTON CLICKED HANDLER!!');
+
+            let mealNo = $('#meal_detail input[name="no"]').val();
+            console.log('mealNo-------------------' + mealNo);
+
+
+            ajax_mealAttend(mealNo);
+
+
+        })
+    }
+
+
+    function mealButtonRemove() {
+
+        let userMealDto = [[${userMealDto}]];
+        let mealNo = userMealDto.no;
+
+        ajax_mealButtonRemove(mealNo);
+    }
+
+
+    function ajax_mealAttend(mealNo) {
+        console.log('ajax_mealAttend() CALLED!')
+
+        let formData = new FormData();
+        formData.append("mealNo", mealNo);
+
+        $.ajax({
+            url: '/user/meal/meal_attend',
+            type: 'POST',
+            processData: false,
+            contentType: false,
+            data: formData,
+            success: function (data) {
+                console.log("meal attend success!!!")
+                console.log(data);
+                location.href = "/user/meeting/list";
+            },
+            error: function (data) {
+                console.log("meal attend error!!!");
+            }
+        });
+
+
+    }
+
+    function ajax_studyButtonRemove(studyNo) {
+        console.log('ajax_buttonRemove() CALLED!')
+
+        let formData = new FormData();
+        formData.append("studyNo", studyNo);
+        console.log(studyNo);
+
+
+        $.ajax({
+            url: '/user/study/button_remove',
+            type: 'POST',
+            processData: false,
+            contentType: false,
+            data: formData,
+
+            success: function (data) {
+                console.log("study button success!!!")
+                console.log(data)
+
+                if (data > 0) {
+                    $('#study_detail input[value="참여"]').css('display', 'none')
+                }
+                // $('#study_detail input[value="참여"]').css('display', 'none')
+
+            },
+            error: function (data) {
+                console.log("book search error!!!");
+            }
+
+        });
+
+    }
+
+    function ajax_mealButtonRemove(mealNo) {
+        console.log('ajax_mealButtonRemove() CALLED!')
+
+        let formData = new FormData();
+        formData.append("mealNo", mealNo);
+        console.log(mealNo);
+
+
+        $.ajax({
+            url: '/user/meal/button_remove',
+            type: 'POST',
+            processData: false,
+            contentType: false,
+            data: formData,
+
+            success: function (data) {
+                console.log("meal button success!!!")
+                console.log(data)
+
+                if (data > 0) {
+                    $('#meal_detail input[value="참여"]').css('display', 'none')
+                }
+                // $('#study_detail input[value="참여"]').css('display', 'none')
+
+            },
+            error: function (data) {
+                console.log("book search error!!!");
+            }
+
+        });
+
+    }
+
+
+</script>
