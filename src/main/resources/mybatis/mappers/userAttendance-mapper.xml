@@ -59,10 +59,9 @@
             resultMap="attendenceDtoListForSatus">
 
         select *
-        from ATTENDENCE A
-                 inner join SUBMIT S on S.a_no = A.no
-        where A.u_id = #{u_id}
-        order by A.reg_date desc
+        from ATTENDENCE
+        where u_id = #{u_id}
+        order by reg_date desc
 
 
     </select>
