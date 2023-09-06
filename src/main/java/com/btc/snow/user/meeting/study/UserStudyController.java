@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+import java.util.Map;
+
 @Log4j2
 @Controller
 @RequestMapping("/user/study")
@@ -60,11 +63,45 @@ public class UserStudyController {
         String nextPage = "user/meeting/study_detail";
 
         UserStudyDto userStudyDto = userStudyService.studyDetail(no);
-        System.out.println("+++++++++++++++++++" + userStudyDto.getTitle());
-        System.out.println("+++++++++++++++++++" + userStudyDto.getBody());
-        System.out.println("+++++++++++++++++++" + userStudyDto.getHit());
+
+        userStudyService.updateHit(no);
 
         model.addAttribute("userStudyDto", userStudyDto);
+
+        return nextPage;
+    }
+
+    @GetMapping("/study_list")
+    public String studyList(Model model, @RequestParam(value = "pageNum", required = false, defaultValue = "1") int pageNum,
+                            @RequestParam(value = "amount", required = false, defaultValue = "5") int amount) {
+        log.info("studyList()");
+
+        String nextPage = "user/meeting/study_list";
+
+        Map<String, Object> studyMap = userStudyService.studyList(pageNum, amount);
+
+        List<UserStudyDto> userStudyDtos = (List<UserStudyDto>) studyMap.get("userStudyDtos");
+
+
+//        UserStudyDto userStudyDto = new UserStudyDto();
+//
+//        LocalDate startDate = LocalDate.parse(userStudyDto.getStart_date());
+//        LocalDate today = LocalDate.now();
+//
+//        System.out.println("+++++++++++++++++++++++++" + startDate);
+//
+//        int dateResult = startDate.compareTo(today);
+//
+//        if (dateResult <= 0) {
+//            // 오늘보다 이전인 경우
+//            model.addAttribute("dateResult", 0);
+//        } else {
+//            // 오늘보다 이후인 경우
+//            model.addAttribute("studyDateResult", 1);
+//        }
+
+        model.addAttribute("userStudyDtos", userStudyDtos);
+        model.addAttribute("pageMakerDto", studyMap.get("pageMakerDto"));
 
         return nextPage;
     }
