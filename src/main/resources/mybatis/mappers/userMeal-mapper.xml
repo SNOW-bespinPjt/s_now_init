@@ -26,4 +26,10 @@
         from MEAL
         order by reg_date desc
     </select>
+
+    <update id="updateStatus">
+        UPDATE MEAL
+        SET status = 1
+        WHERE date > CURDATE()
+    </update>
 </mapper>

@@ -45,6 +45,8 @@ public class UserMealService implements IUserMealService {
     public Map<String, Object> mealList() {
         log.info("mealList()");
 
+        iUserMealMapper.updateStatus();
+
         Map<String, Object> map = new HashMap<>();
 
         List<UserMealDto> userMealDtos = iUserMealMapper.selectMeal();

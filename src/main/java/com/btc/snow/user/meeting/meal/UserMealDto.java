@@ -15,5 +15,6 @@ public class UserMealDto {
     private String date;
     private String reg_date;
     private String mod_date;
+    private int status;
 
 }

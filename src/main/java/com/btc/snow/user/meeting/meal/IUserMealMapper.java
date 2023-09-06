@@ -13,4 +13,6 @@ public interface IUserMealMapper {
     void updateHit(int no);
 
     List<UserMealDto> selectMeal();
+
+    void updateStatus();
 }

@@ -18,7 +18,8 @@
             <img th:src="@{/img/meal.png}" class="w-8 h-8">
             <span class="ml-2 text-2xl font-semibold">식사</span>
         </div>
-        <div th:each="userMealDto : ${userMealDtos}" class="flex flex-row border-b-4 grid-cols-6">
+        <div th:each="userMealDto : ${userMealDtos}" th:if="${userMealDto.status == 1}"
+             class="flex flex-row border-b-4 grid-cols-6">
 
             <div class="img">
                 <img th:src="@{'/snow/user/meeting/meal/' + ${userMealDto.img}}">
