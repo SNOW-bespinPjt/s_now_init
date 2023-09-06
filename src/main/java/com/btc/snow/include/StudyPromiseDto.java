@@ -11,5 +11,6 @@ public class StudyPromiseDto {
     int study_no;
     String reg_date;
     String mod_date;
+    String study_title;
 
 }
