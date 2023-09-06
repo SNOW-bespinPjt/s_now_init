@@ -572,7 +572,7 @@
                     class="mb-1 text-base text-lg cursor-pointer h-1/3 text-slate-400 point"
                     onclick="pointTab()"
             >
-                포인트
+                나의 과제
             </p>
             <p
                     class="mb-5 text-base text-lg cursor-pointer text-slate-400 h-1/3 schedule"
@@ -639,12 +639,17 @@
                           th:each="item : ${userAssignmentDtos}">
                     <span class="text-gray-700" th:text="${item.title}"></span>
                     <span>
+                        <span th:if="${item.file_user != null}">
                             <a class="px-4 py-2 text-gray-700 text-xs hover:text-blue-500"
                                th:download="${item.file_user_name}"
                                th:href="@{/downloadFromUser(file=${item.file_user}, user_id=${id})}"
                                th:text="${item.file_user_name}">
                             </a>
-                    </span>
+                        </span>
+                        <span th:unless="${item.file_user != null}">
+                            <p class="px-4 py-2 text-gray-700 text-xs">미제출</p>
+                        </span>
+                         </span>
                     <span>
                         <span th:text="${item.point}"></span>점
                     </span>
