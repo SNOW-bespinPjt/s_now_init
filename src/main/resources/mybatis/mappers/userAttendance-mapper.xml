@@ -12,7 +12,7 @@
         <id property="u_id" column="u_id"/>
         <id property="astatus" column="astatus"/>
         <id property="tstatus" column="tstatus"/>
-        <id property="file" column="file"/>
+        <id property="ustatus" column="ustatus"/>
         <id property="reg_date" column="reg_date"/>
         <id property="mod_date" column="mod_date"/>
     </resultMap>
@@ -124,7 +124,7 @@
 
     <update id="updateAttendenceByMorning">
 
-        <![CDATA[
+            <![CDATA[
         SET
         @currentDateTime = NOW();
 
@@ -134,11 +134,11 @@
         where u.id not in (select u_id from ATTENDENCE where HOUR (reg_date) <12)
         ]]>
 
-    </update>
+        </update>
 
     <update id="updateAttendenceByAfternoon">
 
-        <![CDATA[
+            <![CDATA[
         SET
         @currentDateTime = NOW();
 
@@ -148,7 +148,7 @@
         where u.id not in (select u_id from ATTENDENCE where HOUR (reg_date) >= 14 AND HOUR (reg_date) < 18)
         ]]>
 
-    </update>
+        </update>
 
     <select id="selectAfterNoonTimeAttendence" parameterType="String" resultMap="attendenceDtoList">
         select *
