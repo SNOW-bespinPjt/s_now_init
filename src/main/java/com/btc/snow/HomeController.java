@@ -3,6 +3,8 @@ package com.btc.snow;
 
 import com.btc.snow.user.attendance.UserAttendanceDto;
 import com.btc.snow.user.attendance.UserAttendanceService;
+import com.btc.snow.user.meeting.UserMeetingService;
+import com.btc.snow.user.meeting.study.UserStudyDto;
 import com.btc.snow.user.member.UserMemberDto;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.log4j.Log4j2;
@@ -13,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalTime;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/")
@@ -21,6 +25,9 @@ public class HomeController {
 
     @Autowired
     UserAttendanceService userAttendanceService;
+
+    @Autowired
+    UserMeetingService userMeetingService;
 
     @GetMapping(value = {""})
     public Object home(HttpSession session) {
@@ -62,6 +69,11 @@ public class HomeController {
             modelAndView.addObject("qrValidStatus", 0);
         }
 
+        //스터디
+        Map<String, Object> studyMap = userMeetingService.mainStudy();
+        List<UserStudyDto> userStudyDtos = (List<UserStudyDto>) studyMap.get("userStudyDtos");
+
+        modelAndView.addObject("userStudyDtos", userStudyDtos);
 
         return modelAndView;
     }

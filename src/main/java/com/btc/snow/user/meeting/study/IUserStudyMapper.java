@@ -20,4 +20,8 @@ public interface IUserStudyMapper {
     List<UserStudyDto> selectStudy(Map<String, Object> map);
 
     int getTotalCntOfSubmit();
+
+    void updateStatus();
+
+    int listCount();
 }

@@ -49,6 +49,24 @@ public class UserStudyService implements IUserStudyService {
     public Map<String, Object> studyList(int pageNum, int amount) {
         log.info("studyList()");
 
+//        UserStudyDto userStudyDto = new UserStudyDto();
+//
+//        LocalDate startDate = LocalDate.parse(userStudyDto.getStart_date());
+//        LocalDate today = LocalDate.now();
+//
+//        System.out.println("+++++++++++++++++++++++++" + startDate);
+//
+//        int dateResult = startDate.compareTo(today);
+//
+//        if (dateResult <= 0) {
+//            iUserStudyMapper.updateStatus(dateResult);
+//        }
+
+
+        iUserStudyMapper.updateStatus();
+        int listCount = iUserStudyMapper.listCount();
+
+
         Criteria criteria = new Criteria(pageNum, amount);
         Map<String, Object> map = new HashMap<>();
 
@@ -57,9 +75,9 @@ public class UserStudyService implements IUserStudyService {
 
 
         List<UserStudyDto> userStudyDtos = iUserStudyMapper.selectStudy(map);
-        int totalCnt = iUserStudyMapper.getTotalCntOfSubmit();
+//        int totalCnt = iUserStudyMapper.getTotalCntOfSubmit();
 
-        PageMakerDto pageMakerDto = new PageMakerDto(criteria, totalCnt);
+        PageMakerDto pageMakerDto = new PageMakerDto(criteria, listCount);
 
         map.put("userStudyDtos", userStudyDtos);
         map.put("pageMakerDto", pageMakerDto);

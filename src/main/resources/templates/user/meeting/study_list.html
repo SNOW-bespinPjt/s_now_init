@@ -22,7 +22,8 @@
             <img th:src="@{/img/study.png}" class="w-8 h-8">
             <span class="ml-2 text-2xl font-semibold">스터디</span>
         </div>
-        <div th:each="userStudyDto : ${userStudyDtos}" class="flex flex-row border-b-4 grid-cols-6">
+        <div th:each="userStudyDto : ${userStudyDtos}" th:if="${userStudyDto.status == 1}"
+             class="flex flex-row border-b-4 grid-cols-6">
 
             <div class="img gap-1 mr-4">
                 <img th:src="@{'/snow/user/meeting/study/' + ${userStudyDto.img}}">

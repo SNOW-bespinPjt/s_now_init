@@ -59,7 +59,7 @@ public class UserStudyController {
     @GetMapping("/study_detail")
     public String studyDetail(Model model, @RequestParam("no") int no) {
         log.info("studyDetail()");
-        
+
         String nextPage = "user/meeting/study_detail";
 
         UserStudyDto userStudyDto = userStudyService.studyDetail(no);
@@ -81,6 +81,24 @@ public class UserStudyController {
         Map<String, Object> studyMap = userStudyService.studyList(pageNum, amount);
 
         List<UserStudyDto> userStudyDtos = (List<UserStudyDto>) studyMap.get("userStudyDtos");
+
+
+//        UserStudyDto userStudyDto = new UserStudyDto();
+//
+//        LocalDate startDate = LocalDate.parse(userStudyDto.getStart_date());
+//        LocalDate today = LocalDate.now();
+//
+//        System.out.println("+++++++++++++++++++++++++" + startDate);
+//
+//        int dateResult = startDate.compareTo(today);
+//
+//        if (dateResult <= 0) {
+//            // 오늘보다 이전인 경우
+//            model.addAttribute("dateResult", 0);
+//        } else {
+//            // 오늘보다 이후인 경우
+//            model.addAttribute("studyDateResult", 1);
+//        }
 
         model.addAttribute("userStudyDtos", userStudyDtos);
         model.addAttribute("pageMakerDto", studyMap.get("pageMakerDto"));
