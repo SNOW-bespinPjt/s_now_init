@@ -67,20 +67,20 @@ public class SpringSecurityConfig {
                 )
                 .formLogin(login -> login  // 로그인 시 폼(form)을 이용
                         .loginPage(
-                                "/user/member/member_login_form"
+                                "/user/member/user_login_form"
                         )  // 로그인 시 폼(form) 주소 설정
-                        .loginProcessingUrl("/user/member/member_login_confirm")
-                        .usernameParameter("u_m_id")
-                        .passwordParameter("u_m_pw")
+                        .loginProcessingUrl("/user/member/user_login_confirm")
+                        .usernameParameter("id")
+                        .passwordParameter("pw")
                         .successHandler((request, response, authentication) -> {  // 로그인 성공 시(추가 구현 예정: 로그인 페이지로 오기 이전에 있던 페이지로 이동)
                             log.info("successHandler!!");
 
                             UserMemberDto userMemberDto = new UserMemberDto();
                             userMemberDto.setId(authentication.getName());
-                            UserMemberDto loginedUserMemberDto = iUserMemberDaoMB.selectUserForLogin(userMemberDto);
+                            UserMemberDto loginedUserDto = iUserMemberDaoMB.selectUserForLogin(userMemberDto);
 
                             HttpSession session = request.getSession();
-                            session.setAttribute("loginedUserMemberDto", loginedUserMemberDto);
+                            session.setAttribute("loginedUserDto", loginedUserDto);
                             session.setMaxInactiveInterval(60 * 30);
 
                             log.info("--> {}", authentication.isAuthenticated());
@@ -90,12 +90,12 @@ public class SpringSecurityConfig {
                         })
                         .failureHandler((request, response, exception) -> {      //로그인 실패 시(추가 구현 예정: 아이디 혹은 비밀번호를 다시 확인해주세요 알림)
                             log.info("failureHandler!!");
-                            response.sendRedirect("/user/member/member_login_form");
+                            response.sendRedirect("/user/member/user_login_form");
 
                         })
                         .permitAll())
                 .logout(logout -> logout
-                        .logoutUrl("/user/member/member_logout_confirm")
+                        .logoutUrl("/user/member/user_logout_confirm")
                         .logoutSuccessHandler((request, response, authentication) -> {
                             log.info("logoutSuccessHandler!!");
 
@@ -132,17 +132,17 @@ public class SpringSecurityConfig {
                 .formLogin(login -> login
                         .loginPage("/admin/member/member_login_form")
                         .loginProcessingUrl("/admin/member/member_login_confirm")
-                        .usernameParameter("a_m_id")
-                        .passwordParameter("a_m_pw")
+                        .usernameParameter("id")
+                        .passwordParameter("pw")
                         .successHandler((request, response, authentication) -> {
                             log.info("successHandler!!");
 
                             AdminMemberDto adminMemberDto = new AdminMemberDto();
                             adminMemberDto.setId(authentication.getName());
-                            AdminMemberDto loginedAdminMemberDto = iAdminDaoMB.selectAdminForLogin(adminMemberDto.getId());
+                            AdminMemberDto loginedAdminDto = iAdminDaoMB.selectAdminForLogin(adminMemberDto.getId());
 
                             HttpSession session = request.getSession();
-                            session.setAttribute("loginedAdminMemberDto", loginedAdminMemberDto);
+                            session.setAttribute("loginedAdminDto", loginedAdminDto);
                             session.setMaxInactiveInterval(60 * 30);
 
                             log.info("--> {}", authentication.isAuthenticated());
