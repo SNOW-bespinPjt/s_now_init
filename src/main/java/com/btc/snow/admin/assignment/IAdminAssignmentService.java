@@ -33,4 +33,5 @@ public interface IAdminAssignmentService {
 
     // 과제 점수 등록
     int AssignmentInputPoint(UserAssignmentDto userAssignmentDto);
+
 }
