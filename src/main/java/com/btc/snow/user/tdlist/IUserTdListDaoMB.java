@@ -15,6 +15,11 @@ public interface IUserTdListDaoMB {
     public List<UserTdListDto> showAllTdList(UserMemberDto userMemberDto);
 
     /*
+     * SHOW ALL TODOLIST IN HOME
+     */
+    List<UserTdListDto> showAllTdListInHome(UserMemberDto userMemberDto);
+
+    /*
      * INSERT NEW TODOLIST
      */
     public int insertTdList(UserTdListDto userTdListDto);

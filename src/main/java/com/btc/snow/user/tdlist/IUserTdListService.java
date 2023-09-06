@@ -10,6 +10,9 @@ public interface IUserTdListService {
     // SELECT TODOLIST CONFIRM
     public List<UserTdListDto> selectTdListConfirm(UserMemberDto userMemberDto);
 
+    // SELECT TODOLIST IN HOME
+    public List<UserTdListDto> selectTdListInHome(UserMemberDto userMemberDto);
+
     // CREATE TODOLIST CONFIRM
     public int createTdListConfirm(UserTdListDto userTdListDto);
 

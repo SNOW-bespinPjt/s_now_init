@@ -38,7 +38,15 @@ public class UserTdListService implements IUserTdListService {
         log.info("[UserTdListService] selectTdListConfirm()");
 
         List<UserTdListDto> userTdListDtos = iUserTdListDaoMB.showAllTdList(userMemberDto);
+        return userTdListDtos;
 
+    }
+
+    @Override
+    public List<UserTdListDto> selectTdListInHome(UserMemberDto userMemberDto) {
+        log.info("[UserTdListService] selectTdListInHome()");
+
+        List<UserTdListDto> userTdListDtos = iUserTdListDaoMB.showAllTdListInHome(userMemberDto);
         return userTdListDtos;
 
     }
@@ -161,7 +169,7 @@ public class UserTdListService implements IUserTdListService {
         List<UserTdListDto> userTdListDtos = iUserTdListDaoMB.showFinishTdList(user_id);
 
         return userTdListDtos;
-        
+
     }
 
 }
