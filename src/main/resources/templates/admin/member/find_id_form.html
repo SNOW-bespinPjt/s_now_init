@@ -15,27 +15,37 @@
     <!--  section & footer  -->
     <div class="flex flex-col items-center justify-center w-5/6 mx-auto">
         <section class="flex flex-row w-5/6 border-solid mt-7">
-            <div
-                    class="relative flex items-center justify-center w-screen h-screen mr-8 border-2 rounded-lg bg-slate-100"
-            >
-                <div>
-                    <h3>FIND PASSWORD FORM</h3>
-                    <p>(We will send you a new password)</p>
-                </div>
+            <div class="relative flex items-center justify-center w-screen h-screen mr-8 border-2 rounded-lg bg-slate-100">
+                <div class="w-full max-w-md p-4">
+                    <h3 class="text-2xl font-semibold mb-2">아이디 찾기</h3>
+                    <p class="text-gray-600">(메일로 아이디를 보내드릴게요!)</p>
 
-                <div>
-                    <form th:action="@{/admin/member/find_id_confirm}" method="post" name="find_id_form">
-                        <br>
-                        <input type="text" name="name" placeholder="INPUT ADMIN NAME."><br>
-                        <input type="email" name="mail" placeholder="INPUT ADMIN MAIL."><br>
-                        <input type="button" value="FIND ID" onclick="findId();">
-                        <input type="reset" value="RESET">
+                    <form method="post" name="find_id_form" th:action="@{/admin/member/find_id_confirm}" class="mt-4">
+                        <div class="mb-4">
+                            <input name="name" placeholder="아이디 찾을 관리자 이름" type="text"
+                                   class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-green-300">
+                        </div>
+                        <div class="mb-4">
+                            <input name="mail" placeholder="메일 주소" type="email"
+                                   class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-green-300">
+                        </div>
+                        <div class="mb-4">
+                            <input onclick="findId();" type="button" value="아이디 찾기"
+                                   class="w-full bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-700 cursor-pointer">
+                        </div>
+                        <div>
+                            <input type="reset" value="초기화"
+                                   class="w-full bg-gray-300 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-400 cursor-pointer">
+                        </div>
+                        <div class="mt-4 items-center text-center">
+                            <a th:href="@{/admin/member/create_account_form}"
+                               class="text-blue-500 hover:underline hover:text-blue-700">회원가입</a>
+                            <span class="mx-2 text-gray-600">|</span>
+                            <a th:href="@{/admin/member/member_login_form.html}"
+                               class="text-blue-500 hover:underline hover:text-blue-700">로그인</a>
+                        </div>
                     </form>
                 </div>
-            </div>
-            <div>
-                <a th:href="@{/admin/member/create_account_form}">create account</a>
-                <a th:href="@{/admin/member/member_login_form.html}">login</a>
             </div>
         </section>
         <footer th:replace="~{/include/header_nav_footer.html::footer}"></footer>

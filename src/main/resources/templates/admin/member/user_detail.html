@@ -25,7 +25,7 @@
                     <div>
                         <span class="font-bold text-2xl" th:text="${userMemberDto.name}"></span>
                         <div class="overflow-x-auto p-4">
-                            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                            <div>
                                 <div class="bg-white rounded-lg shadow-md p-4">
                                     <div>
                                         <img alt="Male Image"
@@ -37,7 +37,7 @@
                                     </div>
                                     <div>
                                         <span>아이디 : </span>
-                                        <span th:text="${userMemberDto.id}"></span>
+                                        <span th:value="${userMemberDto.id}"></span>
                                     </div>
                                     <div>
                                         <span>이름 : </span>
@@ -79,10 +79,10 @@
                                         <span>학과 : </span>
                                         <span th:text="${userMemberDto.department}"></span>
                                     </div>
-<!--                                    <div>-->
-<!--                                        <span>졸업여부 : </span>-->
-<!--                                        <span th:text="${userMemberDto.gradu_status}"></span>-->
-<!--                                    </div>-->
+                                    <div>
+                                        <span>졸업여부 : </span>
+                                        <span th:text="${userMemberDto.gradu_status}"></span>
+                                    </div>
                                     <div>
                                         <span>가입일 : </span>
                                         <span th:text="${userMemberDto.reg_date}"></span>
