@@ -1,5 +1,7 @@
 package com.btc.snow.admin.member;
 
+import com.btc.snow.user.member.UserMemberDto;
+
 import java.util.List;
 
 public interface IAdminService {
@@ -18,6 +20,9 @@ public interface IAdminService {
 
     // 관리자 리스트
     List<AdminMemberDto> listupAdmin();
+
+    // 학생 리스트
+    List<UserMemberDto> listupUser();
 
     // 관리자 권한 승인
     int setAdminApproval(int no);
@@ -39,5 +44,4 @@ public interface IAdminService {
 
     // 회원탈퇴
     int SignOutConfirm(int no);
-
 }

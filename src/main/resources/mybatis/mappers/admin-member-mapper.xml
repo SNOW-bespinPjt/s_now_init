@@ -30,6 +30,11 @@
         FROM ADMIN
     </select>
 
+    <select id="selectUsers" resultType="com.btc.snow.user.member.UserMemberDto">
+        SELECT *
+        FROM USER
+    </select>
+
     <update id="updateAdminApproval" parameterType="Integer">
         UPDATE
             ADMIN

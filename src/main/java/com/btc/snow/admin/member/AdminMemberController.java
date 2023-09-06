@@ -1,5 +1,6 @@
 package com.btc.snow.admin.member;
 
+import com.btc.snow.user.member.UserMemberDto;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -212,7 +213,7 @@ public class AdminMemberController {
     /*
      * 관리자 리스트
      */
-    @GetMapping("/list_admin")
+    @GetMapping("/list_admins")
     public ModelAndView listupAdmin() {
         log.info("[AdminMemberController] listupAdmin()");
 
@@ -231,17 +232,36 @@ public class AdminMemberController {
     /*
      * 학생 리스트
      */
-    @GetMapping("/list_user")
+    @GetMapping("/list_users")
     public ModelAndView listupUser() {
         log.info("[AdminMemberController] listupUser()");
 
-        String nextPage = "admin/member/list_users";  //있지만 승인 DB 컬럼이 없어서 수정이 필요함
+        String nextPage = "admin/member/list_users";
 
-        List<AdminMemberDto> adminMemberDtos = adminMemberService.listupAdmin();   //아직없음
+        List<UserMemberDto> userMemberDtos = adminMemberService.listupUser();
 
         ModelAndView mv = new ModelAndView();                               // 1)객체 생성
         mv.setViewName(nextPage);                                           // 2)뷰 설정
-        mv.addObject("adminMemberDtos", adminMemberDtos);       // 3) 데이터 추가
+        mv.addObject("userMemberDtos", userMemberDtos);       // 3) 데이터 추가
+
+        return mv;                                                          // 4) MV 반환
+
+    }
+
+    /*
+     * 학생 디테일 페이지
+     */
+    @GetMapping("/user_detail")
+    public ModelAndView UserDetail() {
+        log.info("[AdminMemberController] UserDetail()");
+
+        String nextPage = "admin/member/user_detail";
+
+        List<UserMemberDto> userMemberDtos = adminMemberService.listupUser();
+
+        ModelAndView mv = new ModelAndView();                               // 1)객체 생성
+        mv.setViewName(nextPage);                                           // 2)뷰 설정
+        mv.addObject("userMemberDtos", userMemberDtos);       // 3) 데이터 추가
 
         return mv;                                                          // 4) MV 반환
 

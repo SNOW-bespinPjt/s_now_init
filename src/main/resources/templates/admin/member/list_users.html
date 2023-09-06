@@ -4,8 +4,9 @@
     <meta charset="UTF-8"/>
     <title>Title</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://code.jquery.com/jquery-3.7.0.js"
-            integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossOrigin="anonymous"></script>
+    <script crossOrigin="anonymous"
+            integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
+            src="https://code.jquery.com/jquery-3.7.0.js"></script>
     <script th:src="@{/assignment/admin/js/approval.js}" type="text/javascript"></script>
 </head>
 <body>
@@ -23,39 +24,23 @@
                 <div class="absolute top-0 left-0 mt-4 ml-14">
                     <div>
                         <h3 class="font-bold">USER LIST</h3>
-                        <div th:if="${session.loginedAdminDto.getId() eq 'super admin'}"
-                             class="overflow-x-auto">
-                            <table class="table-auto border-collapse border border-gray-400">
-                                <thead>
-                                <tr>
-                                    <th class="px-4 py-2">계정</th>
-                                    <th class="px-4 py-2">이름</th>
-                                    <th class="px-4 py-2">메일</th>
-                                    <th class="px-4 py-2">연락처</th>
-                                    <th class="px-4 py-2">승인</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr th:each="item : ${userMemberDtos}">
-                                    <td class="border px-4 py-2" th:text="${item.id}"></td>
-                                    <td class="border px-4 py-2" th:text="${item.name}"></td>
-                                    <td class="border px-4 py-2" th:text="${item.mail}"></td>
-                                    <td class="border px-4 py-2" th:text="${item.phone}"></td>
-                                    <td class="border px-4 py-2">
-                                        <!-- 이거 그거 뭐냐 가입 승인 등 -->
-                                        <span th:if="${item.is_approval eq 0}">
-                                            <input type="button" value="승인처리" th:attr="data-no=${item.no}"
-                                                   onclick="approveAdmin(this.getAttribute('data-no'));"
-                                                   class="px-2 py-1 rounded bg-blue-500 text-white hover:bg-blue-600">
-                                        </span>
-                                        <span th:if="${item.is_approval eq 1}" class="text-green-500">승인완료</span>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div th:unless="${session.loginedAdminDto.getId() eq 'super admin'}">
-                            <p>최고 관리자만 열람 가능합니다</p>
+                        <div class="overflow-x-auto p-4">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                                <div class="bg-white rounded-lg shadow-md p-4" th:each="item : ${userMemberDtos}">
+                                    <div>
+                                        <img alt="Male Image"
+                                             class="mx-auto w-full" th:if="${item.gender eq '남'}"
+                                             th:src="@{/assignment/admin/img/user_M.png}"/>
+                                        <img alt="Female Image"
+                                             class="mx-auto w-full" th:src="@{/assignment/admin/img/user_W.png}"
+                                             th:unless="${item.gender eq '남'}"/>
+                                    </div>
+                                    <div class="text-center mt-4">
+                                        <p class="text-lg font-semibold" th:text="${item.id}"></p>
+                                        <p th:text="${item.name}"></p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -1,26 +1,30 @@
 <!--<nav th:fragment="nav" class="h-full bg-gray-500 text-white p-10 my-auto">-->
-<nav th:fragment="nav" class="h-full bg-gray-500 text-white p-10">
-    <a th:href="@{/admin}" class="block mb-4 hover:bg-gray-600 py-2 px-16 rounded transition duration-200">홈</a>
-    <a th:href="@{/admin/assignment/}"
-       class="block mb-4 hover:bg-gray-600 py-2 px-16 rounded transition duration-200"
-       th:if="${session.loginedAdminDto != null}">과제</a>
-    <a th:href="@{/admin/member/list_user}"
-       class="block mb-4 hover:bg-gray-600 py-2 px-16 rounded transition duration-200"
-       th:if="${session.loginedAdminDto != null}">학생</a>
-    <a th:href="@{/admin/member/list_admin}"
-       class="block mb-4 hover:bg-gray-600 py-2 px-16 rounded transition duration-200"
-       th:if="${session.loginedAdminDto != null}">관리자</a>
-    <a th:href="@{/admin/attendence}"
-       class="block mb-4 hover:bg-gray-600 py-2 px-16 rounded transition duration-200"
-       th:if="${session.loginedAdminDto != null && session.loginedAdminDto.position =='교육기관'}">출결관리</a>
+<nav class="h-full bg-gray-500 text-white p-10" th:fragment="nav">
+
     <span id="navAlert" th:if="${session.loginedAdminDto == null}">
-    <a class="block mb-4 hover:bg-gray-600 py-2 px-16 rounded transition duration-200"
-    >과제</a>
-    <a class="block mb-4 hover:bg-gray-600 py-2 px-16 rounded transition duration-200"
-    >학생</a>
-    <a class="block mb-4 hover:bg-gray-600 py-2 px-16 rounded transition duration-200"
-    >관리자</a>
-    <a class="block mb-4 hover:bg-gray-600 py-2 px-16 rounded transition duration-200"
-    >출결관리</a>
+    <a class="block mb-4 hover:bg-gray-600 py-2 px-16 rounded transition duration-200">과제</a>
+    <a class="block mb-4 hover:bg-gray-600 py-2 px-16 rounded transition duration-200">학생</a>
+    <a class="block mb-4 hover:bg-gray-600 py-2 px-16 rounded transition duration-200">관리자</a>
+    <a class="block mb-4 hover:bg-gray-600 py-2 px-16 rounded transition duration-200">출결관리</a>
+     <a class="block mb-4 hover:bg-gray-600 py-2 px-16 rounded transition duration-200">커리큘럼</a>
     </span>
+
+    <span th:unless="${session.loginedAdminDto == null}">
+    <a class="block mb-4 hover:bg-gray-600 py-2 px-16 rounded transition duration-200" th:href="@{/admin}">홈</a>
+    <a class="block mb-4 hover:bg-gray-600 py-2 px-16 rounded transition duration-200"
+       th:href="@{/admin/assignment/}"
+       th:if="${session.loginedAdminDto != null}">과제</a>
+    <a class="block mb-4 hover:bg-gray-600 py-2 px-16 rounded transition duration-200"
+       th:href="@{/admin/member/list_users}"
+       th:if="${session.loginedAdminDto != null}">학생</a>
+    <a class="block mb-4 hover:bg-gray-600 py-2 px-16 rounded transition duration-200"
+       th:href="@{/admin/member/list_admins}"
+       th:if="${session.loginedAdminDto != null}">관리자</a>
+    <a class="block mb-4 hover:bg-gray-600 py-2 px-16 rounded transition duration-200"
+       th:href="@{/admin/attendence}"
+       th:if="${session.loginedAdminDto != null && session.loginedAdminDto.position =='교육기관'}">출결관리</a>
+    </span>
+    <a class="block mb-4 hover:bg-gray-600 py-2 px-16 rounded transition duration-200" th:href="@{/admin/curriculum}">커리큘럼</a>
+
+
 </nav>
