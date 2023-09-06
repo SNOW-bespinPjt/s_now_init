@@ -17,7 +17,7 @@
         VALUES (#{admin_no}, #{title}, #{body}, #{file_admin}, #{file_admin_name}, NOW(), NOW())
     </insert>
 
-    <select id="getGeneratedNo" resultType="int" parameterType="com.btc.snow.admin.assignment.AdminAssignmentDto">
+    <select id="getGeneratedNo" resultType="Integer" parameterType="com.btc.snow.admin.assignment.AdminAssignmentDto">
         SELECT LAST_INSERT_ID()
     </select>
 
@@ -64,7 +64,6 @@
         mod_date = NOW()
         WHERE
         no = #{no}
-
     </update>
 
     <delete id="deleteAssignment" parameterType="Integer">
@@ -83,6 +82,7 @@
         SELECT *
         FROM ASSIGNMENT
         WHERE group_id = #{no}
+        ORDER BY is_submit = 0, mod_date ASC
     </select>
 
     <update id="updatePoint" parameterType="com.btc.snow.user.assignment.UserAssignmentDto">

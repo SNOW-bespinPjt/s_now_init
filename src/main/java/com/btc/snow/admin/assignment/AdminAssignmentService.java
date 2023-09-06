@@ -1,23 +1,21 @@
 package com.btc.snow.admin.assignment;
 
-import com.btc.snow.admin.member.AdminMemberDto;
 import com.btc.snow.user.assignment.IUserAssignmentMB;
 import com.btc.snow.user.assignment.UserAssignmentDto;
 import com.btc.snow.user.member.IUserMemberDaoMB;
 import com.btc.snow.user.member.UserMemberDto;
-import jakarta.servlet.http.HttpSession;
-import lombok.Value;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Log4j2
 @Service
@@ -31,6 +29,9 @@ public class AdminAssignmentService implements IAdminAssignmentService {
 
     @Autowired
     IUserAssignmentMB iUserAssignmentMB;
+
+    @Autowired
+    JavaMailSenderImpl javaMailSenderImpl;
 
     // 상수 : 공통상수 빼기
     final static public int ASSIGNMENT_SUCCESS = 1;     // 성공
@@ -157,10 +158,11 @@ public class AdminAssignmentService implements IAdminAssignmentService {
         }
     }
 
-    // 과제 비활성화 스케줄러
-    @Scheduled(cron = "0 0 0 * * ?") // 매일 자정에 실행
-    public void updateAssignmentActivation() {
-        log.info("[AdminAssignmentService] updateAssignmentActivation()");
+    // 스케줄러
+    // 스케줄러 -1. 과제 비활성화
+    @Scheduled(cron = "0 0 0 * * *") // 매일 자정에 실행
+    public void scheduledAssignmentActivation() {
+        log.info("[AdminAssignmentService] scheduledAssignmentActivation()");
 
         // 타입 맞추기 : 변환할 수 없는 타입인 'LocalDate' 및 'String'의 객체 사이에 있습니다
         // LocalDate today = LocalDate.now();
@@ -171,9 +173,8 @@ public class AdminAssignmentService implements IAdminAssignmentService {
         // 포맷터를 정의
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-        // LocalDate를 문자열로 변
+        // LocalDate를 문자열로 변수
         String dateString = today.format(formatter);
-        log.info("현재 날짜 문자열: " + dateString);
 
         // 모든 과제 리스트
         List<AdminAssignmentDto> assignments = iAdminAssignmentMB.selectAssignments();
@@ -187,7 +188,53 @@ public class AdminAssignmentService implements IAdminAssignmentService {
             }
         }
 
-        // 과제 미제출 학생 메일 보내기
+    }
+
+    // 스케줄러 -2. 과제 미제출 학생에게 메일 발송
+    @Scheduled(cron = "0 0 0 * * *") // 매일 자정에 실행
+    public void scheduledSendMailForUserNotSubmitted() {
+        log.info("[AdminAssignmentService] scheduledSendMailForUserNotSubmitted()");
+
+        // 현재 날짜 + 1 : 내일
+        LocalDate today = LocalDate.now().plusDays(1);
+
+        // 포맷터를 정의
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        // LocalDate를 문자열로 변수
+        String dateString = today.format(formatter);
+
+        // 마감기한이 하루 남은 모든 과제 리스트
+        List<AdminAssignmentDto> assignments = iAdminAssignmentMB.selectAssignments();
+
+        // 미제출 학생 리스트
+
+
+        for (AdminAssignmentDto assignment : assignments) {
+            if (assignment.getEnd_date() != null && dateString.equals(assignment.getEnd_date())) {
+                // 미제출 학생들에게 메일 발송 : for
+
+            }
+        }
 
     }
+
+    public void sendAssignmnetByMail(String toMailAddr) {
+        log.info("[AdminMemberService] sendAssignmnetByMail()");
+
+        final MimeMessagePreparator mimeMessagePreparator = new MimeMessagePreparator() {
+            @Override
+            public void prepare(jakarta.mail.internet.MimeMessage mimeMessage) throws Exception {
+                final MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+                mimeMessageHelper.setTo("iolagvi28@gmail.com");    // 수신자 메일 주소
+                mimeMessageHelper.setSubject("[S.NOW] 과제 마감 기한 안내");
+                mimeMessageHelper.setText("과제 제출이 하루 남았습니다. 과제 페이지를 확인해주세요.");
+            }
+
+        };
+
+        javaMailSenderImpl.send(mimeMessagePreparator);
+
+    }
+
 }

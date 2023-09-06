@@ -24,4 +24,6 @@ public interface IUserStudyMapper {
     void updateStatus();
 
     int listCount();
+
+    List<UserStudyDto> coinByStudy(String id);
 }

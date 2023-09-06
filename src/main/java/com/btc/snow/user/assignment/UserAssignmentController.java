@@ -42,13 +42,10 @@ public class UserAssignmentController {
 
         nextPage = "user/assignment/list_assignments";
 
-        List<UserAssignmentDto> userAssignmentDtos = userAssignmentService.listAssignment();
+        // USER 허용 과제 리스트 불러오기
+        List<UserAssignmentDto> userAssignmentDtos = userAssignmentService.listAssignment(session);
 
-        //ModelAndView mv = new ModelAndView(nextPage);
         model.addAttribute("userAssignmentDtos", userAssignmentDtos);
-        for(UserAssignmentDto dto : userAssignmentDtos){
-            System.out.printf("is : " + dto.getIs_submit());
-        }
 
         return nextPage;
     }

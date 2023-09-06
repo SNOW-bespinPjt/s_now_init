@@ -257,8 +257,8 @@ public class AdminMemberService implements IAdminService {
             public void prepare(jakarta.mail.internet.MimeMessage mimeMessage) throws Exception {
                 final MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
                 mimeMessageHelper.setTo("iolagvi28@gmail.com");    // 수신자 메일 주소
-                mimeMessageHelper.setSubject("[TEST] 새 비밀번호 안내 메일입니다.");
-                mimeMessageHelper.setText("새 비밀번호: " + newPassword);
+                mimeMessageHelper.setSubject("[S.NOW] 새 비밀번호 안내 메일입니다.");
+                mimeMessageHelper.setText("새 비밀번호 : " + newPassword);
             }
 
         };
