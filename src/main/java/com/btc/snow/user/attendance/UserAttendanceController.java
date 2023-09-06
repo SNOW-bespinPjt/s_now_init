@@ -156,7 +156,7 @@ public class UserAttendanceController {
         }
         if (request.equals("attendanceACK")) {
             userAttendanceDtos = userAttendanceService.selectACKAttendence(userMemberDto.getId());
-
+            log.info("userAttendanceDtos {}", userAttendanceDtos.get(0).getStatus());
         }
         if (request.equals("tardy")) {
             userAttendanceDtos = userAttendanceService.selectTardyAttendence(userMemberDto.getId());

@@ -49,11 +49,20 @@ public class HomeController {
         if ((currentTime.isAfter(morningTime) && currentTime.isBefore(lastMorningTime)) || (
                 currentTime.isAfter(noonTime) && currentTime.isBefore(lastNoonTime)
         )) {
-            modelAndView.addObject("qrValidStatus", 1);
+
 
             if (userMemberDto != null) {
                 UserAttendanceDto userAttendanceDto = (UserAttendanceDto) userAttendanceService.selectUserforAttendence(userMemberDto.getId());
 //                SubmitDto submitDto = userAttendanceService.selectAttendanceSubmit(userMemberDto.getId());
+                int result = userAttendanceService.isValidAttendence(userMemberDto.getId());
+
+                if (result > 0) {
+                    modelAndView.addObject("qrValidStatus", 0);
+                }
+                if (result < 0) {
+                    modelAndView.addObject("qrValidStatus", 1);
+                }
+
 
                 if (userAttendanceDto == null) {
                     modelAndView.addObject("status", 0);
@@ -69,6 +78,7 @@ public class HomeController {
             modelAndView.addObject("qrValidStatus", 0);
         }
 
+
         if (currentTime.isAfter(lastNoonTime)) {
 
             try {
@@ -78,6 +88,7 @@ public class HomeController {
             }
 
         }
+
 
         //스터디
         Map<String, Object> studyMap = userMeetingService.mainStudy();

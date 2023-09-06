@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.btc.snow.user.mypage.IMyapgeMapper">
+
+    <resultMap id="studyPromiseDto" type="com.btc.snow.include.StudyPromiseDto">
+        <id property="no" column="no"/>
+        <id property="status" column="status"/>
+        <id property="member_id" column="member_id"/>
+        <id property="user_id" column="user_id"/>
+        <id property="study_no" column="study_no"/>
+        <id property="reg_date" column="reg_date"/>
+        <id property="mod_date" column="mod_date"/>
+    </resultMap>
+
+    <select id="selectSceduleByUser" parameterType="String" resultMap="studyPromiseDto">
+        select *
+        from STUDYPROMISE
+        where user_id = #{id}
+
+    </select>
+
+
+</mapper>

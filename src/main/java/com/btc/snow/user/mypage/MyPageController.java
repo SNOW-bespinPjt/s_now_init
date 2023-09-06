@@ -1,7 +1,7 @@
 package com.btc.snow.user.mypage;
 
 
-import com.btc.snow.admin.assignment.StatisticsDto;
+import com.btc.snow.include.StudyPromiseDto;
 import com.btc.snow.include.page.PageDefine;
 import com.btc.snow.user.assignment.UserAssignmentDto;
 import com.btc.snow.user.assignment.UserAssignmentService;
@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -52,7 +53,7 @@ public class MyPageController {
 
 
         double ratio = 0;
-        
+
         if (userAttendanceDtos != null) {
             ratio = ((double) userAttendanceDtos.size() / (double) 214) * 100.0;
         }
@@ -105,6 +106,23 @@ public class MyPageController {
 
 
         return null;
+    }
+
+    @GetMapping("/mypage/schedule")
+    public Object goToSchedule(HttpSession session) {
+        log.info(" goToSchedule() []");
+        ModelAndView modelAndView = new ModelAndView();
+
+        List<StudyPromiseDto> studyPromiseDtos = new ArrayList<>();
+        UserMemberDto loginedUserDto = (UserMemberDto) session.getAttribute("loginedUserDto");
+
+        studyPromiseDtos = (List<StudyPromiseDto>) myPageService.selectScedule(loginedUserDto.getId());
+
+        modelAndView.addObject("studyPromiseDtos", studyPromiseDtos);
+        modelAndView.setViewName("/user/mypage/schedule/home");
+
+
+        return modelAndView;
     }
 
 
