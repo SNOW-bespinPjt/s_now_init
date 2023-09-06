@@ -78,14 +78,20 @@
             no = #{no}
     </delete>
 
+    <select id="selectMyPoint" resultType="com.btc.snow.user.assignment.UserAssignmentDto">
+        SELECT point
+        FROM ASSIGNMENT
+        WHERE user_no = #{user_no}
+    </select>
+
     <select id="selectMyAssignment" parameterType="Integer" resultType="com.btc.snow.user.assignment.UserAssignmentDto">
         SELECT *
         FROM ASSIGNMENT
         WHERE user_no = #{user_no}
     </select>
 
-    <select id="selectAssignmentTitle" resultType="string">
-        SELECT title
+    <select id="selectAssignmentForMyPage" resultType="com.btc.snow.user.assignment.UserAssignmentDto">
+        SELECT *
         FROM ASSIGNMENT
         WHERE no = #{no}
     </select>

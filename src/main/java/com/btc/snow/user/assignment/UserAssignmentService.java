@@ -1,6 +1,7 @@
 package com.btc.snow.user.assignment;
 
 import com.btc.snow.admin.assignment.AdminAssignmentDto;
+import com.btc.snow.admin.assignment.StatisticsDto;
 import com.btc.snow.user.member.UserMemberDto;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.log4j.Log4j2;
@@ -128,6 +129,53 @@ public class UserAssignmentService implements IUserAssignmentService {
         return iUserAssignmentMB.deleteAssignment(no);
     }
 
+    // 과제 점수
+// 과제 점수
+    @Override
+    public Map<String, Object> myPoint(int user_no) {
+        log.info("[UserAssignmentService] myPoint()");
+
+        Map<String, Object> resultMap = new HashMap<>();
+
+        List<UserAssignmentDto> pointDtos = iUserAssignmentMB.selectMyPoint(user_no);
+
+        int minPoint = Integer.MAX_VALUE;
+        int maxPoint = Integer.MIN_VALUE;
+        int totalPoint = 0;
+        double averagePoint = 0.0;
+        String averagePointToString = null;
+
+        if (!pointDtos.isEmpty()) {
+            for (UserAssignmentDto dto : pointDtos) {
+                int point = dto.getPoint();
+
+                if (point < minPoint) {
+                    minPoint = point;
+                }
+                if (point > maxPoint) {
+                    maxPoint = point;
+                }
+                totalPoint += point;
+            }
+
+            averagePoint = (double) totalPoint / pointDtos.size();
+
+            // averagePoint 소수점 제거
+            averagePointToString = String.format("%.2f", averagePoint);
+        }
+
+        // 통계 데이터를 Map에 추가
+        resultMap.put("minPoint", minPoint);
+        resultMap.put("maxPoint", maxPoint);
+        resultMap.put("averagePoint", averagePointToString);
+
+        // UserAssignmentDto 리스트를 Map에 추가
+        resultMap.put("pointDtos", pointDtos);
+
+        return resultMap;
+    }
+
+
     // 나의 과제
     @Override
     public List<UserAssignmentDto> myAssignment(int user_no) {
@@ -144,14 +192,24 @@ public class UserAssignmentService implements IUserAssignmentService {
 
         for (UserAssignmentDto dto : userAssignments) {
             int no = dto.getGroup_id();
-            String title = iUserAssignmentMB.selectAssignmentTitle(no);
+            List<UserAssignmentDto> selectAssignmentForMyPage = iUserAssignmentMB.selectAssignmentForMyPage(no);
 
-            // 중복된 title이 없으면 추가
-            if (assignmentTitles.add(title)) {
-                dto.setTitle(title);
+            for (UserAssignmentDto assignment : selectAssignmentForMyPage) {
+                // 중복된 제목이 아닌 경우에만 추가
+                if (assignmentTitles.add(assignment.getTitle())) {
+                    dto.setTitle(assignment.getTitle());
+                }
+                if (assignmentTitles.add(assignment.getFile_user())) {
+                    dto.setFile_user(assignment.getFile_user());
+                }
+                if (assignmentTitles.add(assignment.getFile_user_name())) {
+                    dto.setFile_user_name(assignment.getFile_user_name());
+                }
+
             }
         }
 
         return userAssignments;
     }
+
 }

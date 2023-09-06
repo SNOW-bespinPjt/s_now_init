@@ -1,9 +1,11 @@
 package com.btc.snow.user.assignment;
 
 import com.btc.snow.admin.assignment.AdminAssignmentDto;
+import com.btc.snow.admin.assignment.StatisticsDto;
 import jakarta.servlet.http.HttpSession;
 
 import java.util.List;
+import java.util.Map;
 
 public interface IUserAssignmentService {
 
@@ -23,6 +25,9 @@ public interface IUserAssignmentService {
     // 과제 삭제
     int deleteAssignmentConfirm(int no);
 
+    // 과제 점수
+    Map<String, Object> myPoint(int user_no);
+
     // 나의 과제
-    List<UserAssignmentDto> myAssignment(int user_id);
+    List<UserAssignmentDto> myAssignment(int user_no);
 }

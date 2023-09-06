@@ -1,6 +1,7 @@
 package com.btc.snow.user.mypage;
 
 
+import com.btc.snow.admin.assignment.StatisticsDto;
 import com.btc.snow.include.page.PageDefine;
 import com.btc.snow.user.assignment.UserAssignmentDto;
 import com.btc.snow.user.assignment.UserAssignmentService;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/mypage")
@@ -65,11 +67,19 @@ public class MyPageController {
 
 
         // --------------------- 나의 과제 ------------------------
-        //
         int user_no = userMemberDto.getNo();
+        String id = userMemberDto.getId();
+
+        // 과제 점수
+        Map<String, Object> pointDtos = userAssignmentService.myPoint(user_no);
+
+        modelAndView.addObject("pointDtos", pointDtos);
+
+        // 과제 리스트
         List<UserAssignmentDto> userAssignmentDtos = userAssignmentService.myAssignment(user_no);
 
         modelAndView.addObject("userAssignmentDtos", userAssignmentDtos);
+        modelAndView.addObject("id", id);
 
         modelAndView.setViewName("/user/mypage/home");
 
