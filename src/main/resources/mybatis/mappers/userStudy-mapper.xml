@@ -47,4 +47,11 @@
 
 
     </select>
+
+    <insert id="studyAttend" parameterType="hashmap">
+        INSERT INTO STUDYPROMISE (member_id, user_id, study_no, reg_date, mod_date)
+        SELECT #{memberId}, s.user_id, #{studyNo}, NOW(), NOW()
+        FROM STUDY s
+        WHERE s.no = #{studyNo}
+    </insert>
 </mapper>

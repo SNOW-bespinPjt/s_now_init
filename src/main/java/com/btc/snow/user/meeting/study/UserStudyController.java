@@ -73,10 +73,14 @@ public class UserStudyController {
 
     @GetMapping("/study_list")
     public String studyList(Model model, @RequestParam(value = "pageNum", required = false, defaultValue = "1") int pageNum,
-                            @RequestParam(value = "amount", required = false, defaultValue = "5") int amount) {
+                            @RequestParam(value = "amount", required = false, defaultValue = "5") int amount, HttpSession session) {
         log.info("studyList()");
 
         String nextPage = "user/meeting/study_list";
+
+        UserMemberDto loginedUserDto = (UserMemberDto) session.getAttribute("loginedUserDto");
+
+        model.addAttribute("loginedUserDto", loginedUserDto);
 
         Map<String, Object> studyMap = userStudyService.studyList(pageNum, amount);
 
@@ -102,6 +106,19 @@ public class UserStudyController {
 
         model.addAttribute("userStudyDtos", userStudyDtos);
         model.addAttribute("pageMakerDto", studyMap.get("pageMakerDto"));
+
+        return nextPage;
+    }
+
+    @PostMapping("/study_attend")
+    public String studyAttend(@RequestParam("studyNo") int studyNo, HttpSession session) {
+        log.info("studyAttend()");
+
+        String nextPage = "redirect:/user/meeting/list";
+
+        UserMemberDto loginedUserDto = (UserMemberDto) session.getAttribute("loginedUserDto");
+
+        userStudyService.studyAttend(studyNo, loginedUserDto.getId());
 
         return nextPage;
     }

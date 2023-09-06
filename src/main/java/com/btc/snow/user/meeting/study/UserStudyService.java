@@ -84,4 +84,15 @@ public class UserStudyService implements IUserStudyService {
 
         return map;
     }
+
+    public void studyAttend(int studyNo, String id) {
+        log.info("studyAttend()");
+
+        HashMap<String, Object> map = new HashMap<>();
+
+        map.put("studyNo", studyNo);
+        map.put("id", id);
+
+        iUserStudyMapper.studyAttend(map);
+    }
 }
