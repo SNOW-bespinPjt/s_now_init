@@ -40,16 +40,6 @@
 
         // 뒤로가기 CLICK HANDLER END
 
-        // 커리큘럼 생성 CLICK HANDLER START
-        $(document).on("click", "a.create_curriculum_button", function (e) {
-            console.log("a.create_curriculum_button CLICK HANDLER");
-
-            location.href = "/admin/curriculum/create_curriculum_form";
-
-        });
-
-        // 커리큘럼 생성 CLICK HANDLER END
-
     }
 
     //init_events() END
@@ -68,7 +58,7 @@
     function ajax_show_curriculum() {
 
         $.ajax({
-            url: '/admin/curriculum/show_all_curriculum',
+            url: '/user/curriculum/show_all_curriculum',
             type: 'POST',
             processData: false,
             contentType: false,
@@ -90,23 +80,20 @@
                     appendTag += "</div>";
                     appendTag += '<div class="flex space-x-1 mb-1 text-xs">';
                     appendTag += '<div class="flex-1">';
-                    appendTag += '<p class="font-semibold">강사명: ' + adminCurriculumDtos[i].admin_id + '</p>';
+                    appendTag += '<p class="font-semibold">' + "평점: " + " / 5.0" + '</p>';
                     appendTag += '</div>';
                     appendTag += '<div class="flex-1">';
                     appendTag += '<p class="font-semibold">' + "카테고리: " + adminCurriculumDtos[i].category + '</p>';
                     appendTag += '</div>';
                     appendTag += '<div class="flex-1">';
-                    appendTag += '<p class="font-semibold">시작일: ' + adminCurriculumDtos[i].start_date + '  ~' + '</p>';
-                    appendTag += '</div>';
-                    appendTag += '<div class="flex-1">';
-                    appendTag += '<p class="font-semibold">종료일: ' + adminCurriculumDtos[i].end_date + '</p>';
+                    appendTag += '<p class="font-semibold">강사명: ' + adminCurriculumDtos[i].admin_id + '</p>';
                     appendTag += '</div>';
                     appendTag += '<div class="flex-1">';
                     appendTag += '<p class="font-semibold">시간 및 날짜: ' + adminCurriculumDtos[i].hour + " 시간" + '</p>';
                     appendTag += '</div>';
                     appendTag += '</div>';
                     appendTag += '<div class="text-right">';
-                    appendTag += '<a href="/admin/curriculum/show_detail_curriculum?no=' + adminCurriculumDtos[i].no + '"';
+                    appendTag += '<a href="/user/curriculum/show_detail_curriculum?no=' + adminCurriculumDtos[i].no + '"';
                     appendTag += 'class="bg-blue-500 text-white px-2 py-1 rounded-md hover:bg-blue-600 cursor-pointer text-xs">상세 페이지로 이동</a>';
                     appendTag += '</div>';
                     appendTag += '</div>';
@@ -132,7 +119,7 @@
         formData.append("search_title", search_title);
 
         $.ajax({
-            url: '/admin/curriculum/search_title_confirm',
+            url: '/user/curriculum/search_title_confirm',
             type: 'POST',
             processData: false,
             contentType: false,
@@ -167,7 +154,7 @@
                     appendTag += '</div>';
                     appendTag += '</div>';
                     appendTag += '<div class="text-right">';
-                    appendTag += '<a href="/admin/curriculum/show_detail_curriculum?no=' + adminCurriculumDtos[i].no + '"' + 'class="bg-blue-500 text-white px-2 py-1 rounded-md hover:bg-blue-600 cursor-pointer text-xs">상세 페이지로 이동</a>';
+                    appendTag += '<a href="/user/curriculum/show_detail_curriculum?no=' + adminCurriculumDtos[i].no + '"' + 'class="bg-blue-500 text-white px-2 py-1 rounded-md hover:bg-blue-600 cursor-pointer text-xs">상세 페이지로 이동</a>';
                     appendTag += '</div>';
                     appendTag += '</div>';
                     appendTag += '</div>';

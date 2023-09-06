@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.HashMap;
 import java.util.Map;
 
 
@@ -127,10 +128,12 @@ public class AdminCurriculumController {
      * MODIFY CURRICULUM FORM
      */
     @GetMapping("/modify_curriculum_form")
-    public String modifyCurriculumForm() {
+    public String modifyCurriculumForm(@RequestParam("no") int no, Model model) {
         log.info("[AdminCurriculumController] modifyCurriculumForm()");
 
-        String nextPage = "";
+        String nextPage = "admin/curriculum/modify_curriculum_form";
+
+        model.addAttribute("msgMap", adminCurriculumService.showDetailCurriculum(no));
 
         return nextPage;
 
@@ -140,10 +143,84 @@ public class AdminCurriculumController {
      * MODIFY CURRICULUM CONFIRM
      */
     @PostMapping("/modify_curriculum_confirm")
-    public int modifyCurriculumConfirm(AdminCurriculumDto adminCurriculumDto) {
+    public String modifyCurriculumConfirm(@RequestParam(value = "file", required = false) MultipartFile file,
+                                          AdminCurriculumDto adminCurriculumDto,
+                                          Model model,
+                                          HttpSession session) {
         log.info("[AdminCurriculumController] modifyCurriculumConfirm()");
 
-        return adminCurriculumService.modifyCurriculumConfirm(adminCurriculumDto);
+        int no = adminCurriculumDto.getNo();
+        log.info("no : " + no);
+
+        String nextPage = "admin/curriculum/curriculum_detail_form";
+        Map<String, Object> msgMap = new HashMap<>();
+
+        //세션 내 ID값 DTO에 저장
+        AdminMemberDto loginedAdminDto = (AdminMemberDto) session.getAttribute("loginedAdminDto");
+        log.info("loginedAdimnDto ID : " + loginedAdminDto.getId());
+
+        adminCurriculumDto.setAdmin_id(loginedAdminDto.getId());
+
+        String savedFileName = "";
+
+        // 수정시 file이 존재할 때
+        if (!file.getOriginalFilename().equals("")) {
+            log.info("file is existing!!");
+            savedFileName = uploadFileServiceForCurriculum.upload(file, loginedAdminDto.getId());
+
+            // 파일이 업로드 된 상태 일 때
+            if (savedFileName != null) {
+                log.info("file uploaded!!");
+                adminCurriculumDto.setFile_name(savedFileName); // 파일 저장이 되면 그걸 넣어주기
+
+                // 수정 성공 여부 확인
+                int result = adminCurriculumService.modifyCurriculumConfirm(adminCurriculumDto);
+
+                // 수정 실패 시
+                if (result <= 0) {
+                    log.info("MODIFY CURRICULUM FAIL!!");
+                    nextPage = "admin/curriculum";
+                    return nextPage;
+
+                }
+                log.info("MODIFY CURRICULUM SUCCESS!!");
+                msgMap = adminCurriculumService.showDetailCurriculum(adminCurriculumDto.getNo());
+                model.addAttribute("msgMap", msgMap);
+                return nextPage;
+
+                // file을 업로드 하지 못했을 경우
+            } else {
+                log.info("MODIFY CURRICULUM FAIL!!");
+                nextPage = "admin/curriculum";
+                return nextPage;
+
+            }
+
+            //파일이 없을 경우
+        } else {
+            // modify 시 파일을 올리지 않았을 떄 기존 DB에서 file명을 가져오는 로직
+            msgMap = adminCurriculumService.showDetailCurriculum(adminCurriculumDto.getNo());
+            AdminCurriculumDto CurriculumDto = (AdminCurriculumDto) msgMap.get("adminCurriculumDto");
+
+            adminCurriculumDto.setFile_name(CurriculumDto.getFile_name());
+
+            // 수정 성공 여부 확인
+            int result = adminCurriculumService.modifyCurriculumConfirm(adminCurriculumDto);
+
+            // 수정 실패 시
+            if (result <= 0) {
+                log.info("MODIFY CURRICULUM FAIL!!");
+                nextPage = "admin/curriculum";
+                return nextPage;
+
+            }
+
+            log.info("MODIFY CURRICULUM SUCCESS!!");
+            msgMap = adminCurriculumService.showDetailCurriculum(adminCurriculumDto.getNo());
+            model.addAttribute("msgMap", msgMap);
+            return nextPage;
+
+        }
 
     }
 
@@ -173,7 +250,8 @@ public class AdminCurriculumController {
      */
     @PostMapping("/search_title_confirm")
     @ResponseBody
-    public Map<String, Object> searchTitleConfirm(@RequestParam("search_title") String search_title, HttpSession session) {
+    public Map<String, Object> searchTitleConfirm(@RequestParam("search_title") String search_title, HttpSession
+            session) {
         log.info("[AdminCurriculumController] searchTitleConfirm()");
 
         AdminMemberDto loginedAdminDto = (AdminMemberDto) session.getAttribute("loginedAdminDto");

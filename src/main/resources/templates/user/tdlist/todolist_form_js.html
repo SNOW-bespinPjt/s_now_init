@@ -1,6 +1,6 @@
 <script th:fragment="js" th:inline="javascript" type="text/javascript">
 
-    $(document).ready(function() {
+    $(document).ready(function () {
         console.log("DOCUMENT WILL BE READY TO OPERATE NOW")
 
         // TODOLIST 전체 조회
@@ -19,15 +19,15 @@
         let className;
 
         // 시작일, 종료일 현재일 기준으로 변경 START
-        $('#start_date').val(new Date().toISOString().substring(0,10)); // 날짜만 추출 (YYYY-MM-DD)
-        $('#end_date').val(new Date().toISOString().substring(0,10));
+        $('#start_date').val(new Date().toISOString().substring(0, 10)); // 날짜만 추출 (YYYY-MM-DD)
+        $('#end_date').val(new Date().toISOString().substring(0, 10));
 
-        $('#start_date_modify').val(new Date().toISOString().substring(0,10));
-        $('#end_date_modify').val(new Date().toISOString().substring(0,10));
+        $('#start_date_modify').val(new Date().toISOString().substring(0, 10));
+        $('#end_date_modify').val(new Date().toISOString().substring(0, 10));
         // 시작일, 종료일 현재일 기준으로 변경 END
 
         // 생성 버튼 클릭 이벤트 START
-        $(document).on("click" , "#todo_container input[value='Create List']", function(e) {
+        $(document).on("click", "#todo_container input[value='Create List']", function (e) {
             console.log("#todo_container input[value='Create List'] CLICK HANDLER!!");
 
             let content = $("#content").val();
@@ -40,16 +40,16 @@
             console.log("start_date: " + start_date);
             console.log("end_date: " + end_date);
 
-            if(start_date > end_date) {
+            if (start_date > end_date) {
                 alert("시작일이 마감일보다 늦게 설정하셨습니다.");
 
                 $("#content").val('');
                 $("#tag").val('');
-                $('#start_date').val(new Date().toISOString().substring(0,10)); // 날짜만 추출 (YYYY-MM-DD)
-                $('#end_date').val(new Date().toISOString().substring(0,10));
+                $('#start_date').val(new Date().toISOString().substring(0, 10)); // 날짜만 추출 (YYYY-MM-DD)
+                $('#end_date').val(new Date().toISOString().substring(0, 10));
 
             } else {
-                ajax_create_tdlist_confirm(content, tag, start_date, end_date );
+                ajax_create_tdlist_confirm(content, tag, start_date, end_date);
 
             }
 
@@ -57,7 +57,7 @@
         // 생성 버튼 클릭 이벤트 END
 
         // 수정(is_finish 클릭) 클릭 이벤트 START
-        $(document).on("click", "#todo_list table tbody tr td input.is_finish", function(e) {
+        $(document).on("click", "#todo_list table tbody tr td input.is_finish", function (e) {
             console.log("#todo_list table tbody tr td a.is_finish MODIFY CLICK HANDLER!!");
 
             className = $(this).data("no");
@@ -69,14 +69,14 @@
         // 수정(is_finish 클릭) 클릭 이벤트 END
 
         // 수정(content 클릭) 클릭 이벤트 START
-        $(document).on("click", "#todo_list table tbody tr td a.modify", function(e) {
+        $(document).on("click", "#todo_list table tbody tr td a.modify", function (e) {
             console.log("#todo_list table tbody tr td a content MODIFY CLICK HANDLER!!");
 
             className = $(this).data("no");
             console.log("className : " + className);
             let isYes = confirm("수정하시겠습니까??");
 
-            if(isYes) {
+            if (isYes) {
                 modallToggle();
 
             }
@@ -105,8 +105,8 @@
 
                 $('#content_modify').val('');
                 $('#tag_modify').val('');
-                $('#start_date_modify').val(new Date().toISOString().substring(0,10));
-                $('#end_date_modify').val(new Date().toISOString().substring(0,10));
+                $('#start_date_modify').val(new Date().toISOString().substring(0, 10));
+                $('#end_date_modify').val(new Date().toISOString().substring(0, 10));
 
             }
 
@@ -115,20 +115,20 @@
         // 수정(content 클릭) 클릭 이벤트 END
 
         // 수정 Modal 초기화(RESET) 버튼 클릭 START
-        $(document).on('click', '#defaultModal button[type="RESET"]', function(e) {
+        $(document).on('click', '#defaultModal button[type="RESET"]', function (e) {
             console.log('reset BUTTON CLICK HANDLER!!');
 
             $("#content_modify").val('');
             $("#tag_modify").val('');
-            $('#start_date_modify').val(new Date().toISOString().substring(0,10));
-            $('#end_date_modify').val(new Date().toISOString().substring(0,10));
+            $('#start_date_modify').val(new Date().toISOString().substring(0, 10));
+            $('#end_date_modify').val(new Date().toISOString().substring(0, 10));
 
         });
 
         // 수정 Modal 초기화(RESET) 버튼 클릭 END
 
         // 수정 Modal CANCEL 버튼 클릭 START
-        $(document).on('click', '#defaultModal button[value="cancel"]', function(e) {
+        $(document).on('click', '#defaultModal button[value="cancel"]', function (e) {
             console.log('cancel BUTTON CLICK HANDLER!!');
 
             modallToggle();
@@ -138,7 +138,7 @@
         // 수정 Modal CANCEL 버튼 클릭 END
 
         // 수정 Modal xbutton(우측상단 X 그림) 버튼 클릭 START
-        $(document).on('click', '#defaultModal button[value="xbutton"]', function(e) {
+        $(document).on('click', '#defaultModal button[value="xbutton"]', function (e) {
             console.log('cancel BUTTON CLICK HANDLER!!');
 
             modallToggle();
@@ -148,13 +148,13 @@
         // 수정 Modal xbutton(우측상단 X 그림) 버튼 클릭 END
 
         // 삭제 버튼 클릭 이벤트 START
-        $(document).on("click" , "#todo_list table tbody input[value='DELETE']", function(e) {
+        $(document).on("click", "#todo_list table tbody input[value='DELETE']", function (e) {
             console.log("#todo_list table tbody input[value='DELETE'] CLICK HANDLER!!");
             let className = $(this).data("no")
 
             let isYes = confirm("정말로 삭제하시겠습니까??");
 
-            if(isYes) {
+            if (isYes) {
                 ajax_delete_tdlist_confirm(className);
 
             }
@@ -163,7 +163,7 @@
         // 삭제 버튼 클릭 이벤트 END
 
         // 검색 버튼 클릭 이벤트 START
-        $(document).on("click", '#search_word input[value="search"]', function(e) {
+        $(document).on("click", '#search_word input[value="search"]', function (e) {
             console.log('#search_word input[value="search"] CLICK HANDER!!');
 
             let search_word = $('#search_word input.search_bar').val();
@@ -176,7 +176,7 @@
         // 검색 버튼 클릭 이벤트 END
 
         // 종료된 TODOLIST 조회 START
-        $(document).on("click", '#finish_btn input[value="finish_btn"]', function(e) {
+        $(document).on("click", '#finish_btn input[value="finish_btn"]', function (e) {
             console.log('#finish_btn input[value="finish_btn"] CLICK HANDER!!');
 
             ajax_tdlist_finish_btn();
@@ -186,7 +186,7 @@
         // 종료된 TODOLIST 조회 END
 
         // 뒤로가기 btn START
-        $(document).on("click", '#finish_btn input[value="back"]', function(e) {
+        $(document).on("click", '#finish_btn input[value="back"]', function (e) {
             console.log('#finish_btn input[value="back"] CLICK HANDER!!');
 
             ajax_show_tdlist();
@@ -196,6 +196,7 @@
         // 뒤로가기 btn 조회 END
 
     }
+
     //init_events() END
 
     // 리스트 전체 삭제 START
@@ -205,6 +206,7 @@
         $("#todo_list tbody").children().remove();
 
     }
+
     // 리스트 전체 삭제 END
 
     // Modal창 visiable & hide START
@@ -215,6 +217,7 @@
         modal.classList.toggle('hidden');
 
     }
+
     // Modal창 visiable & hide END
 
 
@@ -246,9 +249,8 @@
 
         })
     }
+
     // 마감일 & 체크(활성화) css 변경 END
-
-
 
 
     //AJAX START
@@ -266,8 +268,8 @@
             type: 'POST',
             processData: false,
             contentType: false,
-            data:formData,
-            success: function(data) {
+            data: formData,
+            success: function (data) {
                 console.log('AJAX SUCCESS - ajax_create_tdlist_confirm()');
                 alert("리스트가 생성되었습니다.");
 
@@ -277,7 +279,7 @@
                 $("#tag").val('');
 
             },
-            error: function(data) {
+            error: function (data) {
                 console.log('AJAX ERROR - ajax_create_tdlist_confirm()');
                 alert("리스트 생성에 실패하였습니다.");
 
@@ -295,7 +297,7 @@
             processData: false,
             contentType: false,
             // data:formData,
-            success: function(data) {
+            success: function (data) {
                 console.log('AJAX SUCCESS - ajax_show_tdlist()');
 
                 remove_list();
@@ -328,7 +330,7 @@
                 checkedNEndDate();
 
             },
-            error: function(data) {
+            error: function (data) {
                 console.log('AJAX ERROR - ajax_show_tdlist()');
 
             }
@@ -340,19 +342,19 @@
     function ajax_modify_tdlist_confirm(className, content, tag, start_date, end_date) {
 
         let formData = new FormData();
-        formData.append("no" , className);
-        formData.append("content" , content);
-        formData.append("tag" , tag);
-        formData.append("start_date" , start_date);
-        formData.append("end_date" , end_date);
+        formData.append("no", className);
+        formData.append("content", content);
+        formData.append("tag", tag);
+        formData.append("start_date", start_date);
+        formData.append("end_date", end_date);
 
         $.ajax({
             url: '/user/tdlist/modify_tdlist_confirm',
             type: 'POST',
             processData: false,
             contentType: false,
-            data:formData,
-            success: function(data) {
+            data: formData,
+            success: function (data) {
                 console.log('AJAX SUCCESS - ajax_modify_tdlist_confirm()');
                 alert("정보가 수정되었습니다.");
 
@@ -361,7 +363,7 @@
                 modallToggle();
 
             },
-            error: function(data) {
+            error: function (data) {
                 console.log('AJAX ERROR - ajax_modify_tdlist_confirm()');
                 alert("정보가 수정되지 못하였습니다.");
 
@@ -374,22 +376,22 @@
     function ajax_modify_isfinish_confirm(className) {
 
         let formData = new FormData();
-        formData.append("className" , className);
+        formData.append("className", className);
 
         $.ajax({
             url: '/user/tdlist/modify_isfinish_confirm',
             type: 'POST',
             processData: false,
             contentType: false,
-            data:formData,
-            success: function(data) {
+            data: formData,
+            success: function (data) {
                 console.log('AJAX SUCCESS - ajax_modify_isfinish_confirm()');
 
                 remove_list();
                 ajax_show_tdlist();
 
             },
-            error: function(data) {
+            error: function (data) {
                 console.log('AJAX ERROR - ajax_modify_isfinish_confirm()');
                 alert("정보가 수정되지 못하였습니다.");
 
@@ -402,15 +404,15 @@
     function ajax_delete_tdlist_confirm(className) {
 
         let formData = new FormData();
-        formData.append("className" , className);
+        formData.append("className", className);
 
         $.ajax({
             url: '/user/tdlist/delete_tdlist_confirm',
             type: 'POST',
             processData: false,
             contentType: false,
-            data:formData,
-            success: function(data) {
+            data: formData,
+            success: function (data) {
                 console.log('AJAX SUCCESS - ajax_delete_tdlist_confirm()');
                 alert("삭제되었습니다.");
 
@@ -418,7 +420,7 @@
                 ajax_show_tdlist();
 
             },
-            error: function(data) {
+            error: function (data) {
                 console.log('AJAX ERROR - ajax_delete_tdlist_confirm()');
                 alert("삭제하지 못하였습니다");
 
@@ -436,8 +438,8 @@
             type: 'POST',
             processData: false,
             contentType: false,
-            data:formData,
-            success: function(data) {
+            data: formData,
+            success: function (data) {
                 console.log('AJAX SUCCESS - ajax_search_tags()');
 
                 remove_list();
@@ -471,7 +473,7 @@
                 checkedNEndDate();
 
             },
-            error: function(data) {
+            error: function (data) {
                 console.log('AJAX ERROR - ajax_search_tags()');
                 alert("정보를 불러오지 못하였습니다");
 
@@ -488,7 +490,7 @@
             processData: false,
             contentType: false,
             // data:formData,
-            success: function(data) {
+            success: function (data) {
                 console.log('AJAX SUCCESS - ajax_tdlist_finish_btn()');
 
                 // 앞선 리스트 삭제 후 추가적으로 내용 입력.
@@ -522,7 +524,7 @@
                 checkedNEndDate();
 
             },
-            error: function(data) {
+            error: function (data) {
                 console.log('AJAX ERROR - ajax_tdlist_finish_btn()');
 
             }
@@ -531,5 +533,5 @@
 
     }
 
-//AJAX END
+    //AJAX END
 </script>

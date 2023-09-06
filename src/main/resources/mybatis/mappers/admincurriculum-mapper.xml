@@ -14,20 +14,18 @@
                                std_div,
                                hour,
                                file_name,
-                               grade,
                                start_date,
                                end_date,
                                reg_date,
                                mod_date)
         VALUES (#{admin_id},
-                #{book_no},
+                #{book_no, jdbcType=INTEGER},
                 #{title},
                 #{content},
                 #{category},
                 #{std_div},
-                #{hour},
-                #{file_name},
-                #{grade},
+                #{hour, jdbcType=INTEGER},
+                #{file_name, jdbcType = VARCHAR},
                 #{start_date},
                 #{end_date},
                 NOW(), NOW())
@@ -40,8 +38,6 @@
         SELECT *
         FROM CURRICULUM
         WHERE admin_id = #{id}
-          and
-            <![CDATA[ end_date > DATE_SUB(NOW(), INTERVAL 30 DAY)]]>
         order by start_date asc
 
     </select>
@@ -100,13 +96,13 @@
             content    = #{content},
             category   = #{category},
             std_div    = #{std_div},
-            isedu      = #{isedu},
             hour       = #{hour},
-            file       = #{file},
+            file_name  = #{file_name},
             start_date = #{start_date},
             end_date   = #{end_date},
             mod_date   = NOW()
         WHERE no = #{no}
+
     </update>
 
     <delete id="removeCurriculum"

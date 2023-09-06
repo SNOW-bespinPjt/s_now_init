@@ -5,6 +5,8 @@
     <title>Title</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script th:replace="~{/include/common_js.html::jquery_cdn}"></script>
+    <script th:replace="~{/user/curriculum/user_curriculum_detail_form_js.html::js}"></script>
+
     <link rel="stylesheet" th:href="@{/css/curriculum_detail_form.css}">
 
 </head>
@@ -22,17 +24,13 @@
                     class="relative  items-center justify-center w-screen h-screen mr-8 border-2 rounded-lg bg-slate-100"
             >
                 <div class="word">
-                    <h2 class="absolute top-0 left-15 mt-4 text-2xl font-bold ml-14">ADMIN CURRICULUM PAGE</h2>
+                    <h2 class="absolute top-0 left-15 mt-4 text-2xl font-bold ml-14">USER CURRICULUM PAGE</h2>
                 </div>
                 <br>
                 <br>
                 <div class="curriculum_detail">
                     <ul>
-                        <th:block th:if="${msgMap.userBookItemDto.cover != null}">
-                            <li>
-                                <img th:src="${msgMap.userBookItemDto.cover}">
-                            </li>
-                        </th:block>
+                        <li><img th:src="${msgMap.userBookItemDto.cover}"></li>
                         <li>
                             <table>
                                 <tr>
@@ -64,6 +62,10 @@
                                     <td th:text="${msgMap.adminCurriculumDto.hour}"></td>
                                 </tr>
                                 <tr>
+                                    <td>평점</td>
+                                    <td th:text=" ' / 5.0'"></td>
+                                </tr>
+                                <tr>
                                     <td>시작일</td>
                                     <td th:text="${msgMap.adminCurriculumDto.start_date}"></td>
                                 </tr>
@@ -88,17 +90,20 @@
                 </div>
 
                 <div class="buttons mt-6 text-right">
-                    <a class="modify_curriculum_button inline-block px-4 py-2 border border-gray-400 rounded-md bg-gray-200 text-gray-700 hover:bg-gray-300 hover:text-gray-800"
-                       th:href="@{/admin/curriculum/modify_curriculum_form(no=${msgMap.adminCurriculumDto.no})}">
-                        MODIFY</a>
 
-                    <a class="delete_curriculum_button inline-block ml-2 px-4 py-2 border border-red-500 rounded-md bg-red-500 text-white hover:bg-red-600"
-                       th:href="@{/admin/curriculum/delete_curriculum_confirm(no=${msgMap.adminCurriculumDto.no})}">
-                        DELETE</a>
+                    <form name="grade_confirm">
+                        <input type="text" id="grade" name="grade" class="mr-2 px-2 py-1 border rounded-md"
+                               placeholder="INPUT GRADE">
 
-                    <a class="back_button inline-block ml-2 px-4 py-2 border border-red-500 rounded-md bg-red-500 text-white hover:bg-red-600"
-                       th:href="@{/admin/curriculum}">
-                        BACK</a>
+                        <input type="submit" name="grade" class="mr-2 px-2 py-1 border rounded-md"
+                               placeholder="INPUT GRADE">
+
+                        <a class="evaluate_btn inline-block px-4 py-2 border border-gray-400 rounded-md bg-gray-200 text-gray-700 hover:bg-gray-300 hover:text-gray-800">
+                            EVALUATE</a>
+
+                        <a class="back_button inline-block ml-2 px-4 py-2 border border-red-500 rounded-md bg-red-500 text-white hover:bg-red-600">
+                            BACK</a>
+                    </form>
 
                 </div>
 
