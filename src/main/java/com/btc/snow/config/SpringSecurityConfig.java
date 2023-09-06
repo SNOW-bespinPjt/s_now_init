@@ -1,8 +1,10 @@
 package com.btc.snow.config;
 
 
+import com.btc.snow.admin.member.AdminMemberDto;
 import com.btc.snow.admin.member.IAdminDaoMB;
 import com.btc.snow.user.member.IUserMemberDaoMB;
+import com.btc.snow.user.member.UserMemberDto;
 import jakarta.servlet.DispatcherType;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.log4j.Log4j2;
@@ -74,8 +76,8 @@ public class SpringSecurityConfig {
                             log.info("successHandler!!");
 
                             UserMemberDto userMemberDto = new UserMemberDto();
-                            userMemberDto.setU_m_id(authentication.getName());
-                            UserMemberDto loginedUserMemberDto = iUserMemberDaoMapper.selectUserForLogin(userMemberDto);
+                            userMemberDto.setId(authentication.getName());
+                            UserMemberDto loginedUserMemberDto = iUserMemberDaoMB.selectUserForLogin(userMemberDto);
 
                             HttpSession session = request.getSession();
                             session.setAttribute("loginedUserMemberDto", loginedUserMemberDto);
@@ -110,6 +112,7 @@ public class SpringSecurityConfig {
                 .maxSessionsPreventsLogin(false);
 
         return http.build();
+
     }
 
     @Bean
@@ -135,8 +138,8 @@ public class SpringSecurityConfig {
                             log.info("successHandler!!");
 
                             AdminMemberDto adminMemberDto = new AdminMemberDto();
-                            adminMemberDto.setA_m_id(authentication.getName());
-                            AdminMemberDto loginedAdminMemberDto = iAdminMemberDaoMapper.selectAdminForLogin(adminMemberDto);
+                            adminMemberDto.setId(authentication.getName());
+                            AdminMemberDto loginedAdminMemberDto = iAdminDaoMB.selectAdminForLogin(adminMemberDto.getId());
 
                             HttpSession session = request.getSession();
                             session.setAttribute("loginedAdminMemberDto", loginedAdminMemberDto);
@@ -171,8 +174,7 @@ public class SpringSecurityConfig {
                 .maxSessionsPreventsLogin(false);
 
         return http.build();
+
     }
 
-
 }
-
