@@ -75,6 +75,7 @@ public class UserCoinScheduler {
 
         // coinByAttendence값 구하기
         // 오늘 출석 리스트
+        //
         UserAttendanceDto userAttendanceDto = userAttendanceMapper.coinByAttendence(id);
         // datetime > date
         regDateWithoutTime = userAttendanceDto.getReg_date().format(String.valueOf(formatter));
