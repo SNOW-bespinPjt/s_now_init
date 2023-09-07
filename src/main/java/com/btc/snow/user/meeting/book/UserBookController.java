@@ -16,10 +16,11 @@ public class UserBookController {
 
     @GetMapping("/search_book")
     @ResponseBody
-    public Object searchBook(@RequestParam("title") String title) {
+    public Map<String, Object> searchBook(@RequestParam("title") String title) {
         log.info("searchBook()");
 
         Map<String, Object> map = userBookService.searchBook(title);
+
 
         return map;
 
