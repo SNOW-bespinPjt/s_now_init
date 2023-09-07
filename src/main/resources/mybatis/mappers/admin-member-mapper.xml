@@ -30,6 +30,17 @@
         FROM ADMIN
     </select>
 
+    <select id="selectUsers" resultType="com.btc.snow.user.member.UserMemberDto">
+        SELECT *
+        FROM USER
+    </select>
+
+    <select id="selectUser" resultType="com.btc.snow.user.member.UserMemberDto">
+        SELECT *
+        FROM USER
+        WHERE no = #{no}
+    </select>
+
     <update id="updateAdminApproval" parameterType="Integer">
         UPDATE
             ADMIN
@@ -83,6 +94,12 @@
         FROM ADMIN
         WHERE no = #{no}
     </delete>
+
+    <select id="selectCoinRanking" resultType="com.btc.snow.user.member.UserMemberDto">
+        SELECT *
+        FROM USER
+        ORDER BY coin DESC;
+    </select>
 </mapper>
 
 

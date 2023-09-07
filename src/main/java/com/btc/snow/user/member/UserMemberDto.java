@@ -22,5 +22,6 @@ public class UserMemberDto {
     private String img;
     private String reg_date;
     private String mod_date;
+    private int coin;
 
 }

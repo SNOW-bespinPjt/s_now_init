@@ -148,7 +148,7 @@ public class UserMemberController {
 //
 //        return nextPage;
 //    }
-
+//
 //		session.removeAttribute("loginedUserDto");
 //
 //		return nextPage;

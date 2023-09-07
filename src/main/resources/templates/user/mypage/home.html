@@ -131,24 +131,23 @@
                         <span class="font-bold text-gray-700">과제 제목</span>
                         <span class="font-bold text-gray-700">점수</span>
                     </div>
-                    <span class="flex items-center justify-between px-4 py-2 border border-gray-200"
-                          th:each="item : ${userAssignmentDtos}">
-                    <span class="text-gray-700" th:text="${item.title}"></span>
-                    <span>
-                        <span th:if="${item.file_user != null}">
+                    <span class="flex items-center justify-between px-4 py-2 border border-gray-200" th:each="item : ${userAssignmentDtos}">
+                        <span class="text-gray-700" th:text="${item.title}"></span>
+                        <span>
+                            <span th:if="${item.file_user != null}">
                             <a class="px-4 py-2 text-gray-700 text-xs hover:text-blue-500"
                                th:download="${item.file_user_name}"
                                th:href="@{/downloadFromUser(file=${item.file_user}, user_id=${id})}"
                                th:text="${item.file_user_name}">
                             </a>
-                        </span>
-                        <span th:unless="${item.file_user != null}">
-                            <p class="px-4 py-2 text-gray-700 text-xs">미제출</p>
-                        </span>
+                            </span>
+                             <span th:unless="${item.file_user != null}">
+                                <p class="px-4 py-2 text-gray-700 text-xs">미제출</p>
+                             </span>
                          </span>
-                    <span>
-                        <span th:text="${item.point}"></span>점
-                    </span>
+                        <span>
+                        <span class="text-xs" th:text="${item.point}"></span>점
+                        </span>
                     </span>
                 </div>
             </div>
