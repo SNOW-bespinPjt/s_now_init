@@ -20,14 +20,14 @@ public class StudyUploadFileService {
         // File 저장
         String fileOriName = file.getOriginalFilename();
         String fileExtension = fileOriName.substring(fileOriName.lastIndexOf("."), fileOriName.length());
-        String uploadDir = "c:\\snow\\user\\meeting\\study" + user_id;
+        String uploadDir = "c:\\snow\\user\\meeting\\study\\";
 
 
         UUID uuid = UUID.randomUUID();
         String uniqueName = uuid.toString().replace("-", "");
 
         File saveFile = new File(uploadDir + "\\" + uniqueName + fileExtension);
-        
+
 
         if (!saveFile.exists())
             saveFile.mkdirs();

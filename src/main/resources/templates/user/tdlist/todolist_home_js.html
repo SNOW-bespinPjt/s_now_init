@@ -1,0 +1,141 @@
+<script th:fragment="js" th:inline="javascript" type="text/javascript">
+
+    $(document).ready(function () {
+        console.log("DOCUMENT WILL BE READY TO OPERATE NOW")
+
+        // TODOLIST 전체 조회
+        ajax_show_tdlist();
+
+        // 이벤트 핸들러 초기화
+        init_events();
+
+    })
+
+    //init_events() START
+    function init_events() {
+        console.log("init_events() CALLED!!")
+
+        // 수정(is_finish 클릭) 클릭 이벤트 START
+        $(document).on("click", "#todolist_wrap input.is_finish", function (e) {
+            console.log("#todolist_wrap input.is_finish MODIFY CLICK HANDLER!!");
+
+            className = $(this).data("no");
+            console.log("className : " + className);
+
+            ajax_modify_isfinish_confirm(className);
+
+        });
+        // 수정(is_finish 클릭) 클릭 이벤트 END
+
+    }
+
+    //init_events() END
+
+    // 리스트 전체 삭제 START
+    function remove_list() {
+        console.log("remove_list CALLED!!");
+
+        $("#todolist_wrap").children().remove();
+
+    }
+
+    // 리스트 전체 삭제 END
+
+    // 마감일 & 체크(활성화) css 변경 START
+    function checkedNEndDate() {
+
+        // 각 행을 확인하며 CSS 변경
+        $("#todolist_wrap div").each(function () {
+            const isFinish = $(this).find(" .is_finish").prop("checked");
+
+            // 마감일이 오늘 날짜 보다 이전이거나 check가 되어 있는 튜플을 회색 처리하며 선 긋기
+            if (isFinish) {
+                $(this).addClass("gray-row"); // 회색으로 표시
+
+                // 글자를 회색으로 변경하고 가운데에 선 추가
+                $(this).find("span").css({
+                    "color": "#888",                    // 글자 색상을 회색(#888)으로 설정
+                    "text-decoration": "line-through",  // 가운데 선 추가
+                    "text-decoration-color": "#888"     // 선의 색상을 회색(#888)으로 설정
+                });
+
+            }
+
+        })
+    }
+
+    // 마감일 & 체크(활성화) css 변경 END
+
+    //AJAX START
+    function ajax_show_tdlist() {
+
+        $.ajax({
+            url: '/user/tdlist/tdlist_confirm',
+            type: 'POST',
+            processData: false,
+            contentType: false,
+            // data:formData,
+            success: function (data) {
+                console.log('AJAX SUCCESS - ajax_show_tdlist()');
+
+                remove_list();
+
+                let userTdListDtos = data.userTdListDtos;
+                console.log(userTdListDtos);
+
+                for (let i = 0; i < userTdListDtos.length; i++) {
+                    let appendTag = "<div>";
+                    appendTag += "<span><input type='checkbox' class='is_finish' data-no='" + userTdListDtos[i].no + "'";
+                    if (userTdListDtos[i].is_finish === 1) {
+                        appendTag += " checked"; // is_finish가 1이면 checked 속성을 추가하여 체크된 상태로 만듭니다.
+                    }
+                    appendTag += "></span>";
+                    appendTag += "<span>" + userTdListDtos[i].content + "</span>"
+                    appendTag += "</div>";
+
+                    $("#todolist_wrap").append(appendTag);
+
+                }
+
+                checkedNEndDate();
+
+            },
+            error: function (data) {
+                console.log('AJAX ERROR - ajax_show_tdlist()');
+
+            }
+
+        });
+
+    }
+
+    function ajax_modify_isfinish_confirm(className) {
+
+        let formData = new FormData();
+        formData.append("className", className);
+
+        $.ajax({
+            url: '/user/tdlist/modify_isfinish_confirm',
+            type: 'POST',
+            processData: false,
+            contentType: false,
+            data: formData,
+            success: function (data) {
+                console.log('AJAX SUCCESS - ajax_modify_isfinish_confirm()');
+
+                remove_list();
+                ajax_show_tdlist();
+
+            },
+            error: function (data) {
+                console.log('AJAX ERROR - ajax_modify_isfinish_confirm()');
+                alert("정보가 수정되지 못하였습니다.");
+
+            }
+
+        });
+
+    }
+
+    //AJAX END
+</script>

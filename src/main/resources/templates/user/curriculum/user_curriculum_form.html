@@ -5,21 +5,21 @@
     <title>Title</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script th:replace="~{/include/common_js.html::jquery_cdn}"></script>
-    <script th:replace="~{/admin/curriculum/curriculum_form_js.html::js}"></script>
+    <script th:replace="~{/user/curriculum/user_curriculum_form_js.html::js}"></script>
 
 
 </head>
 <body>
-
+<header th:replace="~{/include/header_nav_footer::header}"></header>
 <div class="flex">
     <!-- nav -->
     <div>
-        <nav th:replace="~{/include/admin_nav::nav}"></nav>
+        <nav th:replace="~{/include/header_nav_footer::nav}"></nav>
     </div>
     <!--  section & footer  -->
     <div class="flex flex-col items-center justify-center w-5/6 mx-auto">
         <h2 class="relative   top-0 left-0 mt-4 text-2xl font-bold ml-14">
-            ADMIN CURRICULUM PAGE</h2>
+            USER CURRICULUM PAGE</h2>
         <section class="flex flex-row w-5/6 border-solid mt-7">
             <!-- ⬅️ -->
             <div
@@ -42,16 +42,11 @@
 
                 </div>
 
-                <div class="buttons mt-6 text-right">
-                    <a class="create_curriculum_button inline-block px-4 py-2 border border-gray-400 rounded-md bg-gray-200 text-gray-700 hover:bg-red-600 hover:text-white"
-                       href="#none">커리큘럼
-                        생성</a>
-
-                </div>
             </div>
+
+
         </section>
+
         <footer th:replace="~{/include/header_nav_footer.html::footer}"></footer>
-    </div>
-</div>
 </body>
 </html>

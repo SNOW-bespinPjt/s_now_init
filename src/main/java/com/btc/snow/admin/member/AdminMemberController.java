@@ -5,7 +5,6 @@ import jakarta.servlet.http.HttpSession;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -66,27 +65,27 @@ public class AdminMemberController {
     /*
      * 로그인승인
      */
-    @PostMapping("/member_login_confirm")
-    public String loginConfirm(AdminMemberDto adminMemberDto, HttpSession session, Model model) {
-        log.info("[AdminMemberController] loginConfirm()");
-
-        String nextPage = "redirect:/admin";
-
-        AdminMemberDto loginedAdminDto = adminMemberService.loginConfirm(adminMemberDto);
-
-        if (loginedAdminDto == null) {
-            nextPage = "admin/member/fail";
-
-        } else {
-            session.setAttribute("loginedAdminDto", loginedAdminDto);
-            session.setMaxInactiveInterval(60 * 30);
-
-            log.info("로그인한 ID : " + loginedAdminDto.getId());
-        }
-
-        return nextPage;
-
-    }
+//    @PostMapping("/member_login_confirm")
+//    public String loginConfirm(AdminMemberDto adminMemberDto, HttpSession session, Model model) {
+//        log.info("[AdminMemberController] loginConfirm()");
+//
+//        String nextPage = "redirect:/admin";
+//
+//        AdminMemberDto loginedAdminDto = adminMemberService.loginConfirm(adminMemberDto);
+//
+//        if (loginedAdminDto == null) {
+//            nextPage = "admin/member/fail";
+//
+//        } else {
+//            session.setAttribute("loginedAdminDto", loginedAdminDto);
+//            session.setMaxInactiveInterval(60 * 30);
+//
+//            log.info("로그인한 ID : " + loginedAdminDto.getId());
+//        }
+//
+//        return nextPage;
+//
+//    }
 
     /*
      * 비밀번호 찾기
@@ -151,17 +150,17 @@ public class AdminMemberController {
     /*
      * 로그아웃 확인
      */
-    @GetMapping("/member_logout_confirm")
-    public String logoutConfirm(HttpSession session) {
-        log.info("[AdminMemberController] logoutConfirm()");
-
-        String nextPage = "redirect:/admin";
-
-        session.removeAttribute("loginedAdminDto");
-
-        return nextPage;
-
-    }
+//    @GetMapping("/member_logout_confirm")
+//    public String logoutConfirm(HttpSession session) {
+//        log.info("[AdminMemberController] logoutConfirm()");
+//
+//        String nextPage = "redirect:/admin";
+//
+//        session.removeAttribute("loginedAdminDto");
+//
+//        return nextPage;
+//
+//    }
 
     /*
      * 계정 수정
@@ -266,7 +265,7 @@ public class AdminMemberController {
         return mv;
 
     }
-    
+
     
     /*
      * 관리자 승인 처리

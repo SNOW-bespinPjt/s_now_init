@@ -23,7 +23,7 @@ public interface IAdminCurriculumService {
     public Map<String, Object> showDetailCurriculum(int no);
 
     /*
-     * SHOW DETAIL CURRICULUM INFO USING NO
+     * MODIFY CURRICULUM CONFIRM
      */
     public int modifyCurriculumConfirm(AdminCurriculumDto adminCurriculumDto);
 

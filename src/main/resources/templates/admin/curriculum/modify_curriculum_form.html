@@ -5,7 +5,7 @@
     <title>Title</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script th:replace="~{/include/common_js.html::jquery_cdn}"></script>
-    <script th:replace="~{/admin/curriculum/create_curriculum_form_js.html::js}"></script>
+    <script th:replace="~{/admin/curriculum/modify_curriculum_form_js.html::js}"></script>
 
 </head>
 <body>
@@ -17,7 +17,7 @@
     <!--  section & footer  -->
     <div class="flex flex-col items-center justify-center w-5/6 mx-auto">
         <h2 class="relative   top-0 left-0 mt-4 text-2xl font-bold ml-14">
-            ADMIN CURRICULUM CREATE FORM</h2>
+            ADMIN CURRICULUM MODIFY FORM</h2>
         <section class="flex flex-row w-5/6 border-solid mt-7">
             <!-- ⬅️ -->
             <div
@@ -25,14 +25,32 @@
             >
                 <div id="create_curriculum_wrap" class="items-center justify-center">
                     <div class="max-w-lg mx-auto bg-white rounded-lg shadow-lg p-6">
-                        <form action="/admin/curriculum/create_curriculum_confirm" method="POST"
-                              class="create_curriculum_form space-y-4"
+                        <form action="/admin/curriculum/modify_curriculum_confirm" method="POST"
+                              class="modify_curriculum_form space-y-4"
                               enctype="multipart/form-data">
+
+                            <!-- NO -->
+                            <div>
+                                <input type="hidden" id="no" name="no"
+                                       th:value="${msgMap.adminCurriculumDto.no}"
+                                       class="w-full border-gray-300 rounded-md p-2"
+                                       required>
+                            </div>
+
+                            <!-- ADMIN ID -->
+                            <div>
+                                <label for="admin_name" class="block font-medium">* Admin Name</label>
+                                <input type="text" id="admin_name" name="admin_name"
+                                       th:value="${msgMap.adminMemberDto.name}"
+                                       class="w-full border-gray-300 rounded-md p-2" disabled readonly
+                                       required>
+                            </div>
 
                             <!-- Book No (You can use a select element if it's based on existing books) -->
                             <div id="book_search">
                                 <label for="book_no" class="block font-medium">Book No</label>
                                 <input type="text" id="book_no" name="book_no"
+                                       th:value="${msgMap.adminCurriculumDto.book_no}"
                                        class="w-full border-gray-300 rounded-md p-2" required>
 
                                 <input
@@ -60,6 +78,8 @@
                                         <div
                                                 class="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600 modal_form"
                                         >
+
+
                                             <input type="text" class="bookName" name="bookKeyword"
                                                    placeholder="도서이름을 입력해주세요.">
                                             <input type="button" value="검색" onclick="ajax_getSearchBook()">
@@ -122,7 +142,8 @@
                             <!-- Title -->
                             <div>
                                 <label for="title" class="block font-medium">Title</label>
-                                <input type="text" id="title" name="title" class="w-full border-gray-300 rounded-md p-2"
+                                <input type="text" id="title" name="title" th:value="${msgMap.adminCurriculumDto.title}"
+                                       class="w-full border-gray-300 rounded-md p-2"
                                        required>
                             </div>
 
@@ -130,6 +151,7 @@
                             <div>
                                 <label for="content" class="block font-medium">Content</label>
                                 <input type="text" id="content" name="content" rows="4"
+                                       th:value="${msgMap.adminCurriculumDto.content}"
                                        class="w-full border-gray-300 rounded-md p-2" required></input>
                             </div>
 
@@ -137,6 +159,7 @@
                             <div>
                                 <label for="category" class="block font-medium">Category</label>
                                 <input type="text" id="category" name="category"
+                                       th:value="${msgMap.adminCurriculumDto.Category}"
                                        class="w-full border-gray-300 rounded-md p-2" required>
                             </div>
 
@@ -144,6 +167,7 @@
                             <div>
                                 <label for="std_div" class="block font-medium">Student Division</label>
                                 <select id="std_div" name="std_div" class="w-full border-gray-300 rounded-md p-2"
+                                        th:value="${msgMap.adminCurriculumDto.std_div}"
                                         required>
                                     <option value=''>---- 교육반을 고르시오 ---</option>
                                     <option value="엔지니어">엔지니어</option>
@@ -155,6 +179,7 @@
                             <div>
                                 <label for="hour" class="block font-medium">Hour</label>
                                 <input type="text" id="hour" name="hour" class="w-full border-gray-300 rounded-md p-2"
+                                       th:value="${msgMap.adminCurriculumDto.Hour}"
                                        required>
                             </div>
 
@@ -168,6 +193,7 @@
                             <div>
                                 <label for="start_date" class="block font-medium">Start Date</label>
                                 <input type="date" id="start_date" name="start_date"
+                                       th:value="${msgMap.adminCurriculumDto.start_date}"
                                        class="w-full border-gray-300 rounded-md p-2" required>
                             </div>
 
@@ -175,24 +201,25 @@
                             <div>
                                 <label for="end_date" class="block font-medium">End Date</label>
                                 <input type="date" id="end_date" name="end_date"
+                                       th:value="${msgMap.adminCurriculumDto.end_date}"
                                        class="w-full border-gray-300 rounded-md p-2" required>
                             </div>
 
                             <!-- Submit Button -->
                             <div id="buttons" class="text-right">
                                 <button type="button"
-                                        class="create_btn px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600"
+                                        class="modify_btn px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600"
                                 >
-                                    Create
+                                    Modify
                                     Curriculum
                                 </button>
-                                <button type="button"
+                                <button type="reset"
                                         class="reset_btn px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-red-500">
-                                    reset
+                                    Reset
                                 </button>
                                 <button type="button"
                                         class="cancel_btn px-4 py-2 bg-red-500 text-white rounded-md hover:bg-green-600">
-                                    cancel
+                                    Cancel
                                 </button>
                             </div>
                         </form>
