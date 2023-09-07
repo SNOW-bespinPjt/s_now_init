@@ -14,11 +14,21 @@
         <result property="mod_date" column="mod_date"/>
     </resultMap>
 
-    <select id="selectSceduleByUser" parameterType="String" resultMap="studyPromiseDtos">
+    <select id="selectSceduleByUser" parameterType="HashMap" resultMap="studyPromiseDtos">
         select *
-        from STUDYPROMISE
+        from STUDYPROMISE sp
+                 inner join USER u ON sp.member_id = u.id
         where user_id = #{id}
-           or member_id = #{id}
+        limit #{skip},#{amount}
+
+    </select>
+
+    <select id="selectSceduleByMember" parameterType="HashMap" resultMap="studyPromiseDtos">
+        select *
+        from STUDYPROMISE sp
+                 inner join USER u ON sp.user_id = u.id
+        where member_id = #{id}
+        limit #{skip},#{amount}
 
     </select>
 
@@ -28,6 +38,20 @@
         where no = #{no}
 
     </update>
+
+    <select id="getTotalSudyPromiseDtos" parameterType="String" resultType="Integer">
+        select count(*)
+        from STUDYPROMISE
+        where user_id = #{id}
+
+    </select>
+
+    <select id="getTotalSudyPromiseDtosByMember" parameterType="String" resultType="Integer">
+        select count(*)
+        from STUDYPROMISE
+        where member_id = #{id}
+
+    </select>
 
 
 </mapper>

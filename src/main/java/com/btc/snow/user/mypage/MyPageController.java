@@ -1,7 +1,6 @@
 package com.btc.snow.user.mypage;
 
 
-import com.btc.snow.include.StudyPromiseDto;
 import com.btc.snow.include.page.PageDefine;
 import com.btc.snow.user.assignment.UserAssignmentDto;
 import com.btc.snow.user.assignment.UserAssignmentService;
@@ -13,14 +12,11 @@ import jakarta.servlet.http.HttpSession;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.net.URI;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -107,45 +103,37 @@ public class MyPageController {
         return modelAndView;
     }
 
-    @GetMapping("/attendence/valid")
-    public Object attendenceValid() {
-        log.info("attendenceValid !!");
+//    @GetMapping("/studyhome")
+//    @ResponseBody
+//    public Object goToSchedule(HttpSession session) {
+//        log.info(" goToSchedule() []");
+//
+//        List<StudyPromiseDto> studyPromiseDtos = null;
+//        UserMemberDto loginedUserDto = (UserMemberDto) session.getAttribute("loginedUserDto");
+//
+//        studyPromiseDtos = myPageService.selectScedule(loginedUserDto.getId());
+//        ModelAndView modelAndView = new ModelAndView();
+////        modelAndView.setViewName("/user/mypage/schedule/studyHome");
+////        modelAndView.addObject("studyPromiseDtos", studyPromiseDtos);
+//
+//        log.info("loginedUserDto {}", loginedUserDto.getId());
+//
+////        Map<String, Object> map = new HashMap<>();
+////        map.put("studyPromiseDtos", studyPromiseDtos);
+////        map.put("loginedUserDto", loginedUserDto);
+//
+//        return "hi";
+//    }
 
-        ModelAndView modelAndView = new ModelAndView();
-
-
-        return null;
-    }
-
-    @PostMapping("/schedule")
-    @ResponseBody
-    public Object goToSchedule(HttpSession session) {
-        log.info(" goToSchedule() []");
-
-        List<StudyPromiseDto> studyPromiseDtos = null;
-        UserMemberDto loginedUserDto = (UserMemberDto) session.getAttribute("loginedUserDto");
-
-        studyPromiseDtos = myPageService.selectScedule(loginedUserDto.getId());
-
-        log.info("loginedUserDto {}", loginedUserDto.getId());
-
-        Map<String, Object> map = new HashMap<>();
-        map.put("studyPromiseDtos", studyPromiseDtos);
-        map.put("loginedUserDto", loginedUserDto);
-
-        return map;
-    }
-  
 
     @GetMapping("/approval")
     @ResponseBody
-    public ResponseEntity<Object> approvalStatus(@RequestParam("no") int no) {
+    public int approvalStatus(@RequestParam("no") int no) {
         log.info("approvalStatus()");
         int result = myPageService.updateStatus(no);
-        HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(URI.create("/mypage"));
 
-        return new ResponseEntity<>(headers, HttpStatus.MOVED_PERMANENTLY);
+
+        return result;
 
     }
 
@@ -176,22 +164,30 @@ public class MyPageController {
 
 
     @GetMapping("/studyhome")
-    public Object gotoStudyHome(HttpSession session) {
+    public Object gotoStudyHome(HttpSession session, @RequestParam(value = "pageNum", required = false, defaultValue = "1") int pageNum,
+                                @RequestParam(value = "amount", required = false, defaultValue = "3") int amount) {
         log.info(" gotoStudyHome()");
-        List<StudyPromiseDto> studyPromiseDtos = null;
+
+
         UserMemberDto loginedUserDto = (UserMemberDto) session.getAttribute("loginedUserDto");
 
-        studyPromiseDtos = myPageService.selectScedule(loginedUserDto.getId());
+
+        Map<String, Object> map = myPageService.selectScedule(loginedUserDto.getId(), pageNum, amount);
         ModelAndView modelAndView = new ModelAndView();
 
 
         log.info("loginedUserDto {}", loginedUserDto.getId());
 
-        Map<String, Object> map = new HashMap<>();
-        map.put("studyPromiseDtos", studyPromiseDtos);
         map.put("loginedUserDto", loginedUserDto);
 
-        modelAndView.addObject("studyAndLoginDto", map);
+
+        modelAndView.addObject("studyPromiseDtos", map.get("studyPromiseDtos"));
+        modelAndView.addObject("pageMakerDto", map.get("pageMakerDto"));
+        modelAndView.addObject("studyPromiseDtosByMember", map.get("studyPromiseDtosByMember"));
+        modelAndView.addObject("pageMakerDtoByMember", map.get("pageMakerDtoByMember"));
+        modelAndView.addObject("loginedUserDto", map.get("loginedUserDto"));
+
+
         modelAndView.setViewName("/user/mypage/schedule/studyHome");
 
 

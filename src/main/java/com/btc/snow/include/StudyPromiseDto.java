@@ -13,4 +13,7 @@ public class StudyPromiseDto {
     String mod_date;
     String study_title;
 
+
+    private String img;
+
 }
