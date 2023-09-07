@@ -154,11 +154,11 @@ public class UserMemberController {
 //
 //        return nextPage;
 //    }
-
-		session.removeAttribute("loginedUserDto");
-
-		return nextPage;
-	}
+//
+//		session.removeAttribute("loginedUserDto");
+//
+//		return nextPage;
+//	}
 
     /*
      * USER DELETE CONFIRM
