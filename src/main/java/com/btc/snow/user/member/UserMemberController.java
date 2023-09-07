@@ -55,7 +55,7 @@ public class UserMemberController {
     /*
      USER LOGIN FORM
      */
-    @GetMapping("/in_form")
+    @GetMapping("/user_login_form")
     public String userLoginForm() {
         log.info("[UserMemberController] userLoginForm()");
 

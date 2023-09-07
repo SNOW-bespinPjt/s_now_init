@@ -29,4 +29,5 @@ public interface IUserMemberService {
      */
     public int findPasswordConfirm(UserMemberDto userMemberDto) throws MessagingException;
 
+    int uploadUserImg(UserMemberDto userMemberDto);
 }

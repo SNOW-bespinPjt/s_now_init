@@ -53,4 +53,6 @@ public interface UserAttendanceMapper {
     UserAttendanceDto coinByAttendence(String id);
 
     int isValidAttendence(String id);
+
+    List<UserAttendanceDto> selectTardyAttendenceTab(String id);
 }

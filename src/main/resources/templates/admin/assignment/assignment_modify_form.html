@@ -20,30 +20,30 @@
                     class="relative flex items-center justify-center w-screen h-screen mr-8 border-2 rounded-lg bg-slate-100"
             >
                 <div class="word">
-                    <h2 class="absolute top-0 left-0 mt-4 text-2xl font-bold ml-14">MODIFY ASSIGNMENT FORM</h2>
+                    <h2 class="absolute top-0 left-0 mt-4 text-2xl font-bold ml-14">과제 등록 수정페이지</h2>
                 </div>
-                <div class="assignment_modify_form">
-                    <form th:action="@{/admin/assignment/assignment_modify_confirm}"
-                          name="assignment_modify_form" method="post"
-                          enctype="multipart/form-data"
+                <div class="assignment_modify_form w-full max-w-md p-4">
+                    <form enctype="multipart/form-data"
+                          method="post" name="assignment_modify_form"
+                          th:action="@{/admin/assignment/assignment_modify_confirm}"
                     >
-                        <input type="hidden" name="no" th:value="${adminAssignmentDto.no}">
-                        <input type="text" name="title" class="font-bold border mb-4 px-4 py-2 rounded-lg w-full"
-                               placeholder="INPUT TITLE"
-                               th:value="${adminAssignmentDto.title}">
-                        <textarea name="body" placeholder="INPUT BODY" class="border mb-4 p-4 rounded-lg w-full"
+                        <input name="no" th:value="${adminAssignmentDto.no}" type="hidden">
+                        <input class="font-bold border mb-4 px-4 py-2 rounded-lg w-full" name="title" placeholder="INPUT TITLE"
+                               th:value="${adminAssignmentDto.title}"
+                               type="text">
+                        <textarea class="border mb-4 p-4 rounded-lg w-full" name="body" placeholder="INPUT BODY"
                                   th:text="${adminAssignmentDto.body}"></textarea>
-                        <input type="file" name="file" class="mb-4">
+                        <input class="mb-4" name="file" type="file">
                         <div class="space-x-4">
-                            <input type="button" value="MODIFY" onclick="modifyAssignmentForm();"
-                                   class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
-                            <input type="reset" value="reset"
-                                   class="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400">
+                            <input class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 cursor-pointer" onclick="modifyAssignmentForm();" type="button"
+                                   value="수정">
+                            <input class="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 cursor-pointer" type="reset"
+                                   value="초기화">
                             <input
+                                    class="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 cursor-pointer"
+                                    onclick="goBack()"
                                     type="button"
                                     value="확인"
-                                    onclick="goBack()"
-                                    class="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400"
                             />
                         </div>
                     </form>

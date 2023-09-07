@@ -26,12 +26,10 @@
     <!--  section & footer  -->
     <div class="flex flex-col items-center justify-center w-5/6 mx-auto">
         <section class="flex flex-row w-5/6 border-solid mt-7">
-            <div
-                    class="relative flex items-center justify-center w-screen h-screen mr-8 border-2 rounded-lg bg-slate-100"
-            >
-                <div class="absolute top-0 left-0 mt-6 ml-14 w-full">
+            <div class="flex items-center justify-center w-screen h-auto mr-8 border-2 rounded-lg bg-slate-100 py-8">
+                <div class="ml-14 w-full">
                     <div>
-                        <h2 class="text-2xl font-bold">ASSIGNMENT LIST</h2>
+                        <h2 class="text-2xl font-bold">등록된 과제 페이지</h2>
                         <a th:href="@{/admin/assignment/registration_form}"
                            class="block mb-4 hover:text-green-500 py-2 px-16 rounded transition duration-200"
                         >글쓰기</a>
@@ -43,38 +41,37 @@
                                     <br>
                                 </div>
                                 <div class="flex flex-col items-center p-4 mb-5">
-                                        <span th:if="${item.is_activation eq 0}">
-                                            <input type="button" value="과제 활성화" th:attr="data-no=${item.no}"
-                                                   onclick="activeAssignment(this.getAttribute('data-no'));"
-                                                   class="px-2 py-1 rounded bg-blue-500 text-white hover:bg-blue-600">
-                                        </span>
+                                    <span th:if="${item.is_activation eq 0}">
+                                        <input type="button" value="과제 활성화" th:attr="data-no=${item.no}"
+                                               onclick="activeAssignment(this.getAttribute('data-no'));"
+                                               class="px-2 py-1 rounded bg-blue-500 text-white hover:bg-blue-600">
+                                    </span>
                                     <span th:if="${item.is_activation eq 1}" class="text-green-500">
                                         <input type="button" value="과제 비활성화" th:attr="data-no=${item.no}"
                                                onclick="activeAssignment(this.getAttribute('data-no'));"
                                                class="px-2 py-1 rounded bg-blue-500 text-white hover:bg-blue-600">
-                                    <div class="flex">
-                                        <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                fill="none"
-                                                viewBox="0 0 24 24"
-                                                stroke-width="1.5"
-                                                stroke="currentColor"
-                                                class="w-6 h-6"
-                                        >
-                                            <path
-                                                    stroke-linecap="round"
-                                                    stroke-linejoin="round"
-                                                    d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
-                                            />
-                                            <path
-                                                    stroke-linecap="round"
-                                                    stroke-linejoin="round"
-                                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                                            />
-                                        </svg>
-                                        <p class="ml-2 font-thin text-slate-400" th:text="${item.end_date}"></p>
-                                    </div>
-
+                                        <div class="flex">
+                                            <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    fill="none"
+                                                    viewBox="0 0 24 24"
+                                                    stroke-width="1.5"
+                                                    stroke="currentColor"
+                                                    class="w-6 h-6"
+                                            >
+                                                <path
+                                                        stroke-linecap="round"
+                                                        stroke-linejoin="round"
+                                                        d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
+                                                />
+                                                <path
+                                                        stroke-linecap="round"
+                                                        stroke-linejoin="round"
+                                                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                                                />
+                                            </svg>
+                                            <p class="ml-2 font-thin text-slate-400" th:text="${item.end_date}"></p>
+                                        </div>
                                     </span>
                                 </div>
                             </div>

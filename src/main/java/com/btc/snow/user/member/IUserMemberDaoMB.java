@@ -8,12 +8,12 @@ public interface IUserMemberDaoMB {
     /*
      * CHECK DUPLICATE ID
      */
-	public boolean isUser(String id);
+    public boolean isUser(String id);
 
     /*
      * INSERT NEW ACCOUNT
      */
-	public int insertUserMember(UserMemberDto memberDto);
+    public int insertUserMember(UserMemberDto memberDto);
 
     /*
      * USER LOGIN CONFIRM
@@ -40,13 +40,5 @@ public interface IUserMemberDaoMB {
      */
     public int updateUserPW(UserMemberDto userMemberDto);
 
-    /*
-     * SELECT COIN
-     */
-    int selectCoin(String id);
-
-    /*
-     * UPDATE COIN
-     */
-    int updateCoin(String id, int totalCoin);
+    int uploadUserImg(UserMemberDto userMemberDto);
 }
