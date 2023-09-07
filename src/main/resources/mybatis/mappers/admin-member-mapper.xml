@@ -94,6 +94,12 @@
         FROM ADMIN
         WHERE no = #{no}
     </delete>
+
+    <select id="selectCoinRanking" resultType="com.btc.snow.user.member.UserMemberDto">
+        SELECT *
+        FROM USER
+        ORDER BY coin DESC;
+    </select>
 </mapper>
 
 

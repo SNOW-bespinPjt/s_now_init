@@ -33,4 +33,6 @@ public interface IAdminDaoMB {
     AdminMemberDto selectAdminForFindId(Map<String, Object> map);
 
     UserMemberDto selectUser(int no);
+
+    List<UserMemberDto> selectCoinRanking();
 }

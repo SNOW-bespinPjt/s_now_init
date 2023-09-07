@@ -306,4 +306,12 @@ public class AdminMemberService implements IAdminService {
         return result;
 
     }
+
+    // BTC 코인 순위
+    @Override
+    public List<UserMemberDto> coinRanking() {
+        log.info("[AdminMemberService] coinRanking()");
+
+        return iAdminDaoMB.selectCoinRanking();
+    }
 }

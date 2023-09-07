@@ -48,4 +48,6 @@ public interface IAdminService {
     // 회원탈퇴
     int SignOutConfirm(int no);
 
+    // BTC 코인 순위
+    List<UserMemberDto> coinRanking();
 }

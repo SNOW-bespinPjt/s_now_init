@@ -28,7 +28,7 @@
                     class="relative flex items-center justify-center w-screen h-screen mr-8 border-2 rounded-lg bg-slate-100"
             >
                 <h2 class="absolute top-0 left-0 mt-4 text-2xl font-bold ml-14">관리자 페이지</h2>
-                <div th:if="${session.loginedAdminDto != null}" class="flex flex-col w-11/12 bg-white h-5/6">
+                <div class="flex flex-col w-11/12 bg-white h-5/6" th:if="${session.loginedAdminDto != null}">
                     <img alt="Curriculum Image"
                          class="mx-auto w-full"
                          th:src="@{/assignment/admin/img/curriculum.png}"/>
@@ -40,12 +40,16 @@
                         </div>
                     </div>
                 </div>
-                <div th:unless="${session.loginedAdminDto != null}" class="flex flex-col w-11/12 bg-white h-5/6 items-center text-gray-500">
+                <div class="flex flex-col w-11/12 bg-white h-5/6 items-center text-gray-500"
+                     th:unless="${session.loginedAdminDto != null}">
                     <p class="mt-20">
                     <h2 class="mb-4">로그인 후 확인이 가능합니다</h2>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8 mb-4 mt-6">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
-                        </svg>
+                    <svg class="w-8 h-8 mb-4 mt-6" fill="none" stroke="currentColor" stroke-width="1.5"
+                         viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"/>
+                    </svg>
                     </p>
                 </div>
             </div>
@@ -118,9 +122,12 @@
                 <!-- After Login -->
                 <div class="flex flex-col items-center justify-center w-11/12 h-40 p-2 mt-6 border-2 rounded-sm"
                      th:if="${session.loginedAdminDto != null}">
-                    <h3 class="mb-3 text-2xl font-semibold">환영합니다</h3>
-                    <span class="mx-auto h-10 px-4 py-2 font-bold text-green-500 w-52 hover:text-green-700 text-center"
-                          th:text="${session.loginedAdminDto.id}"> 님</span>
+                    <h3 class="mb-3 font-semibold">환영합니다</h3>
+                    <span class="mx-auto h-10 px-4 py-2">
+                        <span class="text-xl font-bold text-green-500 w-52 hover:text-green-700 text-center"
+                              th:text="${session.loginedAdminDto.id}"></span>
+                        <span>님</span>
+                    </span>
                     <div class="mt-3.5 text-xs text-gray-700">
                         <a class="cursor-pointer hover:underline hover:text-gray-500"
                            th:href="@{/admin/member/member_modify_form}"
@@ -132,10 +139,56 @@
                 </div>
 
                 <!-- ➡️⬇️ -->
-                <div
-                        class="flex flex-col items-center justify-center w-11/12 p-2 mt-6 border-2 rounded-sm h-2/4"
-                >
-                    <h3 class="mb-3">SNOW에 오신 것을 환영합니다 !</h3>
+                <div class="flex flex-col items-center justify-center w-11/12 p-2 mt-6 border-2 rounded-sm h-2/4">
+                    <div th:if="${session.loginedAdminDto != null}">
+                        <div class="flex items-center">
+                            <span class="mr-2 text-xl">🪙</span>
+                            <p class="text-xl font-bold">BTC 코인 순위</p>
+                        </div>
+                        <div class="mt-4">
+                            <div class="flex items-center mt-2">
+                                <span class="mr-2 text-xl">🥇</span>
+                                <span class="font-semibold" th:text="${userMemberDtos.get(0).getName()}"></span>&nbsp;
+                                <span><span class="font-bold"
+                                            th:text="${userMemberDtos.get(0).getCoin()}"></span>점</span>
+                            </div>
+                            <div class="flex items-center mt-2">
+                                <span class="mr-2 text-xl">🥈</span>
+                                <span class="font-semibold" th:text="${userMemberDtos.get(1).getName()}"></span>&nbsp;
+                                <span><span class="font-bold"
+                                            th:text="${userMemberDtos.get(1).getCoin()}"></span>점</span>
+                            </div>
+                            <div class="flex items-center mt-2">
+                                <span class="mr-2 text-xl">🥉</span>
+                                <span class="font-semibold" th:text="${userMemberDtos.get(2).getName()}"></span>&nbsp;
+                                <span><span class="font-bold"
+                                            th:text="${userMemberDtos.get(2).getCoin()}"></span>점</span>
+                            </div>
+                            <div class="my-4">
+                                <div class="flex items-center mt-2 text-xs text-gray-700">
+                                    <span th:text="${userMemberDtos.get(3).getName()}"></span>&nbsp;
+                                    <span><span th:text="${userMemberDtos.get(3).getCoin()}"></span>점</span>
+                                </div>
+                                <div class="flex items-center mt-2 text-xs text-gray-700">
+                                    <span th:text="${userMemberDtos.get(4).getName()}"></span>&nbsp;
+                                    <span><span th:text="${userMemberDtos.get(4).getCoin()}"></span>점</span>
+                                </div>
+                                <div class="flex items-center mt-2 text-xs text-gray-700">
+                                    <span th:text="${userMemberDtos.get(5).getName()}"></span>&nbsp;
+                                    <span><span th:text="${userMemberDtos.get(5).getCoin()}"></span>점</span>
+                                </div>
+                                <div class="flex items-center mt-2 text-xs text-gray-700">
+                                    <span th:text="${userMemberDtos.get(6).getName()}"></span>&nbsp;
+                                    <span><span th:text="${userMemberDtos.get(6).getCoin()}"></span>점</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center mt-2 text-gray-700 font-bold">
+                                ...
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="mb-3 text-center" th:unless="${session.loginedAdminDto != null}"> SNOW에 오신 것을 환영합니다
+                        !</h3>
                 </div>
             </div>
         </section>
