@@ -620,9 +620,9 @@
                                th:text="${item.file_user_name}">
                             </a>
                             </span>
-                            <span th:unless="${item.file_user != null}">
-                            <p class="px-4 py-2 text-gray-700 text-xs">미제출</p>
-                        </span>
+                             <span th:unless="${item.file_user != null}">
+                                <p class="px-4 py-2 text-gray-700 text-xs">미제출</p>
+                             </span>
                          </span>
                         <span>
                         <span class="text-xs" th:text="${item.point}"></span>점

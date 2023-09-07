@@ -81,7 +81,7 @@
     <select id="selectMyPoint" resultType="com.btc.snow.user.assignment.UserAssignmentDto">
         SELECT point
         FROM ASSIGNMENT
-        WHERE user_no = #{user_no}
+        WHERE user_no = #{user_no} AND file_user IS NOT NULL;
     </select>
 
     <select id="selectMyAssignment" parameterType="Integer" resultType="com.btc.snow.user.assignment.UserAssignmentDto">
