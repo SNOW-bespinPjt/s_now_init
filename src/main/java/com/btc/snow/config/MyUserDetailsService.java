@@ -18,7 +18,6 @@ public class MyUserDetailsService implements UserDetailsService {
 
     public MyUserDetailsService(IUserMemberDaoMB iUserMemberDaoMB) {
         this.iUserMemberDaoMB = iUserMemberDaoMB;
-
     }
 
     @Override
