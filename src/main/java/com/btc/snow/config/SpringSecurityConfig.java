@@ -1,8 +1,10 @@
 package com.btc.snow.config;
 
 
+import com.btc.snow.admin.member.AdminMemberDto;
 import com.btc.snow.admin.member.IAdminDaoMB;
 import com.btc.snow.user.member.IUserMemberDaoMB;
+import com.btc.snow.user.member.UserMemberDto;
 import jakarta.servlet.DispatcherType;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.log4j.Log4j2;
@@ -52,33 +54,28 @@ public class SpringSecurityConfig {
                 .cors().disable()
                 .authorizeHttpRequests(request -> request
                         .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()  // HTTP 요청 인증 설정
-                        .requestMatchers("/css/**", "/error/**", "/img/**", "/js/**", "", "/",
+                        .requestMatchers("/css/**", "/error/**", "/img/**", "/js/**", "", "/", "/assignment/user/js/**", "/assignment/admin/js/**",
                                 "/user/member/create_account_form",
                                 "/user/member/create_account_confirm",
-                                "/user/board/review_board",
-                                "/user/board/review_detail",
-                                "/user/board/",
-                                "/user/board/free_board_list",
-                                "/user/board/free_board_detail",
                                 "/UploadImg/**").permitAll()
                         .anyRequest().authenticated()  // 해당 경로 외의 요청은 모두 인증 필요
                 )
                 .formLogin(login -> login  // 로그인 시 폼(form)을 이용
                         .loginPage(
-                                "/user/member/member_login_form"
+                                "/user/member/user_login_form"
                         )  // 로그인 시 폼(form) 주소 설정
-                        .loginProcessingUrl("/user/member/member_login_confirm")
-                        .usernameParameter("u_m_id")
-                        .passwordParameter("u_m_pw")
+                        .loginProcessingUrl("/user/member/user_login_confirm")
+                        .usernameParameter("id")
+                        .passwordParameter("pw")
                         .successHandler((request, response, authentication) -> {  // 로그인 성공 시(추가 구현 예정: 로그인 페이지로 오기 이전에 있던 페이지로 이동)
                             log.info("successHandler!!");
 
                             UserMemberDto userMemberDto = new UserMemberDto();
-                            userMemberDto.setU_m_id(authentication.getName());
-                            UserMemberDto loginedUserMemberDto = iUserMemberDaoMapper.selectUserForLogin(userMemberDto);
+                            userMemberDto.setId(authentication.getName());
+                            UserMemberDto loginedUserDto = iUserMemberDaoMB.selectUserForLogin(userMemberDto);
 
                             HttpSession session = request.getSession();
-                            session.setAttribute("loginedUserMemberDto", loginedUserMemberDto);
+                            session.setAttribute("loginedUserDto", loginedUserDto);
                             session.setMaxInactiveInterval(60 * 30);
 
                             log.info("--> {}", authentication.isAuthenticated());
@@ -88,12 +85,12 @@ public class SpringSecurityConfig {
                         })
                         .failureHandler((request, response, exception) -> {      //로그인 실패 시(추가 구현 예정: 아이디 혹은 비밀번호를 다시 확인해주세요 알림)
                             log.info("failureHandler!!");
-                            response.sendRedirect("/user/member/member_login_form");
+                            response.sendRedirect("/user/member/user_login_form");
 
                         })
                         .permitAll())
                 .logout(logout -> logout
-                        .logoutUrl("/user/member/member_logout_confirm")
+                        .logoutUrl("/user/member/user_logout_confirm")
                         .logoutSuccessHandler((request, response, authentication) -> {
                             log.info("logoutSuccessHandler!!");
 
@@ -110,6 +107,7 @@ public class SpringSecurityConfig {
                 .maxSessionsPreventsLogin(false);
 
         return http.build();
+
     }
 
     @Bean
@@ -122,24 +120,25 @@ public class SpringSecurityConfig {
                 .securityMatcher("/admin/**")  // "/admin/**" 경로 보안 설정
                 .authorizeHttpRequests(request -> request
                         .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
-                        .requestMatchers("/css/**", "/error/**", "/img/**", "/js/**", "", "/",
-                                "/admin/member/create_account_form", "/admin/member/create_account_confirm").permitAll()
+                        .requestMatchers("/css/**", "/error/**", "/img/**", "/js/**", "", "/", "/admin",
+                                "/admin/member/find_password_form", "/admin/member/find_password_confirm", "/admin/member/find_id_form",
+                                "/admin/member/find_id_confirm", "/admin/member/create_account_form", "/admin/member/create_account_confirm").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(login -> login
                         .loginPage("/admin/member/member_login_form")
                         .loginProcessingUrl("/admin/member/member_login_confirm")
-                        .usernameParameter("a_m_id")
-                        .passwordParameter("a_m_pw")
+                        .usernameParameter("id")
+                        .passwordParameter("pw")
                         .successHandler((request, response, authentication) -> {
                             log.info("successHandler!!");
 
                             AdminMemberDto adminMemberDto = new AdminMemberDto();
-                            adminMemberDto.setA_m_id(authentication.getName());
-                            AdminMemberDto loginedAdminMemberDto = iAdminMemberDaoMapper.selectAdminForLogin(adminMemberDto);
+                            adminMemberDto.setId(authentication.getName());
+                            AdminMemberDto loginedAdminDto = iAdminDaoMB.selectAdminForLogin(adminMemberDto.getId());
 
                             HttpSession session = request.getSession();
-                            session.setAttribute("loginedAdminMemberDto", loginedAdminMemberDto);
+                            session.setAttribute("loginedAdminDto", loginedAdminDto);
                             session.setMaxInactiveInterval(60 * 30);
 
                             log.info("--> {}", authentication.isAuthenticated());
@@ -171,8 +170,7 @@ public class SpringSecurityConfig {
                 .maxSessionsPreventsLogin(false);
 
         return http.build();
+
     }
 
-
 }
-

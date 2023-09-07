@@ -13,20 +13,21 @@
     function init_events() {
         console.log("init_events() CALLED!!")
 
-        // EVALUATE btn CLICK HANDLER START
-        $(document).on("click", "div.buttons a.evaluate_btn", function (e) {
-            console.log("div.buttons a.evaluate_btn CLICK HANDLER");
-
-            let grade = $('div.buttons input[type="text"]').val();
-            console.log("grade : " + grade);
-
-            $('div.buttons input[type="text"]').val('');
-
-            ajax_evaluate_grade(grade);
-
-        });
-
-        // EVALUATE btn CLICK HANDLER END
+        // // EVALUATE btn CLICK HANDLER START
+        // $(document).on("click", "div.buttons a.evaluate_btn", function (e) {
+        //     console.log("div.buttons a.evaluate_btn CLICK HANDLER");
+        //
+        //     let grade = $('div.buttons input[type="text"]').val();
+        //     console.log("grade : " + grade);
+        //
+        //     $('div.buttons input[type="text"]').val('');
+        //
+        //     ajax_evaluate_grade(grade);
+        //
+        // });
+        //
+        // // EVALUATE btn CLICK HANDLER END
+        //
 
         // 뒤로가기 CLICK HANDLER START
         $(document).on("click", "div.buttons a.back_button", function (e) {
@@ -43,94 +44,31 @@
     //init_events() END
 
     //AJAX START
-    function ajax_evaluate_grade(grade) {
-        console.log("ajax_evaluate_grade CALLED!!");
-
-        let formData = new FormData();
-        formData.append("grade", grade);
-
-        $.ajax({
-            url: '/user/curriculum/evaluate_curriculum_grade}',
-            type: 'GET',
-            processData: false,
-            contentType: false,
-            data: formData,
-            success: function (data) {
-                console.log('AJAX SUCCESS - ajax_evaluate_grade()');
-
-
-            },
-            error: function (data) {
-                console.log('AJAX ERROR - ajax_evaluate_grade()');
-
-            }
-
-        });
-
-    }
-
-    function ajax_search_title(search_title) {
-
-        let formData = new FormData();
-        formData.append("search_title", search_title);
-
-        $.ajax({
-            url: '/user/curriculum/search_title_confirm',
-            type: 'POST',
-            processData: false,
-            contentType: false,
-            data: formData,
-            success: function (data) {
-                console.log('AJAX SUCCESS - ajax_search_title()');
-
-                remove_list();
-
-                let adminCurriculumDtos = data.adminCurriculumDtos;
-                console.log(adminCurriculumDtos);
-
-                for (let i = 0; i < adminCurriculumDtos.length; i++) {
-                    let appendTag = "<div class=\"container mx-auto p-2\" data-no='" + adminCurriculumDtos[i].no + "'>";
-                    appendTag += '<div class="bg-white p-2 rounded-lg shadow-md">';
-                    appendTag += '<h2 class="text-lg font-semibold mb-1">' + adminCurriculumDtos[i].title + '</h2>';
-                    appendTag += '<div class="mb-1 text-xs">';
-                    appendTag += adminCurriculumDtos[i].content;
-                    appendTag += "</div>";
-                    appendTag += '<div class="flex space-x-1 mb-1 text-xs">';
-                    appendTag += '<div class="flex-1">';
-                    appendTag += '<p class="font-semibold">' + "평점: " + " / 5.0" + '</p>';
-                    appendTag += '</div>';
-                    appendTag += '<div class="flex-1">';
-                    appendTag += '<p class="font-semibold">' + "카테고리: " + adminCurriculumDtos[i].category + '</p>';
-                    appendTag += '</div>';
-                    appendTag += '<div class="flex-1">';
-                    appendTag += '<p class="font-semibold">강사명: ' + adminCurriculumDtos[i].admin_id + '</p>';
-                    appendTag += '</div>';
-                    appendTag += '<div class="flex-1">';
-                    appendTag += '<p class="font-semibold">시간 및 날짜: ' + adminCurriculumDtos[i].hour + " 시간" + '</p>';
-                    appendTag += '</div>';
-                    appendTag += '</div>';
-                    appendTag += '<div class="text-right">';
-                    appendTag += '<a href="/user/curriculum/show_detail_curriculum?no=' + adminCurriculumDtos[i].no + '"' + 'class="bg-blue-500 text-white px-2 py-1 rounded-md hover:bg-blue-600 cursor-pointer text-xs">상세 페이지로 이동</a>';
-                    appendTag += '</div>';
-                    appendTag += '</div>';
-                    appendTag += '</div>';
-
-                    $("#curriculum_container").append(appendTag);
-
-                }
-
-
-            },
-            error: function (data) {
-                console.log('AJAX ERROR - ajax_search_title()');
-
-            }
-
-        });
-
-
-    }
-
+    // function ajax_evaluate_grade(grade) {
+    //     console.log("ajax_evaluate_grade CALLED!!");
+    //
+    //     let formData = new FormData();
+    //     formData.append("grade", grade);
+    //
+    //     $.ajax({
+    //         url: '/user/curriculum/evaluate_curriculum_grade}',
+    //         type: 'GET',
+    //         processData: false,
+    //         contentType: false,
+    //         data: formData,
+    //         success: function (data) {
+    //             console.log('AJAX SUCCESS - ajax_evaluate_grade()');
+    //
+    //
+    //         },
+    //         error: function (data) {
+    //             console.log('AJAX ERROR - ajax_evaluate_grade()');
+    //
+    //         }
+    //
+    //     });
+    //
+    // }
 
     //AJAX END
 </script>

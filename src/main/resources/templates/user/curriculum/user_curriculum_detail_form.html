@@ -59,11 +59,7 @@
                                 </tr>
                                 <tr>
                                     <td>교육 시간</td>
-                                    <td th:text="${msgMap.adminCurriculumDto.hour}"></td>
-                                </tr>
-                                <tr>
-                                    <td>평점</td>
-                                    <td th:text=" ' / 5.0'"></td>
+                                    <td th:text="${msgMap.adminCurriculumDto.hour} + '시간'"></td>
                                 </tr>
                                 <tr>
                                     <td>시작일</td>
@@ -92,14 +88,6 @@
                 <div class="buttons mt-6 text-right">
 
                     <form name="grade_confirm">
-                        <input type="text" id="grade" name="grade" class="mr-2 px-2 py-1 border rounded-md"
-                               placeholder="INPUT GRADE">
-
-                        <input type="submit" name="grade" class="mr-2 px-2 py-1 border rounded-md"
-                               placeholder="INPUT GRADE">
-
-                        <a class="evaluate_btn inline-block px-4 py-2 border border-gray-400 rounded-md bg-gray-200 text-gray-700 hover:bg-gray-300 hover:text-gray-800">
-                            EVALUATE</a>
 
                         <a class="back_button inline-block ml-2 px-4 py-2 border border-red-500 rounded-md bg-red-500 text-white hover:bg-red-600">
                             BACK</a>

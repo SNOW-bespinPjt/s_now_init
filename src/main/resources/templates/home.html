@@ -9,6 +9,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.js"
             integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script th:replace="~{/user/tdlist/todolist_home_js.html::js}"></script>
+
 </head>
 <body class="flex flex-col items-center justify-center w-5/6 mx-auto">
 <header th:replace="~{/include/header_nav_footer::header}"></header>
@@ -121,16 +123,29 @@
                     </svg>
                 </a>
             </div>
-            <div>
+            <div class="flex justify-between">
                 <a th:href="@{/user/member/user_logout_confirm}">Logout</a>
                 <a th:href="@{/mypage}">MyPage</a>
             </div>
         </div>
 
-        <div
-                class="flex flex-col items-center justify-center w-11/12 p-2 mt-6 border-2 rounded-sm h-2/4"
+        <div th:if="${session.loginedUserDto == null}"
+             class="flex flex-col items-center justify-center w-11/12 p-2 mt-6 border-2 rounded-sm h-2/4"
         >
-            <h3 class="mb-3">SNOW에 오신 것을 환영합니다 !</h3>
+            <h3>snow에 오신것을 환영합니다.</h3>
+
+        </div>
+        <div th:unless="${session.loginedUserDto == null}"
+             class="flex flex-col items-center justify-center w-11/12 p-2 mt-6 border-2 rounded-sm h-2/4"
+        >
+            <a class="font-bold" th:href="@{user/tdlist/tdlist_form}">
+                |ToDoLIST 바로가기|
+            </a>
+            <br/>
+            <h4 class="font-semibold">Daily TODOLIST</h4>
+            <div id="todolist_wrap">
+
+            </div>
         </div>
     </div>
 </section>

@@ -1,7 +1,10 @@
 package com.btc.snow.user.mypage;
 
 
+import com.btc.snow.include.StudyPromiseDto;
 import com.btc.snow.include.page.PageDefine;
+import com.btc.snow.user.assignment.UserAssignmentDto;
+import com.btc.snow.user.assignment.UserAssignmentService;
 import com.btc.snow.user.attendance.UserAttendanceDto;
 import com.btc.snow.user.attendance.UserAttendanceService;
 import com.btc.snow.user.member.UserMemberDto;
@@ -15,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/mypage")
@@ -25,6 +30,8 @@ public class MyPageController {
     @Autowired
     UserAttendanceService userAttendanceService;
 
+    @Autowired
+    UserAssignmentService userAssignmentService;
 
     @Autowired
     MyPageService myPageService;
@@ -46,7 +53,7 @@ public class MyPageController {
 
 
         double ratio = 0;
-        
+
         if (userAttendanceDtos != null) {
             ratio = ((double) userAttendanceDtos.size() / (double) 214) * 100.0;
         }
@@ -59,8 +66,23 @@ public class MyPageController {
         modelAndView.addObject("ratio", Math.round(ratio));
 //        modelAndView.addObject("pageMakerDto", pageMakerDto);
 
-        modelAndView.setViewName("/user/mypage/home");
 
+        // --------------------- 나의 과제 ------------------------
+        int user_no = userMemberDto.getNo();
+        String id = userMemberDto.getId();
+
+        // 과제 점수
+        Map<String, Object> pointDtos = userAssignmentService.myPoint(user_no);
+
+        modelAndView.addObject("pointDtos", pointDtos);
+
+        // 과제 리스트
+        List<UserAssignmentDto> userAssignmentDtos = userAssignmentService.myAssignment(user_no);
+
+        modelAndView.addObject("userAssignmentDtos", userAssignmentDtos);
+        modelAndView.addObject("id", id);
+
+        modelAndView.setViewName("/user/mypage/home");
 
         return modelAndView;
     }
@@ -84,6 +106,23 @@ public class MyPageController {
 
 
         return null;
+    }
+
+    @GetMapping("/mypage/schedule")
+    public Object goToSchedule(HttpSession session) {
+        log.info(" goToSchedule() []");
+        ModelAndView modelAndView = new ModelAndView();
+
+        List<StudyPromiseDto> studyPromiseDtos = new ArrayList<>();
+        UserMemberDto loginedUserDto = (UserMemberDto) session.getAttribute("loginedUserDto");
+
+        studyPromiseDtos = (List<StudyPromiseDto>) myPageService.selectScedule(loginedUserDto.getId());
+
+        modelAndView.addObject("studyPromiseDtos", studyPromiseDtos);
+        modelAndView.setViewName("/user/mypage/schedule/home");
+
+
+        return modelAndView;
     }
 
 

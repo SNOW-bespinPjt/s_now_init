@@ -44,10 +44,13 @@ public interface UserAttendanceMapper {
 
     int getTotalCnt(String uNo);
 
-
     void updateAttendenceByAfternoon();
 
     void updateAttendenceByMorning();
 
     Object selectAfterNoonTimeAttendence(String id);
+
+    UserAttendanceDto coinByAttendence(String id);
+
+    int isValidAttendence(String id);
 }

@@ -6,6 +6,8 @@ import com.btc.snow.user.attendance.UserAttendanceService;
 import com.btc.snow.user.meeting.UserMeetingService;
 import com.btc.snow.user.meeting.study.UserStudyDto;
 import com.btc.snow.user.member.UserMemberDto;
+import com.btc.snow.user.tdlist.UserTdListDto;
+import com.btc.snow.user.tdlist.UserTdListService;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,9 @@ public class HomeController {
     @Autowired
     UserMeetingService userMeetingService;
 
+    @Autowired
+    UserTdListService userTdListService;
+
     @GetMapping(value = {""})
     public Object home(HttpSession session) {
         log.info("HomeController home()");
@@ -49,11 +54,20 @@ public class HomeController {
         if ((currentTime.isAfter(morningTime) && currentTime.isBefore(lastMorningTime)) || (
                 currentTime.isAfter(noonTime) && currentTime.isBefore(lastNoonTime)
         )) {
-            modelAndView.addObject("qrValidStatus", 1);
+
 
             if (userMemberDto != null) {
                 UserAttendanceDto userAttendanceDto = (UserAttendanceDto) userAttendanceService.selectUserforAttendence(userMemberDto.getId());
 //                SubmitDto submitDto = userAttendanceService.selectAttendanceSubmit(userMemberDto.getId());
+                int result = userAttendanceService.isValidAttendence(userMemberDto.getId());
+
+                if (result > 0) {
+                    modelAndView.addObject("qrValidStatus", 0);
+                }
+                if (result < 0) {
+                    modelAndView.addObject("qrValidStatus", 1);
+                }
+
 
                 if (userAttendanceDto == null) {
                     modelAndView.addObject("status", 0);
@@ -69,6 +83,7 @@ public class HomeController {
             modelAndView.addObject("qrValidStatus", 0);
         }
 
+
         if (currentTime.isAfter(lastNoonTime)) {
 
             try {
@@ -79,14 +94,22 @@ public class HomeController {
 
         }
 
+
         //스터디
         Map<String, Object> studyMap = userMeetingService.mainStudy();
         List<UserStudyDto> userStudyDtos = (List<UserStudyDto>) studyMap.get("userStudyDtos");
 
         modelAndView.addObject("userStudyDtos", userStudyDtos);
 
+        // TodoList - #현욱
+        if (userMemberDto != null) {
+            log.info("TODOLIST READY");
+            List<UserTdListDto> userTdListDtos = userTdListService.selectTdListInHome(userMemberDto);
+            modelAndView.addObject("userTdListDtos", userTdListDtos);
+        }
 
         return modelAndView;
+
     }
 
 

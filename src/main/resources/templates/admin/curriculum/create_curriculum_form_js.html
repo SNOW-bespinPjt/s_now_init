@@ -79,7 +79,7 @@
         $(document).on('click', '#buttons .cancel_btn', function (e) {
             console.log('#buttons .cancel_btn CLICK HANDLER!!');
 
-            window.history.back();
+            location.href = "/admin/curriculum";
 
         });
 
@@ -95,7 +95,11 @@
 
         let form = $(".create_curriculum_form");
 
-        if (form.find("input[name='title']").val() == '') {
+        if (form.find("input[name='book_no']").val() == '') {
+            alert("INPUT BOOK NO");
+            form.find("input[name='book_no']").focus();
+
+        } else if (form.find("input[name='title']").val() == '') {
             alert("INPUT TITLE");
             form.find("input[name='title']").focus();
 
@@ -110,6 +114,10 @@
         } else if (form.find("select[name='std_div']").val() == '') {
             alert("INPUT STD_DIV");
             form.find("input[name='std_div']").focus();
+
+        } else if (form.find("input[name='file']").val() == '') {
+            alert("INPUT FILE");
+            form.find("input[name='file']").focus();
 
         } else if (form.find("input[name='start_date']").val() == '') {
             alert("INPUT START_DATE");
