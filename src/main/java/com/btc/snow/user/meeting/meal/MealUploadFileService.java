@@ -20,7 +20,7 @@ public class MealUploadFileService {
         // File 저장
         String fileOriName = file.getOriginalFilename();
         String fileExtension = fileOriName.substring(fileOriName.lastIndexOf("."), fileOriName.length());
-        String uploadDir = "c:\\snow\\user\\meeting\\meal";
+        String uploadDir = "c:\\snow\\user\\meeting\\meal\\";
 
         UUID uuid = UUID.randomUUID();
         String uniqueName = uuid.toString().replace("-", "");

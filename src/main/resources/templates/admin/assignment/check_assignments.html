@@ -36,12 +36,10 @@
     <!--  section & footer  -->
     <div class="flex flex-col items-center justify-center w-5/6 mx-auto">
         <section class="flex flex-row w-5/6 border-solid mt-7">
-            <div
-                    class="relative flex items-center justify-center w-screen h-screen mr-8 border-2 rounded-lg bg-slate-100"
-            >
-                <div class="absolute top-0 left-0 mt-6 ml-14 w-full">
+            <div class=" flex items-center justify-center w-screen h-auto mr-8 border-2 rounded-lg bg-slate-100 py-8">
+                <div class="ml-14 w-full">
                     <div>
-                        <h2 class="text-2xl font-bold mb-12">USER SUBMISSION LIST</h2>
+                        <h2 class="text-2xl font-bold mb-12">과제 제출 목록</h2>
                         <div class="flex flex-col w-11/12 bg-white h-5/6">
                             <table class="min-w-full bg-white rounded-lg overflow-hidden">
                                 <tbody>
@@ -92,12 +90,12 @@
                                         <a class="text-gray-700 hover:underline mt-2 block"
                                            href="#"
                                            th:data-no="${combinedDto.assignmentDto.no}"
-                                           th:onclick="'showScoreInputForm('+${combinedDto.assignmentDto.no}+')'"
-                                           th:if="${combinedDto.assignmentDto.is_submit eq 1}">점수 입력</a>
+                                           th:if="${combinedDto.assignmentDto.is_submit eq 1}"
+                                           th:onclick="'showScoreInputForm('+${combinedDto.assignmentDto.no}+')'">점수 입력</a>
                                         <!-- 각 행에 대한 폼 -->
                                         <form class="hidden mt-2" id="scoreForm"
-                                              th:data-no="${combinedDto.assignmentDto.no}"
-                                              method="post" th:action="@{/admin/assignment/assignment_input_point}">
+                                              method="post"
+                                              th:action="@{/admin/assignment/assignment_input_point}" th:data-no="${combinedDto.assignmentDto.no}">
                                             <input name="no" th:value="${combinedDto.assignmentDto.no}" type="hidden"/>
                                             <input name="group_id" th:value="${combinedDto.assignmentDto.group_id}"
                                                    type="hidden"/>
@@ -130,8 +128,7 @@
         // let no = $(this).data('no');
         console.log("no=------->", no);
 
-        $('form[data-no='+ no +']').toggleClass("hidden");
-
+        $('form[data-no=' + no + ']').toggleClass("hidden");
 
     }
 </script>

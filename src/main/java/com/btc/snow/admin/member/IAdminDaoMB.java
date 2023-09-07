@@ -1,5 +1,6 @@
 package com.btc.snow.admin.member;
 
+import com.btc.snow.user.member.UserMemberDto;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -19,6 +20,8 @@ public interface IAdminDaoMB {
 
     List<AdminMemberDto> selectAdmins();
 
+    List<UserMemberDto> selectUsers();
+
     int updateAdminApproval(int no);
 
     AdminMemberDto selectAdminForFindPassword(Map<String, Object> map);
@@ -28,4 +31,8 @@ public interface IAdminDaoMB {
     int deleteAdmin(int no);
 
     AdminMemberDto selectAdminForFindId(Map<String, Object> map);
+
+    UserMemberDto selectUser(int no);
+
+    List<UserMemberDto> selectCoinRanking();
 }

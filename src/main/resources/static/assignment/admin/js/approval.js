@@ -11,7 +11,7 @@ function approveAdmin(no) {
             console.log(data);
 
             alert('승인이 완료되었습니다');
-            location.href='/admin/member/list_admin';
+            location.href='/admin/member/list_admins';
         },
         error: function onError(error) {
             console.error(error);

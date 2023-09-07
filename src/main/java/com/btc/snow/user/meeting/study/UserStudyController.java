@@ -6,10 +6,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -73,10 +70,14 @@ public class UserStudyController {
 
     @GetMapping("/study_list")
     public String studyList(Model model, @RequestParam(value = "pageNum", required = false, defaultValue = "1") int pageNum,
-                            @RequestParam(value = "amount", required = false, defaultValue = "5") int amount) {
+                            @RequestParam(value = "amount", required = false, defaultValue = "5") int amount, HttpSession session) {
         log.info("studyList()");
 
         String nextPage = "user/meeting/study_list";
+
+        UserMemberDto loginedUserDto = (UserMemberDto) session.getAttribute("loginedUserDto");
+
+        model.addAttribute("loginedUserDto", loginedUserDto);
 
         Map<String, Object> studyMap = userStudyService.studyList(pageNum, amount);
 
@@ -105,4 +106,30 @@ public class UserStudyController {
 
         return nextPage;
     }
+
+    @PostMapping("/study_attend")
+    @ResponseBody
+    public int studyAttend(@RequestParam("studyNo") int studyNo, HttpSession session) {
+        log.info("studyAttend()");
+
+        UserMemberDto loginedUserDto = (UserMemberDto) session.getAttribute("loginedUserDto");
+
+        int result = userStudyService.studyAttend(studyNo, loginedUserDto.getId());
+
+        return result;
+    }
+
+    @PostMapping("/button_remove")
+    @ResponseBody
+    public int buttonRemove(@RequestParam("studyNo") int studyNo, HttpSession session) {
+        log.info("buttonRemove()");
+
+        UserMemberDto loginedUserDto = (UserMemberDto) session.getAttribute("loginedUserDto");
+
+        int result = userStudyService.removeButton(studyNo, loginedUserDto.getId());
+
+        return result;
+    }
+
+
 }

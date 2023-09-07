@@ -5,7 +5,6 @@ import com.btc.snow.user.member.UserMemberDto;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
-import java.util.Map;
 
 @Mapper
 public interface IUserAssignmentMB {
@@ -42,6 +41,4 @@ public interface IUserAssignmentMB {
 
     List<UserAssignmentDto> selectAssignmentForMyPage(int no);
 
-    // 코인 설정을 위한
-    List<UserAssignmentDto> coinByAssignment(int user_no);
 }

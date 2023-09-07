@@ -13,25 +13,25 @@
 <!--  section & footer  -->
 <div class="flex flex-col items-center justify-center w-5/6 mx-auto">
     <section class="flex flex-row w-5/6 border-solid mt-7">
-        <div class=" flex items-center justify-center w-screen h-full mr-8 border-2 rounded-lg bg-slate-100">
-            <div class="">
-                <h2 class="text-2xl font-bold mb-10">ASSIGNMENT LIST</h2>
-                <div class="flex flex-col w-11/12 bg-white h-5/6">
-                    <div class="flex w-full border-b-2 h-1/4 border-b-slate-300"
-                         th:each="item : ${userAssignmentDtos}">
-                        <div class="w-11/12 p-4 text-xl font-bold text-gray-700">
-                            <a th:href="@{/user/assignment/get_assignment(no=${item.no})}" th:text="${item.title}"
-                               type="button"></a>
-                            <div class="flex">
+        <div class="flex items-center justify-center w-screen h-auto mr-8 border-2 rounded-lg bg-slate-100 py-8">
+            <div class="ml-14 w-full">
+                <div>
+                    <h2 class="text-2xl font-bold mb-10">오늘의 과제</h2>
+                    <div class="flex flex-col w-11/12 bg-white h-5/6">
+                        <div class="flex w-full border-b-2 h-1/4 border-b-slate-300" th:each="item : ${userAssignmentDtos}">
+                            <div class="w-11/12 p-4 text-xl font-bold text-gray-700">
+                                <a th:href="@{/user/assignment/get_assignment(no=${item.no})}" th:text="${item.title}"
+                                   type="button"></a>
+                                <div class="flex">
                                     <span class="ml-2 font-thin text-slate-400 text-xs">마감일 <span
                                             th:text="${item.end_date}"></span></span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="flex pt-4 pr-4 mb-5">
+                            <div class="flex pt-4 pr-4 mb-5">
                                 <span th:if="${item.is_submit == 0}">
                                     <div class="text-red-500 w-32 text-left pl-4">미제출</div>
                                 </span>
-                            <span class="text-green-500" th:unless="${item.is_submit == 0}">
+                                <span class="text-green-500" th:unless="${item.is_submit == 0}">
                                     <p class="text-blue-500">제출완료</p>
                                     <div class="flex">
                                         <svg class="text-green-500 w-4 h-4" fill="none" stroke="currentColor"
@@ -44,11 +44,11 @@
                                            th:text="${item.mod_date}"></p>
                                     </div>
                                 </span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
     </section>
     <footer th:replace="~{/include/header_nav_footer.html::footer}"></footer>

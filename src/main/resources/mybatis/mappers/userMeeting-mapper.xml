@@ -7,18 +7,32 @@
     <select id="selectStudy" resultType="com.btc.snow.user.meeting.study.UserStudyDto">
         select *
         from STUDY
-        order by start_date desc limit 4
+        where status = 1
+        order by start_date asc limit 4
     </select>
+
+    <update id="studyUpdateStatus">
+        UPDATE STUDY
+        SET status = 1
+        WHERE start_date > CURDATE()
+    </update>
 
     <select id="selectMeal" resultType="com.btc.snow.user.meeting.meal.UserMealDto">
         select *
         from MEAL
-        order by reg_date desc limit 4
+        where status = 1
+        order by date asc
     </select>
+
+    <update id="mealUpdateStatus">
+        UPDATE MEAL
+        SET status = 1
+        WHERE date > CURDATE()
+    </update>
 
     <select id="mainStudy" resultType="com.btc.snow.user.meeting.study.UserStudyDto">
         select *
         from STUDY
-        order by start_date asc limit 4
+        order by hit desc limit 4
     </select>
 </mapper>

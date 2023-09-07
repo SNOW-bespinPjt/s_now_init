@@ -144,6 +144,19 @@ public class UserAssignmentService implements IUserAssignmentService {
         double averagePoint = 0.0;
         String averagePointToString = null;
 
+        // minPoint, maxPoint
+        for (UserAssignmentDto pointDto : pointDtos) {
+            int point = pointDto.getPoint();
+
+            if (point < minPoint) {
+                minPoint = point;
+            }
+
+            if (point > maxPoint) {
+                maxPoint = point;
+            }
+        }
+
         if (!pointDtos.isEmpty()) {
             for (UserAssignmentDto dto : pointDtos) {
                 int point = dto.getPoint();

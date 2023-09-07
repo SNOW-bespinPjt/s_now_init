@@ -1,5 +1,6 @@
 package com.btc.snow.admin.member;
 
+import com.btc.snow.user.member.UserMemberDto;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -116,6 +117,22 @@ public class AdminMemberService implements IAdminService {
 
         return iAdminDaoMB.selectAdmins();
 
+    }
+
+    // 학생 리스트
+    @Override
+    public List<UserMemberDto> listupUser() {
+        log.info("[AdminMemberService] listupUser()");
+
+        return iAdminDaoMB.selectUsers();
+    }
+
+    // 학생 디테일 페이지
+    @Override
+    public UserMemberDto UserDetail(int no) {
+        log.info("[AdminMemberService] UserMemberDto()");
+
+        return iAdminDaoMB.selectUser(no);
     }
 
     // 관리자 권한 설정
@@ -288,5 +305,13 @@ public class AdminMemberService implements IAdminService {
 
         return result;
 
+    }
+
+    // BTC 코인 순위
+    @Override
+    public List<UserMemberDto> coinRanking() {
+        log.info("[AdminMemberService] coinRanking()");
+
+        return iAdminDaoMB.selectCoinRanking();
     }
 }

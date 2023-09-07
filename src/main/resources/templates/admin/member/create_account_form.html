@@ -21,25 +21,62 @@
                 <div class="word">
                     <h2 class="absolute top-0 left-0 mt-4 text-2xl font-bold ml-14">CREATE ACCOUNT FORM</h2>
                 </div>
-                <div class="create_account_form">
-                    <form th:action="@{/admin/member/create_account_confirm}" name="create_account_form" method="post">
-                        <input type="text" name="id" placeholder="INPUT ID"><br>
-                        <input type="password" name="pw" placeholder="INPUT PW"><br>
-                        <input type="text" name="name" placeholder="INPUT NAME"><br>
-                        <input type="email" name="mail" placeholder="INPUT MAIL"><br>
-                        <input type="text" name="phone" placeholder="INPUT PHONE"><br>
-                        <select name="position">
-                            <option value="">--- SELECT POSITION ---</option>
-                            <option value="교육기관">교육기관</option>
-                            <option value="강사">강사</option>
-                        </select>
-                        <input type="button" value="create account" onclick="createAccountForm();">
-                        <input type="reset" value="reset">
+                <div class="create_account_form w-3/4 items-center">
+                    <form method="post" name="create_account_form" th:action="@{/admin/member/create_account_confirm}">
+                        <div class="mb-4">
+                            <label class="block text-lg font-semibold text-gray-700" for="id">아이디</label>
+                            <input class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-green-300"
+                                   id="id" name="id" placeholder="아이디"
+                                   type="text">
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-lg font-semibold text-gray-700" for="pw">비밀번호</label>
+                            <input class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-green-300"
+                                   id="pw" name="pw" placeholder="비밀번호"
+                                   type="password">
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-lg font-semibold text-gray-700" for="name">이름</label>
+                            <input class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-green-300"
+                                   id="name" name="name" placeholder="이름"
+                                   type="text">
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-lg font-semibold text-gray-700" for="mail">메일</label>
+                            <input class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-green-300"
+                                   id="mail" name="mail" placeholder="메일"
+                                   type="email">
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-lg font-semibold text-gray-700" for="phone">전화번호</label>
+                            <input class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-green-300"
+                                   id="phone" name="phone" placeholder="전화번호"
+                                   type="text">
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-lg font-semibold text-gray-700" for="position">직책</label>
+                            <select class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-green-300"
+                                    id="position"
+                                    name="position">
+                                <option value="">--- 직책 선택 ---</option>
+                                <option value="교육기관">교육기관</option>
+                                <option value="강사">강사</option>
+                            </select>
+                        </div>
+                        <div class="mb-4">
+                            <input class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-700 cursor-pointer"
+                                   onclick="createAccountForm();" type="button"
+                                   value="회원가입">
+                            <input class="bg-gray-300 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-400 cursor-pointer ml-2"
+                                   type="reset"
+                                   value="초기화">
+                        </div>
+                        <div class="go_login_form mt-6 text-sm text-gray-700">
+                            <a class="text-green-500 hover:text-green-700 hover:underline"
+                               th:href="@{/admin/member/member_login_form}"
+                            >Already have an account? Login</a>
+                        </div>
                     </form>
-                </div>
-
-                <div class="go_login_form">
-                    <a th:href="@{/admin/member/member_login_form}">Already have an account? login</a>
                 </div>
             </div>
         </section>
