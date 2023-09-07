@@ -84,10 +84,21 @@
             resultType="HashMap">
         select *
         from ATTENDENCE A
-                 inner join SUBMIT S on S.a_no = A.no
+                 left join SUBMIT S on S.a_no = A.no
         where A.u_id = #{id}
           and astatus = 3
         order by A.reg_date desc
+
+    </select>
+
+    <select id="selectAbsentAttendenceTab" parameterType="String"
+            resultType="HashMap">
+        select *
+        from ATTENDENCE
+        where A.u_id = #{id}
+          and astatus = 3
+          and ustatus = 0
+        order by reg_date desc
 
     </select>
 
@@ -97,6 +108,7 @@
         from ATTENDENCE
         where u_id = #{id}
           and astatus = 0
+        order by reg_date desc
 
 
     </select>
@@ -106,10 +118,20 @@
             resultType="HashMap">
         select *
         from ATTENDENCE A
-                 inner join SUBMIT S on S.a_no = A.no
+                 left join SUBMIT S on S.a_no = A.no
         where A.u_id = #{id}
           and astatus = 1
         order by A.reg_date desc
+
+    </select>
+
+    <select id="selectTardyAttendenceTab" parameterType="String"
+            resultType="HashMap">
+        select *
+        from ATTENDENCE
+        where u_id = #{id}
+          and astatus = 1
+        order by reg_date desc
 
     </select>
 
@@ -180,6 +202,7 @@
         from ATTENDENCE
         where u_id = #{id}
           and astatus = 0
+          and date (reg_date)=curdate()
 
     </select>
 
