@@ -12,551 +12,60 @@
             integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
             src="https://code.jquery.com/jquery-3.7.1.js"
     ></script>
-    <script th:inline="javascript">
-        function renderAfterSubmit(no) {
-            $(`button[data-no=${no}]`).text("대기중")
-            $(`button[data-no=${no}]`).addClass('text-white bg-gray-300 cursor-not-allowed')
-            $(`button[data-no=${no}]`).removeClass("text-blue-700 hover:bg-blue-500 hover:text-white border-blue-500")
-            $(`button[data-no=${no}]`).removeAttr("onclick")
-        }
+    <script th:replace="~{/include/schedule_home_js::scheduleJs}"></script>
+    <script th:replace="~{/include/modal_toggle_js::toggle}"></script>
 
 
-        // $(document).ready(function () {
-        //     let dtoSize = Math.ceil([[${userAttendanceDtos.size()}]] / 214);
-        //     let width = document.querySelector(".attendenceRatio");
-        //     console.log(width.style);
-        //     console.log("width: " + dtoSize + "%");
-        //
-        //
-        // })
-        //
-        // function setPage() {
-        //
-        //
-        // }
-
-        function imgUrlSumbmit(e) {
-            console.log(" ajax_submitDoc() ")
-            // let form = document.fileUploadForm;
-            let no = $('.submitFile').data("no")
-            $("#a_no").val(no)
-            let uploadForm = $("#fileUploadForm")
-            let formData = new FormData(uploadForm[0])
-
-
-            // let form = new FormData();
-
-            // let inputFile = $("#file_input")[0].files
-
-            $.ajax({
-                url: '/user/attendence/docs',
-                type: 'POST',
-                data: formData,
-                dataType: 'json',
-                contentType: false,
-                processData: false,
-                success: function (data) {
-                    console.log("ajax_submitDoc() success")
-                    console.log(data)
-                    renderAfterSubmit(no);
-                    modalToggle()
-                    $(location).attr('href', "/mypage")
-                },
-                error: function (data) {
-                    console.log("ajax_submitDoc() error")
-                },
-                complete: function (data) {
-                    console.log('AJAX COMPLETE - ajax_submitDoc()');
-
-                }
-            })
-
-
-        }
-
-
-        function ajax_selectTardy() {
-            console.log(" ajax_selectTardy() ")
-            $.ajax({
-                url: '/user/attendence/tardy',
-                method: 'POST',
-                processData: false,
-                contentType: false,
-                success: function (data) {
-                    console.log('AJAX SUCCESS - ajax_writeStudy()');
-                    console.log("data : ", data)
-                    let appendTag = ""
-                    for (let i = 0; i < data.length; i++) {
-                        let strStatus = ""
-                        let statusColor = ""
-                        let updateStatus = ""
-                        let regDate = ""
-
-                        if (data[i].astatus === 0) {
-                            strStatus += "출석"
-                            statusColor += "text-green-400"
-                            regDate = data[i].reg_date
-                            appendTag += "     <div class=\"w-1/4 border-2 rounded-md shadow-xl mb-5 mr-4 h-16\" " + updateStatus + " > " +
-                                "<div class='relative h-full'>" + `<p class=${statusColor}>` + strStatus + "</p>" + "<p>" + regDate + "</p>" + "</div>" +
-                                "                </div> "
-                        }
-                        if (data[i].astatus === 1) {
-                            strStatus += "지각"
-                            statusColor += "text-orange-400"
-                            regDate = data[i].reg_date
-                            if (data[i].ustatus === 0) {
-                                updateStatus = "' onclick=\"modalToggle(" + data[i].no + ")\""
-                                appendTag += "     <div class=\"w-1/4 border-2 rounded-md shadow-xl mb-5 mr-4 h-16\" " + updateStatus + " > " +
-                                    "<div class='relative h-full'>" + `<p class=${statusColor}>` + strStatus + "</p>" + "<p>" + regDate + "</p>" + "</div>" +
-                                    "                </div> "
-                            } else {
-                                if (data[i].status === 1) {
-                                    updateStatus = "승낙"
-                                    appendTag += "     <div class=\"w-1/4 border-2 text-green-400 font-bold rounded-md shadow-xl mb-5 mr-4 h-full\"  > " + updateStatus +
-                                        "<div class='relative h-full'>" + `<p class=${statusColor}>` + strStatus + "</p>" + "<p>" + regDate + "</p>" + "</div>" +
-                                        "                </div> "
-                                }
-                                if (data[i].status === 0) {
-                                    updateStatus = "대기중"
-                                    appendTag += "     <div class=\"w-1/4 border-2 text-blue-500 font-bold rounded-md shadow-xl mb-5 mr-4 h-full\"  > " + updateStatus +
-                                        "<div class='relative h-full'>" + `<p class=${statusColor}>` + strStatus + "</p>" + "<p>" + regDate + "</p>" + "</div>" +
-                                        "                </div> "
-                                }
-                                if (data[i].status === 2) {
-                                    updateStatus = "취소"
-                                    appendTag += "     <div class=\"w-1/4 border-2 text-red-500 font-bold rounded-md shadow-xl mb-5 mr-4 h-full\"  > " + updateStatus +
-                                        "<div class='relative h-full'>" + `<p class=${statusColor}>` + strStatus + "</p>" + "<p>" + regDate + "</p>" + "</div>" +
-                                        "                </div> "
-                                }
-                            }
-
-                        }
-
-                        if (data[i].astatus === 2) {
-                            strStatus += "병결"
-                            regDate = arr[i].reg_date
-                        }
-                        if (data[i].astatus === 3) {
-                            strStatus += "무단결석"
-                            statusColor += "text-red-400"
-                            regDate = data[i].reg_date
-                            if (data[i].ustatus === 0) {
-                                updateStatus = "' onclick=\"modalToggle(" + data[i].no + ")\""
-                                appendTag += "     <div class=\"w-1/4 border-2 rounded-md shadow-xl mb-5 mr-4 h-16\" " + updateStatus + " > " +
-                                    "<div class='relative h-full'>" + `<p class=${statusColor}>` + strStatus + "</p>" + "<p>" + regDate + "</p>" + "</div>" +
-                                    "                </div> "
-                            } else {
-                                updateStatus = "대기중"
-                                appendTag += "     <div class=\"w-1/4 border-2 rounded-md shadow-xl mb-5 mr-4 h-16\"  > " + updateStatus +
-                                    "<div class='relative h-full'>" + `<p class=${statusColor}>` + strStatus + "</p>" + "<p>" + regDate + "</p>" + "</div>" +
-                                    "                </div> "
-
-
-                            }
-
-                        }
-
-
-                        let attendenceBody = "<div class=\"flex flex-col w-full h-full m-4\">\n" +
-                            "            <div class=\"w-full border-b-2 h-full border-b-slate-200\">\n" +
-                            "                <div class=\"mb-4 text-lg font-bold border-b-2 border-gray-200 pb-4\">출결사항</div>" +
-                            "<div >"
-                            + "<span class=\"inline-flex items-center bg-green-100 cursor-pointer text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300\" onclick='ajax_selectACK()'>\n" +
-                            "                <span class=\"w-2 h-2 mr-1 bg-green-500 rounded-full\"></span>\n" +
-                            "                출석\n" +
-                            "            </span> <span class=\"inline-flex items-center cursor-pointer bg-red-100 text-red-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300\" onclick='ajax_selectAbsent()'>\n" +
-                            "                <span class=\"w-2 h-2 mr-1 bg-red-500 rounded-full\"></span>\n" +
-                            "                결석\n" +
-                            "            </span>" +
-                            " <span class=\"inline-flex items-center bg-red-100 text-red-800 cursor-pointer text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-orange-900 dark:text-orange-300\">\n" +
-                            "                <span class=\"w-2 h-2 mr-1 bg-orange-500 rounded-full\"></span>\n" +
-                            "                지각\n" +
-                            "            </span>"
-                            + "</div>" + "<div class='flex flex-wrap items-center justify-center mt-6'>" + appendTag + "</div>" +
-                            "</div>" +
-                            "</div>"
-
-
-                        $(".section2").children().remove()
-                        $(".section2").append(attendenceBody)
-                    }
-                }
-                ,
-                error: function (data) {
-                    console.log('AJAX ERROR - ajax_writeStudy()');
-
-                    // alert('일정 등록에 문제가 발생 했습니다.');
-
-                }
-                ,
-                complete: function (data) {
-                    console.log('AJAX COMPLETE - ajax_writeStudy()');
-
-
-                }
-            });
-        }
-
-        function ajax_selectACK() {
-            console.log(" ajax_selectACK() ")
-            $.ajax({
-                url: '/user/attendence/ackattendence',
-                method: 'POST',
-                processData: false,
-                contentType: false,
-                success: function (data) {
-                    console.log('AJAX SUCCESS - ajax_selectACK()');
-                    console.log("data : ", data)
-                    let appendTag = ""
-
-                    for (let i = 0; i < data.length; i++) {
-                        let strStatus = ""
-                        let statusColor = ""
-                        let updateStatus = ""
-                        let regDate = ""
-
-                        if (data[i].astatus === 0) {
-                            strStatus += "출석"
-                            statusColor += "text-green-400"
-                            regDate = data[i].reg_date
-                            appendTag += "     <div class=\"w-1/4 border-2 rounded-md shadow-xl mb-5 mr-4 h-16\" " + updateStatus + " > " +
-                                "<div class='relative h-full'>" + `<p class=${statusColor}>` + strStatus + "</p>" + "<p>" + regDate + "</p>" + "</div>" +
-                                "                </div> "
-                        }
-                        if (data[i].astatus === 1) {
-                            strStatus += "지각"
-                            statusColor += "text-orange-400"
-                            regDate = data[i].reg_date
-                            if (data[i].ustatus === 0) {
-                                updateStatus = "' onclick=\"modalToggle(" + data[i].no + ")\""
-                                appendTag += "     <div class=\"w-1/4 border-2 rounded-md shadow-xl mb-5 mr-4 h-16\" " + updateStatus + " > " +
-                                    "<div class='relative h-full'>" + `<p class=${statusColor}>` + strStatus + "</p>" + "<p>" + regDate + "</p>" + "</div>" +
-                                    "                </div> "
-                            } else {
-                                updateStatus = "대기중"
-                                appendTag += "     <div class=\"w-1/4 border-2 rounded-md shadow-xl mb-5 mr-4 h-16\"  > " + updateStatus +
-                                    "<div class='relative h-full'>" + `<p class=${statusColor}>` + strStatus + "</p>" + "<p>" + regDate + "</p>" + "</div>" +
-                                    "                </div> "
-
-
-                            }
-
-                        }
-
-                        if (data[i].astatus === 2) {
-                            strStatus += "병결"
-                            regDate = arr[i].reg_date
-                        }
-                        if (data[i].astatus === 3) {
-                            strStatus += "무단결석"
-                            statusColor += "text-red-400"
-                            regDate = data[i].reg_date
-                            if (data[i].ustatus === 0) {
-                                updateStatus = "' onclick=\"modalToggle(" + data[i].no + ")\""
-                                appendTag += "     <div class=\"w-1/4 border-2 rounded-md shadow-xl mb-5 mr-4 h-16\" " + updateStatus + " > " +
-                                    "<div class='relative h-full'>" + `<p class=${statusColor}>` + strStatus + "</p>" + "<p>" + regDate + "</p>" + "</div>" +
-                                    "                </div> "
-                            } else {
-                                updateStatus = "대기중"
-                                appendTag += "     <div class=\"w-1/4 border-2 rounded-md shadow-xl mb-5 mr-4 h-16\"  > " + updateStatus +
-                                    "<div class='relative h-full'>" + `<p class=${statusColor}>` + strStatus + "</p>" + "<p>" + regDate + "</p>" + "</div>" +
-                                    "                </div> "
-
-
-                            }
-
-                        }
-
-
-                        let attendenceBody = "<div class=\"flex flex-col w-full h-full m-4\">\n" +
-                            "            <div class=\"w-full border-b-2 h-full border-b-slate-200\">\n" +
-                            "                <div class=\"mb-4 text-lg font-bold border-b-2 border-gray-200 pb-4\">출결사항</div>" +
-                            "<div >"
-                            + "<span class=\"inline-flex items-center bg-green-100 cursor-pointer text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300\">\n" +
-                            "                <span class=\"w-2 h-2 mr-1 bg-green-500 rounded-full\"></span>\n" +
-                            "                출석\n" +
-                            "            </span> <span class=\"inline-flex items-center cursor-pointer bg-red-100 text-red-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300\" onclick='ajax_selectAbsent()'>\n" +
-                            "                <span class=\"w-2 h-2 mr-1 bg-red-500 rounded-full\"></span>\n" +
-                            "                결석\n" +
-                            "            </span>" +
-                            " <span class=\"inline-flex items-center bg-red-100 text-red-800 cursor-pointer text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-orange-900 dark:text-orange-300\"  onclick='ajax_selectTardy()'>\n" +
-                            "                <span class=\"w-2 h-2 mr-1 bg-orange-500 rounded-full\"></span>\n" +
-                            "                지각\n" +
-                            "            </span>"
-                            + "</div>" + "<div class='flex flex-wrap items-center justify-center mt-6'>" + appendTag + "</div>" +
-                            "</div>"
-                        "</div>"
-
-
-                        $(".category p").removeClass("font-semibold").addClass("text-slate-400")
-                        $(".attendence").addClass("font-semibold").removeClass("text-slate-400")
-                        $(".section2").children().remove()
-                        $(".section2").append(attendenceBody)
-                    }
-                }
-                ,
-                error: function (data) {
-                    console.log('AJAX ERROR - ajax_writeStudy()');
-
-                    // alert('일정 등록에 문제가 발생 했습니다.');
-
-                }
-                ,
-                complete: function (data) {
-                    console.log('AJAX COMPLETE - ajax_writeStudy()');
-
-
-                }
-            });
-
-        }
-
-        function ajax_selectAbsent() {
-            console.log(" ajax_selectAbsent(u_id) ")
-
-
-            $.ajax({
-                url: '/user/attendence/absent',
-                method: 'POST',
-                processData: false,
-                contentType: false,
-                success: function (data) {
-                    console.log('AJAX SUCCESS - ajax_writeStudy()');
-                    console.log("data : ", data)
-                    let appendTag = ""
-                    for (let i = 0; i < data.length; i++) {
-                        let strStatus = ""
-                        let statusColor = ""
-                        let updateStatus = ""
-                        let regDate = ""
-
-                        if (data[i].astatus === 0) {
-                            strStatus += "출석"
-                            statusColor += "text-green-400"
-                            regDate = data[i].reg_date
-                            appendTag += "     <div class=\"w-1/4 border-2 rounded-md shadow-xl mb-5 mr-4 h-16\" " + updateStatus + " > " +
-                                "<div class='relative h-full'>" + `<p class=${statusColor}>` + strStatus + "</p>" + "<p>" + regDate + "</p>" + "</div>" +
-                                "                </div> "
-                        }
-                        if (data[i].astatus === 1) {
-                            strStatus += "지각"
-                            statusColor += "text-orange-400"
-                            regDate = data[i].reg_date
-                            if (data[i].status === 1) {
-                                updateStatus = "승낙"
-                                appendTag += "     <div class=\"w-1/4 border-2 text-green-400 font-bold rounded-md shadow-xl mb-5 mr-4 h-full\"  > " + updateStatus +
-                                    "<div class='relative h-full'>" + `<p class=${statusColor}>` + strStatus + "</p>" + "<p>" + regDate + "</p>" + "</div>" +
-                                    "                </div> "
-                            }
-                            if (data[i].status === 0) {
-                                updateStatus = "대기중"
-                                appendTag += "     <div class=\"w-1/4 border-2 text-blue-500 font-bold rounded-md shadow-xl mb-5 mr-4 h-full\"  > " + updateStatus +
-                                    "<div class='relative h-full'>" + `<p class=${statusColor}>` + strStatus + "</p>" + "<p>" + regDate + "</p>" + "</div>" +
-                                    "                </div> "
-                            }
-                            if (data[i].status === 2) {
-                                updateStatus = "취소"
-                                appendTag += "     <div class=\"w-1/4 border-2 text-red-500 font-bold rounded-md shadow-xl mb-5 mr-4 h-full\"  > " + updateStatus +
-                                    "<div class='relative h-full'>" + `<p class=${statusColor}>` + strStatus + "</p>" + "<p>" + regDate + "</p>" + "</div>" +
-                                    "                </div> "
-                            }
-
-                        }
-
-                        if (data[i].astatus === 2) {
-                            strStatus += "병결"
-                            regDate = arr[i].reg_date
-                        }
-                        if (data[i].astatus === 3) {
-                            strStatus += "무단결석"
-                            statusColor += "text-red-400"
-                            regDate = data[i].reg_date
-                            if (data[i].status === 1) {
-                                updateStatus = "승낙"
-                                appendTag += "     <div class=\"w-1/4 border-2 text-green-400 font-bold rounded-md shadow-xl mb-5 mr-4 h-full\"  > " + updateStatus +
-                                    "<div class='relative h-full'>" + `<p class=${statusColor}>` + strStatus + "</p>" + "<p>" + regDate + "</p>" + "</div>" +
-                                    "                </div> "
-                            }
-                            if (data[i].status === 0) {
-                                updateStatus = "대기중"
-                                appendTag += "     <div class=\"w-1/4 border-2 text-blue-500 font-bold rounded-md shadow-xl mb-5 mr-4 h-full\"  > " + updateStatus +
-                                    "<div class='relative h-full'>" + `<p class=${statusColor}>` + strStatus + "</p>" + "<p>" + regDate + "</p>" + "</div>" +
-                                    "                </div> "
-                            }
-                            if (data[i].status === 2) {
-                                updateStatus = "취소"
-                                appendTag += "     <div class=\"w-1/4 border-2 text-red-500 font-bold rounded-md shadow-xl mb-5 mr-4 h-full\"  > " + updateStatus +
-                                    "<div class='relative h-full'>" + `<p class=${statusColor}>` + strStatus + "</p>" + "<p>" + regDate + "</p>" + "</div>" +
-                                    "                </div> "
-                            }
-                        }
-
-
-                        let attendenceBody = "<div class=\"flex flex-col w-full h-full m-4\">\n" +
-                            "            <div class=\"w-full border-b-2 h-full border-b-slate-200\">\n" +
-                            "                <div class=\"mb-4 text-lg font-bold border-b-2 border-gray-200 pb-4\">출결사항</div>" +
-                            "<div >"
-                            + "<span class=\"inline-flex items-center bg-green-100 cursor-pointer text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300\" onclick='ajax_selectACK()'>\n" +
-                            "                <span class=\"w-2 h-2 mr-1 bg-green-500 rounded-full\"></span>\n" +
-                            "                출석\n" +
-                            "            </span> <span class=\"inline-flex items-center cursor-pointer bg-red-100 text-red-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300\" onclick='ajax_selectAbsent()'>\n" +
-                            "                <span class=\"w-2 h-2 mr-1 bg-red-500 rounded-full\"></span>\n" +
-                            "                결석\n" +
-                            "            </span>" +
-                            " <span class=\"inline-flex items-center bg-red-100 text-red-800 cursor-pointer text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-orange-900 dark:text-orange-300\" onclick='ajax_selectTardy()'>\n" +
-                            "                <span class=\"w-2 h-2 mr-1 bg-orange-500 rounded-full\"></span>\n" +
-                            "                지각\n" +
-                            "            </span>"
-                            + "</div>" + "<div class='flex flex-wrap items-center justify-center mt-6'>" + appendTag + "</div>" +
-                            "</div>"
-                        "</div>"
-
-
-                        $(".section2").children().remove()
-                        $(".section2").append(attendenceBody)
-                    }
-                }
-                ,
-                error: function (data) {
-                    console.log('AJAX ERROR - ajax_writeStudy()');
-
-                    // alert('일정 등록에 문제가 발생 했습니다.');
-
-                }
-                ,
-                complete: function (data) {
-                    console.log('AJAX COMPLETE - ajax_writeStudy()');
-
-
-                }
-            });
-
-
-        }
-
-        function attendenceTab(size) {
-            console.log("attendenceTab")
-            let appendTag = "";
-
-            ajax_selectACK()
-            let arr = [[${userAttendanceDtos}]]
-            console.log("arr status", arr[0].status)
-            let nextAtag = ''
-            $('.section2').children().remove();
-
-
-        }
-
-
-        function homeTab(ratio) {
-            console.log("homeTab")
-            console.log(ratio)
-            const test = "<div class=\"flex flex-col w-full h-full m-4\">\n" +
-                "            <div class=\"w-full border-b-2 h-1/3 border-b-slate-200\">\n" +
-                "                <div class=\"mb-4 text-lg font-bold border-b-2 border-gray-200\">출결사항</div>\n" +
-                "                <div class=\"relative flex flex-col items-center justify-center\">\n" +
-                "                    <p class=\"mb-4 text-2xl text-green-500\">출석일 / 총 출석일</p>\n" +
-                "\n" +
-                "                    <div class=\"text-4xl font-bold font-extrabold mb-9\">[[${userAttendanceDtos.size()}]] 일/214일</div>\n" +
-                "                    <div class=\"w-full bg-gray-200 rounded-full dark:bg-gray-700\">\n" +
-                "                        <div\n" +
-                "                                class=\"bg-blue-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full attendenceRatio\"\n" +
-                "                                style=\"width: " + ratio + "%;\"\n" +
-                "                        >\n" +
-                "                            [[${ratio}]]%\n" +
-                "                        </div>\n" +
-                "                    </div>\n" +
-                "                </div>\n" +
-                "            </div>\n" +
-                "            <div class=\"w-full border-b-2 h-1/3 border-b-slate-200\">\n" +
-                "                <div class=\"mt-3 text-lg font-bold\"  >포인트</div>\n" +
-                "            </div>\n" +
-                "            <div class=\"w-full border-b-2 h-1/3 border-b-slate-200\">\n" +
-                "                <div class=\"mt-3 text-lg font-bold\">스케쥴</div>\n" +
-                "            </div>"
-
-            $(".category p").removeClass("font-semibold").addClass("text-slate-400")
-            $(".home").addClass("font-semibold").removeClass("text-slate-400")
-            $(".section2").children().remove()
-            $(".section2").append(test)
-
-        }
-
-        function pointTab() {
-            console.log("pointTab")
-
-            $(".category p").removeClass("font-semibold").addClass("text-slate-400")
-            $(".point").addClass("font-semibold").removeClass("text-slate-400")
-            $(".section2").children().remove()
-
-        }
-
-        function scheduleTab() {
-            console.log("scheduleTab")
-
-            $(".category p").removeClass("font-semibold").addClass("text-slate-400")
-            $(".schedule").addClass("font-semibold").removeClass("text-slate-400")
-            $(".section2").children().remove()
-
-        }
-
-        function modalToggle(no) {
-            console.log("modalToogle()")
-            console.log("no", no)
-            $('#defaultModal').toggleClass('hidden');
-            $(this).data('no', no)
-
-
-            $('.submitFile').data("no", no)
-
-        }
-    </script>
 </head>
 <body class="flex flex-col items-center justify-center w-5/6 mx-auto">
-<div th:replace="~{/include/modal.html::modal}"></div>
+
+<div th:replace="~{/include/modal_mypage.html::mypage}"></div>
+<!--<div th:replace="~{/include/modal_attendence.html::attendence}"></div>-->
+<div th:replace="~{/include/modal.html::mypage}"></div>
+
 <header th:replace="~{/include/header_nav_footer::header}"></header>
 <section class="flex flex-row w-5/6 border-solid mt-7">
-    <div class="relative h-screen p-4 mr-3 border-4 divide-y-reverse rounded-lg w-96">
+    <div class="relative h-full p-4 mr-3 border-4 divide-y-reverse rounded-lg w-96">
         <div class="w-full font-bold border-b-2 border-b-slate-200 h-60">
                     <span
                             class="text-xl font-semibold"
                             th:text="${session.loginedUserDto.id}+'('+${session.loginedUserDto.name}+')'"
                     >Sample username</span
                     >
-            <div class="rounded-full"></div>
+            <div class="flex justify-center items-center userImg">
+
+            </div>
         </div>
 
         <div
                 class="flex flex-col items-center justify-center h-auto border-b-2 border-b-slate-200 category"
         >
             <p
-                    class="mt-5 mb-1 text-lg font-semibold cursor-pointer h-1/3 home"
+                    class="mt-5 mb-1 text-lg font-semibold hover:text-black  cursor-pointer h-1/3 home"
                     th:onclick="'homeTab('+${ratio} +')'"
             >
                 홈
             </p>
             <a th:onclick="'attendenceTab('+${userAttendanceDtos.size()}+')'">
                 <p
-                        class="mb-1 text-base text-lg cursor-pointer h-1/3 text-slate-400 attendence"
+                        class="mb-1 text-base text-lg hover:text-black  cursor-pointer h-1/3 text-slate-400 attendence"
                 >
                     출결사항
                 </p></a
             >
-            <p
-                    class="mb-1 text-base text-lg cursor-pointer h-1/3 text-slate-400 point"
-                    onclick="pointTab()"
-            >
-                나의 과제
-            </p>
-            <p
-                    class="mb-5 text-base text-lg cursor-pointer text-slate-400 h-1/3 schedule"
-                    onclick="scheduleTab()"
-            >
-                스케쥴
-            </p>
+
+            <a th:href="@{/mypage/studyhome}">
+                <p
+                        class="mb-5 text-base text-lg hover:text-black   cursor-pointer text-slate-400 h-1/3 study"
+
+                >
+
+                    스터디
+                </p>
+            </a>
         </div>
     </div>
-    <div class="flex flex-col items-center w-3/4 h-screen p-8 border-2 rounded-lg section2">
+    <div class="flex w-3/4 h-screen p-8 border-2 rounded-lg section2">
         <div class="flex flex-col w-full h-full m-4">
             <div class="w-full border-b-2 h-1/3 border-b-slate-200">
                 <div class="mb-4 text-lg font-bold">출결사항</div>
@@ -576,7 +85,7 @@
                     </div>
                 </div>
             </div>
-            <div class="w-full border-b-2 h-1/3 border-b-slate-200">
+            <div class="w-full border-b-2 h-1/3 border-b-slate-200 h-full overflow-y-auto mt-4">
                 <div class="mt-3 text-lg font-bold">나의 과제</div>
 
                 <!-- 간략하게 -->
@@ -608,7 +117,8 @@
                         <span class="font-bold text-gray-700">과제 제목</span>
                         <span class="font-bold text-gray-700">점수</span>
                     </div>
-                    <span class="flex items-center justify-between px-4 py-2 border border-gray-200" th:each="item : ${userAssignmentDtos}">
+                    <span class="flex items-center justify-between px-4 py-2 border border-gray-200"
+                          th:each="item : ${userAssignmentDtos}">
                         <span class="text-gray-700" th:text="${item.title}"></span>
                         <span>
                             <span th:if="${item.file_user != null}">
@@ -628,11 +138,9 @@
                     </span>
                 </div>
             </div>
-            <div class="w-full border-b-2 h-1/3 border-b-slate-200">
-                <div class="mt-3 text-lg font-bold">스케쥴</div>
-            </div>
+
         </div>
-        <div id="pageNum">hi</div>
+
     </div>
 </section>
 <footer th:replace="~{/include/header_nav_footer.html::footer}"></footer>

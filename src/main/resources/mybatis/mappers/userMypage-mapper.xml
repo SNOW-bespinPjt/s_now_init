@@ -4,20 +4,52 @@
 
 <mapper namespace="com.btc.snow.user.mypage.IMyapgeMapper">
 
-    <resultMap id="studyPromiseDto" type="com.btc.snow.include.StudyPromiseDto">
-        <id property="no" column="no"/>
-        <id property="status" column="status"/>
-        <id property="member_id" column="member_id"/>
-        <id property="user_id" column="user_id"/>
-        <id property="study_no" column="study_no"/>
-        <id property="reg_date" column="reg_date"/>
-        <id property="mod_date" column="mod_date"/>
+    <resultMap id="studyPromiseDtos" type="com.btc.snow.include.StudyPromiseDto">
+        <result property="no" column="no"/>
+        <result property="status" column="status"/>
+        <result property="member_id" column="member_id"/>
+        <result property="user_id" column="user_id"/>
+        <result property="study_no" column="study_no"/>
+        <result property="reg_date" column="reg_date"/>
+        <result property="mod_date" column="mod_date"/>
     </resultMap>
 
-    <select id="selectSceduleByUser" parameterType="String" resultMap="studyPromiseDto">
+    <select id="selectSceduleByUser" parameterType="HashMap" resultMap="studyPromiseDtos">
         select *
+        from STUDYPROMISE sp
+                 inner join USER u ON sp.member_id = u.id
+        where user_id = #{id}
+        limit #{skip},#{amount}
+
+    </select>
+
+    <select id="selectSceduleByMember" parameterType="HashMap" resultMap="studyPromiseDtos">
+        select *
+        from STUDYPROMISE sp
+                 inner join USER u ON sp.user_id = u.id
+        where member_id = #{id}
+        limit #{skip},#{amount}
+
+    </select>
+
+    <update id="updateStatus" parameterType="Integer">
+        update STUDYPROMISE
+        set status = '승낙'
+        where no = #{no}
+
+    </update>
+
+    <select id="getTotalSudyPromiseDtos" parameterType="String" resultType="Integer">
+        select count(*)
         from STUDYPROMISE
         where user_id = #{id}
+
+    </select>
+
+    <select id="getTotalSudyPromiseDtosByMember" parameterType="String" resultType="Integer">
+        select count(*)
+        from STUDYPROMISE
+        where member_id = #{id}
 
     </select>
 
