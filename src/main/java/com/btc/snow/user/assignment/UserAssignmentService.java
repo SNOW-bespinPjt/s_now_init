@@ -196,6 +196,9 @@ public class UserAssignmentService implements IUserAssignmentService {
         // 로그인 멤버의 과제목록 가져오는 Dtos
         List<UserAssignmentDto> userAssignments = iUserAssignmentMB.selectMyAssignment(user_no);
 
+//        log.info("idx0 ---> {} :  {}", userAssignments.get(0).getFile_user(), userAssignments.get(0).getFile_user_name());
+//        log.info("idx1 ---> {} : {}", userAssignments.get(1).getFile_user(), userAssignments.get(1).getFile_user_name());
+
         // 중복된 과제를 방지하기 위한 Set 사용
         // Set을 사용하면 중복 검사와 중복 제거를 간결하게 처리할 수 있으며, 코드가 간단하고 이해하기 쉬워서 사용
         // 중복 방지, 빠른 검색, 하지만 순서 저장은 안함 - 저장된 순서 순회는 불가
@@ -211,15 +214,16 @@ public class UserAssignmentService implements IUserAssignmentService {
                 if (assignmentTitles.add(assignment.getTitle())) {
                     dto.setTitle(assignment.getTitle());
                 }
-                if (assignmentTitles.add(assignment.getFile_user())) {
-                    dto.setFile_user(assignment.getFile_user());
-                }
-                if (assignmentTitles.add(assignment.getFile_user_name())) {
-                    dto.setFile_user_name(assignment.getFile_user_name());
-                }
+//                if (assignmentTitles.add(assignment.getFile_user())) {
+//                    dto.setFile_user(assignment.getFile_user());
+//                }
+//                }
 
             }
         }
+
+//        log.info("idx0 ---> {} :  {}", userAssignments.get(0).getFile_user(), userAssignments.get(0).getFile_user_name());
+//        log.info("idx1 ---> {} : {}", userAssignments.get(1).getFile_user(), userAssignments.get(1).getFile_user_name());
 
         return userAssignments;
     }

@@ -1,7 +1,6 @@
 package com.btc.snow.user.assignment;
 
 import com.btc.snow.admin.assignment.AdminAssignmentDto;
-import com.btc.snow.user.config.UploadFileServiceForUser;
 import com.btc.snow.user.member.UserMemberDto;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.log4j.Log4j2;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
