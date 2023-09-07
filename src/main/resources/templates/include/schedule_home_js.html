@@ -26,12 +26,10 @@
         console.log(" ajax_submitDoc() ")
         let no = $('.submitFileAttendence').data("no")
         console.log(typeof no)
-        $("#a_no_attendence").val(no)
-
-
-        let uploadForm = $("#fileUploadForm")
+        $("#fileUploadFormByDoc #a_no").val(no)
+        
+        let uploadForm = $("#fileUploadFormByDoc")
         let formData = new FormData(uploadForm[0])
-
 
         $.ajax({
             url: '/user/attendence/docs',
