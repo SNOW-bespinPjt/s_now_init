@@ -2,10 +2,7 @@
 
     $(document).ready(function () {
         console.log("DOCUMENT WILL BE READY TO OPERATE NOW")
-
-        $('#start_date').val(new Date().toISOString().substring(0, 10));
-        $('#end_date').val(new Date().toISOString().substring(0, 10));
-
+        
         // 이벤트 핸들러 초기화
         init_events();
 
@@ -47,39 +44,21 @@
 
         // 도서 목록 리스트 CLICK HANDLER END
 
-        // CREATE BTN CLICK HANDLER START
-        $(document).on('click', '#buttons .create_btn', function (e) {
+        // MODIFY BTN CLICK HANDLER START
+        $(document).on('click', '#buttons .modify_btn', function (e) {
             console.log('#buttons .create_btn CLICK HANDLER!!');
 
-            createCurriculum();
+            modifyCurriculum();
 
         });
 
-        // CREATE BTN CLICK HANDLER END
-
-        // RESET BTN CLICK HANDLER START
-        $(document).on('click', '#buttons .reset_btn', function (e) {
-            console.log('#buttons .reset_btn CLICK HANDLER!!');
-
-            $('#book_no').val('');
-            $('#title').val('');
-            $('#content').val('');
-            $('#category').val('');
-            $('#std_div').val('');
-            $('#hour').val('');
-            $('#file').val('');
-            $('#start_date').val(new Date().toISOString().substring(0, 10));
-            $('#end_date').val(new Date().toISOString().substring(0, 10));
-
-        });
-
-        // RESET BTN CLICK HANDLER END
+        // MODIFY BTN CLICK HANDLER END
 
         // CANCEL BTN CLICK HANDLER START
         $(document).on('click', '#buttons .cancel_btn', function (e) {
             console.log('#buttons .cancel_btn CLICK HANDLER!!');
 
-            location.href = "/admin/curriculum";
+            window.history.back();
 
         });
 
@@ -89,17 +68,13 @@
 
     //init_events() END
 
-    // CREATE BTN CLICK HANDLER START
-    function createCurriculum() {
-        console.log('createCurriculum() CALLED!!');
+    // MODIFY BTN CLICK HANDLER START
+    function modifyCurriculum() {
+        console.log('modifyCurriculum() CALLED!!');
 
-        let form = $(".create_curriculum_form");
+        let form = $(".modify_curriculum_form");
 
-        if (form.find("input[name='book_no']").val() == '') {
-            alert("INPUT BOOK NO");
-            form.find("input[name='book_no']").focus();
-
-        } else if (form.find("input[name='title']").val() == '') {
+        if (form.find("input[name='title']").val() == '') {
             alert("INPUT TITLE");
             form.find("input[name='title']").focus();
 
@@ -115,10 +90,6 @@
             alert("INPUT STD_DIV");
             form.find("input[name='std_div']").focus();
 
-        } else if (form.find("input[name='file']").val() == '') {
-            alert("INPUT FILE");
-            form.find("input[name='file']").focus();
-
         } else if (form.find("input[name='start_date']").val() == '') {
             alert("INPUT START_DATE");
             form.find("input[name='start_date']").focus();
@@ -133,7 +104,7 @@
 
     }
 
-    // CREATE BTN CLICK HANDLER END
+    // MODIFY BTN CLICK HANDLER END
 
     // MODAL TOGGLE ON/OFF START
     function modallToggle() {

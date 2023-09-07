@@ -17,6 +17,19 @@
 
     </select>
 
+    <select id="showAllTdListInHome"
+            parameterType="com.btc.snow.user.member.UserMemberDto"
+            resultType="com.btc.snow.user.tdlist.UserTdListDto">
+
+        SELECT *
+        FROM TODOLIST
+        WHERE user_id = #{id}
+          and end_date >= DATE_SUB(NOW(), INTERVAL 3 DAY)
+          and is_finish = 0
+        ORDER BY is_finish ASC, end_date asc, start_date desc, reg_date desc
+
+    </select>
+
     <insert id="insertTdList"
             parameterType="com.btc.snow.user.tdlist.UserTdListDto">
 
@@ -79,7 +92,7 @@
         FROM TODOLIST
         WHERE user_id = #{user_id}
           AND end_date >= DATE_SUB(NOW(), INTERVAL 3 DAY)
-          AND tag = #{tag}
+          AND (tag like CONCAT('%', #{tag}, '%') or content like CONCAT('%', #{content}, '%'))
         ORDER BY is_finish ASC, end_date asc, start_date desc, reg_date desc
 
     </select>
@@ -93,7 +106,8 @@
         WHERE user_id = #{user_id}
           AND (is_finish = 1
             or
-            <![CDATA[ end_date < NOW() ]]>)
+            <![CDATA[ end_date < DATE_FORMAT(now(), '%Y-%m-%d')]]>)
+        order by is_finish ASC, end_date asc, start_date desc, reg_date desc
 
     </select>
 
