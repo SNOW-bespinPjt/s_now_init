@@ -17,6 +17,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+
 @Log4j2
 @Configuration
 @EnableWebSecurity
@@ -38,7 +39,6 @@ public class SpringSecurityConfig {
         this.myAdminDetailsService = myAdminDetailsService;
 
     }
-
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -126,7 +126,7 @@ public class SpringSecurityConfig {
                         .anyRequest().authenticated()
                 )
                 .formLogin(login -> login
-                        .loginPage("/admin/member/member_login_form")
+                        .loginPage("/admin/")
                         .loginProcessingUrl("/admin/member/member_login_confirm")
                         .usernameParameter("id")
                         .passwordParameter("pw")
