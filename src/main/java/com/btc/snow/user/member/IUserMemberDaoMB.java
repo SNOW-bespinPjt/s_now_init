@@ -40,13 +40,4 @@ public interface IUserMemberDaoMB {
      */
     public int updateUserPW(UserMemberDto userMemberDto);
 
-    /*
-     * SELECT COIN
-     */
-    int selectCoin(String id);
-
-    /*
-     * UPDATE COIN
-     */
-    int updateCoin(String id, int totalCoin);
 }

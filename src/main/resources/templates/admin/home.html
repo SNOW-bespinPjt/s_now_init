@@ -4,8 +4,9 @@
     <meta charset="UTF-8"/>
     <title>Title</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://code.jquery.com/jquery-3.7.0.js"
-            integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossOrigin="anonymous"></script>
+    <script crossOrigin="anonymous"
+            integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
+            src="https://code.jquery.com/jquery-3.7.0.js"></script>
     <script th:src="@{/assignment/admin/js/admin_nav.js}" type="text/javascript"></script>
     <script th:src="@{/assignment/admin/js/init_events.js}" type="text/javascript"></script>
     <script th:src="@{/assignment/admin/js/member_login_form.js}" type="text/javascript"></script>
@@ -26,39 +27,30 @@
             <div
                     class="relative flex items-center justify-center w-screen h-screen mr-8 border-2 rounded-lg bg-slate-100"
             >
-                <h2 class="absolute top-0 left-0 mt-4 text-2xl font-bold ml-14">ADMIN PAGE</h2>
-                <div class="flex flex-col w-11/12 bg-white h-5/6">
-                    <div class="flex w-full border-b-2 h-1/4 border-b-slate-300">
+                <h2 class="absolute top-0 left-0 mt-4 text-2xl font-bold ml-14">관리자 페이지</h2>
+                <div class="flex flex-col w-11/12 bg-white h-5/6" th:if="${session.loginedAdminDto != null}">
+                    <img alt="Curriculum Image"
+                         class="mx-auto w-full"
+                         th:src="@{/assignment/admin/img/curriculum.png}"/>
+                    <div class="flex w-full h-1/4">
+                        <!-- <div class="flex w-full border-b-2 h-1/4 border-b-slate-300">  -->
                         <div class="w-11/12 p-4">
-                            <p class="font-bold">sample title</p>
-                            <p class="font-thin truncate">sample content</p>
-                        </div>
-                        <div class="flex flex-col items-center p-4 mb-5">
-                            <p class="font-bold text-blue-400">D-5</p>
-                            <div class="flex">
-                                <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke-width="1.5"
-                                        stroke="currentColor"
-                                        class="w-6 h-6"
-                                >
-                                    <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
-                                    />
-                                    <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                                    />
-                                </svg>
-                                <p class="ml-2 font-thin text-slate-400">399</p>
-                            </div>
+                            <p class="font-bold">학생들 평균 점수</p>
+                            <p class="font-thin truncate">개발자반 너무너무 잘해요 칭찬합니다</p>
                         </div>
                     </div>
+                </div>
+                <div class="flex flex-col w-11/12 bg-white h-5/6 items-center text-gray-500"
+                     th:unless="${session.loginedAdminDto != null}">
+                    <p class="mt-20">
+                    <h2 class="mb-4">로그인 후 확인이 가능합니다</h2>
+                    <svg class="w-8 h-8 mb-4 mt-6" fill="none" stroke="currentColor" stroke-width="1.5"
+                         viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"/>
+                    </svg>
+                    </p>
                 </div>
             </div>
 
@@ -66,125 +58,137 @@
             <div class="flex flex-col items-center w-3/4 h-screen border-2 rounded-lg">
                 <!-- ➡️⬆️️ -->
 
-                <!-- beforn login : contentDiv -->
-                <div id="contentDiv"
-                     class="flex flex-col items-center justify-center w-11/12 h-40 p-2 mt-6 border-2 rounded-sm"
+                <!-- Before Login -->
+                <div class="flex flex-col items-center justify-center w-11/12 h-40 p-2 mt-6 border-2 rounded-sm"
+                     id="contentDiv"
                      th:if="${session.loginedAdminDto == null}">
-                    <h3 class="mb-3">이곳은 ADMIN 페이지 입니다 !</h3>
-                    <a class="mx-auto h-10 px-4 py-2 font-bold items-center text-white bg-green-500 rounded w-52 hover:bg-green-600 text-center"
+                    <h3 class="mb-3 font-semibold">이곳은 관리자 페이지 입니다 !</h3>
+                    <a class="mx-auto h-10 px-4 py-2 font-bold text-white bg-green-500 rounded w-52 hover:bg-green-600 text-center"
                        id="loginLink"
                     >
-                        login
+                        관리자 로그인
                     </a>
                     <div class="mt-3.5 text-xs text-gray-700">
-                        <a
-                                class="cursor-pointer hover:underline hover:font-thin hover:text-gray-500"
-                                th:href="@{/admin/member/find_id_form}"
-                        >아이디 찾기</a
-                        >
-                        |
-                        <a
-                                class="cursor-pointer hover:underline hover:font-thin hover:text-gray-500"
-                                th:href="@{/admin/member/find_password_form}"
-                        >비밀번호 찾기</a
-                        >
-                        |
-                        <a
-                                class="cursor-pointer hover:underline hover:font-thin hover:text-gray-500"
-                                th:href="@{/admin/member/create_account_form}"
-                        >회원가입</a
-                        >
-                    </div>
-                </div>
-                <!-- member_login_form -->
-                <div id="member_login_form" style="display: none"
-                     class="flex flex-col items-center justify-center w-11/12 h-40 p-2 mt-6 border-2 rounded-sm">
-                    <div>
-                        MEMBER LOGIN FORM
-                    </div>
-                    <div>
-                        <form th:action="@{/admin/member/member_login_confirm}" name="member_login_form"
-                              method="post">
-                            <input type="text" name="id" placeholder="INPUT ID"><br>
-                            <input type="password" name="pw" placeholder="INPUT PW"><br>
-                            <input type="button" value="member login" onclick="memberLoginForm();">
-                            <input type="reset" value="reset">
-                        </form>
-                    </div>
-                    <div class="mt-3.5 text-xs text-gray-700">
-                        <a
-                                class="cursor-pointer hover:underline hover:font-thin hover:text-gray-500"
-                                th:href="@{/admin/member/find_id_form}"
-                        >아이디 찾기</a
-                        >
-                        |
-                        <a
-                                class="cursor-pointer hover:underline hover:font-thin hover:text-gray-500"
-                                th:href="@{/admin/member/find_password_form}"
-                        >비밀번호 찾기</a
-                        >
-                        |
-                        <a
-                                class="cursor-pointer hover:underline hover:font-thin hover:text-gray-500"
-                                th:href="@{/admin/member/create_account_form}"
-                        >회원가입</a
-                        >
+                        <a class="cursor-pointer hover:underline hover:text-gray-500"
+                           th:href="@{/admin/member/find_id_form}"
+                        >아이디 찾기</a> |
+                        <a class="cursor-pointer hover:underline hover:text-gray-500"
+                           th:href="@{/admin/member/find_password_form}"
+                        >비밀번호 찾기</a> |
+                        <a class="cursor-pointer hover:underline hover:text-gray-500"
+                           th:href="@{/admin/member/create_account_form}"
+                        >회원가입</a>
                     </div>
                 </div>
 
-                <!--  after login -->
+                <!-- Member Login Form -->
+                <div class="flex flex-col items-center justify-center w-11/12 h-40 p-2 mt-6 border-2 rounded-sm text-center h-auto"
+                     id="member_login_form"
+                     style="display: none"
+                     th:if="${session.loginedAdminDto == null}">
+                    <div class="text-xs text-gray-700 mb-2">
+                        관리자 로그인 후 이용 가능합니다
+                    </div>
+                    <div class="w-full">
+                        <form method="post" name="member_login_form"
+                              th:action="@{/admin/member/member_login_confirm}">
+                            <input class="w-full px-3 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-green-300 mb-2"
+                                   name="id" placeholder="INPUT ID"
+                                   type="text">
+                            <input class="w-full px-3 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-green-300 mb-2"
+                                   name="pw" placeholder="INPUT PW"
+                                   type="password">
+                            <input class="bg-green-500 text-white px-4 py-1 rounded-md hover:bg-green-700 cursor-pointer"
+                                   onclick="memberLoginForm();" type="button"
+                                   value="로그인">
+                            <input class="bg-gray-200 text-gray-800 px-4 py-1 rounded-md hover:bg-gray-300 cursor-pointer ml-2"
+                                   type="reset"
+                                   value="초기화">
+                        </form>
+                    </div>
+                    <div class="mt-3.5 text-xs text-gray-700">
+                        <a class="cursor-pointer hover:underline hover:text-gray-500"
+                           th:href="@{/admin/member/find_id_form}"
+                        >아이디 찾기</a> |
+                        <a class="cursor-pointer hover:underline hover:text-gray-500"
+                           th:href="@{/admin/member/find_password_form}"
+                        >비밀번호 찾기</a> |
+                        <a class="cursor-pointer hover:underline hover:text-gray-500"
+                           th:href="@{/admin/member/create_account_form}"
+                        >회원가입</a>
+                    </div>
+                </div>
+
+                <!-- After Login -->
                 <div class="flex flex-col items-center justify-center w-11/12 h-40 p-2 mt-6 border-2 rounded-sm"
                      th:if="${session.loginedAdminDto != null}">
-                    <h3 class="mb-3">환영합니다</h3>
-
-                    <span th:text="${session.loginedAdminDto.id}"
-                          class="mx-auto h-10 px-4 py-2 font-bold items-center text-white bg-green-500 rounded w-52 hover:bg-green-600 text-center"> 님</span>
+                    <h3 class="mb-3 font-semibold">환영합니다</h3>
+                    <span class="mx-auto h-10 px-4 py-2">
+                        <span class="text-xl font-bold text-green-500 w-52 hover:text-green-700 text-center"
+                              th:text="${session.loginedAdminDto.id}"></span>
+                        <span>님</span>
+                    </span>
                     <div class="mt-3.5 text-xs text-gray-700">
-                        <a th:href="@{/admin/member/member_modify_form}"
-                           class="cursor-pointer hover:underline hover:font-thin hover:text-gray-500"
-                        >나의 정보</a
-                        >
-                        |
-                        <a th:href="@{/admin/member/member_logout_confirm}"
-                           class="cursor-pointer hover:underline hover:font-thin hover:text-gray-500"
-                        >로그아웃</a
-                        >
+                        <a class="cursor-pointer hover:underline hover:text-gray-500"
+                           th:href="@{/admin/member/member_modify_form}"
+                        >나의 정보</a> |
+                        <a class="cursor-pointer hover:underline hover:text-gray-500"
+                           th:href="@{/admin/member/member_logout_confirm}"
+                        >로그아웃</a>
                     </div>
-                </div>
-
-
-                <!-- find_id_form -->
-                <!-- find_password_form -->
-                <div id="find_password_form" style="display: none"
-                     class="flex flex-col items-center justify-center w-11/12 h-40 p-2 mt-6 border-2 rounded-sm">
-                    <div>
-                        <h3>FIND PASSWORD FORM</h3>
-                        <p>(We will send you a new password)</p>
-                    </div>
-
-                    <div>
-                        <form th:action="@{/admin/member/find_password_confirm}" method="post"
-                              name="find_password_form"><br>
-                            <input type="text" name="id" placeholder="INPUT ADMIN ID."><br>
-                            <input type="text" name="name" placeholder="INPUT ADMIN NAME."><br>
-                            <input type="email" name="mail" placeholder="INPUT ADMIN MAIL."><br>
-                            <input type="button" value="FIND PASSWORD" onclick="findPassword();">
-                            <input type="reset" value="RESET">
-                        </form>
-                    </div>
-
-                    <div>
-                        <a th:href="@{/admin/member/create_account_form}">create account</a>
-                        <a th:href="@{/admin/member/member_login_form.html}">login</a>
-                    </div>
-
                 </div>
 
                 <!-- ➡️⬇️ -->
-                <div
-                        class="flex flex-col items-center justify-center w-11/12 p-2 mt-6 border-2 rounded-sm h-2/4"
-                >
-                    <h3 class="mb-3">SNOW에 오신 것을 환영합니다 !</h3>
+                <div class="flex flex-col items-center justify-center w-11/12 p-2 mt-6 border-2 rounded-sm h-2/4">
+                    <div th:if="${session.loginedAdminDto != null}">
+                        <div class="flex items-center">
+                            <span class="mr-2 text-xl">🪙</span>
+                            <p class="text-xl font-bold">BTC 코인 순위</p>
+                        </div>
+                        <div class="mt-4">
+                            <div class="flex items-center mt-2">
+                                <span class="mr-2 text-xl">🥇</span>
+                                <span class="font-semibold" th:text="${userMemberDtos.get(0).getName()}"></span>&nbsp;
+                                <span><span class="font-bold"
+                                            th:text="${userMemberDtos.get(0).getCoin()}"></span>점</span>
+                            </div>
+                            <div class="flex items-center mt-2">
+                                <span class="mr-2 text-xl">🥈</span>
+                                <span class="font-semibold" th:text="${userMemberDtos.get(1).getName()}"></span>&nbsp;
+                                <span><span class="font-bold"
+                                            th:text="${userMemberDtos.get(1).getCoin()}"></span>점</span>
+                            </div>
+                            <div class="flex items-center mt-2">
+                                <span class="mr-2 text-xl">🥉</span>
+                                <span class="font-semibold" th:text="${userMemberDtos.get(2).getName()}"></span>&nbsp;
+                                <span><span class="font-bold"
+                                            th:text="${userMemberDtos.get(2).getCoin()}"></span>점</span>
+                            </div>
+                            <div class="my-4">
+                                <div class="flex items-center mt-2 text-xs text-gray-700">
+                                    <span th:text="${userMemberDtos.get(3).getName()}"></span>&nbsp;
+                                    <span><span th:text="${userMemberDtos.get(3).getCoin()}"></span>점</span>
+                                </div>
+                                <div class="flex items-center mt-2 text-xs text-gray-700">
+                                    <span th:text="${userMemberDtos.get(4).getName()}"></span>&nbsp;
+                                    <span><span th:text="${userMemberDtos.get(4).getCoin()}"></span>점</span>
+                                </div>
+                                <div class="flex items-center mt-2 text-xs text-gray-700">
+                                    <span th:text="${userMemberDtos.get(5).getName()}"></span>&nbsp;
+                                    <span><span th:text="${userMemberDtos.get(5).getCoin()}"></span>점</span>
+                                </div>
+                                <div class="flex items-center mt-2 text-xs text-gray-700">
+                                    <span th:text="${userMemberDtos.get(6).getName()}"></span>&nbsp;
+                                    <span><span th:text="${userMemberDtos.get(6).getCoin()}"></span>점</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center mt-2 text-gray-700 font-bold">
+                                ...
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="mb-3 text-center" th:unless="${session.loginedAdminDto != null}"> SNOW에 오신 것을 환영합니다
+                        !</h3>
                 </div>
             </div>
         </section>

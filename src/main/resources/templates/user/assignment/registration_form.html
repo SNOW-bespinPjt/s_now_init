@@ -19,17 +19,17 @@
                     class="relative flex items-center justify-center w-screen h-screen mr-8 border-2 rounded-lg bg-slate-100"
             >
                 <div class="word">
-                    <h2 class="absolute top-0 left-0 mt-4 text-2xl font-bold ml-14">CREATE ACCOUNT FORM</h2>
+                    <h2 class="absolute top-0 left-0 mt-4 text-2xl font-bold ml-14">과제 등록</h2>
                 </div>
                 <div class="create_account_form">
                     <form th:action="@{/admin/assignment/registration_confirm}"
                           name="registration_form" method="post"
                           enctype="multipart/form-data"
                     >
-                        <input type="text" name="title" placeholder="INPUT TITLE"><br>
-                        <textarea name="body" placeholder="INPUT BODY" rows="5" cols="33"></textarea><br>
+                        <input type="text" name="title" placeholder="과제 제목을 입력하세요"><br>
+                        <textarea name="body" placeholder="과제 내용을 입력하세요" rows="5" cols="33"></textarea><br>
                         <input type="file" name="file "> <br>
-                        <input type="button" value="create assignment" onclick="createAssignmentForm();">
+                        <input type="button" value="과제 등록" onclick="createAssignmentForm();">
                         <input type="reset" value="reset">
                     </form>
                 </div>
