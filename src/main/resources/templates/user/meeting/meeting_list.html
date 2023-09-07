@@ -14,81 +14,134 @@
 
 <nav th:replace="~{/include/header_nav_footer.html::nav}"></nav>
 
-<section id="meeting_list" class="flex flex-col items-center justify-center w-full mx-auto mt-7">
-    <div class="w-5/6">
-        <div class="font-semibold mb-5 ">
-            <a th:href="@{/user/meeting/meeting_form}" class="border border-gray-200 rounded-md p-2 bg-gray-200">모임
+<section id="meeting_list"
+         class="flex flex-col items-center justify-center w-full border-2 border-slate-200 mx-auto mt-7 shadow-lg rounded-l">
+    <div class="w-full h-full p-6 ">
+        <div class="font-semibold mb-5 flex flex-row-reverse border-gray-200 border-b-2 p-3">
+            <a th:href="@{/user/meeting/meeting_form}"
+               class="border border-gray-200 rounded-md p-2 bg-green-200 hover:bg-green-400 ">모임
                 개설</a>
         </div>
 
         <!--        식사 리스트-->
         <div class="flex items-center mb-8">
-            <img th:src="@{/img/meal.png}" class="w-8 h-8">
+            <img class="w-16 h-16" th:src="@{/img/meal.png}">
             <span class="ml-2 text-2xl font-semibold">식사</span>
         </div>
-        <div th:each="userMealDto : ${userMealDtos}" th:if="${userMealDto.status == 1}"
-             class="flex flex-row border-b-4 grid-cols-6">
 
-            <div class="img w-24 h-24">
-                <img th:src="@{'/UploadImg/' + ${userMealDto.img}}">
+        <div
+                class="flex items-center p-6 flex-row border-b-4 ">
+
+            <div class="img w-1/6 h-full font-bold text-lg text-black">
+                이미지
             </div>
-            <div class="flex flex-col mr-4">
-                <div class="title gap-3">
+
+            <div class="flex flex-col mr-4 w-3/6">
+                <div class="title font-bold text-lg text-black">
+                    제목/본문
+                </div>
+            </div>
+            <div class="count font-bold text-lg text-black  gap-1 mr-4 w-1/6">
+                날짜
+            </div>
+            <div class="count font-bold text-lg text-black  w-1/6">
+                정원
+            </div>
+            <div class="hit font-bold text-lg text-black w-1/6">
+                조회수
+            </div>
+
+        </div>
+
+        <div th:each="userMealDto : ${userMealDtos}" th:if="${userMealDto.status == 1}"
+             class="flex items-center p-6 flex-row border-b-2 ">
+
+            <div class="img w-1/6 h-full">
+                <img class="w-14 h-14 rounded-full" th:src="@{'/UploadImg/' + ${userMealDto.img}}">
+            </div>
+
+            <div class="flex flex-col mr-4 w-3/6">
+                <div class="font-bold text-lg text-black">
                     <a th:href="@{/user/meal/meal_detail(no=${userMealDto.no})}" th:text="${userMealDto.title}"></a>
                 </div>
                 <div th:text="${userMealDto.body}" class="body">
                 </div>
             </div>
-            <div th:text="${userMealDto.date}" class="count gap-1 mr-4">
+            <div th:text="${userMealDto.date}" class="count gap-1 mr-4 w-1/6">
 
             </div>
-            <div th:text="${userMealDto.total}" class="count">
+            <div th:text="${userMealDto.total}" class="count  w-1/6">
 
             </div>
-            <div th:text="${userMealDto.hit}" class="hit">
+            <div th:text="${userMealDto.hit}" class="hit w-1/6">
 
             </div>
 
         </div>
 
-        <div class="mb-10">
+        <div class="mb-10 flex justify-center items-center mt-2 font-semibold text-gray-300">
             <a th:href="@{/user/meal/meal_list}">더보기</a>
         </div>
 
         <!--        스터디 리스트-->
         <div class="flex items-center mb-8">
-            <img th:src="@{/img/study.png}" class="w-8 h-8">
+            <img class="w-16 h-16" th:src="@{/img/study.png}">
             <span class="ml-2 text-2xl font-semibold">스터디</span>
         </div>
+
+        <div
+                class="flex items-center p-6 flex-row border-b-4 ">
+
+            <div class="img w-1/6 h-full font-bold text-lg text-black">
+                이미지
+            </div>
+
+            <div class="flex flex-col mr-4 w-3/6">
+                <div class="title font-bold text-lg text-black">
+                    제목/본문
+                </div>
+            </div>
+            <div class="count font-bold text-lg text-black  gap-1 mr-4 w-1/6">
+                날짜
+            </div>
+            <div class="count font-bold text-lg text-black  w-1/6">
+                정원
+            </div>
+            <div class="hit font-bold text-lg text-black w-1/6">
+                조회수
+            </div>
+
+        </div>
+
         <div th:each="userStudyDto : ${userStudyDtos}" th:if="${userStudyDto.status == 1}" class=" flex flex-row
-             border-b-4 grid-cols-6
+             border-b-2 p-6
         ">
 
-            <div class="img w-24 h-24">
-                <img th:src="@{'/UploadImg/' + ${userStudyDto.img}}">
+            <div class="img  h-full  w-1/6">
+                <img class="w-16 h-16 rounded-full" th:src="@{'/UploadImg/' + ${userStudyDto.img}}">
             </div>
-            <div class="flex flex-col mr-4">
-                <div class="title gap-3">
+            <div class="flex flex-col mr-4 w-3/6">
+                <div class="title font-bold text-lg text-black">
                     <a th:href="@{/user/study/study_detail(no=${userStudyDto.no})}" th:text="${userStudyDto.title}"></a>
                 </div>
                 <div th:text="${userStudyDto.body}" class="body">
                 </div>
             </div>
 
-            <div th:text="${userStudyDto.start_date}" class="count gap-1 mr-4">
+            <div th:text="${userStudyDto.start_date}" class="count font-bold text-lg text-black gap-1 mr-4 w-1/6">
 
             </div>
 
-            <div th:text="${userStudyDto.total}" class="count gap-1 mr-4">
+            <div th:text="${userStudyDto.total}" class="count gap-1 mr-4 w-1/6">
 
             </div>
-            <div th:text="${userStudyDto.hit}" class="hit gap-1 mr-4">
+            <div th:text="${userStudyDto.hit}" class="hit gap-1 mr-4 w-1/6">
 
             </div>
 
         </div>
 
-        <div class="mb-10">
+        <div class="mb-10 flex justify-center items-center mt-2 font-semibold text-gray-300">
             <a th:href="@{/user/study/study_list}">더보기</a>
         </div>
     </div>

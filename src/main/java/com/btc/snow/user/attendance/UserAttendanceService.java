@@ -252,7 +252,7 @@ public class UserAttendanceService implements IUserAttendanceService {
 
 
         return userAttendanceMapper.isValidAttendence(id);
-        
+
     }
 
 

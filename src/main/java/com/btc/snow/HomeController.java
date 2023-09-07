@@ -71,6 +71,7 @@ public class HomeController {
                 UserAttendanceDto userAttendanceDto = (UserAttendanceDto) userAttendanceService.selectUserforAttendence(userMemberDto.getId());
 //                SubmitDto submitDto = userAttendanceService.selectAttendanceSubmit(userMemberDto.getId());
                 int result = userAttendanceService.isValidAttendence(userMemberDto.getId());
+                log.info("qrvalidStatus!! {}", result);
 
                 if (result > 0) {
                     modelAndView.addObject("qrValidStatus", 0);
@@ -84,6 +85,7 @@ public class HomeController {
                     modelAndView.addObject("status", 0);
 
                 } else {
+
                     modelAndView.addObject("status", 1);
                     modelAndView.addObject("userAttendanceDto", userAttendanceDto);
                 }

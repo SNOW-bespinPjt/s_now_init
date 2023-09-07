@@ -100,4 +100,11 @@
 
     </update>
 
+    <update id="uploadUserImg" parameterType="com.btc.snow.user.member.UserMemberDto">
+        update USER
+        set img= #{img}
+        where id = #{id}
+
+
+    </update>
 </mapper>

@@ -1,0 +1,65 @@
+<script th:fragment="mypageList" th:inline="javascript" type="text/javascript">
+
+    function approval(no) {
+        console.log("approval(!)")
+
+        $.ajax({
+            url: '/mypage/approval?no=' + no,
+            type: 'GET',
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                console.log("ajax_submitDoc() success")
+                console.log(data)
+
+                $(".satusSelect[data-no=" + no + "]").addClass("hidden");
+                $(".status1Select[data-no=" + no + "]").removeClass("hidden");
+
+            },
+            error: function (data) {
+                console.log("ajax_submitDoc() error")
+            },
+            complete: function (data) {
+                console.log('AJAX COMPLETE - ajax_submitDoc()');
+
+            }
+        })
+
+
+    }
+
+    function approvalMember(no) {
+        console.log("approvalMember(!)")
+
+        $.ajax({
+            url: '/mypage/approval?no=' + no,
+            type: 'GET',
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                console.log("ajax_submitDoc() success")
+                console.log(data)
+                let appendTag = "<p class=\" font-semibold text-green-400\"\n" +
+                    "                          >승낙 </p>"
+
+
+                // $(".MemberSelect[data-no=" + no + "]").addClass("hidden");
+                // $(".Member1Select[data-no=" + no + "]").removeClass("hidden");
+                $(".statusdiv[data-no=" + no + "]").children().remove();
+                $(".statusdiv[data-no=" + no + "]").append(appendTag);
+                $(".checkStatus[data-no=" + no + "]").children().remove();
+
+            },
+            error: function (data) {
+                console.log("ajax_submitDoc() error")
+            },
+            complete: function (data) {
+                console.log('AJAX COMPLETE - ajax_submitDoc()');
+
+            }
+        })
+
+
+    }
+
+</script>

@@ -1,24 +1,23 @@
 package com.btc.snow.user.mypage;
 
 
-import com.btc.snow.include.StudyPromiseDto;
 import com.btc.snow.include.page.PageDefine;
 import com.btc.snow.user.assignment.UserAssignmentDto;
 import com.btc.snow.user.assignment.UserAssignmentService;
 import com.btc.snow.user.attendance.UserAttendanceDto;
 import com.btc.snow.user.attendance.UserAttendanceService;
 import com.btc.snow.user.member.UserMemberDto;
+import com.btc.snow.user.member.UserMemberService;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -35,6 +34,12 @@ public class MyPageController {
 
     @Autowired
     MyPageService myPageService;
+
+    @Autowired
+    UploadFileServiceForMypage uploadFileServiceForMypage;
+
+    @Autowired
+    UserMemberService userMemberService;
 
     @GetMapping(value = {"", "/"})
     public Object home(HttpSession httpSession,
@@ -91,7 +96,7 @@ public class MyPageController {
         return modelAndView;
     }
 
-    @GetMapping("/mypage/attendance")
+    @GetMapping("/attendance")
     public Object mypageAttendance() {
         log.info("Controller mypageAttendance() !!");
 
@@ -102,32 +107,95 @@ public class MyPageController {
         return modelAndView;
     }
 
-    @GetMapping("/mypage/attendence/valid")
-    public Object attendenceValid() {
-        log.info("attendenceValid !!");
+//    @GetMapping("/studyhome")
+//    @ResponseBody
+//    public Object goToSchedule(HttpSession session) {
+//        log.info(" goToSchedule() []");
+//
+//        List<StudyPromiseDto> studyPromiseDtos = null;
+//        UserMemberDto loginedUserDto = (UserMemberDto) session.getAttribute("loginedUserDto");
+//
+//        studyPromiseDtos = myPageService.selectScedule(loginedUserDto.getId());
+//        ModelAndView modelAndView = new ModelAndView();
+////        modelAndView.setViewName("/user/mypage/schedule/studyHome");
+////        modelAndView.addObject("studyPromiseDtos", studyPromiseDtos);
+//
+//        log.info("loginedUserDto {}", loginedUserDto.getId());
+//
+////        Map<String, Object> map = new HashMap<>();
+////        map.put("studyPromiseDtos", studyPromiseDtos);
+////        map.put("loginedUserDto", loginedUserDto);
+//
+//        return "hi";
+//    }
 
-        ModelAndView modelAndView = new ModelAndView();
+
+    @GetMapping("/approval")
+    @ResponseBody
+    public int approvalStatus(@RequestParam("no") int no) {
+        log.info("approvalStatus()");
+        int result = myPageService.updateStatus(no);
 
 
-        return null;
+        return result;
+
     }
 
-    @GetMapping("/mypage/schedule")
-    public Object goToSchedule(HttpSession session) {
-        log.info(" goToSchedule() []");
-        ModelAndView modelAndView = new ModelAndView();
 
-        List<StudyPromiseDto> studyPromiseDtos = new ArrayList<>();
+    @PostMapping("/userimg")
+    @ResponseBody
+    public Object userImgUpload(@RequestParam("file") MultipartFile file, HttpSession session) {
+        log.info("file {}", file);
+        UserMemberDto userMemberDto = (UserMemberDto) session.getAttribute("loginedUserDto");
+
+        log.info("uploadFile()!!");
+
+        String savedFileName = uploadFileServiceForMypage.upload(file, userMemberDto.getId());
+        Map<String, Object> map = new HashMap<>();
+        map.put("savedFileName", savedFileName);
+
+
+        if (savedFileName != null) {
+            userMemberDto.setImg(savedFileName);
+
+            userMemberService.uploadUserImg(userMemberDto);
+            return map;
+        } else {
+            return "업로드 실패";
+        }
+
+    }
+
+
+    @GetMapping("/studyhome")
+    public Object gotoStudyHome(HttpSession session, @RequestParam(value = "pageNum", required = false, defaultValue = "1") int pageNum,
+                                @RequestParam(value = "amount", required = false, defaultValue = "3") int amount) {
+        log.info(" gotoStudyHome()");
+
+
         UserMemberDto loginedUserDto = (UserMemberDto) session.getAttribute("loginedUserDto");
 
-        studyPromiseDtos = (List<StudyPromiseDto>) myPageService.selectScedule(loginedUserDto.getId());
 
-        modelAndView.addObject("studyPromiseDtos", studyPromiseDtos);
-        modelAndView.setViewName("/user/mypage/schedule/home");
+        Map<String, Object> map = myPageService.selectScedule(loginedUserDto.getId(), pageNum, amount);
+        ModelAndView modelAndView = new ModelAndView();
+
+
+        log.info("loginedUserDto {}", loginedUserDto.getId());
+
+        map.put("loginedUserDto", loginedUserDto);
+
+
+        modelAndView.addObject("studyPromiseDtos", map.get("studyPromiseDtos"));
+        modelAndView.addObject("pageMakerDto", map.get("pageMakerDto"));
+        modelAndView.addObject("studyPromiseDtosByMember", map.get("studyPromiseDtosByMember"));
+        modelAndView.addObject("pageMakerDtoByMember", map.get("pageMakerDtoByMember"));
+        modelAndView.addObject("loginedUserDto", map.get("loginedUserDto"));
+
+
+        modelAndView.setViewName("/user/mypage/schedule/studyHome");
 
 
         return modelAndView;
+
     }
-
-
 }
