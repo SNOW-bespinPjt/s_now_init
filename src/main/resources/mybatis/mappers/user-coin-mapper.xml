@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.btc.snow.user.coin.IUserCoinSchedulerMB">
+    <!-- date_format(reg_date, '%Y-%m-%d') = date_format(curdate(), '%Y-%m-%d') -->
+
+    <select id="selectAllUser" resultType="com.btc.snow.user.member.UserMemberDto">
+        SELECT *
+        FROM USER
+    </select>
+
+    <select id="coinByAttendance" resultType="com.btc.snow.user.attendance.UserAttendanceDto">
+        SELECT *
+        FROM ATTENDENCE
+        WHERE u_id = #{id} AND DATE(reg_date) = DATE(NOW())
+    </select>
+
+    <select id="coinByStudy" resultType="Integer">
+        SELECT COUNT(*)
+        FROM STUDY
+        WHERE user_id = #{id} AND DATE(reg_date) = DATE(NOW())
+    </select>
+
+    <select id="coinByAssignment" resultType="com.btc.snow.user.assignment.UserAssignmentDto">
+        SELECT *
+        FROM ASSIGNMENT
+            WHERE user_no = #{user_no} AND is_submit = 1 AND DATE(reg_date) = DATE(NOW())
+    </select>
+
+    <select id="selectCoin" resultType="Integer">
+        SELECT COALESCE(coin, 0) as coin
+        FROM USER
+        WHERE id = #{id}
+    </select>
+
+    <update id="updateCoin">
+        UPDATE USER
+        SET coin = #{totalCoin}
+        WHERE id = #{id}
+    </update>
+
+</mapper>

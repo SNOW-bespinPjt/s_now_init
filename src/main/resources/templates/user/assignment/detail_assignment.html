@@ -15,63 +15,68 @@
         <section class="flex flex-row w-5/6 border-solid mt-7">
             <div class="relative flex items-center justify-center w-screen h-auto mr-8 border-2 rounded-lg bg-slate-100 pb-10">
                 <div class="word">
-                    <h2 class="absolute top-0 left-0 mt-4 text-2xl font-bold ml-14">
-                        DETAIL
-                    </h2>
+                    <h3 class="absolute top-0 left-0 mt-4 font-bold ml-14">
+                        오늘의 과제
+                    </h3>
                 </div>
-                <div id="assignmentDetails" class="mt-8 w-full text-center">
+                <div class="mt-8 w-full text-center" id="assignmentDetails">
                     <div class="mb-4">
                         <h2 class="text-2xl font-bold pt-10" th:text="${msg.adminAssignmentDto.title}"></h2>
                     </div>
-                    <div class="mb-4 h-auto pt-16 pb-20" th:text="${msg.adminAssignmentDto.body}"></div>
-                    <div>
+                    <div class="mb-4 h-auto pt-16 pb-20 border-t-2"
+                         th:text="${msg.adminAssignmentDto.body}">
+                    </div>
+                    <div class="text-right border-b border-gray-300">
                         <!-- 다운로드 버튼 -->
-                        <a th:href="@{/downloadFromAdmin(file =${msg.adminAssignmentDto.file_admin})}"
-                           class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100"
-                           th:download="${msg.adminAssignmentDto.file_admin_name}"
-                           th:text="${msg.adminAssignmentDto.file_admin_name}">
-                        </a>
+                        <div class="text-right flex items-center justify-between">
+                            <span class="text-gray-500 text-xs text-right">첨부자료</span>
+                            <a class="flex items-center px-4 py-2 text-gray-700 hover:text-sky-500"
+                               th:download="${msg.adminAssignmentDto.file_admin_name}"
+                               th:href="@{/downloadFromAdmin(file =${msg.adminAssignmentDto.file_admin})}"
+                               th:text="${msg.adminAssignmentDto.file_admin_name}">
+                            </a>
+                        </div>
                     </div>
-                    <div th:if="${msg.userAssignmentInfo.is_submit eq 0}"
-                         class="flex space-x-4 mt-7 justify-center">
-                        <form th:action="@{/user/assignment/registration_confirm}"
-                              name="detail_assignment" method="post"
-                              enctype="multipart/form-data">
-                            <input type="hidden" name="no" th:value="${msg.adminAssignmentDto.no}">
-                            <input type="file" name="file"
-                                   class="bg-gray-200 border border-gray-400 rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-blue-500"
+                    <div class="flex space-x-4 mt-7 justify-center"
+                         th:if="${msg.userAssignmentInfo.is_submit eq 0}">
+                        <form enctype="multipart/form-data"
+                              method="post" name="detail_assignment"
+                              th:action="@{/user/assignment/registration_confirm}">
+                            <input name="no" th:value="${msg.adminAssignmentDto.no}" type="hidden">
+                            <input class="bg-gray-200 border border-gray-400 rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-blue-500"
+                                   name="file"
+                                   type="file"
                             >
-                            <input type="button" value="과제 제출" onclick="uploadFile()"
-                                   class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+                            <input class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 focus:outline-none focus:bg-green-600"
+                                   onclick="uploadFile()" type="button"
+                                   value="과제 제출"
                             >
                         </form>
                         <input
+                                class="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400"
+                                onclick="goBack()"
                                 type="button"
                                 value="확인"
-                                onclick="goBack()"
-                                class="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400"
                         />
                     </div>
-                    <div th:unless="${msg.userAssignmentInfo.is_submit eq 0}"
-                         class="flex space-x-4 mt-7 justify-center">
-                        <form th:action="@{/user/assignment/assignment_modify_confirm}"
-                              name="detail_assignment" method="post"
-                              enctype="multipart/form-data">
-                            <input type="hidden" name="no" th:value="${msg.adminAssignmentDto.no}">
-                            <input type="file" name="file"
-                                   class="bg-gray-200 border border-gray-400 rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-blue-500"
-                            >
-                            <input type="button" value="과제 수정" onclick="uploadFile()"
-                                   class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
-                            >
+                    <div class="flex space-x-4 mt-7 justify-center"
+                         th:unless="${msg.userAssignmentInfo.is_submit eq 0}">
+                        <form enctype="multipart/form-data" method="post" name="detail_assignment"
+                              th:action="@{/user/assignment/assignment_modify_confirm}">
+                            <input name="no" th:value="${msg.adminAssignmentDto.no}" type="hidden">
+                            <input class="bg-gray-200 border border-gray-400 rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-blue-500"
+                                   id="fileInput" name="file" type="file">
+                            <input class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 focus:outline-none focus:bg-green-600"
+                                   onclick="uploadFile()" type="button" value="과제 수정">
                         </form>
-                        <input
-                                type="button"
-                                value="확인"
-                                onclick="goBack()"
-                                class="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400"
-                        />
+                        <input class="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400" onclick="goBack()"
+                               type="button" value="확인">
                     </div>
+                    <!-- 파일 이름 표시 -->
+                    <p class="mt-4 text-xs text-gray-600" th:if="${msg.userAssignmentInfo.file_user_name != null}">
+                        <span>나의 제출 : </span>
+                        <span th:text="${msg.userAssignmentInfo.file_user_name}"></span>
+                    </p>
                 </div>
             </div>
         </section>
@@ -79,4 +84,11 @@
     </div>
 </div>
 </body>
+<script>
+    // 파일 선택 시 파일 이름 업데이트
+    document.getElementById('fileInput').addEventListener('change', function () {
+        var fileName = this.value.split('\\').pop();
+        document.querySelector('p').textContent = fileName;
+    });
+</script>
 </html>
