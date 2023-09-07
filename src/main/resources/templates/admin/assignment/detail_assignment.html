@@ -20,9 +20,7 @@
             <section class="flex flex-row w-5/6 border-solid mt-7">
                 <div class="relative flex items-center justify-center w-screen h-auto mr-8 border-2 rounded-lg bg-slate-100 pb-10">
                     <div class="word">
-                        <h4 class="absolute top-0 left-0 mt-4 text-2xl font-bold ml-14">
-                            등록 과제 상세 페이지
-                        </h4>
+                        <h4 class="absolute top-0 left-0 mt-10 text-2xl font-bold ml-14" th:text="${adminAssignmentDto.title}"></h4>
                     </div>
                     <div class="mt-8 w-full text-center" id="assignmentDetails">
                         <div class="mb-4 h-auto pt-16 pb-20" th:text="${adminAssignmentDto.body}"></div>

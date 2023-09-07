@@ -76,11 +76,15 @@ public class MyPageController {
 
         modelAndView.addObject("pointDtos", pointDtos);
 
+
         // 과제 리스트
         List<UserAssignmentDto> userAssignmentDtos = userAssignmentService.myAssignment(user_no);
 
         modelAndView.addObject("userAssignmentDtos", userAssignmentDtos);
         modelAndView.addObject("id", id);
+
+//        log.info("idx0 ---> {} :  {}", userAssignmentDtos.get(0).getFile_user(), userAssignmentDtos.get(0).getFile_user_name());
+//        log.info("idx1 ---> {} : {}", userAssignmentDtos.get(1).getFile_user(), userAssignmentDtos.get(1).getFile_user_name());
 
         modelAndView.setViewName("/user/mypage/home");
 

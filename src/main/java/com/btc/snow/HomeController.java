@@ -3,6 +3,7 @@ package com.btc.snow;
 
 import com.btc.snow.user.attendance.UserAttendanceDto;
 import com.btc.snow.user.attendance.UserAttendanceService;
+import com.btc.snow.user.coin.UserCoinSchedulerService;
 import com.btc.snow.user.meeting.UserMeetingService;
 import com.btc.snow.user.meeting.study.UserStudyDto;
 import com.btc.snow.user.member.UserMemberDto;
@@ -37,6 +38,15 @@ public class HomeController {
     @GetMapping(value = {""})
     public Object home(HttpSession session) {
         log.info("HomeController home()");
+
+        // 스케줄러가 실행중이면 서버 점검 페이지로 이동
+        UserCoinSchedulerService schedulerService = new UserCoinSchedulerService();
+
+        if (schedulerService.onScheduled) {
+            return "redirect:/error/onScheduled/onScheduled.html";
+
+        }
+
         UserMemberDto userMemberDto = (UserMemberDto) session.getAttribute("loginedUserDto");
 
         //분기 포인트 로그인!
