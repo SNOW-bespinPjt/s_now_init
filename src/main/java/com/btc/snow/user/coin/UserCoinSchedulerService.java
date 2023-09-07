@@ -21,7 +21,7 @@ public class UserCoinSchedulerService {
     //스케쥴러 실행중인지 확인할 전역변수 설정
     public static boolean onScheduled = false;
 
-    @Scheduled(cron = "0 0 3 * * *") // 모두가 자는 새벽 3시.. 체크를 합니다 ->
+    @Scheduled(cron = "0 0 2 * * *") // 모두가 자는 새벽 3시.. 체크를 합니다 ->
     public void scheduledUpdateCoin() {
         log.info("[UserCoinScheduler] scheduledUpdateCoin()");
         log.info(new Date() + " : BTC coin 스케줄러 실행");
@@ -66,6 +66,7 @@ public class UserCoinSchedulerService {
 
             List<UserAssignmentDto> userAssignmentDtos = iUserCoinSchedulerMB.coinByAssignment(user_no);
 
+            // 과제 : 0점 0, 1-4점 1, 5-8점 3, 9-10점 5
             if (userAssignmentDtos != null) {
                 for (UserAssignmentDto userAssignmentDto : userAssignmentDtos) {
                     int coinByAssignments = userAssignmentDto.getPoint() == 0 ? 0 :

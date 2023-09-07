@@ -42,10 +42,11 @@ public class HomeController {
         // 스케줄러가 실행중이면 서버 점검 페이지로 이동
         UserCoinSchedulerService schedulerService = new UserCoinSchedulerService();
 
-        if (schedulerService.onScheduled) {
+        if (schedulerService.onScheduled == true) {
             return "redirect:/error/onScheduled/onScheduled.html";
 
         }
+
 
         UserMemberDto userMemberDto = (UserMemberDto) session.getAttribute("loginedUserDto");
 
