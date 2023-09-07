@@ -54,7 +54,7 @@ public class SpringSecurityConfig {
                 .cors().disable()
                 .authorizeHttpRequests(request -> request
                         .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()  // HTTP 요청 인증 설정
-                        .requestMatchers("/css/**", "/error/**", "/img/**", "/js/**", "", "/",
+                        .requestMatchers("/css/**", "/error/**", "/img/**", "/js/**", "", "/", "/assignment/user/js/**", "/assignment/admin/js/**",
                                 "/user/member/create_account_form",
                                 "/user/member/create_account_confirm",
                                 "/UploadImg/**").permitAll()
@@ -120,8 +120,9 @@ public class SpringSecurityConfig {
                 .securityMatcher("/admin/**")  // "/admin/**" 경로 보안 설정
                 .authorizeHttpRequests(request -> request
                         .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
-                        .requestMatchers("/css/**", "/error/**", "/img/**", "/js/**", "", "/",
-                                "/admin/member/create_account_form", "/admin/member/create_account_confirm").permitAll()
+                        .requestMatchers("/css/**", "/error/**", "/img/**", "/js/**", "", "/", "/admin",
+                                "/admin/member/find_password_form", "/admin/member/find_password_confirm", "/admin/member/find_id_form",
+                                "/admin/member/find_id_confirm", "/admin/member/create_account_form", "/admin/member/create_account_confirm").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(login -> login

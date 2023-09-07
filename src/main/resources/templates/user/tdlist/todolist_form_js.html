@@ -300,6 +300,8 @@
                     ajax_show_tdlist();
                     $("#content").val('');
                     $("#tag").val('');
+                    $('#start_date').val(new Date().toISOString().substring(0, 10)); // 날짜만 추출 (YYYY-MM-DD)
+                    $('#end_date').val(new Date().toISOString().substring(0, 10));
 
                 } else if (data == 0) {
                     alert("리스트를 생성하는데 실패하였습니다.");
