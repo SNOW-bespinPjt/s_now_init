@@ -20,6 +20,8 @@ public class UserMeetingService {
     public Map<String, Object> studyList() {
         log.info("studyList()");
 
+        iUserMeetingMapper.studyUpdateStatus();
+        
         Map<String, Object> map = new HashMap<>();
 
         List<UserStudyDto> userStudyDtos = iUserMeetingMapper.selectStudy();
@@ -31,6 +33,8 @@ public class UserMeetingService {
 
     public Map<String, Object> mealList() {
         log.info("mealList()");
+
+        iUserMeetingMapper.mealUpdateStatus();
 
         Map<String, Object> map = new HashMap<>();
 
