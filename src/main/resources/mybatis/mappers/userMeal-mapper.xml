@@ -21,9 +21,41 @@
         where no = #{no}
     </update>
 
-    <select id="selectMeal" resultType="com.btc.snow.user.meeting.meal.UserMealDto">
+    <update id="updateStatus">
+        UPDATE MEAL
+        SET status = 1
+        WHERE date > CURDATE()
+    </update>
+
+    <select id="listCount" resultType="Integer">
+        select count(*)
+        from MEAL
+        where status = 1
+    </select>
+
+    <select id="selectMeal" parameterType="HashMap" resultType="com.btc.snow.user.meeting.meal.UserMealDto">
         select *
         from MEAL
         order by reg_date desc
     </select>
+
+    <select id="getTotalCntOfSubmit" resultType="Integer">
+        select count(*)
+        from MEAL
+    </select>
+
+    <insert id="mealAttend" parameterType="hashmap">
+        INSERT INTO MEALPROMISE (member_id, meal_title, user_id, meal_no, reg_date, mod_date)
+        SELECT m.user_id, m.title, #{id}, #{mealNo}, NOW(), NOW()
+        FROM MEAL m
+        WHERE m.no = #{mealNo}
+    </insert>
+
+    <select id="removeButton" parameterType="hashmap" resultType="Integer">
+        select count(*)
+        from MEALPROMISE
+        where user_id = #{id}
+          and meal_no = #{mealNo}
+    </select>
+
 </mapper>
