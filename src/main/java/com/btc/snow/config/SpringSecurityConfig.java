@@ -62,7 +62,7 @@ public class SpringSecurityConfig {
                 )
                 .formLogin(login -> login  // 로그인 시 폼(form)을 이용
                         .loginPage(
-                                "/user/member/in_form"
+                                "/user/member/user_login_form"
                         )  // 로그인 시 폼(form) 주소 설정
                         .loginProcessingUrl("/user/member/user_login_confirm")
                         .usernameParameter("id")
