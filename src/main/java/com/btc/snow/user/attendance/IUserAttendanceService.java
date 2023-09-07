@@ -29,4 +29,6 @@ public interface IUserAttendanceService {
     Object submitDocument(SubmitDto submitDto);
 
     PageMakerDto listAttendence(String uId, int pageNum, int amount);
+
+    int isValidAttendence(String id);
 }
