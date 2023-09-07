@@ -32,4 +32,6 @@ public interface IUserStudyMapper {
     int studyAttend(HashMap<String, Object> map);
 
     int removeButton(HashMap<String, Object> map);
+
+
 }

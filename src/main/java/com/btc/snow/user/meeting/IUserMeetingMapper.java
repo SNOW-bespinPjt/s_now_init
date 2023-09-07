@@ -17,4 +17,8 @@ public interface IUserMeetingMapper {
     List<UserMealDto> selectMeal();
 
     List<UserStudyDto> mainStudy();
+
+    void studyUpdateStatus();
+
+    void mealUpdateStatus();
 }

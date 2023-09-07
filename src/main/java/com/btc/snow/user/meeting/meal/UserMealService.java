@@ -1,7 +1,5 @@
 package com.btc.snow.user.meeting.meal;
 
-import com.btc.snow.include.page.Criteria;
-import com.btc.snow.include.page.PageMakerDto;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,25 +42,17 @@ public class UserMealService implements IUserMealService {
         iUserMealMapper.updateHit(no);
     }
 
-    public Map<String, Object> mealList(int pageNum, int amount) {
+    public Map<String, Object> mealList() {
         log.info("mealList()");
 
         iUserMealMapper.updateStatus();
-        int listCount = iUserMealMapper.listCount();
 
-        Criteria criteria = new Criteria(pageNum, amount);
         Map<String, Object> map = new HashMap<>();
-
-        map.put("skip", criteria.getSkip());
-        map.put("amount", criteria.getAmount());
 
         List<UserMealDto> userMealDtos = iUserMealMapper.selectMeal(map);
 
-        PageMakerDto pageMakerDto = new PageMakerDto(criteria, listCount);
-
-
         map.put("userMealDtos", userMealDtos);
-        map.put("pageMakerDto", pageMakerDto);
+
 
         return map;
     }

@@ -61,4 +61,5 @@
         where user_id = #{id}
           and study_no = #{studyNo}
     </select>
+
 </mapper>

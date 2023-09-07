@@ -69,8 +69,7 @@ public class UserMealController {
     }
 
     @GetMapping("/meal_list")
-    public String mealList(Model model, @RequestParam(value = "pageNum", required = false, defaultValue = "1") int pageNum,
-                           @RequestParam(value = "amount", required = false, defaultValue = "5") int amount, HttpSession session) {
+    public String mealList(Model model, HttpSession session) {
         log.info("mealList()");
 
         String nextPage = "user/meeting/meal_list";
@@ -79,13 +78,11 @@ public class UserMealController {
 
         model.addAttribute("loginedUserDto", loginedUserDto);
 
-        Map<String, Object> mealMap = userMealService.mealList(pageNum, amount);
+        Map<String, Object> mealMap = userMealService.mealList();
 
         List<UserMealDto> userMealDtos = (List<UserMealDto>) mealMap.get("userMealDtos");
 
-
         model.addAttribute("userMealDtos", userMealDtos);
-        model.addAttribute("pageMakerDto", mealMap.get("pageMakerDto"));
 
         return nextPage;
     }

@@ -65,39 +65,7 @@
 
 
     }
-
-    function ajax_studyButtonRemove(studyNo) {
-        console.log('ajax_buttonRemove() CALLED!')
-
-        let formData = new FormData();
-        formData.append("studyNo", studyNo);
-        console.log(studyNo);
-
-
-        $.ajax({
-            url: '/user/study/button_remove',
-            type: 'POST',
-            processData: false,
-            contentType: false,
-            data: formData,
-
-            success: function (data) {
-                console.log("study button success!!!")
-                console.log(data)
-
-                if (data > 0) {
-                    $('#study_detail input[value="참여"]').css('display', 'none')
-                }
-                // $('#study_detail input[value="참여"]').css('display', 'none')
-
-            },
-            error: function (data) {
-                console.log("book search error!!!");
-            }
-
-        });
-
-    }
+    
 
     function ajax_mealButtonRemove(mealNo) {
         console.log('ajax_mealButtonRemove() CALLED!')

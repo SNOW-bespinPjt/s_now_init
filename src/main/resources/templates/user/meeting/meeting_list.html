@@ -26,7 +26,8 @@
             <img th:src="@{/img/meal.png}" class="w-8 h-8">
             <span class="ml-2 text-2xl font-semibold">식사</span>
         </div>
-        <div th:each="userMealDto : ${userMealDtos}" class="flex flex-row border-b-4 grid-cols-6">
+        <div th:each="userMealDto : ${userMealDtos}" th:if="${userMealDto.status == 1}"
+             class="flex flex-row border-b-4 grid-cols-6">
 
             <div class="img w-24 h-24">
                 <img th:src="@{'/UploadImg/' + ${userMealDto.img}}">
@@ -37,6 +38,9 @@
                 </div>
                 <div th:text="${userMealDto.body}" class="body">
                 </div>
+            </div>
+            <div th:text="${userMealDto.date}" class="count gap-1 mr-4">
+
             </div>
             <div th:text="${userMealDto.total}" class="count">
 
@@ -56,7 +60,9 @@
             <img th:src="@{/img/study.png}" class="w-8 h-8">
             <span class="ml-2 text-2xl font-semibold">스터디</span>
         </div>
-        <div th:each="userStudyDto : ${userStudyDtos}" class="flex flex-row border-b-4 grid-cols-6">
+        <div th:each="userStudyDto : ${userStudyDtos}" th:if="${userStudyDto.status == 1}" class=" flex flex-row
+             border-b-4 grid-cols-6
+        ">
 
             <div class="img w-24 h-24">
                 <img th:src="@{'/UploadImg/' + ${userStudyDto.img}}">
@@ -68,6 +74,11 @@
                 <div th:text="${userStudyDto.body}" class="body">
                 </div>
             </div>
+
+            <div th:text="${userStudyDto.start_date}" class="count gap-1 mr-4">
+
+            </div>
+
             <div th:text="${userStudyDto.total}" class="count gap-1 mr-4">
 
             </div>

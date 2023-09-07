@@ -21,11 +21,14 @@
         <div class="flex flex-col w-11/12 bg-white h-5/6">
             <div th:each="userStudyDto : ${userStudyDtos}" class="flex w-full border-b-2 h-1/4 border-b-slate-300">
                 <div class="w-11/12 p-4">
-                    <p th:text="${userStudyDto.title}" class="font-bold"></p>
+                    <div class="title">
+                        <a th:href="@{/user/study/study_detail(no=${userStudyDto.no})}"
+                           th:text="${userStudyDto.title}"></a>
+                    </div>
                     <p th:text="${userStudyDto.body}" class="font-thin truncate"></p>
                 </div>
                 <div class="flex flex-col items-center p-4 mb-5">
-                    <p class="font-bold text-blue-400">D-5</p>
+                    <!--                    <p class="font-bold text-blue-400">D-5</p>-->
                     <div class="flex">
                         <svg
                                 xmlns="http://www.w3.org/2000/svg"
