@@ -1,0 +1,74 @@
+<script th:fragment="js" th:inline="javascript" type="text/javascript">
+
+    $(document).ready(function () {
+        console.log("DOCUMENT WILL BE READY TO OPERATE NOW")
+
+
+        // 이벤트 핸들러 초기화
+        init_events();
+
+    })
+
+    //init_events() START
+    function init_events() {
+        console.log("init_events() CALLED!!")
+
+        // // EVALUATE btn CLICK HANDLER START
+        // $(document).on("click", "div.buttons a.evaluate_btn", function (e) {
+        //     console.log("div.buttons a.evaluate_btn CLICK HANDLER");
+        //
+        //     let grade = $('div.buttons input[type="text"]').val();
+        //     console.log("grade : " + grade);
+        //
+        //     $('div.buttons input[type="text"]').val('');
+        //
+        //     ajax_evaluate_grade(grade);
+        //
+        // });
+        //
+        // // EVALUATE btn CLICK HANDLER END
+        //
+
+        // 뒤로가기 CLICK HANDLER START
+        $(document).on("click", "div.buttons a.back_button", function (e) {
+            console.log("div.buttons a.back_button CLICK HANDLER");
+
+            location.href = "/user/curriculum";
+
+        });
+
+        // 뒤로가기 CLICK HANDLER END
+
+    }
+
+    //init_events() END
+
+    //AJAX START
+    // function ajax_evaluate_grade(grade) {
+    //     console.log("ajax_evaluate_grade CALLED!!");
+    //
+    //     let formData = new FormData();
+    //     formData.append("grade", grade);
+    //
+    //     $.ajax({
+    //         url: '/user/curriculum/evaluate_curriculum_grade}',
+    //         type: 'GET',
+    //         processData: false,
+    //         contentType: false,
+    //         data: formData,
+    //         success: function (data) {
+    //             console.log('AJAX SUCCESS - ajax_evaluate_grade()');
+    //
+    //
+    //         },
+    //         error: function (data) {
+    //             console.log('AJAX ERROR - ajax_evaluate_grade()');
+    //
+    //         }
+    //
+    //     });
+    //
+    // }
+
+    //AJAX END
+</script>

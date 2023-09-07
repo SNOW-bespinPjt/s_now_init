@@ -6,6 +6,8 @@ import com.btc.snow.user.attendance.UserAttendanceService;
 import com.btc.snow.user.meeting.UserMeetingService;
 import com.btc.snow.user.meeting.study.UserStudyDto;
 import com.btc.snow.user.member.UserMemberDto;
+import com.btc.snow.user.tdlist.UserTdListDto;
+import com.btc.snow.user.tdlist.UserTdListService;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,9 @@ public class HomeController {
 
     @Autowired
     UserMeetingService userMeetingService;
+
+    @Autowired
+    UserTdListService userTdListService;
 
     @GetMapping(value = {""})
     public Object home(HttpSession session) {
@@ -96,8 +101,15 @@ public class HomeController {
 
         modelAndView.addObject("userStudyDtos", userStudyDtos);
 
+        // TodoList - #현욱
+        if (userMemberDto != null) {
+            log.info("TODOLIST READY");
+            List<UserTdListDto> userTdListDtos = userTdListService.selectTdListInHome(userMemberDto);
+            modelAndView.addObject("userTdListDtos", userTdListDtos);
+        }
 
         return modelAndView;
+
     }
 
 

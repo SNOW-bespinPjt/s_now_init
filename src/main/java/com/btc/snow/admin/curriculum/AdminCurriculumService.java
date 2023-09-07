@@ -104,6 +104,7 @@ public class AdminCurriculumService implements IAdminCurriculumService {
     public Map<String, Object> showDetailCurriculum(int no) {
         log.info("[AdminCurriculumService] showDetailCurriculum()");
 
+
         Map<String, Object> msgMap = new HashMap<>();
 
         AdminCurriculumDto adminCurriculumDto = iAdminCurriculumDaoMB.showDetailByNo(no);
@@ -113,14 +114,27 @@ public class AdminCurriculumService implements IAdminCurriculumService {
 
             // 담당자 name(이름) 불러오기 START
             AdminMemberDto adminMemberDto = iAdminCurriculumDaoMB.selectAdminName(adminCurriculumDto.getAdmin_id());
-            log.info("adminMemberDto name" + adminMemberDto.getName());
+            log.info("adminMemberDto name : " + adminMemberDto.getName());
+            msgMap.put("adminMemberDto", adminMemberDto);
 
             // 책 표지(사진) 불러오기 START
-            UserBookItemDto userBookItemDto = iAdminCurriculumDaoMB.selectBookCover(adminCurriculumDto.getBook_no());
-            log.info("userBookDto cover" + userBookItemDto.getCover());
+            UserBookItemDto userBookItemDto = null;
+            if (adminCurriculumDto.getBook_no() != null) {
+                try {
+                    int book_no = adminCurriculumDto.getBook_no();
+                    log.info("book_no : " + book_no);
 
-            msgMap.put("userBookItemDto", userBookItemDto);
-            msgMap.put("adminMemberDto", adminMemberDto);
+                    userBookItemDto = iAdminCurriculumDaoMB.selectBookCover(adminCurriculumDto.getBook_no());
+                    log.info("userBookDto cover : " + userBookItemDto.getCover());
+                    msgMap.put("userBookItemDto", userBookItemDto);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+
+                }
+
+            }
+
             msgMap.put("adminCurriculumDto", adminCurriculumDto);
 
             return msgMap;

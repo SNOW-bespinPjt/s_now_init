@@ -74,37 +74,37 @@ public class UserMemberController {
     /*
      USER LOGIN CONFIRM
     */
-    @PostMapping("/user_login_confirm")
-    @ResponseBody
-    public ResponseEntity<Object> userLoginConfirm(UserMemberDto userMemberDto, HttpSession session) {
-        log.info("[UserMemberController] userLoginConfirm()");
-
-
-        HttpHeaders headers = new HttpHeaders();
-
-
-        UserMemberDto loginedUserDto = userMemberService.userLoginConfirm(userMemberDto);
-
-        if (loginedUserDto != null) {
-            log.info("Login Success!!");
-
-            session.setAttribute("loginedUserDto", loginedUserDto);
-            session.setMaxInactiveInterval(60 * 30);
-
-            headers.setLocation(URI.create("/"));
-
-            return new ResponseEntity<>(headers, HttpStatus.MOVED_PERMANENTLY);
-        } else {
-
-            log.info("Login Fail!!");
-
-            headers.setLocation(URI.create("404"));
-
-            return new ResponseEntity<>(headers, HttpStatus.MOVED_PERMANENTLY);
-        }
-
-
-    }
+//    @PostMapping("/user_login_confirm")
+//    @ResponseBody
+//    public ResponseEntity<Object> userLoginConfirm(UserMemberDto userMemberDto, HttpSession session) {
+//        log.info("[UserMemberController] userLoginConfirm()");
+//
+//
+//        HttpHeaders headers = new HttpHeaders();
+//
+//
+//        UserMemberDto loginedUserDto = userMemberService.userLoginConfirm(userMemberDto);
+//
+//        if (loginedUserDto != null) {
+//            log.info("Login Success!!");
+//
+//            session.setAttribute("loginedUserDto", loginedUserDto);
+//            session.setMaxInactiveInterval(60 * 30);
+//
+//            headers.setLocation(URI.create("/"));
+//
+//            return new ResponseEntity<>(headers, HttpStatus.MOVED_PERMANENTLY);
+//        } else {
+//
+//            log.info("Login Fail!!");
+//
+//            headers.setLocation(URI.create("404"));
+//
+//            return new ResponseEntity<>(headers, HttpStatus.MOVED_PERMANENTLY);
+//        }
+//
+//
+//    }
 
     /*
        USER MODIFY FORM
@@ -141,19 +141,24 @@ public class UserMemberController {
 
     }
 
-    /*
-    LOGOUT CONFIRM
-     */
-    @GetMapping("/user_logout_confirm")
-    public String userLogoutConfirm(HttpSession session) {
-        log.info("[UserMemberController] user_logout_confirm()");
+//    /*
+//    LOGOUT CONFIRM
+//     */
+//    @GetMapping("/user_logout_confirm")
+//    public String userLogoutConfirm(HttpSession session) {
+//        log.info("[UserMemberController] user_logout_confirm()");
+//
+//        String nextPage = "redirect:/";
+//
+//        session.removeAttribute("loginedUserDto");
+//
+//        return nextPage;
+//    }
 
-        String nextPage = "redirect:/";
+		session.removeAttribute("loginedUserDto");
 
-        session.removeAttribute("loginedUserDto");
-
-        return nextPage;
-    }
+		return nextPage;
+	}
 
     /*
      * USER DELETE CONFIRM
