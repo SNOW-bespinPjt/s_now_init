@@ -14,7 +14,7 @@
         console.log(loginedUserDto.id)
         let appendTag = " <img class=\"rounded-full w-48 h-48 cursor-pointer \"\n" +
             `                     src="/snow/user/img/${loginedUserDto.id}/${loginedUserDto.img}\"\n` +
-            "                     onclick=\"modalToggle()\">"
+            "                     onclick=\"modalToggleForImgSubmit()\">"
 
 
         $(".userImg").append(appendTag)
@@ -24,10 +24,14 @@
 
     function imgUrlSumbmit(e) {
         console.log(" ajax_submitDoc() ")
-        let no = $('.submitFile').data("no")
-        $("#a_no").val(no)
+        let no = $('.submitFileAttendence').data("no")
+        console.log(typeof no)
+        $("#a_no_attendence").val(no)
+
+
         let uploadForm = $("#fileUploadForm")
         let formData = new FormData(uploadForm[0])
+
 
         $.ajax({
             url: '/user/attendence/docs',
@@ -639,11 +643,11 @@
     function modalToggle(no) {
         console.log("modalToogle()")
         console.log("no", no)
-        $('#defaultModal').toggleClass('hidden');
+        $('#attendenceModal').toggleClass('hidden');
         $(this).data('no', no)
 
 
-        $('.submitFile').data("no", no)
+        $('.submitFileAttendence').data("no", no)
 
     }
 
@@ -665,10 +669,10 @@
             success: function (data) {
                 console.log("submitImg() success")
                 console.log(data)
-                modalToggle()
+                modalToggleForImgSubmit()
                 let appendTag = " <img class=\"rounded-full w-48 h-48 cursor-pointer \"\n" +
                     `                     src="/snow/user/img/${loginedUserDto.id}/${data.savedFileName}\"\n` +
-                    "                     onclick=\"modalToggle()\">"
+                    "                     onclick=\"modalToggleForImgSubmit()\">"
 
                 $(".userImg").empty().append(appendTag);
                 // $(location).attr('href', "/mypage")

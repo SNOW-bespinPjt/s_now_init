@@ -14,9 +14,15 @@
     ></script>
     <script th:replace="~{/include/schedule_home_js::scheduleJs}"></script>
     <script th:replace="~{/include/modal_toggle_js::toggle}"></script>
+
+
 </head>
 <body class="flex flex-col items-center justify-center w-5/6 mx-auto">
+
 <div th:replace="~{/include/modal_mypage.html::mypage}"></div>
+<!--<div th:replace="~{/include/modal_attendence.html::attendence}"></div>-->
+<div th:replace="~{/include/modal.html::mypage}"></div>
+
 <header th:replace="~{/include/header_nav_footer::header}"></header>
 <section class="flex flex-row w-5/6 border-solid mt-7">
     <div class="relative h-screen p-4 mr-3 border-4 divide-y-reverse rounded-lg w-96">
@@ -54,17 +60,18 @@
                 나의 과제
             </p>
 
-            <p
-                    class="mb-5 text-base text-lg hover:bg-[#1da1f2]/90 cursor-pointer text-slate-400 h-1/3 study"
-                    onclick="scheduleTab()"
-            >
+            <a th:href="@{/mypage/studyhome}">
+                <p
+                        class="mb-5 text-base text-lg hover:bg-[#1da1f2]/90 cursor-pointer text-slate-400 h-1/3 study"
 
-                스터디
-            </p>
+                >
 
+                    스터디
+                </p>
+            </a>
             <p
                     class="mb-5 text-base text-lg hover:bg-[#1da1f2]/90 cursor-pointer text-slate-400 h-1/3 meal"
-                    onclick="scheduleForMealTab()"
+                    th:href="@{/mypage/mealhome}"
             >
 
                 식사약속

@@ -135,7 +135,7 @@ public class MyPageController {
 
         return map;
     }
-
+  
 
     @GetMapping("/approval")
     @ResponseBody
@@ -175,4 +175,27 @@ public class MyPageController {
     }
 
 
+    @GetMapping("/studyhome")
+    public Object gotoStudyHome(HttpSession session) {
+        log.info(" gotoStudyHome()");
+        List<StudyPromiseDto> studyPromiseDtos = null;
+        UserMemberDto loginedUserDto = (UserMemberDto) session.getAttribute("loginedUserDto");
+
+        studyPromiseDtos = myPageService.selectScedule(loginedUserDto.getId());
+        ModelAndView modelAndView = new ModelAndView();
+
+
+        log.info("loginedUserDto {}", loginedUserDto.getId());
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("studyPromiseDtos", studyPromiseDtos);
+        map.put("loginedUserDto", loginedUserDto);
+
+        modelAndView.addObject("studyAndLoginDto", map);
+        modelAndView.setViewName("/user/mypage/schedule/studyHome");
+
+
+        return modelAndView;
+
+    }
 }
