@@ -150,6 +150,7 @@ public class UserAttendanceController {
     private Object getObject(HttpSession session, String request) {
         UserMemberDto userMemberDto = (UserMemberDto) session.getAttribute("loginedUserDto");
         List<UserAttendanceDto> userAttendanceDtos = null;
+
         if (request.equals("absent")) {
             userAttendanceDtos = userAttendanceService.selectAbsentAttendence(userMemberDto.getId());
 
