@@ -246,6 +246,15 @@ public class UserAttendanceService implements IUserAttendanceService {
         return new PageMakerDto(criteria, totalCnt);
     }
 
+    @Override
+    public int isValidAttendence(String id) {
+        log.info("isValidAttendence(String id)");
+
+
+        return userAttendanceMapper.isValidAttendence(id);
+        
+    }
+
 
     //2주 전 데이터 ustatus update (1 -> 업데이트 불가능)
     @Scheduled(cron = "0 0 0 * * *", zone = "Asia/Seoul")
