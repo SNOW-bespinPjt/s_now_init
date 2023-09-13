@@ -37,19 +37,20 @@
                             <div th:each="item : ${adminAssignmentDtos}"
                                  class="flex w-full border-b-2 h-1/4 border-b-slate-300">
                                 <div class="w-11/12 p-4 text-xl font-bold text-gray-700">
-                                    <a type="button" th:text="${item.title}" th:href="@{/admin/assignment/get_assignment(no=${item.no})}"></a>
+                                    <a type="button" th:text="${item.title}"
+                                       th:href="@{/admin/assignment/get_assignment(no=${item.no})}"></a>
                                     <br>
                                 </div>
                                 <div class="flex flex-col items-center p-4 mb-5">
                                     <span th:if="${item.is_activation eq 0}">
                                         <input type="button" value="과제 활성화" th:attr="data-no=${item.no}"
                                                onclick="activeAssignment(this.getAttribute('data-no'));"
-                                               class="px-2 py-1 rounded bg-blue-500 text-white hover:bg-blue-600">
+                                               class="px-2 py-1 rounded bg-green-500 text-white hover:bg-green-600">
                                     </span>
                                     <span th:if="${item.is_activation eq 1}" class="text-green-500">
                                         <input type="button" value="과제 비활성화" th:attr="data-no=${item.no}"
                                                onclick="activeAssignment(this.getAttribute('data-no'));"
-                                               class="px-2 py-1 rounded bg-blue-500 text-white hover:bg-blue-600">
+                                               class="px-2 py-1 rounded bg-green-500 text-white hover:bg-green-600">
                                         <div class="flex">
                                             <svg
                                                     xmlns="http://www.w3.org/2000/svg"

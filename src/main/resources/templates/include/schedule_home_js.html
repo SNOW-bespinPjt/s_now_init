@@ -4,7 +4,7 @@
     function renderAfterSubmit(no) {
         $(`button[data-no=${no}]`).text("대기중")
         $(`button[data-no=${no}]`).addClass('text-white bg-gray-300 cursor-not-allowed')
-        $(`button[data-no=${no}]`).removeClass("text-blue-700 hover:bg-blue-500 hover:text-white border-blue-500")
+        $(`button[data-no=${no}]`).removeClass("text-blue-700 hover:bg-green-500 hover:text-white border-blue-500")
         $(`button[data-no=${no}]`).removeAttr("onclick")
     }
 
@@ -443,7 +443,7 @@
             "                    <div class=\"text-4xl font-bold font-extrabold mb-9\">[[${userAttendanceDtos.size()}]] 일/214일</div>\n" +
             "                    <div class=\"w-full bg-gray-200 rounded-full dark:bg-gray-700\">\n" +
             "                        <div\n" +
-            "                                class=\"bg-blue-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full attendenceRatio\"\n" +
+            "                                class=\"bg-green-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full attendenceRatio\"\n" +
             "                                style=\"width: " + ratio + "%;\"\n" +
             "                        >\n" +
             "                            [[${ratio}]]%\n" +
