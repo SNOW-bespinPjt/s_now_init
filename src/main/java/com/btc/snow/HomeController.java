@@ -1,6 +1,7 @@
 package com.btc.snow;
 
 
+import com.btc.snow.admin.member.AdminMemberService;
 import com.btc.snow.user.attendance.UserAttendanceDto;
 import com.btc.snow.user.attendance.UserAttendanceService;
 import com.btc.snow.user.coin.UserCoinSchedulerService;
@@ -34,6 +35,9 @@ public class HomeController {
 
     @Autowired
     UserTdListService userTdListService;
+
+    @Autowired
+    AdminMemberService adminMemberService;
 
     @GetMapping(value = {""})
     public Object home(HttpSession session) {
@@ -119,6 +123,13 @@ public class HomeController {
             log.info("TODOLIST READY");
             List<UserTdListDto> userTdListDtos = userTdListService.selectTdListInHome(userMemberDto);
             modelAndView.addObject("userTdListDtos", userTdListDtos);
+        }
+
+        // BTC 코인 순위
+        if (userMemberDto != null) {
+            log.info("COINTANKING READY");
+            List<UserMemberDto> userMemberDtos = adminMemberService.coinRanking();
+            modelAndView.addObject("userMemberDtos", userMemberDtos);
         }
 
         return modelAndView;

@@ -82,7 +82,7 @@
         SELECT *
         FROM ASSIGNMENT
         WHERE group_id = #{no}
-        ORDER BY is_submit = 0, mod_date ASC
+        ORDER BY is_submit = 0, mod_date DESC
     </select>
 
     <update id="updatePoint" parameterType="com.btc.snow.user.assignment.UserAssignmentDto">

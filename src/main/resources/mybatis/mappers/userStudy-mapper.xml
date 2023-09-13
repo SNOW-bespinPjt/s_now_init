@@ -40,7 +40,7 @@
         select *
         from STUDY
         order by reg_date desc
-            LIMIT #{skip}, #{amount}
+        
     </select>
 
     <select id="getTotalCntOfSubmit" resultType="Integer">

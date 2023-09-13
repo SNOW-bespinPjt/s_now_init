@@ -69,8 +69,7 @@ public class UserStudyController {
     }
 
     @GetMapping("/study_list")
-    public String studyList(Model model, @RequestParam(value = "pageNum", required = false, defaultValue = "1") int pageNum,
-                            @RequestParam(value = "amount", required = false, defaultValue = "5") int amount, HttpSession session) {
+    public String studyList(Model model, HttpSession session) {
         log.info("studyList()");
 
         String nextPage = "user/meeting/study_list";
@@ -79,7 +78,7 @@ public class UserStudyController {
 
         model.addAttribute("loginedUserDto", loginedUserDto);
 
-        Map<String, Object> studyMap = userStudyService.studyList(pageNum, amount);
+        Map<String, Object> studyMap = userStudyService.studyList();
 
         List<UserStudyDto> userStudyDtos = (List<UserStudyDto>) studyMap.get("userStudyDtos");
 
