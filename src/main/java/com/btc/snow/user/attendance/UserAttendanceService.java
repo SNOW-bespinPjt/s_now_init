@@ -67,7 +67,7 @@ public class UserAttendanceService implements IUserAttendanceService {
 
         Map<Object, Object> map = new HashMap<>();
         map.put("u_id", u_id);
-
+        log.info("currTime{}", currTime);
 
         if (currTime.isBefore(LocalTime.NOON)) {
             map.put("tstatus", 0);
@@ -88,7 +88,7 @@ public class UserAttendanceService implements IUserAttendanceService {
                     map.put("i", 0);
                     map.put("i1", 0);
                     result = userAttendanceMapper.qrCheckConfrim(map);
-
+                    log.info("result : {}", result);
                 }
             }
         } else {
@@ -103,8 +103,8 @@ public class UserAttendanceService implements IUserAttendanceService {
 
 
             } else {
-                map.put("i", 0);
-                map.put("i1", 1);
+                map.put("i", 1);
+                map.put("i1", 0);
                 result = userAttendanceMapper.qrCheckConfrim(map);
 
             }

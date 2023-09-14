@@ -27,11 +27,18 @@ import java.util.Map;
 @Log4j2
 public class UserAttendanceController {
 
-    @Autowired
-    UserAttendanceService userAttendanceService;
+//    @Autowired
+//    UserAttendanceService userAttendanceService;
 
     @Autowired
     UploadFileService uploadFileService;
+    private final UserAttendanceService userAttendanceService;
+
+
+    public UserAttendanceController(UserAttendanceService userAttendanceService) {
+        this.userAttendanceService = userAttendanceService;
+    }
+
 
     @PostMapping("/attendence/docs")
     @ResponseBody
