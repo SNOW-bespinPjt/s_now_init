@@ -20,7 +20,8 @@
             <section class="flex flex-row w-5/6 border-solid mt-7">
                 <div class="relative flex items-center justify-center w-screen h-auto mr-8 border-2 rounded-lg bg-slate-100 pb-10">
                     <div class="word">
-                        <h4 class="absolute top-0 left-0 mt-10 text-2xl font-bold ml-14" th:text="${adminAssignmentDto.title}"></h4>
+                        <h4 class="absolute top-0 left-0 mt-10 text-2xl font-bold ml-14"
+                            th:text="${adminAssignmentDto.title}"></h4>
                     </div>
                     <div class="mt-8 w-full text-center" id="assignmentDetails">
                         <div class="mb-4 h-auto pt-16 pb-20" th:text="${adminAssignmentDto.body}"></div>
@@ -35,7 +36,7 @@
                         </div>
                         <div class="flex space-x-4 mt-7 justify-center"
                              th:if="${session.loginedAdminDto.getNo() eq adminAssignmentDto.admin_no}">
-                            <input class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                            <input class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
                                    onclick="goToModifyForm(this.getAttribute('data-no'))"
                                    th:attr="data-no=${adminAssignmentDto.no}"
                                    type="button"
@@ -52,17 +53,17 @@
                                    type="button"
                                    value="확인"
                             />
-<!--                            <div class="mb-4">-->
-                                <a class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700 font-bold inline-flex items-center"
-                                   th:href="@{'/admin/assignment/check?no=' + ${adminAssignmentDto.no}}">
-                                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" stroke-width="2"
-                                         viewBox="0 0 24 24"
-                                         xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M5 12l5 5L20 7"></path>
-                                    </svg>
-                                    과제 제출 목록
-                                </a>
-<!--                            </div>-->
+                            <!--                            <div class="mb-4">-->
+                            <a class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700 font-bold inline-flex items-center"
+                               th:href="@{'/admin/assignment/check?no=' + ${adminAssignmentDto.no}}">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" stroke-width="2"
+                                     viewBox="0 0 24 24"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M5 12l5 5L20 7"></path>
+                                </svg>
+                                과제 제출 목록
+                            </a>
+                            <!--                            </div>-->
                         </div>
                         <div class="flex space-x-4 mt-7 justify-center"
                              th:unless="${session.loginedAdminDto.getNo() eq adminAssignmentDto.admin_no}">

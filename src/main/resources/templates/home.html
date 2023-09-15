@@ -18,7 +18,7 @@
 
 <section class="flex flex-row w-5/6 border-solid mt-7">
     <div class="relative flex items-center justify-center w-screen h-screen mr-8 border-2 rounded-lg bg-gray-100">
-        <h2 class="absolute top-0 left-0 mt-4 text-2xl font-bold ml-14 text-gray-900">🔥금주 핫 스터디🔥</h2>
+        <h2 class="absolute top-0 left-0 mt-4 text-2xl font-bold ml-14 text-gray-900">🔥핫 스터디🔥</h2>
         <div class="flex flex-col w-11/12 bg-white h-5/6 rounded-lg shadow-md">
             <div class="flex w-full border-b-2 h-1/4 border-b-gray-300" th:each="userStudyDto : ${userStudyDtos}">
                 <div class="w-11/12 p-4 ml-3">
@@ -125,13 +125,13 @@
         <div class="flex flex-col items-center justify-center w-11/12 p-2 mt-6 border-2 rounded-lg h-auto py-4"
              th:unless="${session.loginedUserDto == null}">
             <a class="font-bold text-green-600 p-3 hover:text-green-700 text-xl" th:href="@{user/tdlist/tdlist_form}">
-                <h2 class="font-semibold border-b-2">Daily TODOLIST</h2>
+                <h2 class="font-semibold border-b-2">TODOLIST</h2>
             </a>
-            <div class="mb-2" id="todolist_wrap">
+            <div id="todolist_wrap" class="mb-2">
             </div>
         </div>
 
-        <div class="flex flex-col items-center justify-center w-11/12 p-2 mt-6 border-2 rounded-lg h-auto py-3">
+        <div class="flex flex-col items-center justify-center w-11/12 p-2 mt-6 border-2 rounded-lg h-auto py-4">
             <div th:if="${session.loginedUserDto != null}">
                 <div class="flex items-center">
                     <span class="mr-2 text-xl">🪙</span>
@@ -158,8 +158,10 @@
                     </div>
                 </div>
             </div>
-            <h3 class="mb-3 text-center" th:unless="${session.loginedUserDto != null}"> 😎
-                !</h3>
+            <div>
+                <h3 class="mb-3 text-center" th:unless="${session.loginedUserDto != null}"> 😎
+                    !</h3>
+            </div>
         </div>
 
     </div>

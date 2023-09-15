@@ -35,7 +35,6 @@
                     <div class="flex w-full h-1/4">
                         <!-- <div class="flex w-full border-b-2 h-1/4 border-b-slate-300">  -->
                         <div class="w-11/12 p-4">
-                            <p class="font-bold">학생들 평균 점수</p>
                             <p class="font-thin truncate">개발자반 너무너무 잘해요 칭찬합니다</p>
                         </div>
                     </div>
@@ -139,7 +138,7 @@
                 </div>
 
                 <!-- ➡️⬇️ -->
-                <div class="flex flex-col items-center justify-center w-11/12 p-2 mt-6 border-2 rounded-lg h-auto">
+                <div class="flex flex-col items-center justify-center w-11/12 p-2 mt-6 border-2 rounded-lg h-auto py-4">
                     <div th:if="${session.loginedAdminDto != null}">
                         <div class="flex items-center">
                             <span class="mr-2 text-xl">🪙</span>
@@ -166,8 +165,10 @@
                             </div>
                         </div>
                     </div>
-                    <h3 class="mb-3 text-center" th:unless="${session.loginedAdminDto != null}"> SNOW에 오신 것을 환영합니다
-                        !</h3>
+                    <div>
+                        <h3 class="mb-3 text-center" th:unless="${session.loginedAdminDto != null}"> 😎
+                            !</h3>
+                    </div>
                 </div>
             </div>
         </section>

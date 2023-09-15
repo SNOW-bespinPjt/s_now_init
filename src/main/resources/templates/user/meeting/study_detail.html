@@ -18,21 +18,43 @@
 
 <section>
     <div id="study_detail">
-        <div>
-            <div class="title" th:text="${userStudyDto.title}"></div>
-            <div class="hit" th:text="${userStudyDto.hit}"></div>
-            <div class="reg_date" th:text="${userStudyDto.reg_date}"></div>
-            <div class="user_id" th:text="${userStudyDto.user_id}"></div>
-            <!--        <div class="img" th:text="${userStudyDto.img}"></div>-->
-            <div class="start_date" th:text="${userStudyDto.start_date}"></div>
-            <div class="end_date" th:text="${userStudyDto.end_date}"></div>
-            <div class="body" th:text="${userStudyDto.body}"></div>
+        <div class=" flex items-center justify-center min-h-screen">
+            <div class="bg-white p-8 rounded shadow-md max-w-md w-full">
+                <div class="title text-3xl font-bold mb-4" th:text="${userStudyDto.title}"></div>
+                <!--                <div class="hit text-gray-500 mb-2" th:text="${userStudyDto.hit}"></div>-->
+                <div class="hit text-gray-500 mb-2">
+                    조회수 : <span th:text="${userStudyDto.hit}"></span>
+                </div>
+                <div class="reg_date text-gray-500 mb-2">
+                    등록일 : <span th:text="${userStudyDto.reg_date}"></span>
+                </div>
 
-        </div>
+                <!--                <div class="reg_date text-gray-500 mb-2" th:text="${userStudyDto.reg_date}"></div>-->
+                <!--                <div class="user_id text-gray-500 mb-2" th:text="${userStudyDto.user_id}"></div>-->
+                <!--                            <div class="img" th:src="@{'/UploadImg/' + ${userStudyDto.img}}"></div>-->
+                <div class="user_id text-gray-500 mb-2">
+                    작성자 : <span th:text="${userStudyDto.user_id}"></span>
+                </div>
 
-        <div th:if="${userStudyDto.user_id != session.loginedUserDto.id}">
-            <input type="hidden" name="no" th:value="${userStudyDto.no}">
-            <input type="button" value="참여">
+                <div class="user_id text-gray-500 mb-2">
+                    시작일 : <span th:text="${userStudyDto.start_date}"></span>
+                </div>
+
+                <div class="user_id text-gray-500 mb-2">
+                    종료일 : <span th:text="${userStudyDto.end_date}"></span>
+                </div>
+
+                <!--                <div class="start_date text-gray-500 mb-2" th:text="${userStudyDto.start_date}"></div>-->
+                <!--                <div class="end_date text-gray-700" th:text="${userStudyDto.end_date}"></div>-->
+                <div class="body mt-6 font-semibold text-lg" th:text="${userStudyDto.body}"></div>
+
+            </div>
+
+            <div class="mt-4" th:if="${userStudyDto.user_id != session.loginedUserDto.id}">
+                <input type="hidden" name="no" th:value="${userStudyDto.no}">
+                <input class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded" type="button"
+                       value="참여">
+            </div>
         </div>
     </div>
 </section>
