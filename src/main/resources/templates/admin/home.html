@@ -59,7 +59,7 @@
                 <!-- ➡️⬆️️ -->
 
                 <!-- Before Login -->
-                <div class="flex flex-col items-center justify-center w-11/12 h-40 p-2 mt-6 border-2 rounded-sm"
+                <div class="flex flex-col items-center justify-center w-11/12 h-40 p-2 mt-6 border-2 rounded-lg"
                      id="contentDiv"
                      th:if="${session.loginedAdminDto == null}">
                     <h3 class="mb-3 font-semibold">이곳은 관리자 페이지 입니다 !</h3>
@@ -82,7 +82,7 @@
                 </div>
 
                 <!-- Member Login Form -->
-                <div class="flex flex-col items-center justify-center w-11/12 h-40 p-2 mt-6 border-2 rounded-sm text-center h-auto"
+                <div class="flex flex-col items-center justify-center w-11/12 h-40 p-2 mt-6 border-2 rounded-lg text-center h-auto"
                      id="member_login_form"
                      style="display: none"
                      th:if="${session.loginedAdminDto == null}">
@@ -120,7 +120,7 @@
                 </div>
 
                 <!-- After Login -->
-                <div class="flex flex-col items-center justify-center w-11/12 h-40 p-2 mt-6 border-2 rounded-sm"
+                <div class="flex flex-col items-center justify-center w-11/12 h-40 p-2 mt-6 border-2 rounded-lg"
                      th:if="${session.loginedAdminDto != null}">
                     <h3 class="mb-3 font-semibold">환영합니다</h3>
                     <span class="mx-auto h-10 px-4 py-2">
@@ -139,7 +139,7 @@
                 </div>
 
                 <!-- ➡️⬇️ -->
-                <div class="flex flex-col items-center justify-center w-11/12 p-2 mt-6 border-2 rounded-sm h-2/4">
+                <div class="flex flex-col items-center justify-center w-11/12 p-2 mt-6 border-2 rounded-lg h-auto">
                     <div th:if="${session.loginedAdminDto != null}">
                         <div class="flex items-center">
                             <span class="mr-2 text-xl">🪙</span>
@@ -163,27 +163,6 @@
                                 <span class="font-semibold" th:text="${userMemberDtos.get(2).getName()}"></span>&nbsp;
                                 <span><span class="font-bold"
                                             th:text="${userMemberDtos.get(2).getCoin()}"></span>점</span>
-                            </div>
-                            <div class="my-4">
-                                <div class="flex items-center mt-2 text-xs text-gray-700">
-                                    <span th:text="${userMemberDtos.get(3).getName()}"></span>&nbsp;
-                                    <span><span th:text="${userMemberDtos.get(3).getCoin()}"></span>점</span>
-                                </div>
-                                <div class="flex items-center mt-2 text-xs text-gray-700">
-                                    <span th:text="${userMemberDtos.get(4).getName()}"></span>&nbsp;
-                                    <span><span th:text="${userMemberDtos.get(4).getCoin()}"></span>점</span>
-                                </div>
-                                <div class="flex items-center mt-2 text-xs text-gray-700">
-                                    <span th:text="${userMemberDtos.get(5).getName()}"></span>&nbsp;
-                                    <span><span th:text="${userMemberDtos.get(5).getCoin()}"></span>점</span>
-                                </div>
-                                <div class="flex items-center mt-2 text-xs text-gray-700">
-                                    <span th:text="${userMemberDtos.get(6).getName()}"></span>&nbsp;
-                                    <span><span th:text="${userMemberDtos.get(6).getCoin()}"></span>점</span>
-                                </div>
-                            </div>
-                            <div class="flex items-center mt-2 text-gray-700 font-bold">
-                                ...
                             </div>
                         </div>
                     </div>

@@ -124,12 +124,43 @@
         <!--             th:unless="${session.loginedUserDto == null}">-->
         <div class="flex flex-col items-center justify-center w-11/12 p-2 mt-6 border-2 rounded-lg h-auto py-4"
              th:unless="${session.loginedUserDto == null}">
-        <a class="font-bold text-green-600 p-3 hover:text-green-700 text-xl" th:href="@{user/tdlist/tdlist_form}">
-            <h2 class="font-semibold border-b-2">Daily TODOLIST</h2>
-        </a>
-        <div id="todolist_wrap" class="mb-2">
+            <a class="font-bold text-green-600 p-3 hover:text-green-700 text-xl" th:href="@{user/tdlist/tdlist_form}">
+                <h2 class="font-semibold border-b-2">Daily TODOLIST</h2>
+            </a>
+            <div class="mb-2" id="todolist_wrap">
+            </div>
         </div>
-    </div>
+
+        <div class="flex flex-col items-center justify-center w-11/12 p-2 mt-6 border-2 rounded-lg h-auto py-3">
+            <div th:if="${session.loginedUserDto != null}">
+                <div class="flex items-center">
+                    <span class="mr-2 text-xl">🪙</span>
+                    <p class="text-xl font-bold">BTC 코인 순위</p>
+                </div>
+                <div class="mt-4">
+                    <div class="flex items-center mt-2">
+                        <span class="mr-2 text-xl">🥇</span>
+                        <span class="font-semibold" th:text="${userMemberDtos.get(0).getName()}"></span>&nbsp;
+                        <span><span class="font-bold"
+                                    th:text="${userMemberDtos.get(0).getCoin()}"></span>점</span>
+                    </div>
+                    <div class="flex items-center mt-2">
+                        <span class="mr-2 text-xl">🥈</span>
+                        <span class="font-semibold" th:text="${userMemberDtos.get(1).getName()}"></span>&nbsp;
+                        <span><span class="font-bold"
+                                    th:text="${userMemberDtos.get(1).getCoin()}"></span>점</span>
+                    </div>
+                    <div class="flex items-center mt-2">
+                        <span class="mr-2 text-xl">🥉</span>
+                        <span class="font-semibold" th:text="${userMemberDtos.get(2).getName()}"></span>&nbsp;
+                        <span><span class="font-bold"
+                                    th:text="${userMemberDtos.get(2).getCoin()}"></span>점</span>
+                    </div>
+                </div>
+            </div>
+            <h3 class="mb-3 text-center" th:unless="${session.loginedUserDto != null}"> 😎
+                !</h3>
+        </div>
 
     </div>
 </section>

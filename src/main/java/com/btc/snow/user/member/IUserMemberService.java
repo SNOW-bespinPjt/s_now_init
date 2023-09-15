@@ -2,6 +2,8 @@ package com.btc.snow.user.member;
 
 import jakarta.mail.MessagingException;
 
+import java.util.List;
+
 public interface IUserMemberService {
 
     /*
@@ -30,4 +32,7 @@ public interface IUserMemberService {
     public int findPasswordConfirm(UserMemberDto userMemberDto) throws MessagingException;
 
     int uploadUserImg(UserMemberDto userMemberDto);
+
+    // BTC 코인 순위
+    List<UserMemberDto> coinRanking();
 }

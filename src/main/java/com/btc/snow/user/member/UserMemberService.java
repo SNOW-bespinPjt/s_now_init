@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
 import java.util.Date;
+import java.util.List;
 
 @Log4j2
 @Service
@@ -136,8 +137,15 @@ public class UserMemberService implements IUserMemberService {
     public int uploadUserImg(UserMemberDto userMemberDto) {
         log.info("uploadUserImg()!!!");
 
-
         return iUserMemberDaoMB.uploadUserImg(userMemberDto);
+    }
+
+    // BTC 코인 순위
+    @Override
+    public List<UserMemberDto> coinRanking() {
+        log.info("[UserMemberService] coinRanking()");
+
+        return iUserMemberDaoMB.selectCoinRanking();
     }
 
     private String createNewPassword() {

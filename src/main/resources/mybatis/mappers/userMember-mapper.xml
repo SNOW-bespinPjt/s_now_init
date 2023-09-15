@@ -104,7 +104,12 @@
         update USER
         set img= #{img}
         where id = #{id}
-
-
     </update>
+
+    <select id="selectCoinRanking" resultType="com.btc.snow.user.member.UserMemberDto">
+        SELECT *
+        FROM USER
+        ORDER BY coin DESC;
+    </select>
+
 </mapper>
