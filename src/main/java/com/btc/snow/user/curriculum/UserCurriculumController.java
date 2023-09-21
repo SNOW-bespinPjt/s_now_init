@@ -30,7 +30,7 @@ public class UserCurriculumController {
     public String curriculumForm() {
         log.info("[UserCurriculumController] curriculumForm()");
 
-        String nextPage = "user/curriculum/user_curriculum_form";
+        String nextPage = "/user/curriculum/user_curriculum_form";
 
         return nextPage;
 
@@ -55,7 +55,7 @@ public class UserCurriculumController {
     public String showDetailCurriculum(@RequestParam("no") int no, Model model) {
         log.info("[UserCurriculumController] showDetailCurriculum()");
 
-        String nextPage = "user/curriculum/user_curriculum_detail_form";
+        String nextPage = "/user/curriculum/user_curriculum_detail_form";
 
         model.addAttribute("msgMap", userCurriculumService.showDetailCurriculum(no));
 

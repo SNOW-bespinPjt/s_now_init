@@ -25,7 +25,7 @@ public class UserMeetingController {
     public String list(Model model, HttpSession session) {
         log.info("list()");
 
-        String nextPage = "user/meeting/meeting_list";
+        String nextPage = "/user/meeting/meeting_list";
 
         Map<String, Object> studyMap = userMeetingService.studyList();
         Map<String, Object> mealMap = userMeetingService.mealList();
@@ -43,7 +43,7 @@ public class UserMeetingController {
     public String meetingForm() {
         log.info("meetingForm()");
 
-        String nextPage = "user/meeting/meeting_form";
+        String nextPage = "/user/meeting/meeting_form";
 
         return nextPage;
     }

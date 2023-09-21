@@ -45,7 +45,7 @@
                                         <span th:if="${item.is_approval eq 0}">
                                             <input type="button" value="승인처리" th:attr="data-no=${item.no}"
                                                    onclick="approveAdmin(this.getAttribute('data-no'));"
-                                                   class="px-2 py-1 rounded bg-green-500 text-white hover:bg-blue-600 cursor-pointer">
+                                                   class="px-2 py-1 rounded bg-green-500 text-white hover:bg-green-600 cursor-pointer">
                                         </span>
                                         <span th:if="${item.is_approval eq 1}" class="text-green-500">승인완료</span>
                                     </td>

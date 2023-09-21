@@ -30,6 +30,6 @@ public class AdminHomeController {
       List<UserMemberDto> userMemberDtos = adminMemberService.coinRanking();
       model.addAttribute("userMemberDtos", userMemberDtos);
 
-      return "admin/home";
+      return "/admin/home";
    }
 }

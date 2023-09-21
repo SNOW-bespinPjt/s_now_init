@@ -10,7 +10,7 @@ public interface IUserStudyService {
 
     public void updateHit(int no);
 
-    public Map<String, Object> studyList(int pageNum, int amount);
+    public Map<String, Object> studyList();
 
     public int studyAttend(int studyNo, String id);
 

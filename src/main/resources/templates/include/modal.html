@@ -1,7 +1,7 @@
 <!-- Main modal -->
 <div
-        th:fragment="modal"
-        id="defaultModal"
+        th:fragment="mypage"
+        id="attendenceModal"
         tabindex="-1"
         aria-hidden="true"
         class="fixed flex bg-black bg-opacity-75 justify-center items-center right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full"
@@ -44,13 +44,13 @@
             <!-- Modal body -->
             <div class="p-6 space-y-6">
                 <form method="post" enctype="multipart/form-data"
-                      name="fileUploadForm"
-                      id="fileUploadForm">
-                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload
-                        file</label>
+                      name="fileUploadFormByDoc"
+                      id="fileUploadFormByDoc">
                     <input type="hidden" id="a_no" name="no" readonly>
+                    <label class=" block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file">Upload
+                        file</label>
                     <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                           id="file_input" type="file" name="file">
+                           id="file_input " type="file" name="file">
                 </form>
             </div>
             <!-- Modal footer -->
@@ -60,7 +60,7 @@
                 <button
                         data-modal-hide="defaultModal"
                         type="button"
-                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 submitFile"
+                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 submitFileAttendence"
                         onclick="imgUrlSumbmit()"
                 >
                     확인

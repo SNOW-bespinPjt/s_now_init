@@ -1,8 +1,10 @@
 package com.btc.snow;
 
 
+import com.btc.snow.admin.member.AdminMemberService;
 import com.btc.snow.user.attendance.UserAttendanceDto;
 import com.btc.snow.user.attendance.UserAttendanceService;
+import com.btc.snow.user.coin.UserCoinSchedulerService;
 import com.btc.snow.user.meeting.UserMeetingService;
 import com.btc.snow.user.meeting.study.UserStudyDto;
 import com.btc.snow.user.member.UserMemberDto;
@@ -34,9 +36,22 @@ public class HomeController {
     @Autowired
     UserTdListService userTdListService;
 
+    @Autowired
+    AdminMemberService adminMemberService;
+
     @GetMapping(value = {""})
     public Object home(HttpSession session) {
         log.info("HomeController home()");
+
+        // 스케줄러가 실행중이면 서버 점검 페이지로 이동
+        UserCoinSchedulerService schedulerService = new UserCoinSchedulerService();
+
+        if (schedulerService.onScheduled == true) {
+            return "redirect:/error/onScheduled/onScheduled.html";
+
+        }
+
+
         UserMemberDto userMemberDto = (UserMemberDto) session.getAttribute("loginedUserDto");
 
         //분기 포인트 로그인!
@@ -60,6 +75,7 @@ public class HomeController {
                 UserAttendanceDto userAttendanceDto = (UserAttendanceDto) userAttendanceService.selectUserforAttendence(userMemberDto.getId());
 //                SubmitDto submitDto = userAttendanceService.selectAttendanceSubmit(userMemberDto.getId());
                 int result = userAttendanceService.isValidAttendence(userMemberDto.getId());
+                log.info("qrvalidStatus!! {}", result);
 
                 if (result > 0) {
                     modelAndView.addObject("qrValidStatus", 0);
@@ -73,6 +89,7 @@ public class HomeController {
                     modelAndView.addObject("status", 0);
 
                 } else {
+
                     modelAndView.addObject("status", 1);
                     modelAndView.addObject("userAttendanceDto", userAttendanceDto);
                 }
@@ -106,6 +123,13 @@ public class HomeController {
             log.info("TODOLIST READY");
             List<UserTdListDto> userTdListDtos = userTdListService.selectTdListInHome(userMemberDto);
             modelAndView.addObject("userTdListDtos", userTdListDtos);
+        }
+
+        // BTC 코인 순위
+        if (userMemberDto != null) {
+            log.info("COINTANKING READY");
+            List<UserMemberDto> userMemberDtos = adminMemberService.coinRanking();
+            modelAndView.addObject("userMemberDtos", userMemberDtos);
         }
 
         return modelAndView;

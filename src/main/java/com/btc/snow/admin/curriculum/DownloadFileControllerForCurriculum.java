@@ -27,7 +27,7 @@ public class DownloadFileControllerForCurriculum {
         log.info("downloadFromUser file :::::::::::: " + file);
         log.info("downloadFromUser admin_id  :::::::::::: " + admin_id);
 
-//        String nextPage = "admin/curriculum/curriculum_detail_form";
+//        String nextPage = "/admin/curriculum/curriculum_detail_form";
 
 //        String download_dir = "c:/snow/user/assignment" + user_id;
 

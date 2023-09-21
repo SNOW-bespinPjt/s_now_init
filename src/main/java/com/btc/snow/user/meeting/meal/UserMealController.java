@@ -31,7 +31,7 @@ public class UserMealController {
 
         UserMemberDto loginedUserDto = (UserMemberDto) session.getAttribute("loginedUserDto");
 
-        String nextPage = "redirect:/user/meeting/list";
+        String nextPage = "/redirect:/user/meeting/list";
 
         String saveFileName = mealUploadFileService.upload(file, loginedUserDto.getId());
 
@@ -57,7 +57,7 @@ public class UserMealController {
     public String mealDetail(Model model, @RequestParam("no") int no) {
         log.info("mealDetail()");
 
-        String nextPage = "user/meeting/meal_detail";
+        String nextPage = "/user/meeting/meal_detail";
 
         UserMealDto userMealDto = userMealService.mealDetail(no);
 
@@ -72,7 +72,7 @@ public class UserMealController {
     public String mealList(Model model, HttpSession session) {
         log.info("mealList()");
 
-        String nextPage = "user/meeting/meal_list";
+        String nextPage = "/user/meeting/meal_list";
 
         UserMemberDto loginedUserDto = (UserMemberDto) session.getAttribute("loginedUserDto");
 

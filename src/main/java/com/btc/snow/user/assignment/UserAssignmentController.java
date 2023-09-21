@@ -1,7 +1,6 @@
 package com.btc.snow.user.assignment;
 
 import com.btc.snow.admin.assignment.AdminAssignmentDto;
-import com.btc.snow.user.config.UploadFileServiceForUser;
 import com.btc.snow.user.member.UserMemberDto;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.log4j.Log4j2;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,7 +38,7 @@ public class UserAssignmentController {
     public String List(HttpSession session, Model model) {
         log.info("[UserAssignmentController] List()");
 
-        nextPage = "user/assignment/list_assignments";
+        nextPage = "/user/assignment/list_assignments";
 
         // USER 허용 과제 리스트 불러오기
         List<UserAssignmentDto> userAssignmentDtos = userAssignmentService.listAssignment(session);
@@ -59,7 +57,7 @@ public class UserAssignmentController {
                                       @RequestParam("file") MultipartFile file) {
         log.info("[UserAssignmentController] RegistrationConfirm()");
 
-        nextPage = "redirect:/user/assignment/";
+        nextPage = "/redirect:/user/assignment/";
 
         // 세션 > user_no 저장
         UserMemberDto loginedUserDto = (UserMemberDto) session.getAttribute("loginedUserDto");
@@ -104,7 +102,7 @@ public class UserAssignmentController {
     public ModelAndView getAssignment(@RequestParam("no") int no, HttpSession session) {
         log.info("[UserAssignmentController] getAssignment()");
 
-        nextPage = "user/assignment/detail_assignment";
+        nextPage = "/user/assignment/detail_assignment";
 
         // no에 맞는 페이지 가져오기
         AdminAssignmentDto adminAssignmentDto = userAssignmentService.getDetail(no);
@@ -134,7 +132,7 @@ public class UserAssignmentController {
                                           HttpSession session) {
         log.info("[UserAssignmentController] modifyAssignmentConfirm()");
 
-        nextPage = "redirect:/user/assignment/";
+        nextPage = "/redirect:/user/assignment/";
 
         // 세션 > user_no 저장
         UserMemberDto loginedUserDto = (UserMemberDto) session.getAttribute("loginedUserDto");
@@ -176,7 +174,7 @@ public class UserAssignmentController {
     public String deleteAssignmentConfirm(@RequestParam("no") int no) {
         log.info("[UserAssignmentController] deleteAssignmentConfirm()");
 
-        String nextPage = "redirect:/user/assignment/";
+        String nextPage = "/redirect:/user/assignment/";
 
         int result = userAssignmentService.deleteAssignmentConfirm(no);
 

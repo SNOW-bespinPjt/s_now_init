@@ -28,16 +28,19 @@
                           th:action="@{/admin/assignment/assignment_modify_confirm}"
                     >
                         <input name="no" th:value="${adminAssignmentDto.no}" type="hidden">
-                        <input class="font-bold border mb-4 px-4 py-2 rounded-lg w-full" name="title" placeholder="INPUT TITLE"
+                        <input class="font-bold border mb-4 px-4 py-2 rounded-lg w-full" name="title"
+                               placeholder="INPUT TITLE"
                                th:value="${adminAssignmentDto.title}"
                                type="text">
                         <textarea class="border mb-4 p-4 rounded-lg w-full" name="body" placeholder="INPUT BODY"
                                   th:text="${adminAssignmentDto.body}"></textarea>
                         <input class="mb-4" name="file" type="file">
                         <div class="space-x-4">
-                            <input class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 cursor-pointer" onclick="modifyAssignmentForm();" type="button"
+                            <input class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 cursor-pointer"
+                                   onclick="modifyAssignmentForm();" type="button"
                                    value="수정">
-                            <input class="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 cursor-pointer" type="reset"
+                            <input class="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 cursor-pointer"
+                                   type="reset"
                                    value="초기화">
                             <input
                                     class="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 cursor-pointer"

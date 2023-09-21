@@ -1,4 +1,4 @@
-package com.btc.snow.admin.assignment;
+package com.btc.snow.user.mypage;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
@@ -9,9 +9,9 @@ import java.util.UUID;
 
 @Log4j2
 @Service
-public class UploadFileService {
+public class UploadFileServiceForMypage {
 
-    public String upload(MultipartFile file) {
+    public String upload(MultipartFile file, String id) {
         log.info("[UploadFileService] upload()");
 
         // 저장 유무
@@ -20,7 +20,7 @@ public class UploadFileService {
         // File 저장
         String fileOriName = file.getOriginalFilename();
         String fileExtension = fileOriName.substring(fileOriName.lastIndexOf("."), fileOriName.length());
-        String uploadDir = "c:\\snow/user/attendence";
+        String uploadDir = "c:\\snow/user/img/" + id;
 //        String uploadDir = "c:\\snow\\member\\" + user_id; // 아이디별로 받겠다 여기에 키득
 
         UUID uuid = UUID.randomUUID(); // 랜덤으로 유니크한 값을 생성해서 보내주는 메소드 (덮어쓰기 방지)

@@ -4,17 +4,11 @@ import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-
-import java.net.URI;
 
 @Controller
 @Log4j2
@@ -31,7 +25,7 @@ public class UserMemberController {
     public String createAccountForm() {
         log.info("[UserMemberController] createAccountForm()");
 
-        String nextPage = "user/member/create_account_form";
+        String nextPage = "/user/member/create_account_form";
 
         return nextPage;
 
@@ -65,7 +59,7 @@ public class UserMemberController {
     public String userLoginForm() {
         log.info("[UserMemberController] userLoginForm()");
 
-        String nextPage = "user/member/member_login_form";
+        String nextPage = "/user/member/member_login_form";
 
         return nextPage;
 
@@ -148,17 +142,12 @@ public class UserMemberController {
 //    public String userLogoutConfirm(HttpSession session) {
 //        log.info("[UserMemberController] user_logout_confirm()");
 //
-//        String nextPage = "redirect:/";
+//        String nextPage = "/redirect:/";
 //
 //        session.removeAttribute("loginedUserDto");
 //
 //        return nextPage;
 //    }
-//
-//		session.removeAttribute("loginedUserDto");
-//
-//		return nextPage;
-//	}
 
     /*
      * USER DELETE CONFIRM
@@ -167,7 +156,7 @@ public class UserMemberController {
     public String userDeleteConfirm(HttpSession session) {
         log.info("[UserMemberController] userDeleteConfirm()");
 
-        String nextPage = "redirect:/";
+        String nextPage = "/redirect:/";
 
         UserMemberDto loginedUserDto =
                 (UserMemberDto) session.getAttribute("loginedUserDto");
@@ -178,7 +167,7 @@ public class UserMemberController {
             session.removeAttribute("loginedUserDto");
 
         } else {
-            nextPage = "member/member_delete_fail";
+            nextPage = "/member/member_delete_fail";
 
         }
 
@@ -193,7 +182,7 @@ public class UserMemberController {
     public String findPasswordForm() {
         log.info("[UserMemberController] findPasswordForm()");
 
-        String nextPage = "user/member/find_password_form";
+        String nextPage = "/user/member/find_password_form";
 
         return nextPage;
 
@@ -206,12 +195,12 @@ public class UserMemberController {
     public String findPasswordConfirm(UserMemberDto userMemberDto) throws MessagingException {
         log.info("[UserMemberController] findPasswordConfirm()");
 
-        String nextPage = "user/member/find_password_success";
+        String nextPage = "/user/member/find_password_success";
 
         int result = userMemberService.findPasswordConfirm(userMemberDto);
 
         if (result <= 0) {
-            nextPage = "admin/member/find_password_fail";
+            nextPage = "/admin/member/find_password_fail";
 
         }
 
@@ -226,7 +215,7 @@ public class UserMemberController {
 //   public String findIdForm() {
 //      log.info("[UserMemberController] findIdForm()");
 //
-//      String nextPage = "user/member/find_id_form";
+//      String nextPage = "/user/member/find_id_form";
 //
 //      return nextPage;
 //
@@ -239,12 +228,12 @@ public class UserMemberController {
 //   public String findIdConfirm(UserMemberDto userMemberDto) throws MessagingException {
 //      log.info("[UserMemberController] findIdConfirm()");
 //
-//      String nextPage = "user/member/find_id_success";
+//      String nextPage = "/user/member/find_id_success";
 //
 //      int result = userMemberService.findIdConfirm(userMemberDto);
 //
 //      if(result <= 0)
-//         nextPage = "admin/member/find_id_fail";
+//         nextPage = "/admin/member/find_id_fail";
 //
 //      return nextPage;
 //

@@ -11,50 +11,53 @@
 </head>
 <body class="flex flex-col items-center justify-center w-5/6 mx-auto">
 
-<div id="defaultModal"
-     class="fixed inset-0 z-50 hidden overflow-y-auto bg-black bg-opacity-50 flex justify-center items-center">
+<div class="fixed inset-0 z-50 hidden overflow-y-auto bg-black bg-opacity-50 flex justify-center items-center"
+     id="defaultModal">
     <div class="relative w-full max-w-screen-md mx-auto">
         <!-- Modal content -->
-        <div id="search" class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700" id="search">
             <!-- Modal header -->
             <div class="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
                 <!--헤더-->
                 <h2>MODIFY TODOLIST INFO</h2>
 
-                <button type="button"
-                        class="inline-flex items-center justify-center w-8 h-8 ml-auto text-gray-400 bg-transparent rounded-lg hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white"
-                        data-modal-hide="defaultModal" value="xbutton">
-                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                         fill="none" viewBox="0 0 14 14">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                              stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                <button class="inline-flex items-center justify-center w-8 h-8 ml-auto text-gray-400 bg-transparent rounded-lg hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white"
+                        data-modal-hide="defaultModal"
+                        type="button" value="xbutton">
+                    <svg aria-hidden="true" class="w-3 h-3" fill="none"
+                         viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+                        <path d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" stroke="currentColor" stroke-linecap="round"
+                              stroke-linejoin="round" stroke-width="2"/>
                     </svg>
                     <span class="sr-only">Close modal</span>
                 </button>
             </div>
             <!-- Modal body -->
-            <div id="book_list" class="p-6 space-y-6 max-h-[calc(100vh-10rem)] overflow-y-auto flex flex-col">
+            <div class="p-6 space-y-6 max-h-[calc(100vh-10rem)] overflow-y-auto flex flex-col" id="book_list">
                 <form name="create_tdlist_form">
                     <!--					<input type="hidden" id="no_modify" name="no">-->
-                    <input type="text" id="content_modify" name="content" placeholder="INPUT NEW CONTENT">
-                    <input type="text" id="tag_modify" name="tag" placeholder="INPUT NEW TAG">
-                    <input type="date" id="start_date_modify" name="start_date">
-                    <input type="date" id="end_date_modify" name="end_date">
+                    <input id="content_modify" name="content" placeholder="INPUT NEW CONTENT" type="text">
+                    <input id="tag_modify" name="tag" placeholder="INPUT NEW TAG" type="text">
+                    <input id="start_date_modify" name="start_date" type="date">
+                    <input id="end_date_modify" name="end_date" type="date">
                 </form>
 
             </div>
             <!-- Modal footer -->
             <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
-                <button data-modal-hide="defaultModal" type="button" value="modify"
-                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                <button class="text-white bg-green-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-blue-800"
+                        data-modal-hide="defaultModal" type="button"
+                        value="modify">
                     MODIFY
                 </button>
-                <button data-modal-hide="defaultModal" type="RESET"
-                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                <button class="text-white bg-green-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-blue-800"
+                        data-modal-hide="defaultModal"
+                        type="RESET">
                     RESET
                 </button>
-                <button data-modal-hide="defaultModal" type="button" value="cancel"
-                        class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">
+                <button class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600"
+                        data-modal-hide="defaultModal" type="button"
+                        value="cancel">
                     CANCEL
                 </button>
             </div>
@@ -66,67 +69,71 @@
 <header th:replace="~{/include/header_nav_footer.html::header}"></header>
 
 <section class="flex flex-row w-5/6 border-solid mt-7">
-    <div class="items-center justify-center w-screen h-screen mr-8 border-2 rounded-lg bg-slate-100">
-        <div class="mb-4 text-center">
-            <h2 class="text-2xl font-bold">Create ToDoList~</h2>
-        </div>
+    <div class="items-center justify-center w-screen h-screen mr-8 border-2 rounded-lg bg-gray-100">
+        <div class="m-6">
+            <div class="mb-4 text-center">
+                <h2 class="text-2xl font-bold">Create ToDoList</h2>
+            </div>
 
-        <div id="todo_container" class="my-4">
-            <form name="create_tdlist_form" class="flex flex-col space-y-4">
-                <div class="flex space-x-4 items-center">
-                    <label for="content" class="w-1/4 text-right">Content:</label>
-                    <input type="text" id="content" name="content" placeholder="INPUT CONTENT"
-                           class="w-1/2 p-2 border rounded">
-                </div>
-                <div class="flex space-x-4 items-center">
-                    <label for="tag" class="w-1/4 text-right">Tag:</label>
-                    <input type="text" id="tag" name="tag" placeholder="INPUT TAG" class="w-1/2 p-2 border rounded">
-                </div>
-                <div class="flex space-x-4 items-center">
-                    <label for="start_date" class="w-1/4 text-right">Start Date:</label>
-                    <input type="date" id="start_date" name="start_date" class="w-1/2 p-2 border rounded">
-                </div>
-                <div class="flex space-x-4 items-center">
-                    <label for="end_date" class="w-1/4 text-right">End Date:</label>
-                    <input type="date" id="end_date" name="end_date" class="w-1/2 p-2 border rounded">
-                </div>
-                <div class="flex space-x-4 items-center">
-                    <input type="button" value="Create List"
-                           class="p-2 bg-blue-500 text-white rounded hover:bg-blue-700">
-                </div>
-            </form>
-        </div>
+            <div class="my-4" id="todo_container">
+                <form class="flex flex-col space-y-4" name="create_tdlist_form">
+                    <div class="flex space-x-4 items-center">
+                        <label class="w-1/4 text-right" for="content">Content:</label>
+                        <input class="w-1/2 p-2 border rounded" id="content" name="content" placeholder="INPUT CONTENT"
+                               type="text">
+                    </div>
+                    <div class="flex space-x-4 items-center">
+                        <label class="w-1/4 text-right" for="tag">Tag:</label>
+                        <input class="w-1/2 p-2 border rounded" id="tag" name="tag" placeholder="INPUT TAG" type="text">
+                    </div>
+                    <div class="flex space-x-4 items-center">
+                        <label class="w-1/4 text-right" for="start_date">Start Date:</label>
+                        <input class="w-1/2 p-2 border rounded" id="start_date" name="start_date" type="date">
+                    </div>
+                    <div class="flex space-x-4 items-center">
+                        <label class="w-1/4 text-right" for="end_date">End Date:</label>
+                        <input class="w-1/2 p-2 border rounded" id="end_date" name="end_date" type="date">
+                    </div>
+                    <div class="flex space-x-4 items-center text-center justify-end mr-48">
+                        <input class="p-2 bg-green-500 text-white rounded font-bold hover:bg-green-700" type="button"
+                               value="CREATE LIST">
+                    </div>
+                </form>
+            </div>
 
-        <div id="search_word" class="my-4 flex justify-center">
-            <form name="search_word_form" class="flex space-x-4 items-center">
-                <input type="text" class="search_bar w-3/4 p-2 border rounded" placeholder="INPUT SEARCH WORD">
-                <input type="button" value="Search" class="p-2 bg-blue-500 text-white rounded hover:bg-blue-700">
-                <input type="reset" value="Reset" class="p-2 bg-gray-300 rounded hover:bg-gray-400">
-            </form>
-        </div>
+            <span class="mt-10 flex justify-center" id="search_word">
+                <form class="flex space-x-4 items-center" name="search_word_form">
+                    <input class="search_bar w-3/4 p-2 border rounded" placeholder="INPUT SEARCH WORD" type="text">
+                    <input class="p-2 bg-green-500 text-white rounded hover:bg-green-700" type="button" value="Search">
+                    <input class="p-2 bg-gray-300 rounded hover:bg-gray-400" type="reset" value="Reset">
+                </form>
+            </span>
 
-        <div id="finish_btn" class="my-4 flex justify-end space-x-2">
-            <span><input type="button" value="Finish"
-                         class="p-2 bg-green-500 text-white rounded hover:bg-green-700"></span>
-            <span><input type="button" value="Back" class="p-2 bg-red-500 text-white rounded hover:bg-red-700"></span>
-        </div>
+            <span class="mb-4 flex justify-end space-x-2" id="finish_btn">
+            <span><input class="p-2 text-blue-400 text-black font-semibold border-2 hover:text-blue-500" type="button"
+                         value="Finish"></span>
+                <span><input class="p-2 text-blue-400 text-black font-semibold border-2 hover:text-blue-500"
+                             type="button"
+                             value="Back"></span>
+            </span>
 
-        <div id="todo_list" class="my-4">
-            <table class="w-full border-collapse border border-gray-400">
-                <thead>
-                <tr>
-                    <th class="border p-2">체크</th>
-                    <th class="border p-2">내용</th>
-                    <th class="border p-2">태그</th>
-                    <th class="border p-2">시작일</th>
-                    <th class="border p-2">마감일</th>
-                    <th class="border p-2">삭제</th>
-                </tr>
-                </thead>
-                <tbody>
+            <div class="my-4" id="todo_list">
+                <table class="w-full border-collapse border border-gray-400">
+                    <thead>
+                    <tr>
+                        <th class="border p-2">체크</th>
+                        <th class="border p-2">내용</th>
+                        <th class="border p-2">태그</th>
+                        <th class="border p-2">시작일</th>
+                        <th class="border p-2">마감일</th>
+                        <th class="border p-2">삭제</th>
+                    </tr>
+                    </thead>
+                    <tbody>
 
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </section>

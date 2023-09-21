@@ -1,6 +1,5 @@
 package com.btc.snow.admin.assignment;
 
-import com.btc.snow.admin.config.UploadFileServiceForAdmin;
 import com.btc.snow.admin.member.AdminMemberDto;
 import com.btc.snow.user.assignment.UserAssignmentDto;
 import com.btc.snow.user.member.UserMemberDto;
@@ -41,7 +40,7 @@ public class AdminAssignmentController {
     public ModelAndView List() {
         log.info("[AdminAssignmentController] List()");
 
-        nextPage = "admin/assignment/list_assignments";
+        nextPage = "/admin/assignment/list_assignments";
 
         List<AdminAssignmentDto> adminAssignmentDtos = adminAssignmentService.listAssignment();
 
@@ -60,7 +59,7 @@ public class AdminAssignmentController {
     public void RegistrationForm() {
         log.info("[AdminAssignmentController] RegistrationForm()");
 
-        nextPage = "admin/assignment/registration_form";
+        nextPage = "/admin/assignment/registration_form";
     }
 
     @PostMapping("/registration_confirm")
@@ -70,7 +69,7 @@ public class AdminAssignmentController {
                                       Model model) {
         log.info("[AdminAssignmentController] RegistrationConfirm()");
 
-        nextPage = "redirect:/admin/assignment/";
+        nextPage = "/redirect:/admin/assignment/";
         msg = "과제등록에 성공하였습니다";
 
         // 세션
@@ -134,7 +133,7 @@ public class AdminAssignmentController {
     public ModelAndView getAssignment(@RequestParam("no") int no) {
         log.info("[AdminAssignmentController] getAssignment()");
 
-        nextPage = "admin/assignment/detail_assignment";
+        nextPage = "/admin/assignment/detail_assignment";
 
         AdminAssignmentDto adminAssignmentDto = adminAssignmentService.getAssignment(no);
 
@@ -156,7 +155,7 @@ public class AdminAssignmentController {
     ) {
         log.info("[AdminAssignmentController] AssignmentModifyForm()");
 
-        nextPage = "admin/assignment/assignment_modify_form";
+        nextPage = "/admin/assignment/assignment_modify_form";
 
         AdminAssignmentDto adminAssignmentDto = adminAssignmentService.getAssignment(no);
         model.addAttribute("adminAssignmentDto", adminAssignmentDto);
@@ -170,8 +169,8 @@ public class AdminAssignmentController {
                                           AdminAssignmentDto adminAssignmentDto) {
         log.info("[AdminAssignmentController] modifyAssignmentConfirm()");
 
-//        nextPage = "redirect:/admin/assignment/assignment_modify_form?no=" + adminAssignmentDto.getNo();
-        nextPage = "redirect:/admin/assignment/";
+//        nextPage = "/redirect:/admin/assignment/assignment_modify_form?no=" + adminAssignmentDto.getNo();
+        nextPage = "/redirect:/admin/assignment/";
 
         adminAssignmentDto.setFile_admin_name(file.getOriginalFilename());
         log.info("adminAssignmentDto : " + adminAssignmentDto.getFile_admin_name());
@@ -201,7 +200,7 @@ public class AdminAssignmentController {
     public String deleteAssignmentConfirm(@RequestParam("no") int no) {
         log.info("[AdminAssignmentController] deleteAssignmentConfirm()");
 
-        nextPage = "redirect:/admin/assignment/";
+        nextPage = "/redirect:/admin/assignment/";
 
         int result = adminAssignmentService.deleteAssignmentConfirm(no);
 
@@ -225,7 +224,7 @@ public class AdminAssignmentController {
         log.info("[AdminAssignmentController] checkAssignmentList()");
         log.info("[AdminAssignmentController] no() --> ", no);
 
-        nextPage = "admin/assignment/check_assignments";
+        nextPage = "/admin/assignment/check_assignments";
 
         List<UserMemberDto> userMemberDtos = adminAssignmentService.getUserList();
         List<UserAssignmentDto> userAssignmentDtos = adminAssignmentService.checkAssignmentList(no);
@@ -258,7 +257,7 @@ public class AdminAssignmentController {
     public String AssignmentInputPoint(UserAssignmentDto userAssignmentDto) {
         log.info("[UserAssignmentController] AssignmentInputPoint()");
 
-        nextPage = "redirect:/admin/assignment/check?no=" + userAssignmentDto.getGroup_id();
+        nextPage = "/redirect:/admin/assignment/check?no=" + userAssignmentDto.getGroup_id();
 
         int result = adminAssignmentService.AssignmentInputPoint(userAssignmentDto);
         if (result > 0) {

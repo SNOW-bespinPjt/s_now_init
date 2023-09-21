@@ -36,7 +36,7 @@ public class AdminCurriculumController {
     public String curriculumForm() {
         log.info("[AdminCurriculumController] curriculumForm()");
 
-        String nextPage = "admin/curriculum/curriculum_form";
+        String nextPage = "/admin/curriculum/curriculum_form";
 
         return nextPage;
 
@@ -49,7 +49,7 @@ public class AdminCurriculumController {
     public String createCurriculumForm() {
         log.info("[AdminCurriculumController] createCurriculumForm()");
 
-        String nextPage = "admin/curriculum/create_curriculum_form";
+        String nextPage = "/admin/curriculum/create_curriculum_form";
 
         return nextPage;
 
@@ -65,7 +65,7 @@ public class AdminCurriculumController {
                                           HttpSession session) {
         log.info("[AdminCurriculumController] createCurriculumConfirm()");
 
-        String nextPage = "admin/curriculum/curriculum_form";
+        String nextPage = "/admin/curriculum/curriculum_form";
 
         //세션 내 ID값 DTO에 저장
         AdminMemberDto loginedAdminDto = (AdminMemberDto) session.getAttribute("loginedAdminDto");
@@ -116,7 +116,7 @@ public class AdminCurriculumController {
     public String showDetailCurriculum(@RequestParam("no") int no, Model model) {
         log.info("[AdminCurriculumController] showDetailCurriculum()");
 
-        String nextPage = "admin/curriculum/curriculum_detail_form";
+        String nextPage = "/admin/curriculum/curriculum_detail_form";
 
         model.addAttribute("msgMap", adminCurriculumService.showDetailCurriculum(no));
 
@@ -131,7 +131,7 @@ public class AdminCurriculumController {
     public String modifyCurriculumForm(@RequestParam("no") int no, Model model) {
         log.info("[AdminCurriculumController] modifyCurriculumForm()");
 
-        String nextPage = "admin/curriculum/modify_curriculum_form";
+        String nextPage = "/admin/curriculum/modify_curriculum_form";
 
         model.addAttribute("msgMap", adminCurriculumService.showDetailCurriculum(no));
 
@@ -152,7 +152,7 @@ public class AdminCurriculumController {
         int no = adminCurriculumDto.getNo();
         log.info("no : " + no);
 
-        String nextPage = "admin/curriculum/curriculum_detail_form";
+        String nextPage = "/admin/curriculum/curriculum_detail_form";
         Map<String, Object> msgMap = new HashMap<>();
 
         //세션 내 ID값 DTO에 저장
@@ -179,7 +179,7 @@ public class AdminCurriculumController {
                 // 수정 실패 시
                 if (result <= 0) {
                     log.info("MODIFY CURRICULUM FAIL!!");
-                    nextPage = "admin/curriculum";
+                    nextPage = "/admin/curriculum";
                     return nextPage;
 
                 }
@@ -191,7 +191,7 @@ public class AdminCurriculumController {
                 // file을 업로드 하지 못했을 경우
             } else {
                 log.info("MODIFY CURRICULUM FAIL!!");
-                nextPage = "admin/curriculum";
+                nextPage = "/admin/curriculum";
                 return nextPage;
 
             }
@@ -210,7 +210,7 @@ public class AdminCurriculumController {
             // 수정 실패 시
             if (result <= 0) {
                 log.info("MODIFY CURRICULUM FAIL!!");
-                nextPage = "admin/curriculum";
+                nextPage = "/admin/curriculum";
                 return nextPage;
 
             }
@@ -233,14 +233,14 @@ public class AdminCurriculumController {
 
         int result = adminCurriculumService.deleteCurriculumConfirm(no);
 
-        String nextPage = "admin/curriculum/curriculum_form";
+        String nextPage = "/admin/curriculum/curriculum_form";
 
         if (result > 0) {
             return nextPage;
 
         }
 
-        nextPage = "admin/curriculum/curriculum_detail_form";
+        nextPage = "/admin/curriculum/curriculum_detail_form";
         return nextPage;
 
     }

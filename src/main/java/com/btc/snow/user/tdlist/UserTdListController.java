@@ -34,7 +34,7 @@ public class UserTdListController {
     public String selectTdListForm() {
         log.info("[UserTdListController] selectTdListForm()");
 
-        String nextPage = "user/tdlist/todolist_form";
+        String nextPage = "/user/tdlist/todolist_form";
 
         return nextPage;
 
