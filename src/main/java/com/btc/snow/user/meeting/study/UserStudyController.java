@@ -31,7 +31,7 @@ public class UserStudyController {
 
         UserMemberDto loginedUserDto = (UserMemberDto) session.getAttribute("loginedUserDto");
 
-        String nextPage = "redirect:/user/meeting/list";
+        String nextPage = "/redirect:/user/meeting/list";
 
         String saveFileName = studyUploadFileService.upload(file, loginedUserDto.getId());
 
@@ -57,7 +57,7 @@ public class UserStudyController {
     public String studyDetail(Model model, @RequestParam("no") int no) {
         log.info("studyDetail()");
 
-        String nextPage = "user/meeting/study_detail";
+        String nextPage = "/user/meeting/study_detail";
 
         UserStudyDto userStudyDto = userStudyService.studyDetail(no);
 
@@ -72,7 +72,7 @@ public class UserStudyController {
     public String studyList(Model model, HttpSession session) {
         log.info("studyList()");
 
-        String nextPage = "user/meeting/study_list";
+        String nextPage = "/user/meeting/study_list";
 
         UserMemberDto loginedUserDto = (UserMemberDto) session.getAttribute("loginedUserDto");
 

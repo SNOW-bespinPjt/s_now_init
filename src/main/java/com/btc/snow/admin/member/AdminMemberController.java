@@ -27,7 +27,7 @@ public class AdminMemberController {
     public String createAccountForm() {
         log.info("[AdminMemberController] createAccountForm()");
 
-        String nextPage = "admin/member/create_account_form";
+        String nextPage = "/admin/member/create_account_form";
 
         return nextPage;
 
@@ -40,11 +40,11 @@ public class AdminMemberController {
     public String createAccountConfirm(AdminMemberDto adminMemberDto) {
         log.info("[AdminMemberController] createAccountConfirm()");
 
-        String nextPage = "admin/member/success";
+        String nextPage = "/admin/member/success";
 
         int result = adminMemberService.createAccountConfirm(adminMemberDto);
         if (result <= 0)
-            nextPage = "admin/member/fail";
+            nextPage = "/admin/member/fail";
 
         return nextPage;
     }
@@ -56,7 +56,7 @@ public class AdminMemberController {
     public String loginForm() {
         log.info("[AdminMemberController] loginForm()");
 
-        String nextPage = "admin/member/member_login_form";
+        String nextPage = "/admin/member/member_login_form";
 
         return nextPage;
 
@@ -69,12 +69,12 @@ public class AdminMemberController {
 //    public String loginConfirm(AdminMemberDto adminMemberDto, HttpSession session, Model model) {
 //        log.info("[AdminMemberController] loginConfirm()");
 //
-//        String nextPage = "redirect:/admin";
+//        String nextPage = "/redirect:/admin";
 //
 //        AdminMemberDto loginedAdminDto = adminMemberService.loginConfirm(adminMemberDto);
 //
 //        if (loginedAdminDto == null) {
-//            nextPage = "admin/member/fail";
+//            nextPage = "/admin/member/fail";
 //
 //        } else {
 //            session.setAttribute("loginedAdminDto", loginedAdminDto);
@@ -94,7 +94,7 @@ public class AdminMemberController {
     public String findPasswordForm() {
         log.info("[AdminMemberController] findPasswordForm()");
 
-        String nextPage = "admin/member/find_password_form";
+        String nextPage = "/admin/member/find_password_form";
 
         return nextPage;
 
@@ -107,11 +107,11 @@ public class AdminMemberController {
     public String findPasswordConfirm(AdminMemberDto adminMemberDto) {
         log.info("[AdminMemberController] findPasswordConfirm()");
 
-        String nextPage = "admin/member/success";
+        String nextPage = "/admin/member/success";
 
         int result = adminMemberService.findPasswordConfirm(adminMemberDto);
         if (result <= 0)
-            nextPage = "admin/member/fail";
+            nextPage = "/admin/member/fail";
 
         return nextPage;
 
@@ -124,7 +124,7 @@ public class AdminMemberController {
     public String findIdForm() {
         log.info("[AdminMemberController] findPasswordForm()");
 
-        String nextPage = "admin/member/find_id_form";
+        String nextPage = "/admin/member/find_id_form";
 
         return nextPage;
 
@@ -137,11 +137,11 @@ public class AdminMemberController {
     public String findIdConfirm(AdminMemberDto adminMemberDto) {
         log.info("[AdminMemberController] findPasswordConfirm()");
 
-        String nextPage = "admin/member/success";
+        String nextPage = "/admin/member/success";
 
         int result = adminMemberService.findIdConfirm(adminMemberDto);
         if (result <= 0)
-            nextPage = "admin/member/fail";
+            nextPage = "/admin/member/fail";
 
         return nextPage;
 
@@ -154,7 +154,7 @@ public class AdminMemberController {
 //    public String logoutConfirm(HttpSession session) {
 //        log.info("[AdminMemberController] logoutConfirm()");
 //
-//        String nextPage = "redirect:/admin";
+//        String nextPage = "/redirect:/admin";
 //
 //        session.removeAttribute("loginedAdminDto");
 //
@@ -169,12 +169,12 @@ public class AdminMemberController {
     public String modifyAccountForm(HttpSession session) {
         log.info("[AdminMemberController] modifyAccountForm()");
 
-        String nextPage = "admin/member/member_modify_form";
+        String nextPage = "/admin/member/member_modify_form";
 
         AdminMemberDto loginedAdminDto =
                 (AdminMemberDto) session.getAttribute("loginedAdminDto");
         if (loginedAdminDto == null)
-            nextPage = "redirect:/admin/member/loginForm";
+            nextPage = "/redirect:/admin/member/loginForm";
 
         return nextPage;
     }
@@ -186,7 +186,7 @@ public class AdminMemberController {
     public String modifyAccountConfirm(AdminMemberDto adminMemberDto, HttpSession session) {
         log.info("[AdminMemberController] modifyAccountConfirm()");
 
-        String nextPage = "admin/member/success";
+        String nextPage = "/admin/member/success";
 
         log.info("modift pw -------------->" + adminMemberDto.getPw());
         log.info("modift name -------------->" + adminMemberDto.getName());
@@ -201,7 +201,7 @@ public class AdminMemberController {
             session.setMaxInactiveInterval(60 * 30);
 
         } else {
-            nextPage = "admin/member/fail";
+            nextPage = "/admin/member/fail";
 
         }
 
@@ -216,7 +216,7 @@ public class AdminMemberController {
     public ModelAndView listupAdmin() {
         log.info("[AdminMemberController] listupAdmin()");
 
-        String nextPage = "admin/member/list_admins";
+        String nextPage = "/admin/member/list_admins";
 
         List<AdminMemberDto> adminMemberDtos = adminMemberService.listupAdmin();
 
@@ -235,7 +235,7 @@ public class AdminMemberController {
     public ModelAndView listupUser() {
         log.info("[AdminMemberController] listupUser()");
 
-        String nextPage = "admin/member/list_users";
+        String nextPage = "/admin/member/list_users";
 
         List<UserMemberDto> userMemberDtos = adminMemberService.listupUser();
 
@@ -254,7 +254,7 @@ public class AdminMemberController {
     public ModelAndView UserDetail(@RequestParam("no") int no) {
         log.info("[AdminMemberController] UserDetail()");
 
-        String nextPage = "admin/member/user_detail";
+        String nextPage = "/admin/member/user_detail";
 
         UserMemberDto userMemberDto = adminMemberService.UserDetail(no);
 
@@ -299,7 +299,7 @@ public class AdminMemberController {
     public Object SignOutConfirm(HttpSession session) {
         log.info("[AdminController] SignOutConfirm()");
 
-        String nextPage = "admin/member/modify_account_form";
+        String nextPage = "/admin/member/modify_account_form";
 
         Map<String, Object> map = new HashMap<>();
 
@@ -311,12 +311,12 @@ public class AdminMemberController {
                 log.info("[AdminController] SIGNOUT SUCCESS!!");
                 session.removeAttribute("loginedAdminDto");
 
-                nextPage = "admin/member/success";
+                nextPage = "/admin/member/success";
 
             } else {
                 log.info("[AdminController] SIGNOUT FAIL!!");
 
-                nextPage = "admin/member/fail";
+                nextPage = "/admin/member/fail";
             }
 
         }

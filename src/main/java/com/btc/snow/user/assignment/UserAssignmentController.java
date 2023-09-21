@@ -38,7 +38,7 @@ public class UserAssignmentController {
     public String List(HttpSession session, Model model) {
         log.info("[UserAssignmentController] List()");
 
-        nextPage = "user/assignment/list_assignments";
+        nextPage = "/user/assignment/list_assignments";
 
         // USER 허용 과제 리스트 불러오기
         List<UserAssignmentDto> userAssignmentDtos = userAssignmentService.listAssignment(session);
@@ -57,7 +57,7 @@ public class UserAssignmentController {
                                       @RequestParam("file") MultipartFile file) {
         log.info("[UserAssignmentController] RegistrationConfirm()");
 
-        nextPage = "redirect:/user/assignment/";
+        nextPage = "/redirect:/user/assignment/";
 
         // 세션 > user_no 저장
         UserMemberDto loginedUserDto = (UserMemberDto) session.getAttribute("loginedUserDto");
@@ -102,7 +102,7 @@ public class UserAssignmentController {
     public ModelAndView getAssignment(@RequestParam("no") int no, HttpSession session) {
         log.info("[UserAssignmentController] getAssignment()");
 
-        nextPage = "user/assignment/detail_assignment";
+        nextPage = "/user/assignment/detail_assignment";
 
         // no에 맞는 페이지 가져오기
         AdminAssignmentDto adminAssignmentDto = userAssignmentService.getDetail(no);
@@ -132,7 +132,7 @@ public class UserAssignmentController {
                                           HttpSession session) {
         log.info("[UserAssignmentController] modifyAssignmentConfirm()");
 
-        nextPage = "redirect:/user/assignment/";
+        nextPage = "/redirect:/user/assignment/";
 
         // 세션 > user_no 저장
         UserMemberDto loginedUserDto = (UserMemberDto) session.getAttribute("loginedUserDto");
@@ -174,7 +174,7 @@ public class UserAssignmentController {
     public String deleteAssignmentConfirm(@RequestParam("no") int no) {
         log.info("[UserAssignmentController] deleteAssignmentConfirm()");
 
-        String nextPage = "redirect:/user/assignment/";
+        String nextPage = "/redirect:/user/assignment/";
 
         int result = userAssignmentService.deleteAssignmentConfirm(no);
 
